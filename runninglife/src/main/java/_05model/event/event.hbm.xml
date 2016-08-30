@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="_05model.event.EventVO" table="event">
+
+		<composite-id name="eventPK" class="_05model.event.EventPK" mapped="false">
+			<key-property name="contestID" column="contestID" />
+			<key-property name="eventID" column="eventID" />
+			<generator class=""></generator>
+		</composite-id>
+
+		<property name="eventName" column="eventName" />
+		<property name="distance" column="distance" />
+		<property name="fee" column="fee" />
+		<property name="quota" column="quota" />
+		<property name="whenToRun" column="whenToRun" />
+		<property name="limitTime" column="limitTime" />
+
+<!-- 		<many-to-one name="contestVO"  class="_05model.contest.ContestVO" -->
+<!-- 			cascade="all" outer-join="true" insert="false" update="false"> -->
+<!-- 			<column name="contestID"></column> -->
+<!-- 		</many-to-one> -->
+
+		<!-- <set name="emps" table="emp2" lazy="false" cascade="all" inverse="true" 
+			order-by="empno asc"> -->
+		<!-- <key> -->
+		<!-- <column name="deptno" /> -->
+		<!-- </key> -->
+		<!-- <one-to-many class="com.emp.model.EmpVO" /> -->
+		<!-- </set> -->
+
+	</class>
+</hibernate-mapping>
+
