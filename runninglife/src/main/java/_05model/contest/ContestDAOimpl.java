@@ -9,7 +9,7 @@ import org.hibernate.Session;
 import _05hibernate.util.HibernateUtil;
 
 public class ContestDAOimpl implements ContestDAO {
-	private static final String GET_ALL_STMT = "from contest order by contestID";
+	private static final String GET_ALL_STMT = "from ContestVO order by contestID";
 
 	@Override
 	public void insert(ContestVO contestVO) {
@@ -94,5 +94,6 @@ public class ContestDAOimpl implements ContestDAO {
 		contestVO.setPlace("干你屁事");
 		contestVO.setStartDate(Date.valueOf("2016-3-13"));
 		dao.insert(contestVO);
+		dao.getAll();
 	}
 }

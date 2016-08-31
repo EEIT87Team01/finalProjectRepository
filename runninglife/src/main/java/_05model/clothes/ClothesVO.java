@@ -1,4 +1,4 @@
-package _05model;
+package _05model.clothes;
 
 public class ClothesVO {
 	private String clothesSize ;

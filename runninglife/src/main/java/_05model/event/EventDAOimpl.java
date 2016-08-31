@@ -10,7 +10,7 @@ import _05hibernate.util.HibernateUtil;
 import _05model.contest.ContestVO;
 
 public class EventDAOimpl implements EventDAO {
-	private static final String GET_ALL_STMT = "from event order by eventID";
+	private static final String GET_ALL_STMT = "from EventVO order by eventID";
 	
 	@Override
 	public void insert(EventVO eventVO) {
@@ -57,7 +57,13 @@ public class EventDAOimpl implements EventDAO {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		try {
 			session.beginTransaction();
+			
+//			order.getCustormer().getOrders().remove(order);
+//            
+//			order.setCustormer(null);
 			EventVO eventVO = (EventVO) session.get(EventVO.class, pk);
+			eventVO.getContestVO().getEvents().remove(eventVO);
+			eventVO.setContestVO(null);
 			session.delete(eventVO);
 			session.getTransaction().commit();
 		} catch (RuntimeException ex) {
@@ -102,11 +108,13 @@ public class EventDAOimpl implements EventDAO {
 		
 		EventVO eventVO = new EventVO();
 		EventPK pk = new EventPK();
-		pk.setContestID(4);
-//		pk.setEventID(6);
+		pk.setContestID(3);
+		pk.setEventID(2);
 		eventVO.setEventPK(pk);
-		dao.insert(eventVO);
-//		dao.delete(pk);
+//		dao.insert(eventVO);
+		
+//		dao.getAll();
+		dao.delete(pk);
 //		EventVO event = dao.findByPrimaryKey(pk);
 //		System.out.println(event.getEventPK().getContestID());
 //		System.out.println(event.getEventPK().getEventID());

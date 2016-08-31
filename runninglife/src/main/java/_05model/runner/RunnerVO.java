@@ -1,4 +1,4 @@
-package _05model;
+package _05model.runner;
 
 import java.sql.Time;
 

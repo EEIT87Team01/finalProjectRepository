@@ -1,4 +1,4 @@
-package _05model;
+package _05model.team;
 
 public class TeamVO {
 	private int teamID;

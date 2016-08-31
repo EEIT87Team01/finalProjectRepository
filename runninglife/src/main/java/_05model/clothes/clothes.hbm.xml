@@ -3,10 +3,9 @@
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
-	<class name="_05model.contest.ContestVO" table="contest">
+	<class name="_05model.clothes.ClothesVO" table="clothes">
 
-		<id name="contestID" column="contestID">
-			<generator class="identity"/>
+		<id name="clothesSize" column="clothesSize">
 		</id>
 
 		<property name="contestName" column="contestName" />
@@ -19,12 +18,12 @@
 		<property name="coorganizer" column="coorganizer" />
 		<property name="contestPhotoPath" column="contestPhotoPath" />
 
-		<set name="events" table="event" lazy="false" cascade="save-update"  inverse="true"  order-by="eventID asc">			
-			<key foreign-key="contestID">
-				<column name="contestID" />
-			</key>
-			<one-to-many class="_05model.event.EventVO" />
-		</set>
+<!-- 		<set name="emps" table="emp2" lazy="false" cascade="all"  inverse="true"  order-by="empno asc">			 -->
+<!-- 			<key> -->
+<!-- 				<column name="deptno" /> -->
+<!-- 			</key> -->
+<!-- 			<one-to-many class="com.emp.model.EmpVO" /> -->
+<!-- 		</set> -->
 
 	</class>
 </hibernate-mapping>

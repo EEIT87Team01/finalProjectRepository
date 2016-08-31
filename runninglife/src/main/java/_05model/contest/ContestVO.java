@@ -2,6 +2,9 @@ package _05model.contest;
 
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.util.Set;
+
+import _05model.event.EventVO;
 
 public class ContestVO {
 	private int contestID;
@@ -14,6 +17,16 @@ public class ContestVO {
 	private String organizer;
 	private String coorganizer;
 	private String contestPhotoPath;
+	//一對多
+	private Set<EventVO> events ;
+	public Set<EventVO> getEvents() {
+		return events;
+	}
+	public void setEvents(Set<EventVO> events) {
+		this.events = events;
+	}
+	//一對多
+	
 	public int getContestID() {
 		return contestID;
 	}

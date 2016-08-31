@@ -1,4 +1,4 @@
-package _05model;
+package _05model.clothes;
 
 import java.util.List;
 
