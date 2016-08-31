@@ -1,4 +1,4 @@
-package model;
+package com.eeit.team01.runninglife;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.ServletException;
