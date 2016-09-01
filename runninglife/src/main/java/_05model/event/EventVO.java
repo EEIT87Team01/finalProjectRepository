@@ -1,32 +1,49 @@
 package _05model.event;
 
 import java.io.Serializable;
+import static javax.persistence.GenerationType.IDENTITY;
 import java.sql.Time;
 
-import _05model.contest.ContestVO;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.IdClass;
+import javax.persistence.Table;
 
-public class EventVO {
-	private EventPK eventPK;
+import _05model.contest.ContestVO;
+import _05model.team.TeamVO;
+@Entity
+@Table(name = "event")
+public class EventVO implements Serializable{
+	private int contestID;
+	@Id
+	@GeneratedValue(strategy = IDENTITY)
+	private int eventID;
+	@Column
 	private String eventName;
+	@Column
 	private int distance;
+	@Column
 	private int fee;
+	@Column
 	private int quota;
+	@Column
 	private Time whenToRun;
+	@Column
 	private int limitTime;
-	ContestVO contestVO;
-	
-	
-	public ContestVO getContestVO() {
-		return contestVO;
+//	private ContestVO contestVO;
+	public int getContestID() {
+		return contestID;
 	}
-	public void setContestVO(ContestVO contestVO) {
-		this.contestVO = contestVO;
+	public void setContestID(int contestID) {
+		this.contestID = contestID;
 	}
-	public EventPK getEventPK() {
-		return eventPK;
+	public int getEventID() {
+		return eventID;
 	}
-	public void setEventPK(EventPK eventPK) {
-		this.eventPK = eventPK;
+	public void setEventID(int eventID) {
+		this.eventID = eventID;
 	}
 	public String getEventName() {
 		return eventName;

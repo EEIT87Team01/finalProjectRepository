@@ -19,17 +19,17 @@ public class EventDAOimpl implements EventDAO {
 			session.beginTransaction();
 			//自動生成eventID
 			//取最大值+1
-			Query query  = session.createQuery(" from EventVO where contestID=:contestID order by eventID desc");
-			query.setParameter("contestID",eventVO.getEventPK().getContestID());
-			List<EventVO> events =query.list();
-			int eventID=0;
-			if(!events.isEmpty()){
-			eventID=events.get(0).getEventPK().getEventID();
-			}
-			eventVO.getEventPK().setEventID(eventID+1);
+//			Query query  = session.createQuery(" from EventVO where contestID=:contestID order by eventID desc");
+//			query.setParameter("contestID",eventVO.getEventPK().getContestID());
+//			List<EventVO> events =query.list();
+//			int eventID=0;
+//			if(!events.isEmpty()){
+//			eventID=events.get(0).getEventPK().getEventID();
+//			}
+//			eventVO.getEventPK().setEventID(eventID+1);
 //			for(EventVO aEvent:events){
 //				System.out.println(aEvent.getEventPK().getEventID());
-//			}
+//			} 
 			session.save(eventVO);
 			session.getTransaction().commit();
 		} catch (RuntimeException ex) {
@@ -38,7 +38,6 @@ public class EventDAOimpl implements EventDAO {
 		}
 
 	}
-
 	@Override
 	public void update(EventVO eventVO) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
@@ -51,19 +50,12 @@ public class EventDAOimpl implements EventDAO {
 			throw ex;
 		}
 	}
-
 	@Override
-	public void delete(EventPK pk) {
+	public void delete(Integer eventID) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		try {
 			session.beginTransaction();
-			
-//			order.getCustormer().getOrders().remove(order);
-//            
-//			order.setCustormer(null);
-			EventVO eventVO = (EventVO) session.get(EventVO.class, pk);
-			eventVO.getContestVO().getEvents().remove(eventVO);
-			eventVO.setContestVO(null);
+			EventVO eventVO = (EventVO) session.get(EventVO.class, eventID);
 			session.delete(eventVO);
 			session.getTransaction().commit();
 		} catch (RuntimeException ex) {
@@ -73,12 +65,12 @@ public class EventDAOimpl implements EventDAO {
 	}
 
 	@Override
-	public EventVO findByPrimaryKey(EventPK pk) {
+	public EventVO findByPrimaryKey(Integer eventID) {
 		EventVO eventVO =null;
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		try {
 			session.beginTransaction();
-			eventVO = (EventVO) session.get(EventVO.class, pk);
+			eventVO = (EventVO) session.get(EventVO.class, eventID);
 			session.getTransaction().commit();
 		} catch (RuntimeException ex) {
 			session.getTransaction().rollback();
@@ -86,7 +78,6 @@ public class EventDAOimpl implements EventDAO {
 		}
 		return eventVO;
 	}
-
 	@Override
 	public List<EventVO> getAll() {
 		List<EventVO> list = null;
@@ -105,19 +96,10 @@ public class EventDAOimpl implements EventDAO {
 
 	public static void main(String[] args) {
 		EventDAOimpl dao = new EventDAOimpl();
-		
 		EventVO eventVO = new EventVO();
-		EventPK pk = new EventPK();
-		pk.setContestID(3);
-		pk.setEventID(2);
-		eventVO.setEventPK(pk);
-//		dao.insert(eventVO);
-		
-//		dao.getAll();
-		dao.delete(pk);
-//		EventVO event = dao.findByPrimaryKey(pk);
-//		System.out.println(event.getEventPK().getContestID());
-//		System.out.println(event.getEventPK().getEventID());
+		eventVO.setContestID(1);
+		dao.insert(eventVO);
+//		dao.delete(5);
 	}
 
 }

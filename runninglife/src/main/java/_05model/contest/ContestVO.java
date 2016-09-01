@@ -1,32 +1,71 @@
 package _05model.contest;
 
 import java.sql.Date;
+import static javax.persistence.GenerationType.IDENTITY;
 import java.sql.Timestamp;
 import java.util.Set;
 
-import _05model.event.EventVO;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
+import _05model.event.EventVO;
+import _05model.team.TeamVO;
+@Entity
+@Table(name="contest")
 public class ContestVO {
+	@Id
+	@GeneratedValue(strategy = IDENTITY)
 	private int contestID;
+	@Column
 	private String contestName;
+	@Column
 	private String place;
+	@Column
 	private Date startDate;
+	@Column
 	private Timestamp registrationBegin;
+	@Column
 	private Timestamp registrationEnd;
+	@Column
 	private String goal;
+	@Column
 	private String organizer;
+	@Column
 	private String coorganizer;
+	@Column
 	private String contestPhotoPath;
 	//一對多
+//	private Set<EventVO> events ;
+//	public Set<EventVO> getEvents() {
+//		return events;
+//	}
+//	public void setEvents(Set<EventVO> events) {
+//		this.events = events;
+//	}
+	//一對多
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "contestID")
 	private Set<EventVO> events ;
+	
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "contestID")
+	private Set<TeamVO> Teams ;
+	
 	public Set<EventVO> getEvents() {
 		return events;
 	}
 	public void setEvents(Set<EventVO> events) {
 		this.events = events;
 	}
-	//一對多
-	
+	public Set<TeamVO> getTeams() {
+		return Teams;
+	}
+	public void setTeams(Set<TeamVO> teams) {
+		Teams = teams;
+	}
 	public int getContestID() {
 		return contestID;
 	}
