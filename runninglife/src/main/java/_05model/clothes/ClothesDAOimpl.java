@@ -4,10 +4,11 @@ import java.util.List;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.springframework.stereotype.Service;
 
 import _05hibernate.util.HibernateUtil;
-
-class ClothesDAOimpl implements ClothesDAO {
+@Service
+public class ClothesDAOimpl implements ClothesDAO {
 	private static final String GET_ALL_STMT = "from ClothesVO order by breast";
 	@Override
 	public void insert(ClothesVO clothesVO) {

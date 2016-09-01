@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.springframework.stereotype.Repository;
+@Repository
 @Entity
 @Table(name="clothes")
 public class ClothesVO {

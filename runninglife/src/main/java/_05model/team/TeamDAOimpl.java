@@ -4,10 +4,11 @@ import java.util.List;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.springframework.stereotype.Service;
 
 import _05hibernate.util.HibernateUtil;
 import _05model.runner.RunnerVO;
-
+@Service
 public  class TeamDAOimpl implements TeamDAO {
 	private static final String GET_ALL_STMT = "from TeamVO order by teamID";
 	@Override

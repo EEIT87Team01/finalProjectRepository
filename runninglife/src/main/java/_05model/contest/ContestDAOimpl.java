@@ -5,10 +5,11 @@ import java.util.Set;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.springframework.stereotype.Service;
 
 import _05hibernate.util.HibernateUtil;
 import _05model.event.EventVO;
-
+@Service
 public class ContestDAOimpl implements ContestDAO {
 	private static final String GET_ALL_STMT = "from ContestVO order by contestID";
 

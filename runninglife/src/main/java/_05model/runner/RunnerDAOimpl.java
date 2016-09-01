@@ -4,9 +4,10 @@ import java.util.List;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.springframework.stereotype.Service;
 
 import _05hibernate.util.HibernateUtil;
-
+@Service
 public class RunnerDAOimpl implements RunnerDAO {
 	private static final String GET_ALL_STMT = "from RunnerVO order by runnerID";
 	@Override
