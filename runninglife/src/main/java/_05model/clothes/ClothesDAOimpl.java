@@ -3,9 +3,10 @@ package _05model.clothes;
 import java.util.List;
 
 import org.hibernate.Session;
+import org.springframework.stereotype.Service;
 
 import _05hibernate.util.HibernateUtil;
-
+@Service
 public class ClothesDAOimpl implements ClothesDAO {
 
 	@Override

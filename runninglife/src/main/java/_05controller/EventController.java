@@ -12,8 +12,10 @@ import _05model.clothes.ClothesDAOimpl;
 import _05model.contest.ContestDAOimpl;
 import _05model.contest.ContestVO;
 import _05model.event.EventDAOimpl;
+import _05model.member.MemberVO;
 import _05model.runner.RunnerDAOimpl;
 import _05model.team.TeamDAOimpl;
+import _05service.email.MailService;
 @Controller
 public class EventController {
 
@@ -27,6 +29,8 @@ public class EventController {
 	private RunnerDAOimpl runnerDAO;
 	@Autowired
 	private ClothesDAOimpl clothesDAO;
+	@Autowired
+	private MailService mailService;
 
 	
 	@RequestMapping("contest")
@@ -40,5 +44,17 @@ public class EventController {
 		
 //		model.addAttribute("events", "Hello,World.");
 		return "index";
+	}
+	
+	@RequestMapping("email")
+	public String emailtest(Model model) {
+		MemberVO member = new MemberVO();
+		member.setEmail("artashur@gmail.com");
+		member.setLastName("Max");
+		member.setMemberID("Maxcool#3433");
+//		MailService mailService = (MailService) context.getBean("mailService");
+		mailService.sendEmail(member);
+		model.addAttribute("A",member);
+		return "/../../index";
 	}
 }

@@ -11,7 +11,7 @@
 
 <h3>Welcome ${user.custid}</h3>
 <h3><a href="<c:url value="/contest" />">賽事首頁</a></h3>
-<h3><a href="<c:url value="/pages/product.jsp" />">Poduct</a></h3>
+<h3><a href="<c:url value="/email" />">Poduct</a></h3>
 
 </body>
 </html>
