@@ -5,7 +5,6 @@ import java.util.List;
 import org.hibernate.Session;
 
 import _05hibernate.util.HibernateUtil;
-import _05model.contest.ContestVO;
 
 public class ClothesDAOimpl implements ClothesDAO {
 
@@ -48,7 +47,7 @@ public class ClothesDAOimpl implements ClothesDAO {
 
 	public static void main(String[] args) {
 		ClothesDAOimpl dao = new ClothesDAOimpl();
-		ClothesVO clothesVO=new ClothesVO();
+		ClothesVO clothesVO = new ClothesVO();
 		clothesVO.setClothesSize("SAs");
 		clothesVO.setBreast(66);
 		clothesVO.setLength(101);

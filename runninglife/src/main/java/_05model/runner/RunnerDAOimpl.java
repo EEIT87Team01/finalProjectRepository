@@ -1,63 +1,21 @@
-package _05model.event;
+package _05model.runner;
 
 import java.util.List;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.springframework.stereotype.Service;
 
 import _05hibernate.util.HibernateUtil;
-import _05model.contest.ContestVO;
 @Service
-public class EventDAOimpl implements EventDAO {
-	private static final String GET_ALL_STMT = "from EventVO order by eventID";
-	
+public class RunnerDAOimpl implements RunnerDAO {
+	private static final String GET_ALL_STMT = "from RunnerVO order by runnerID";
 	@Override
-	public void insert(EventVO eventVO) {
+	public void insert(RunnerVO runnerVO) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		try {
 			session.beginTransaction();
-			//自動生成eventID
-			//取最大值+1
-//			Query query  = session.createQuery(" from EventVO where contestID=:contestID order by eventID desc");
-//			query.setParameter("contestID",eventVO.getEventPK().getContestID());
-//			List<EventVO> events =query.list();
-//			int eventID=0;
-//			if(!events.isEmpty()){
-//			eventID=events.get(0).getEventPK().getEventID();
-//			}
-//			eventVO.getEventPK().setEventID(eventID+1);
-//			for(EventVO aEvent:events){
-//				System.out.println(aEvent.getEventPK().getEventID());
-//			} 
-			session.save(eventVO);
-			session.getTransaction().commit();
-		} catch (RuntimeException ex) {
-			session.getTransaction().rollback();
-			throw ex;
-		}
-
-	}
-	@Override
-	public void update(EventVO eventVO) {
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		try{
-			session.beginTransaction();
-			session.saveOrUpdate(eventVO);
-			session.getTransaction();
-		}catch(RuntimeException ex){
-			session.getTransaction();
-			throw ex;
-		}
-	}
-	@Override
-	public void delete(Integer eventID) {
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		try {
-			session.beginTransaction();
-			EventVO eventVO = (EventVO) session.get(EventVO.class, eventID);
-			session.delete(eventVO);
+			session.saveOrUpdate(runnerVO);
 			session.getTransaction().commit();
 		} catch (RuntimeException ex) {
 			session.getTransaction().rollback();
@@ -66,22 +24,50 @@ public class EventDAOimpl implements EventDAO {
 	}
 
 	@Override
-	public EventVO findByPrimaryKey(Integer eventID) {
-		EventVO eventVO =null;
+	public void update(RunnerVO runnerVO) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		try {
 			session.beginTransaction();
-			eventVO = (EventVO) session.get(EventVO.class, eventID);
+			session.saveOrUpdate(runnerVO);
 			session.getTransaction().commit();
 		} catch (RuntimeException ex) {
 			session.getTransaction().rollback();
 			throw ex;
 		}
-		return eventVO;
 	}
+
 	@Override
-	public List<EventVO> getAll() {
-		List<EventVO> list = null;
+	public void delete(RunnerPK pk) {
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		try {
+			session.beginTransaction();
+			RunnerVO contestVO = (RunnerVO) session.get(RunnerVO.class, pk);
+			session.delete(contestVO);
+			session.getTransaction().commit();
+		} catch (RuntimeException ex) {
+			session.getTransaction().rollback();
+			throw ex;
+		}
+	}
+
+	@Override
+	public RunnerVO findByPrimaryKey(RunnerPK pk) {
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		RunnerVO runnerVO = null;
+		try {
+			session.beginTransaction();
+			runnerVO = (RunnerVO) session.get(RunnerVO.class, pk);
+			session.getTransaction().commit();
+		} catch (RuntimeException ex) {
+			session.getTransaction().rollback();
+			throw ex;
+		}
+		return runnerVO;
+	}
+
+	@Override
+	public List<RunnerVO> getAll() {
+		List<RunnerVO> list = null;
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		try {
 			session.beginTransaction();
@@ -96,11 +82,20 @@ public class EventDAOimpl implements EventDAO {
 	}
 
 	public static void main(String[] args) {
-		EventDAOimpl dao = new EventDAOimpl();
-		EventVO eventVO = new EventVO();
-		eventVO.setContestID(1);
-		dao.insert(eventVO);
-//		dao.delete(5);
+		RunnerDAOimpl dao = new RunnerDAOimpl();
+		RunnerVO runner = new RunnerVO();
+		RunnerPK pk = new RunnerPK();
+		pk.setContestID(1);
+		pk.setMemberID("arthur");
+		runner.setPk(pk);
+		runner.setEventID(3);
+		runner.setTeamID(30);
+//		runner.setContestID(1);
+//		runner.setRunTime(Time.valueOf("22:22:22"));
+//		dao.delete(pk);
+		dao.insert(runner);
+		RunnerVO list =dao.findByPrimaryKey(pk);
+		System.out.println(list.getPk().getContestID());
 	}
 
 }

@@ -1,63 +1,47 @@
-package _05model.event;
+package _05model.team;
 
 import java.util.List;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.springframework.stereotype.Service;
 
 import _05hibernate.util.HibernateUtil;
-import _05model.contest.ContestVO;
+import _05model.runner.RunnerVO;
 @Service
-public class EventDAOimpl implements EventDAO {
-	private static final String GET_ALL_STMT = "from EventVO order by eventID";
-	
+public  class TeamDAOimpl implements TeamDAO {
+	private static final String GET_ALL_STMT = "from TeamVO order by teamID";
 	@Override
-	public void insert(EventVO eventVO) {
+	public void insert(TeamVO teamVO) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		try {
 			session.beginTransaction();
-			//自動生成eventID
-			//取最大值+1
-//			Query query  = session.createQuery(" from EventVO where contestID=:contestID order by eventID desc");
-//			query.setParameter("contestID",eventVO.getEventPK().getContestID());
-//			List<EventVO> events =query.list();
-//			int eventID=0;
-//			if(!events.isEmpty()){
-//			eventID=events.get(0).getEventPK().getEventID();
-//			}
-//			eventVO.getEventPK().setEventID(eventID+1);
-//			for(EventVO aEvent:events){
-//				System.out.println(aEvent.getEventPK().getEventID());
-//			} 
-			session.save(eventVO);
+			session.saveOrUpdate(teamVO);
 			session.getTransaction().commit();
 		} catch (RuntimeException ex) {
 			session.getTransaction().rollback();
 			throw ex;
 		}
-
 	}
 	@Override
-	public void update(EventVO eventVO) {
+	public void update(TeamVO teamVO) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		try{
+		try {
 			session.beginTransaction();
-			session.saveOrUpdate(eventVO);
-			session.getTransaction();
-		}catch(RuntimeException ex){
-			session.getTransaction();
+			session.saveOrUpdate(teamVO);
+			session.getTransaction().commit();
+		} catch (RuntimeException ex) {
+			session.getTransaction().rollback();
 			throw ex;
 		}
 	}
 	@Override
-	public void delete(Integer eventID) {
+	public void delete(Integer teamID) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		try {
 			session.beginTransaction();
-			EventVO eventVO = (EventVO) session.get(EventVO.class, eventID);
-			session.delete(eventVO);
+			TeamVO teamVO = (TeamVO) session.get(TeamVO.class, teamID);
+			session.delete(teamVO);
 			session.getTransaction().commit();
 		} catch (RuntimeException ex) {
 			session.getTransaction().rollback();
@@ -66,22 +50,23 @@ public class EventDAOimpl implements EventDAO {
 	}
 
 	@Override
-	public EventVO findByPrimaryKey(Integer eventID) {
-		EventVO eventVO =null;
+	public TeamVO findByPrimaryKey(Integer teamID) {
+		TeamVO teamVO = null;
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		try {
 			session.beginTransaction();
-			eventVO = (EventVO) session.get(EventVO.class, eventID);
+			teamVO = (TeamVO) session.get(TeamVO.class, teamID);
 			session.getTransaction().commit();
 		} catch (RuntimeException ex) {
 			session.getTransaction().rollback();
 			throw ex;
 		}
-		return eventVO;
+		return teamVO;
 	}
+
 	@Override
-	public List<EventVO> getAll() {
-		List<EventVO> list = null;
+	public List<TeamVO> getAll() {
+		List<TeamVO> list = null;
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		try {
 			session.beginTransaction();
@@ -96,11 +81,14 @@ public class EventDAOimpl implements EventDAO {
 	}
 
 	public static void main(String[] args) {
-		EventDAOimpl dao = new EventDAOimpl();
-		EventVO eventVO = new EventVO();
-		eventVO.setContestID(1);
-		dao.insert(eventVO);
-//		dao.delete(5);
+		TeamVO teamvo = new TeamVO()	;
+		teamvo.setTeamName("男子組");
+		teamvo.setContestID(1);
+		teamvo.setAgeRange("25-30");
+		TeamDAO dao = new TeamDAOimpl();
+		dao.insert(teamvo);
+
 	}
+
 
 }

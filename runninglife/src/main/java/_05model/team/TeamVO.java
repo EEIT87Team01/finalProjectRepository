@@ -1,9 +1,49 @@
 package _05model.team;
 
-public class TeamVO {
+import java.io.Serializable;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="team")
+public class TeamVO implements Serializable{
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int teamID;
+	@Column
 	private int contestID;
-	private int eventID;
+	@Column
 	private String teamName;
+	@Column
 	private String ageRange;
+	public int getTeamID() {
+		return teamID;
+	}
+	public void setTeamID(int teamID) {
+		this.teamID = teamID;
+	}
+	public int getContestID() {
+		return contestID;
+	}
+	public void setContestID(int contestID) {
+		this.contestID = contestID;
+	}
+	public String getTeamName() {
+		return teamName;
+	}
+	public void setTeamName(String teamName) {
+		this.teamName = teamName;
+	}
+	public String getAgeRange() {
+		return ageRange;
+	}
+	public void setAgeRange(String ageRange) {
+		this.ageRange = ageRange;
+	}
+	
 }
