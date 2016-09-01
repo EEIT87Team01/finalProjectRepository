@@ -79,16 +79,33 @@ public  class TeamDAOimpl implements TeamDAO {
 		}
 		return list;
 	}
+	public List<TeamVO> getTeamById(Integer contestID) {
+		List<TeamVO> list = null;
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		try {
+			session.beginTransaction();
+			Query query = session.createQuery("from TeamVO where contestID = ? order by teamID");
+			query.setParameter(0, contestID);
+			list = query.list();
+			session.getTransaction().commit();
+		} catch (RuntimeException ex) {
+			session.getTransaction().rollback();
+			throw ex;
+		}
+		return list;
+	}
 
 	public static void main(String[] args) {
 		TeamVO teamvo = new TeamVO()	;
 		teamvo.setTeamName("男子組");
 		teamvo.setContestID(1);
-		teamvo.setAgeRange("25-30");
-		TeamDAO dao = new TeamDAOimpl();
+		teamvo.setAgeRange(25);
+		TeamDAOimpl dao = new TeamDAOimpl();
 		dao.insert(teamvo);
-
+		List<TeamVO> list =dao.getTeamById(1);
+		for(TeamVO aList:list){
+			System.out.println(aList.getTeamID());
+		}
 	}
-
 
 }

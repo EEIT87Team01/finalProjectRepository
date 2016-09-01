@@ -20,7 +20,7 @@ public class TeamVO implements Serializable{
 	@Column
 	private String teamName;
 	@Column
-	private String ageRange;
+	private int ageRange;
 	public int getTeamID() {
 		return teamID;
 	}
@@ -39,10 +39,10 @@ public class TeamVO implements Serializable{
 	public void setTeamName(String teamName) {
 		this.teamName = teamName;
 	}
-	public String getAgeRange() {
+	public int getAgeRange() {
 		return ageRange;
 	}
-	public void setAgeRange(String ageRange) {
+	public void setAgeRange(int ageRange) {
 		this.ageRange = ageRange;
 	}
 	

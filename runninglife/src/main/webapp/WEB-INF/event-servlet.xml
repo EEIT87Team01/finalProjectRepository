@@ -8,33 +8,39 @@
             http://www.springframework.org/schema/context/spring-context.xsd            
             http://www.springframework.org/schema/mvc   
             http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+<!-- 	<mvc:resources mapping="/resources/**" location="/resources/"> -->
+<!-- 		<mvc:cache-control max-age="3600" cache-public="true" /> -->
+<!-- 	</mvc:resources> -->
+
+<!-- 	<mvc:resources mapping="/resources/**" location="/resources2/" /> -->
 	<mvc:annotation-driven />
+	
 	<context:annotation-config />
 	<context:component-scan base-package="_05controller" />
 	<context:component-scan base-package="_05model" />
 
 	<bean id="viewResolver"
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver"
-		p:prefix="/WEB-INF/jsp/" p:suffix=".jsp" />
+		p:viewClass="org.springframework.web.servlet.view.JstlView" p:prefix="/WEB-INF/jsp/" p:suffix=".jsp" />
 
-<!-- 	<bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean"> -->
-<!-- 		<property name="jndiName" value="java:comp/env/jdbc/RunningLife"></property> -->
-<!-- 	</bean> -->
-	
-	
-<!-- 	<bean id="sessionFactory" -->
-<!-- 		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean"> -->
-<!-- 		<property name="dataSource" ref="dataSource"></property> -->
-<!-- 		<property name="configLocation" value="classpath:hibernate.cfg.xml"></property> -->
-<!-- 	</bean> -->
-<!-- 	<bean id="dataSource" -->
-<!-- 		class="org.springframework.jdbc.datasource.DriverManagerDataSource"> -->
-<!-- 		<property name="driverClassName" value="com.microsoft.sqlserver.jdbc.SQLServerDriver"></property> -->
-<!-- 		<property name="url" -->
-<!-- 			value="jdbc:sqlserver://localhost:1433;database=RunningLife"></property> -->
-<!-- 		<property name="username" value="sa2"></property> -->
-<!-- 		<property name="password" value="sa1234"></property> -->
-<!-- 	</bean> -->
+	<!-- <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean"> -->
+	<!-- <property name="jndiName" value="java:comp/env/jdbc/RunningLife"></property> -->
+	<!-- </bean> -->
+
+
+	<!-- <bean id="sessionFactory" -->
+	<!-- class="org.springframework.orm.hibernate4.LocalSessionFactoryBean"> -->
+	<!-- <property name="dataSource" ref="dataSource"></property> -->
+	<!-- <property name="configLocation" value="classpath:hibernate.cfg.xml"></property> -->
+	<!-- </bean> -->
+	<!-- <bean id="dataSource" -->
+	<!-- class="org.springframework.jdbc.datasource.DriverManagerDataSource"> -->
+	<!-- <property name="driverClassName" value="com.microsoft.sqlserver.jdbc.SQLServerDriver"></property> -->
+	<!-- <property name="url" -->
+	<!-- value="jdbc:sqlserver://localhost:1433;database=RunningLife"></property> -->
+	<!-- <property name="username" value="sa2"></property> -->
+	<!-- <property name="password" value="sa1234"></property> -->
+	<!-- </bean> -->
 
 
 
