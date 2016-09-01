@@ -19,7 +19,7 @@
 
 		<many-to-one name="contestVO"  class="_05model.contest.ContestVO"
 			cascade="save-update" outer-join="true" insert="false" update="false">
-			<column name="contestID"></column>
+			<column name="contestID" ></column>
 		</many-to-one>
 
 
