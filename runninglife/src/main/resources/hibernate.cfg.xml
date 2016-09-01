@@ -35,9 +35,7 @@
 		<!--Java物件與資料庫表格的映射檔 -->
 		<mapping resource="_05model/contest/contest.hbm.xml" />
 		<mapping resource="_05model/event/event.hbm.xml" />
-<!-- 		<mapping resource="_05model/contest.hbm.xml" /> -->
-<!-- 		<mapping resource="_05model/contest.hbm.xml" /> -->
-
+		<mapping class="_05model.clothes.ClothesVO" />
 	</session-factory>
 	
 </hibernate-configuration>
