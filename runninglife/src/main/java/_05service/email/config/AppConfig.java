@@ -17,8 +17,6 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 @EnableWebMvc 
 public class AppConfig extends WebMvcConfigurerAdapter{
 	
-	
-	
 	// Put Other Application configuration here.
 
 	@Bean
