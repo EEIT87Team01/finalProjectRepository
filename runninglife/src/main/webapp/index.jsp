@@ -6,12 +6,15 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Home</title>
+<link rel="stylesheet" href="resources/css/bootstrap.min.css">
 </head>
 <body>
 
-<h3>Welcome ${user.custid}</h3>
 <h3><a href="<c:url value="/contest" />">賽事首頁</a></h3>
-<h3><a href="<c:url value="/email" />">Poduct</a></h3>
+<h3><a href="<c:url value="/email" />">註冊email</a></h3>
 
+<img  src="resources/01.jpg">
+<img  src="resources/02.jpg">
+<%-- <img  src="<c:url value="/resources/01.jpg" />"> --%>
 </body>
 </html>

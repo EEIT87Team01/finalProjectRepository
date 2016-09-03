@@ -9,17 +9,17 @@ import org.springframework.stereotype.Service;
 import _05hibernate.util.HibernateUtil;
 @Service
 public class RunnerDAOimpl implements RunnerDAO {
-	private static final String GET_ALL_STMT = "from RunnerVO order by runnerID";
+	private static final String GET_ALL_STMT = "from RunnerVO order by runnerID ";
 	@Override
 	public void insert(RunnerVO runnerVO) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		try {
 			session.beginTransaction();
-			session.saveOrUpdate(runnerVO);
+			session.save(runnerVO);
 			session.getTransaction().commit();
 		} catch (RuntimeException ex) {
 			session.getTransaction().rollback();
-			throw ex;
+			System.out.println("已經報名過了");
 		}
 	}
 

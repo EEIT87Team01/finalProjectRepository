@@ -1,16 +1,19 @@
 package _05service.email.config;
 
 import java.util.Properties;
+import java.util.concurrent.TimeUnit;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.CacheControl;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.ui.freemarker.FreeMarkerConfigurationFactoryBean;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
-import org.springframework.web.servlet.view.InternalResourceViewResolver;
+import org.springframework.web.servlet.resource.PathResourceResolver;
 
 @Configuration
 @ComponentScan(basePackages = "_05service.email")
@@ -54,5 +57,14 @@ public class AppConfig extends WebMvcConfigurerAdapter{
 //        resolver.setSuffix(".jsp");
 //        return resolver;
 //    }
-
+	@Override
+	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+	    registry
+	      .addResourceHandler("/resources/**")
+	      .addResourceLocations("/resources/","classpath:/images/","classpath:/","file:/run/")
+	      .setCachePeriod(3600)
+	      .resourceChain(true)
+	      .addResolver(new PathResourceResolver());
+	    
+	}
 }
