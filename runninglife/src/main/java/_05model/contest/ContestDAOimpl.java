@@ -51,7 +51,7 @@ public class ContestDAOimpl implements ContestDAO {
 			session.getTransaction().commit();
 		} catch (RuntimeException ex) {
 			session.getTransaction().rollback();
-			throw ex;
+//			throw ex;
 		}
 	}
 
@@ -94,11 +94,7 @@ public class ContestDAOimpl implements ContestDAO {
 	public static void main  (String []args) throws ParseException{
 		ContestDAOimpl dao = new ContestDAOimpl();
 		ContestVO contest = dao.findByPrimaryKey(1);
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日 E");
-		String begin = sdf.format(contest.getRegistrationBegin());
-		String end = sdf.format(contest.getRegistrationEnd());
-		System.out.println(begin);
-		System.out.println(sdf.parse(begin));
+		dao.delete(1);
 //		ContestVO contestVO = new ContestVO();
 //		contestVO.setContestName("hibernate3");
 //		contestVO.setPlace("干你屁事");

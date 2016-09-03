@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=BIG5"
-	pageEncoding="BIG5"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -7,35 +7,48 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=BIG5">
 <title>Insert title here</title>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-<link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
 <link rel="stylesheet"
-	href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+	href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css"
+	type="text/css">
 <link rel="stylesheet"
-	href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	href="/runninglife/resources/css/bootstrap.min.css" type="text/css">
 <link rel="stylesheet"
-	href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap.min.css">
-<link rel="stylesheet"
-	href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
-<link rel="stylesheet"
-	href="/runninglife/resources/css/bootstrap.min.css">
-<script src="/runninglife/resources/js/bootstrap.min.js"></script>
-<script
-	src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+	href="/runninglife/resources/css/jquery.countdown.css" type="text/css">
+
+
 </head>
-<body>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script src="/runninglife/resources/js/jquery.countdown.min.js"></script>
+<script src="/runninglife/resources/js/bootstrap.min.js"></script>
 
-	${contest.place} ${contest.startDate} ${contestName} ${begin}${end}
-	${contest.goal}${contest.organizer}${contest.coorganizer}
-	${contest.contestPhotoPath}
 
+<body class="smoothscroll enable-animation">
 
+	<%-- 	${contest.place} ${contest.startDate} ${contestName} ${begin}${end} --%>
+	<%-- 	${contest.goal}${contest.organizer}${contest.coorganizer} --%>
+	<%-- 	${contest.contestPhotoPath} --%>
+	<div id="timer">${timer}</div>
+	
+	<section id="slider">
+	<div>
+		<img class="img-responsive " src="/runninglife/resources/banner.jpg"
+			alt="banner">
+	</div>
+
+	</section>
+	<section class="page-header page-header-md">
+	<div class="container">
+		<h1>${contest.contestName }</h1>
+	</div>
+	</section>
+	<section>
 	<div class="container">
 		<div class="col-lg-9 col-md-9 col-sm-9 letter-spacing-1">
 			<div class="tab-content size-16">
 				<div class="heading-title heading-dotted text-center margin-top-20">
 					<h4>
-						�v�ɳW�{<span class="margin-left-8">COMPETITION RULES</span>
+						競賽規程<span class="margin-left-8">COMPETITION RULES</span>
 					</h4>
 				</div>
 				<div class="table-responsive">
@@ -43,80 +56,218 @@
 						class="table table-hover table-bordered lohas-table text-center">
 						<tbody>
 							<tr>
-								<td class="col-xs-2">���ʤ��</td>
+								<td class="col-xs-2">活動日期</td>
 								<td class="col-xs-10 text-left">${start}</td>
 							</tr>
 							<tr>
-								<td>���W�ɶ�</td>
-								<td class="text-left">${begin}�_��~${end}���B������</td>
-								<!-- <td class="text-left">2016 �~ 6 �� 17 �� 11:00 �_ �� 2016 �~ 7 �� 17 �� 23:59�� �B������</td> -->
+								<td>報名時間</td>
+								<td class="text-left">${begin}起至~${end}止額滿為止</td>
+								<!-- <td class="text-left">2016 年 6 月 17 日 11:00 起 至 2016 年 7 月 17 日 23:59止 額滿為止</td> -->
 							</tr>
 							<tr>
-								<td>���ʩv��</td>
-								<td class="text-left">�q�д���</td>
+								<td>活動宗旨</td>
+								<td class="text-left">敬請期待</td>
 							</tr>
 							<tr>
-								<td>�a��²��</td>
-								<td class="text-left">�����Ϧ������f�y�H�h�Ҷ}�o�A�]���º١u�s�s���v�A�����u�s�P���s�j����v���N�A�ӡu�����v�P�u�s�s�v���f�y�o���ᬰ�ۦ��A�i���ӥѩ�ԤH�J���A�[�W��[�f�~�A�Ӫu�Ρu�����v���W�C�M�D���G�Q�G�~�A�����m���A�u�{�H�Ӧ��c�~�A��O�E���u�{�H�E���C�O�W�����饻��A�饻�⦹�a�����u�����v�B�u���f�v�B�u�T���J�v���T�Ӱϰ�C�������u���������}�o���ߡv���١A���H�J�׭�B�F�աB�Z�����a�}���A���ݸg�ѥ��a�F�]���j�ݫܦh�A�o�Ǥ�Ƹ겣�w���������֦��o�i�[���Ʒ~��O�C����E�~�T�ϲΤ@�אּ�u�����ܡv�A���ݻO���{�׭�p�����ܡC�O�W���_��l�]�u�����m�v�A����E�Q�E�~�Q�G��G�Q����אּ�����ϡC</td>
+								<td>地區簡介</td>
+								<td class="text-left">神岡區早期為粵籍人士所開發，因此舊稱「新廣莊」，似有「新闢的廣大平原」之意，而「神岡」與「新廣」的粵語發音頗為相似，可能後來由於閩人入墾，加上日久口誤，而沿用「神岡」之名。清道光二十二年，神岡置莊，泉州人來此構居，於是遂成泉州人聚落。臺灣割讓日本後，日本把此地分為「神岡」、「社口」、「三角仔」等三個區域。神岡有「早期中部開發中心」之稱，先人入豐原、東勢、后里等地開墾，都需經由本地；因此古蹟很多，這些文化資產已成為神岡擁有發展觀光事業潛力。民國九年三區統一改為「神岡庄」，隸屬臺中州豐原郡神岡庄。臺灣光復後始設「神岡鄉」，民國九十九年十二月二十五日改為神岡區。</td>
 							</tr>
 							<tr>
-								<td>�D����</td>
+								<td>主辦單位</td>
 								<td class="text-left">${contest.organizer}</td>
 							</tr>
 							<tr>
-								<td>�����</td>
+								<td>協辦單位</td>
 								<td class="text-left">${contest.coorganizer}</td>
 							</tr>
 							<tr>
-								<td>�|���a�I</td>
+								<td>會場地點</td>
 								<td class="text-left">${contest.place}</td>
 							</tr>
 							<tr>
-								<td>���W���</td>
-								<td class="text-left">����17���A���ѥ[���{���ԪQ�ջP�b�{���ԪQ�դ��ɤ����A��ú��<a
-									href="assets/�a���P�N��.doc" class="label label-success">�a���P�N��</a>�øg�j�|�֥i���o���W�A�_�h�������z�C�P�N��ñ�W���Email�ܡG���٦t
-									�`�F��<a class="text-info"
+								<td>報名資格</td>
+								<td class="text-left">未滿17歲，欲參加全程馬拉松組與半程馬拉松組比賽之選手，須繳交<a
+									href="assets/家長同意書.doc" class="label label-success">家長同意書</a>並經大會核可後方得報名，否則不予受理。同意書簽名後請Email至：陳撼宇
+									總幹事<a class="text-info"
 									href="mailto:cck0936392333@yahoo.com.tw" target="_blank">cck0936392333@yahoo.com.tw</a>
 								</td>
 							</tr>
 						</tbody>
 					</table>
 				</div>
+				<!-- 競賽項目 -->
 				<div
 					class="heading-title heading-border heading-color margin-top-40">
 					<h4>
-						<span>�v�ɤ���</span>�A���{���ԪQ�աB�b�{���ԪQ��
+						<span>競賽項目</span>
 					</h4>
-					<p>�̩ʧO�Φ~�֦@����12�աA�Ԧp�U��</p>
 				</div>
 				<div class="table-responsive">
-					<table 
+					<table
 						class="table table-hover table-bordered lohas-table text-center">
 						<thead>
 							<tr>
-								<th class="col-xs-2">�էO</th>
-								<th class="col-xs-4">�~�ֽd��</th>
+								<th class="col-xs-2">項目名稱</th>
+								<th class="col-xs-2">報名金額</th>
+								<th class="col-xs-2">晶片押金</th>
+								<th class="col-xs-2">開放名額</th>
+								<th class="col-xs-2">起跑時間</th>
+								<th class="col-xs-2">限制時間</th>
+							</tr>
+						</thead>
+						<tbody>
+							<c:forEach var="event" items="${events}">
+								<tr>
+									<td>${event.eventName}</td>
+									<td>${event.fee}</td>
+									<td>100</td>
+									<td>$${event.quota}</td>
+									<td>${event.whenToRun}</td>
+									<td>${event.limitTime }</td>
+								</tr>
+							</c:forEach>
+						</tbody>
+					</table>
+				</div>
+				<!--競賽分組-->
+				<div
+					class="heading-title heading-border heading-color margin-top-40">
+					<h4>
+						<span>競賽分組</span>／全程馬拉松組、半程馬拉松組
+					</h4>
+					<p>依性別及年齡共分為10組，詳如下表</p>
+				</div>
+				<div class="table-responsive">
+					<table
+						class="table table-hover table-bordered lohas-table text-center ">
+						<thead>
+							<tr>
+								<th class="col-xs-2">組別</th>
+								<th class="col-xs-4">年齡範圍</th>
+								<th style="display: none">年齡範圍</th>
 							</tr>
 						</thead>
 						<tbody>
 							<c:forEach var='team' items='${teams}'>
 								<tr>
 									<td>${team.teamName}</td>
-									<td>${team.ageRange}~${team.ageRange + 10}</td>
+									<td>${team.ageRange}~${team.ageRange + 9}</td>
 								</tr>
 							</c:forEach>
 						</tbody>
 					</table>
 				</div>
+				<!--退費說明 -->
+				<div
+					class="heading-title heading-border heading-color margin-top-40">
+					<h4>
+						<span>退費說明</span>
+					</h4>
+				</div>
+				<ol>
+					<li>開報後14天內(報名費全額退費，另酌收100元手續費)。</li>
+					<li>開報後14至28天(退還報名費50%，另酌收100元手續費)。</li>
+					<li>開報28天後無法取消名額與退費。</li>
+				</ol>
+				<!-- 注意事項 -->
+				<div
+					class="heading-title heading-border heading-color margin-top-40">
+					<h4>
+						<span>注意事項</span>
+					</h4>
+				</div>
+				<ol>
+					<li>進入終點前裁判會檢視信物，請選手配合。</li>
+					<li>成績證明：完跑立即發給，請務必現場領取，如未領取恕不補寄。（若遇大風大雨、停電、當機、網路斷線等意外，完賽證書改由完賽一週後，於大會網路下載自行列印。）成績於賽後一週內公佈於網站。</li>
+					<li>競賽途中選手不得搭乘車輛或由他人代跑；參賽選手於時間內無法跑完全程者，請遵照裁判人員指示，搭乘巡迴車輛返回終點。</li>
+					<li>選手出發及到達終點均應進入感應區，方能記錄時間；沿途競賽靠右側進行，並注意安全，沿線遵從裁判或巡迴裁判指示。</li>
+					<li>大會有權將此項比賽之錄影、相片及成績，於世界各地播放、展出、登錄於本會網站與本會刊物上暨參賽者，必須同意肖像與成績，用於相關比賽之宣傳與播放活動上。</li>
+					<li>安全第一，大會裁判或醫師有權視選手體能狀況，中止選手繼續比賽資格，選手不得有異議。</li>
+					<li>比賽前如遇颱風或其他不可抗力之天災，由大會以選手安全為考量，有權決定是否取消或擇期比賽或改用其他替代路線，參賽選手不得有議；若因故取消活動，大會將扣除已經產生之費用及匯款手續費後退費給選手。</li>
+					<li>請隨身攜帶身分證明(身分證)備查。</li>
+					<li>賽後歸還晶片退100元晶片押金。</li>
+					<li>代跑或轉讓者，如有意外發生應負連帶保險理賠及法律責任。</li>
+				</ol>
+				<!-- 違規罰則 -->
+				<div
+					class="heading-title heading-border heading-color margin-top-40">
+					<h4>
+						<span>違規罰則</span>
+					</h4>
+				</div>
+				<ol>
+					<li>違反下列規定者，取消比賽成績處理之。</li>
+					<ul>
+						<li>無本次活動號碼者。</li>
+						<li>不遵守競賽規則及裁判指揮，經判定者失格者。</li>
+						<li>未將號碼布完整佩掛在胸前者。</li>
+						<li>未將晶片掛在鞋面者。</li>
+					</ul>
+					<li>有下列情形之一者，取消比賽成績並禁止參加本會舉辦之活動一年。</li>
+					<ul>
+						<li>比賽進行中選手借助他人之幫助而獲利者(如補給、扶持…)。</li>
+						<li>報名組別與身分證明資格不符者。</li>
+						<li>違反運動精神和道德(如打架、辱罵裁判等)。</li>
+						<li>私自塗改、更換號碼布或與參賽資料不符者。</li>
+					</ul>
+				</ol>
+				<!--大會免責說明  -->
+				<div
+					class="heading-title heading-border heading-color margin-top-40">
+					<h4>
+						<span>大會免責說明</span>
+					</h4>
+				</div>
+				<ol>
+					<li>參加者因任何原因受傷、財物損失或死亡皆不得向指導單位、主辦單位、協辦單位及執行單位要求任何形式之賠償。</li>
+					<li>參加者一旦報名，視同同意本規程所有規定。</li>
+					<li>本規程如有未盡事宜，得由大會修正並公佈(請隨時注意大會網站資訊)。</li>
+				</ol>
 			</div>
-		</div>
-		
-		
-<script>$(document).ready(function() {
-    $('#example').DataTable();
-} );
-</script>
 
+		</div>
+		<div class="col-lg-3 col-md-3 col-sm-3" id="activity-sidebar">
+			<div id="countdown" class="countdownHolder breadcrumb size-10"></div>
+			<!-- 			<div id="note"></div> -->
+			<a href="#"
+				class="btn btn-featured btn-green btn-inverse margin-bottom-30 size-25">
+				<span>立即報名</span> <i class="fa fa-pencil-square-o"></i>
+			</a>
+
+			<div
+				class="box-flip box-color box-icon box-icon-center box-icon-round box-icon-large text-center margin-bottom-40"
+				style="min-height: 451px;">
+				<div class="box1"
+					style="min-height: 451px; background-color: rgb(115, 185, 220);">
+					<div class="box-icon-title">
+						<i class="fa fa-pencil-square-o"></i>
+					</div>
+					<div class="row margin-bottom-0">
+						<p class="size-18">
+							賽事問題請洽<br>神豐國際同濟會
+						</p>
+						<hr>
+						<p class="size-18">報名問題請洽樂活資訊</p>
+						<p class="size-14">
+							<i class="fa fa-phone margin-right-10"></i>05-5336010 <br>聯絡時間：週一至週五
+							<br>(08:30~12:00、13:30~17:00)
+						</p>
+						<p class="size-14">
+							<i class="fa fa-envelope margin-right-10"></i>lohasnet.tw@gmail.com
+						</p>
+					</div>
+					<hr>
+					<a href="#" class="btn btn-lg btn-default btn-bordered"> <span>立即報名</span>
+					</a>
+				</div>
+			</div>
+
+		</div>
 	</div>
+	</section>
 </body>
+
+<script src="/runninglife/resources/js/time.js"></script>
+<script src="/runninglife/resources/js/jquery.countdown.js"></script>
+
 </html>

@@ -5,6 +5,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 import java.sql.Timestamp;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -48,10 +49,10 @@ public class ContestVO {
 //		this.events = events;
 //	}
 	//一對多
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "contestID")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "contestID",cascade=CascadeType.ALL)
 	private Set<EventVO> events ;
 	
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "contestID")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "contestID",cascade=CascadeType.ALL)
 	private Set<TeamVO> Teams ;
 	
 	public Set<EventVO> getEvents() {
