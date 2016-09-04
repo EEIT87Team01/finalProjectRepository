@@ -60,7 +60,7 @@ public class Photo {
 //			}
 //		}
 	}
-	public void writeToDisk(Object photo){
+	public String writeToDisk(Object photo){
 		try {
 			// 將檔案透過imageio轉成byte
 			ImageInputStream iis = ImageIO.createImageInputStream(photo);
@@ -98,10 +98,12 @@ public class Photo {
 			bufferedImage = ImageIO.read(bis);
 			bis.close();
 			ImageIO.write(bufferedImage, "jpg", new File(path+"/"+pictureName));
+			return pictureName;
 		} catch (IOException e) {
 			e.printStackTrace();
-			
 		}
+		return "fail";
+		
 	}
 	public String readFromDisk(String photoPath){
 

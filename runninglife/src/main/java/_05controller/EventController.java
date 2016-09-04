@@ -1,5 +1,6 @@
 package _05controller;
 
+import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -11,10 +12,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import _05model.clothes.ClothesDAOimpl;
@@ -43,6 +48,8 @@ public class EventController {
 	private ClothesDAOimpl clothesDAO;
 	@Autowired
 	private MailService mailService;
+	@Autowired
+	private ContestFormValidator contestFormValidator;
 
 	// show all contest
 	@RequestMapping("contest")
@@ -53,7 +60,7 @@ public class EventController {
 	}
 
 	// show contest
-	@RequestMapping("contest/{contestID}")
+	@RequestMapping(value="/contest/{contestID}", method = RequestMethod.GET)
 	public String showContest(@PathVariable int contestID, Model model) {
 		List<TeamVO> teams = teamDAO.getTeamById(contestID);
 		List<EventVO> events = eventDAO.getEventById(contestID);
@@ -86,29 +93,34 @@ public class EventController {
 	@RequestMapping(value = "/contest/add", method = RequestMethod.GET)
 	public String showAddContestForm(Model model) {
 		return null;
-
 	}
 
 	// show updateform
-	@RequestMapping(value = "/contest/{id}/update", method = RequestMethod.GET)
+	@RequestMapping(value = "/contest/{id}/edit", method = RequestMethod.GET)
 	public String showUpdateContestForm(@PathVariable("id") int id, Model model) {
+		ContestVO contest = contestDAO.findByPrimaryKey(id);
+		model.addAttribute("contest", contest);
+		return "contestform";
+	}
 
-		return "detail";
-
+	// 錯誤訊息
+	@InitBinder("contest")
+	protected void initBinder(WebDataBinder binder) {
+		binder.setValidator(contestFormValidator);
 	}
 
 	/// save or update contest
-	@RequestMapping(value = "contest", method = RequestMethod.POST)
-	public String saveOrUpdateUser(@ModelAttribute("userForm") @Validated ContestVO contest, BindingResult result,
+	@RequestMapping(value = "/contest/{contestID}", method = RequestMethod.POST)
+	public String saveOrUpdateUser(@ModelAttribute("contest") @Validated ContestVO contestVO, BindingResult result,
 			Model model, final RedirectAttributes redirectAttributes) {
 		if (result.hasErrors()) {
-			// populateDefaultModel(model);
+			model.addAttribute("contest", contestVO);
 			return "contestform";
 		} else {
 
 			// Add message to flash scope
 			redirectAttributes.addFlashAttribute("css", "success");
-			if ((Integer) contest.getContestID() == null) {
+			if ((Integer) contestVO.getContestID() == null) {
 				redirectAttributes.addFlashAttribute("msg", "User added successfully!");
 			} else {
 				redirectAttributes.addFlashAttribute("msg", "User updated successfully!");
@@ -117,23 +129,49 @@ public class EventController {
 			// userService.saveOrUpdate(user);
 
 			// POST/REDIRECT/GET
-			return "redirect:/contest" + contest.getContestID();
+			return "redirect:/contest/" + contestVO.getContestID();
 			// POST/FORWARD/GET
 			// return "user/list";
-
 		}
 
 	}
 
 	// delete contest
-	@RequestMapping(value = "contest/{id}/delete")
-	public String deleteUser(@PathVariable("id") int id, final RedirectAttributes redirectAttributes,HttpServletRequest request) {
-		MemberVO memeber =(MemberVO) request.getSession().getAttribute("member");
-//		if(memeber!=null){
+	@RequestMapping(value = "contest/{id}/delete", method = RequestMethod.POST)
+	public String deleteUser(@PathVariable("id") int id, final RedirectAttributes redirectAttributes,
+			HttpServletRequest request) {
+		MemberVO memeber = (MemberVO) request.getSession().getAttribute("member");
+		// if(memeber!=null){
 		contestDAO.delete(id);
 		redirectAttributes.addFlashAttribute("msg", "User is deleted!");
-//		}
-		
+		// }
+
+		return "redirect:/contest";
+	}
+
+	private String saveDirectory = "c:/run/upload/";
+	
+	@RequestMapping(value ="contest/{id}/upload",method = RequestMethod.POST)
+	public String ContestPhotoUpload(@RequestParam CommonsMultipartFile[] fileUpload,@PathVariable("id") int id)
+			throws Exception {
+
+
+		if (fileUpload != null && fileUpload.length > 0) {
+			for (CommonsMultipartFile aFile : fileUpload) {
+
+				System.out.println("Saving file: " + aFile.getOriginalFilename());
+
+				if (!aFile.getOriginalFilename().equals("")) {
+//					aFile.transferTo(new File(saveDirectory + aFile.getOriginalFilename()));
+					File photo =new File(saveDirectory+id+".jpg");
+					if(!photo.exists()){photo.mkdirs();}
+					aFile.transferTo(photo);
+					ContestVO contest= contestDAO.findByPrimaryKey(id);
+					contest.setContestPhotoPath(id+".jpg");
+					contestDAO.update(contest);
+				}
+			}
+		}
 		return "redirect:/contest";
 	}
 

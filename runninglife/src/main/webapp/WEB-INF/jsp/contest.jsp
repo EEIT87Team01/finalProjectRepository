@@ -13,15 +13,16 @@
 	href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
 <link rel="stylesheet"
 	href="https://fonts.googleapis.com/icon?family=Material+Icons">
-<link rel="stylesheet" href="/runninglife/resources/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="/runninglife/resources/css/bootstrap.min.css">
 
 
 </head>
 <body>
-	<h2>${events}</h2>
 
 
-
+	<div id="auth" class="">admin</div>
+	<!-- 	<div id="auth" class="">${member.auth}</div> -->
 	<c:url var="saveUrl" value="/event//${contest.contestID}" />
 
 	<%-- 				<td><a href="<c:url  value="/contest/${contest.contestID}" />">${contest.contestName}</a></td> --%>
@@ -38,7 +39,7 @@
 				<div class="col-lg-2 col-md-2 col-sm-3 col-xs-3 nopadding-right">
 					<a href="contest/${contest.contestID}" target="_blank"><img
 						class="img-responsive thumbnail"
-						src="/runninglife/resources/${contest.contestID}.jpg"></a>
+						src="/runninglife/resources/${contest.contestPhotoPath}"></a>
 				</div>
 				<div class="col-lg-10 col-md-10 col-sm-9 col-xs-9 margin-bottom-0">
 					<div class="size-17 contest${contest.contestID} ">
@@ -71,12 +72,80 @@
 				</div>
 			</div>
 			<div class="col-lg-3 col-md-3 col-sm-3">
-				<a href="/runninglife/contest/${contest.contestID}/delete" class="btn btn-info" role="button">刪除</a>
+				<a href="/runninglife/contest/${contest.contestID}/edit"
+					class="btn btn-info edit" role="button"">編輯</a>
 			</div>
-		</c:forEach>
+			<div class="col-lg-3 col-md-3 col-sm-3">
+				<a href="/runninglife/contest/${contest.contestID}/delete"
+					class="btn btn-danger  delete" role="button" data-text="真的要刪除此賽事嗎?"
+					data-confirm-button="是的" data-cancel-button="不了"data-confirm-button-class: "btn-danger">刪除</a>
+			</div>
+			<div class="col-lg-3 col-md-3 col-sm-3">
+				<form method="post" action="/runninglife/contest/${contest.contestID}/upload"
+					enctype="multipart/form-data">
+					<table border="0">
+						<tr>
+							<td><input type="file" name="fileUpload" size="50" /></td>
+						</tr>
+<!-- 						<tr> -->
+<!-- 							<td>Pick file #2:</td> -->
+<!-- 							<td><input type="file" name="fileUpload" size="50" /></td> -->
+<!-- 						</tr> -->
+						<tr>
+							<td colspan="2" align="center"><input type="submit"
+								value="Upload" /></td>
+						</tr>
+					</table>
+				</form>
+			</div>
 
+		</c:forEach>
 	</div>
 	</section>
 	<script></script>
 </body>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script src="/runninglife/resources/js/jquery.confirm.min.js"></script>
+<script src="/runninglife/resources/js/bootstrap.min.js"></script>
+<script>
+	$(document).ready(auth());
+	function auth() {
+		if ($('#auth').text() == 1) {
+			$("#auth").addClass("hidden");
+			console.log(2);
+		}
+	}
+	//隱藏刪除編輯按鈕	
+	$(function() {
+		if ($('#auth').text() != "admin") {
+			$('.delete').addClass("hidden");
+			$('.edit').addClass("hidden");
+		}
+	});
+	//刪除確認視窗
+	$(".delete").confirm({
+		post : true,
+		confirmButtonClass : "btn-danger btn-sm",
+		cancelButtonClass : "btn-default btn-sm",
+		dialogClass : "modal-dialog modal-sm" // Bootstrap classes for large modal
+	});
+	//$('selector').confirm()
+	// $(".delete").confirm({
+	//     text: "Are you sure you want to delete that comment?",
+	//     title: "Confirmation required",
+	//     confirm: function(button) {
+	//         delete();
+	//     },
+	//     cancel: function(button) {
+	//         // nothing to do
+	//     },
+	//     confirmButton: "Yes I am",
+	//     cancelButton: "No",
+	//     post: true,
+	//     confirmButtonClass: "btn-danger",
+	//     cancelButtonClass: "btn-default",
+	//     dialogClass: "modal-dialog modal-lg" // Bootstrap classes for large modal
+	// });
+</script>
 </html>
