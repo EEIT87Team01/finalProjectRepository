@@ -5,7 +5,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=BIG5">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet"
 	href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css"
@@ -26,11 +26,8 @@
 
 <body class="smoothscroll enable-animation">
 
-	<%-- 	${contest.place} ${contest.startDate} ${contestName} ${begin}${end} --%>
-	<%-- 	${contest.goal}${contest.organizer}${contest.coorganizer} --%>
-	<%-- 	${contest.contestPhotoPath} --%>
-	<div id="contestID">${contest.contestID}</div>
-
+	<div id="contestID" class="hidden">${contest.contestID}</div>
+	<div id="timer" class="hidden">${timer}</div>
 	<section id="slider">
 	<div>
 		<img class="img-responsive "
@@ -301,23 +298,18 @@
 		</div>
 		<div class="col-lg-3 col-md-3 col-sm-3" id="activity-sidebar">
 			<div id="countdown" class="countdownHolder breadcrumb size-10"></div>
-			<!-- 			<div id="note"></div> -->
-			<a href="#"
-				class="btn btn-featured btn-green btn-inverse margin-bottom-30 size-25">
-				<span>立即報名</span> <i class="fa fa-pencil-square-o"></i>
-			</a>
-
+			<!-- 籃圈 -->
 			<div
-				class="box-flip box-color box-icon box-icon-center box-icon-round box-icon-large text-center margin-bottom-40"
-				style="min-height: 451px;">
-				<div class="box1"
-					style="min-height: 451px; background-color: rgb(115, 185, 220);">
+				class="panel-group text-center margin-bottom-40"
+				style="min-height: 351px;">
+				<div class="panel panel-primary"
+					style="min-height:351px; background-color: rgb(115, 185, 220);">
 					<div class="box-icon-title">
 						<i class="fa fa-pencil-square-o"></i>
 					</div>
-					<div class="row margin-bottom-0">
+					<div class="row margin-bottom-0 panel-body">
 						<p class="size-18">
-							賽事問題請洽<br>神豐國際同濟會
+							賽事問題請洽<br>${contest.organizer}
 						</p>
 						<p class="size-18">報名問題請洽樂活資訊</p>
 						<p class="size-14">
@@ -328,9 +320,11 @@
 							<i class="fa fa-envelope margin-right-10"></i>lohasnet.tw@gmail.com
 						</p>
 					</div>
+					<div class="panel-footer">
 					<a id="applyLink" class="btn btn-lg btn-default btn-bordered">
 						<span>立即報名</span>
 					</a>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -340,7 +334,7 @@
 		<!-- 彈出報名 -->
 		<div id="popupContact">
 			<!-- 報名表單 -->
-			<form action="/runninglife/apply?id=${contest.contestID}" id="form" method="get" name="runner">
+			<form action="/runninglife/apply" id="runnerForm" method="post" name="runner">
 				<img id="close" src="/runninglife/resources/images/Close-2-icon.png"
 					onclick="div_hide()">
 				<h2>${contest.contestName}</h2>
@@ -374,7 +368,6 @@
 		</div>
 		<!-- Popup Div Ends Here -->
 	</div>
-	<h1>Click Button To Popup Form Using Javascript</h1>
 	<button id="popup" onclick="div_show()">Popup</button>
 </body>
 
@@ -553,21 +546,11 @@
 								+ '/delete"class="btn btn-danger  delete" role="button"data-text="真的要刪除此項目嗎?" data-confirm-button="是的"data-cancel-button="不了"data-confirm-button-class: "btn-danger">刪除</a></td></tr>');
 
 	}
+	
 	$("#applyLink").on("click", function() {
 		document.getElementById('applyForm').style.display = "block";
 	})
 
-	// Validating Empty Field
-	function check_empty() {
-		if (document.getElementById('name').value == ""
-				|| document.getElementById('email').value == ""
-				|| document.getElementById('msg').value == "") {
-			alert("Fill All Fields !");
-		} else {
-			document.getElementById('form').submit();
-			alert("Form Submitted Successfully...");
-		}
-	}
 	//Function To Display Popup
 	function div_show() {
 		document.getElementById('applyForm').style.display = "block";

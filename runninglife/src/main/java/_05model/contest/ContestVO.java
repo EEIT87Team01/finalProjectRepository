@@ -1,7 +1,8 @@
 package _05model.contest;
 
-import java.sql.Date;
 import static javax.persistence.GenerationType.IDENTITY;
+
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.Set;
 
@@ -15,6 +16,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import _05model.event.EventVO;
+import _05model.runner.RunnerVO;
 import _05model.team.TeamVO;
 @Entity
 @Table(name="contest")
@@ -41,19 +43,15 @@ public class ContestVO {
 	@Column
 	private String contestPhotoPath;
 	//一對多
-//	private Set<EventVO> events ;
-//	public Set<EventVO> getEvents() {
-//		return events;
-//	}
-//	public void setEvents(Set<EventVO> events) {
-//		this.events = events;
-//	}
-	//一對多
+	//偷吃
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "contestID",cascade=CascadeType.ALL)
 	private Set<EventVO> events ;
-	
+	//偷吃
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "contestID",cascade=CascadeType.ALL)
 	private Set<TeamVO> Teams ;
+	
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "contest",cascade=CascadeType.ALL)
+	private Set<RunnerVO> runners ;
 	
 	public Set<EventVO> getEvents() {
 		return events;
@@ -66,6 +64,12 @@ public class ContestVO {
 	}
 	public void setTeams(Set<TeamVO> teams) {
 		Teams = teams;
+	}
+	public Set<RunnerVO> getRunners() {
+		return runners;
+	}
+	public void setRunners(Set<RunnerVO> runners) {
+		this.runners = runners;
 	}
 	public int getContestID() {
 		return contestID;

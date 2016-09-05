@@ -16,8 +16,10 @@
 	<mvc:annotation-driven />
 	
 	<context:annotation-config />
-	<context:component-scan base-package="_05controller" />
-	<context:component-scan base-package="_05model" />
+<!-- 	<context:component-scan base-package="_05controller" /> -->
+<!-- 	<context:component-scan base-package="_05model" /> -->
+<!-- 	<context:component-scan base-package="_05service" /> -->
+<!-- 	<context:component-scan base-package="_05validator" /> -->
 
 	<bean id="viewResolver"
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver"

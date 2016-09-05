@@ -5,13 +5,14 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
+import _05model.contest.ContestVO;
+
 @Embeddable
 public class RunnerPK implements Serializable{
     @Column(name = "memberID")
     private String memberID;
     @Column(name = "contestID")
     private int contestID;
-    
 	public String getMemberID() {
 		return memberID;
 	}

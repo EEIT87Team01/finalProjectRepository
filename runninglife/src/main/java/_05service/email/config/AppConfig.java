@@ -16,8 +16,10 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import org.springframework.web.servlet.resource.PathResourceResolver;
 
 @Configuration
-@ComponentScan(basePackages = "_05service.email")
+@ComponentScan(basePackages = "_05service")
 @ComponentScan(basePackages = "_05validator")
+@ComponentScan(basePackages = "_05controller")
+@ComponentScan(basePackages = "_05model")
 @EnableWebMvc 
 public class AppConfig extends WebMvcConfigurerAdapter{
 	
@@ -48,7 +50,7 @@ public class AppConfig extends WebMvcConfigurerAdapter{
 	@Bean
 	public FreeMarkerConfigurationFactoryBean getFreeMarkerConfiguration() {
 		FreeMarkerConfigurationFactoryBean bean = new FreeMarkerConfigurationFactoryBean();
-		bean.setTemplateLoaderPath("/template/");
+		bean.setTemplateLoaderPath("/WEB-INF/classes/template/");
 		return bean;
 	}
 //    @Bean
@@ -63,7 +65,7 @@ public class AppConfig extends WebMvcConfigurerAdapter{
 	    registry
 	      .addResourceHandler("/resources/**")
 	      .addResourceLocations("/resources/","classpath:/images/","classpath:/","file:/run/")
-	      .setCachePeriod(3600)
+	      .setCachePeriod(0)
 	      .resourceChain(true)
 	      .addResolver(new PathResourceResolver());
 	    

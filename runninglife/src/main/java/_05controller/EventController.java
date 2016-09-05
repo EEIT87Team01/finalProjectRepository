@@ -2,6 +2,7 @@ package _05controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -38,6 +40,7 @@ import _05model.runner.RunnerDAOimpl;
 import _05model.runner.RunnerVO;
 import _05model.team.TeamDAOimpl;
 import _05model.team.TeamVO;
+import _05service.ContestService;
 import _05service.email.MailService;
 import _05validator.EventValidator;
 import _05validator.FileValidator;
@@ -64,59 +67,57 @@ public class EventController {
 	private FileValidator fileValidator;
 	@Autowired
 	private EventValidator eventValidator;
+	@Autowired
+	private ContestService contestService;
 
 	// show all contests
-	@RequestMapping(value="contest",method = RequestMethod.GET)
+	@RequestMapping(value = "contest", method = RequestMethod.GET)
 	public String showAllContests(Model model) {
 		List<ContestVO> contests = contestDAO.getAll();
 		model.addAttribute("contests", contests);
 		return "contest";
 	}
+
 	// show contest
 	@RequestMapping(value = "/contest/{contestID}", method = RequestMethod.GET)
 	public String showContest(@PathVariable int contestID, Model model) {
 		List<TeamVO> teams = teamDAO.getTeamById(contestID);
 		List<EventVO> events = eventDAO.getEventById(contestID);
 		ContestVO contest = contestDAO.findByPrimaryKey(contestID);
-		List<ClothesVO> clothes =clothesDAO.getAll();
+		List<ClothesVO> clothes = clothesDAO.getAll();
 		// 修正時間
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd hh:mm");
 		String begin = sdf.format(contest.getRegistrationBegin());
 		String end = sdf.format(contest.getRegistrationEnd());
 		SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy年MM月dd日 (E)");
 		String start = sdf2.format(contest.getStartDate());
-		java.util.Date millseconds = null;
-		try {
-			millseconds = sdf.parse(end);
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
 		EventVO event = new EventVO();
-		model.addAttribute("event",event);
+		long timer = contest.getStartDate().getTime();
+		model.addAttribute("timer",timer);
+		model.addAttribute("event", event);
 		model.addAttribute("start", start);
 		model.addAttribute("begin", begin);
 		model.addAttribute("end", end);
 		model.addAttribute("events", events);
 		model.addAttribute("teams", teams);
 		model.addAttribute("contest", contest);
-		model.addAttribute("clothes",clothes);
+		model.addAttribute("clothes", clothes);
 		return "detail";
 	}
 
-	// show add contest form
-	@RequestMapping(value = "/contest/add", method = RequestMethod.GET)
-	public String showAddContestForm(Model model) {
+
+	// show contest form
+	@RequestMapping(value = "/contest/edit", method = RequestMethod.GET)
+	public String showUpdateContestForm(Model model, HttpServletRequest req) {
 		ContestVO contest = new ContestVO();
+		try {
+			Integer id = Integer.valueOf(req.getParameter("id"));
+			System.out.println("修改賽事:"+id);
+			contest = contestDAO.findByPrimaryKey(id);
+		} catch (Exception e) {
+			System.out.println("新增賽事");
+		}
 		model.addAttribute("contest", contest);
-		model.addAttribute("action", new Integer(1));
-		return "contestform";
-	}
-	// show update contest form
-	@RequestMapping(value = "/contest/{id}/edit", method = RequestMethod.GET)
-	public String showUpdateContestForm(@PathVariable("id") int id, Model model) {
-		ContestVO contest = contestDAO.findByPrimaryKey(id);
-		model.addAttribute("contest", contest);
-		model.addAttribute("action", new Integer(2));
 		return "contestform";
 	}
 
@@ -133,100 +134,21 @@ public class EventController {
 
 	private String path = "c:/run/";
 
-	/// add contest
-	@RequestMapping(value = "/contest/add", method = RequestMethod.POST)
-	public String SaveUser(@ModelAttribute("contest") @Validated ContestVO contestVO, BindingResult result, Model model,
+	/// add.update contest
+	@RequestMapping(value = "/contest/edit", method = RequestMethod.POST)
+	public String SaveUser(@ModelAttribute("contest") @Validated ContestVO contest, BindingResult result, Model model,
 			final RedirectAttributes redirectAttributes, @RequestParam @Validated CommonsMultipartFile[] fileUpload) {
 		if (result.hasErrors()) {
 			return "contestform";
 		} else {
 			// 新增表單
-			
-			contestDAO.insert(contestVO);
-			// 上傳圖片
-			if (fileUpload != null && fileUpload.length > 0) {
-
-				if (fileUpload[0].getSize() > 0) {
-					System.out.println("Saving file: " + path + contestVO.getContestID() + fileUpload[0]
-							.getOriginalFilename().substring(fileUpload[0].getOriginalFilename().indexOf(".")));
-
-					try {
-						fileUpload[0].transferTo(new File(path + contestVO.getContestID() + fileUpload[0]
-								.getOriginalFilename().substring(fileUpload[0].getOriginalFilename().indexOf("."))));
-						contestVO.setContestPhotoPath(contestVO.getContestID() + fileUpload[0].getOriginalFilename()
-								.substring(fileUpload[0].getOriginalFilename().indexOf(".")));
-						contestVO.setContestPhotoPath(contestVO.getContestID() + fileUpload[0].getOriginalFilename()
-								.substring(fileUpload[0].getOriginalFilename().indexOf(".")));
-						contestDAO.update(contestVO);
-					} catch (IllegalStateException e) {
-						e.printStackTrace();
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-				}
-				if (fileUpload[1].getSize() > 0) {
-					System.out.println("Saving file: " + path + contestVO.getContestID() + "banner" + fileUpload[1]
-							.getOriginalFilename().substring(fileUpload[1].getOriginalFilename().indexOf(".")));
-					try {
-						fileUpload[1].transferTo(new File(path + contestVO.getContestID() + "banner" + fileUpload[1]
-								.getOriginalFilename().substring(fileUpload[1].getOriginalFilename().indexOf("."))));
-					} catch (IllegalStateException e) {
-						e.printStackTrace();
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-				}
-			}
+			contestService.createContest(contest);
+			contestService.photo(fileUpload, contest);
 
 			// Add message to flash scope
 			redirectAttributes.addFlashAttribute("css", "success");
 			// POST/REDIRECT/GET
-			return "redirect:/contest/" + contestVO.getContestID();
-			// POST/FORWARD/GET
-			// return "user/list";
-		}
-	}
-
-	/// update contest
-	@RequestMapping(value = "/contest/{contestID}", method = RequestMethod.POST)
-	public String UpdateUser(@ModelAttribute("contest") @Validated ContestVO contestVO, BindingResult result,
-			Model model, final RedirectAttributes redirectAttributes,
-			@RequestParam @Validated CommonsMultipartFile[] fileUpload) {
-		if (result.hasErrors()) {
-			return "contestform";
-		} else {
-			// 更新表單
-			contestDAO.update(contestVO);
-			// 上傳圖片
-			if (fileUpload != null && fileUpload.length > 0) {
-
-				for (CommonsMultipartFile aFile : fileUpload) {
-					if (aFile.getSize() > 0) {
-						System.out.println("有檔案");
-						System.out.println("Saving file: " + path + contestVO.getContestID()
-								+ aFile.getOriginalFilename().substring(aFile.getOriginalFilename().indexOf(".")));
-
-						try {
-							aFile.transferTo(new File(path + contestVO.getContestID()
-									+ aFile.getOriginalFilename().substring(aFile.getOriginalFilename().indexOf("."))));
-							System.out.println("上傳圖片成功");
-							contestVO.setContestPhotoPath(contestVO.getContestID()
-									+ aFile.getOriginalFilename().substring(aFile.getOriginalFilename().indexOf(".")));
-						} catch (IllegalStateException e) {
-							e.printStackTrace();
-						} catch (IOException e) {
-							e.printStackTrace();
-						}
-					}
-				}
-			}
-
-			// Add message to flash scope
-			redirectAttributes.addFlashAttribute("css", "success");
-			// POST/REDIRECT/GET
-			return "redirect:/contest/" + contestVO.getContestID();
-			// POST/FORWARD/GET
-			// return "user/list";
+			return "redirect:/contest/" + contest.getContestID();
 		}
 	}
 
@@ -242,50 +164,57 @@ public class EventController {
 
 		return "redirect:/contest";
 	}
+
 	@InitBinder("eventVO")
 	protected void initBinderEvent(WebDataBinder binder) {
 		binder.setValidator(eventValidator);
 	}
-	
-	
+
 	// add event
-	@RequestMapping(value="/{id}/event/add",method =RequestMethod.POST,consumes="application/json",produces = "application/json; charset=UTF-8")
-	public @ResponseBody EventVO addEvent(@PathVariable("id")Integer id,@RequestBody @Validated EventVO eventVO){
-		
+	@RequestMapping(value = "/{id}/event/add", method = RequestMethod.POST, consumes = "application/json", produces = "application/json; charset=UTF-8")
+	public @ResponseBody EventVO addEvent(@PathVariable("id") Integer id, @RequestBody @Validated EventVO eventVO) {
+
 		eventVO.setContestID(id);
 		eventDAO.insert(eventVO);
 		System.out.println("ajxa------------------------------------");
 		return eventVO;
 	}
-	
-	//delete event
-	@RequestMapping(value="/event/{id}/delete",method=RequestMethod.POST,produces = "text/html; charset=UTF-8")//produces = "text/html; charset=UTF-8"
-	public @ResponseBody String deleteEvent(HttpServletResponse response,@PathVariable("id")Integer id){
-		
+
+	// delete event
+	@RequestMapping(value = "/event/{id}/delete", method = RequestMethod.POST, produces = "text/html; charset=UTF-8") // produces
+																														// =
+																														// "text/html;
+																														// charset=UTF-8"
+	public @ResponseBody String deleteEvent(HttpServletResponse response, @PathVariable("id") Integer id) {
+
 		eventDAO.delete(id);
-		System.out.println("刪除eventID="+id);
-//		response.setCharacterEncoding("UTF-8");
+		System.out.println("刪除eventID=" + id);
+		// response.setCharacterEncoding("UTF-8");
 		return "刪除成功";
 	}
-	
+
 	// add team
-	@RequestMapping(value="{id}/team/add",method =RequestMethod.POST,consumes="application/json",produces = "application/json; charset=UTF-8")
-	public @ResponseBody TeamVO addTeam(@PathVariable("id")Integer id,@RequestBody  TeamVO teamVO,HttpServletResponse res){
-		
+	@RequestMapping(value = "{id}/team/add", method = RequestMethod.POST, consumes = "application/json", produces = "application/json; charset=UTF-8")
+	public @ResponseBody TeamVO addTeam(@PathVariable("id") Integer id, @RequestBody TeamVO teamVO,
+			HttpServletResponse res) {
+
 		teamVO.setContestID(id);
 		teamDAO.insert(teamVO);
 		System.out.println("ajxa------------------------------------");
 		return teamVO;
 	}
-	//delete team
-	@RequestMapping(value="/team/delete",method=RequestMethod.POST,produces = "text/html; charset=UTF-8")//produces = "text/html; charset=UTF-8"
-	public @ResponseBody String deleteTeam(HttpServletRequest req, @RequestParam Integer id){
+
+	// delete team
+	@RequestMapping(value = "/team/delete", method = RequestMethod.POST, produces = "text/html; charset=UTF-8") // produces
+																												// =
+																												// "text/html;
+																												// charset=UTF-8"
+	public @ResponseBody String deleteTeam(HttpServletRequest req, @RequestParam Integer id) {
 		teamDAO.delete(id);
-		System.out.println("刪除teamID="+id);
+		System.out.println("刪除teamID=" + id);
 		return "刪除成功";
 	}
-	
-	
+
 	private String saveDirectory = "c:/run/upload/";
 
 	@RequestMapping(value = "contest/{id}/upload", method = RequestMethod.POST)
@@ -313,48 +242,41 @@ public class EventController {
 		}
 		return "redirect:/contest";
 	}
-	// apply 
-	@RequestMapping(value="/apply",method=RequestMethod.GET)
-	public String ContestApply(@ModelAttribute RunnerVO runner ,Model model){
-		System.out.println("event:"+runner.getEventID());
-		System.out.println("team:"+runner.getTeamID());
-		System.out.println("clothes:"+runner.getClothesSize());
-		
-		System.out.println(runner.getPk());
-		System.out.println("contestID:"+runner.getPk().getContestID());
-		System.out.println("contestID:"+runner.getPk().getMemberID());
-		
-		String msg = runnerDAO.insert(runner);
-		System.out.println(msg);
-		return "redirect:/contest/1";
-	}
-	
-	
-//	@RequestMapping(value = "/test", method = RequestMethod.POST)
-//	public String testtest(HttpServletRequest req){
-//		String param = (String) req.getAttribute("param");
-//		System.out.println(param);
-//		System.out.println(11111111);
-//		return "aa";
-//	}
-	
-	
-	
 
+	// apply
+	@RequestMapping(value = "/apply", method = RequestMethod.POST)
+	public String ContestApply(@ModelAttribute RunnerVO runner, @SessionAttribute MemberVO member, Model model) {
+		Integer id = runner.getPk().getContestID();
+		try {
+			String msg = runnerDAO.insert(runner);
+			ContestVO contest = contestDAO.findByPrimaryKey(runner.getPk().getContestID());
+			mailService.sendApplyEmail(member, contest);
+			System.out.println(msg);
+		} catch (Exception ex) {
+			System.out.println("-----------------------------------------------");
+		}
+		return "redirect:/contest/" + id;
+	}
+
+	@RequestMapping(value = "/score", method = RequestMethod.GET)
+	public String showScore(Model model) {
+		return "score";
+	}
+
+	// @RequestMapping(value = "/test", method = RequestMethod.POST)
+	// public String testtest(HttpServletRequest req){
+	// String param = (String) req.getAttribute("param");
+	// System.out.println(param);
+	// System.out.println(11111111);
+	// return "aa";
+	// }
 	@RequestMapping("email")
-	public String emailtest(Model model) {
-		MemberVO member = new MemberVO();
-		member.setEmail("artashur@gmail.com");
-		member.setLastName("Max");
-		member.setMemberID("Maxcool#3433");
+	public String emailtest(Model model, @SessionAttribute("member") MemberVO member) {
 		mailService.sendEmail(member);
-		model.addAttribute("A", member);
 		return "/../../index";
 	}
-
-	
 	@ModelAttribute("member")
-	public MemberVO login(){
+	public MemberVO login() {
 		MemberVO member = new MemberVO();
 		member.setEmail("artashur@gmail.com");
 		member.setLastName("Arthur");

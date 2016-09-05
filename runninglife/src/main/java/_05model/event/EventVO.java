@@ -3,15 +3,20 @@ package _05model.event;
 import java.io.Serializable;
 import static javax.persistence.GenerationType.IDENTITY;
 import java.sql.Time;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import _05model.contest.ContestVO;
+import _05model.runner.RunnerVO;
 import _05model.team.TeamVO;
 
 @Entity
@@ -34,7 +39,7 @@ public class EventVO implements Serializable {
 	private Time whenToRun;
 	@Column
 	private int limitTime;
-	// private ContestVO contestVO;
+	//偷吃
 
 	public int getContestID() {
 		return contestID;
@@ -43,7 +48,6 @@ public class EventVO implements Serializable {
 	public EventVO() {
 		super();
 	}
-
 
 	public void setContestID(int contestID) {
 		this.contestID = contestID;

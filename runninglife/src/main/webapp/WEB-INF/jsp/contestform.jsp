@@ -12,13 +12,13 @@
 	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
 	crossorigin="anonymous">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>編輯賽事</title>
 </head>
 <body>
 	<div class="container ">
 		<div class="col-lg-9 col-md-9 col-sm-9 letter-spacing-1">
 			<div class="text-center">
-				<h2>新增賽事</h2>
+				<h2>編輯賽事</h2>
 			</div>
 			${action}
 
@@ -33,7 +33,7 @@
 
 
 			<spring:url value="/contest/${contest.contestID}" var="updateContest" />
-			<spring:url value="/contest/add" var="addContest" />
+			<spring:url value="/contest/edit" var="addContest" />
 
 			<form:form class="form-horizontal" method="post"
 				acceptCharset="UTF-8" modelAttribute="contest"

@@ -13,7 +13,7 @@ import _05model.team.TeamVO;
 @Service
 public class EventDAOimpl implements EventDAO {
 	private static final String GET_ALL_STMT = "from EventVO order by eventID";
-	private static final String GET_EVENT_BY_ID="from EventVO where contestID = ? order by EventID";
+	private static final String GET_EVENT_BY_ID="from EventVO where contestID = :contestID order by EventID";
 	@Override
 	public void insert(EventVO eventVO) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
@@ -101,7 +101,7 @@ public class EventDAOimpl implements EventDAO {
 		try {
 			session.beginTransaction();
 			Query query = session.createQuery(GET_EVENT_BY_ID);
-			query.setParameter(0, contestID);
+			query.setParameter("contestID", contestID);
 			list = query.list();
 			session.getTransaction().commit();
 		} catch (RuntimeException ex) {

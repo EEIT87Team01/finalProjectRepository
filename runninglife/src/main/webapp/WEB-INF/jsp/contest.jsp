@@ -65,7 +65,7 @@
 				</div>
 			</div>
 			<div class="col-lg-3 col-md-3 col-sm-3">
-				<a href="/runninglife/contest/${contest.contestID}/edit"
+				<a href="/runninglife/contest/edit?id=${contest.contestID}"
 					class="btn btn-info edit" role="button"">編輯</a>
 			</div>
 			<div class="col-lg-3 col-md-3 col-sm-3">
@@ -140,9 +140,5 @@
 	//     cancelButtonClass: "btn-default",
 	//     dialogClass: "modal-dialog modal-lg" // Bootstrap classes for large modal
 	// });
-	var currentdate = new Date();
-	if (currentdate < new Date('2016-08-09')){
-		console.log("yes");
-	}
 </script>
 </html>

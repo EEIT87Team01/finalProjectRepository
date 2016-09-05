@@ -27,9 +27,9 @@ public class ContestFormValidator implements Validator {
 
 		ContestVO contest = (ContestVO) target;
 
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "contestName", "NotEmpty.contestForm.contestName");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "startDate", "NotEmpty.contestForm.startDate","安安");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "place", "NotEmpty.contestForm.place");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "contestName", "NotEmpty.contest.contestName");
+//		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "startDate", "NotEmpty.contest.startDate");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "place", "NotEmpty.contest.place");
 //		if (contest.getStartDate(). ) {
 //			errors.rejectValue("place", "NotEmpty.contestForm.place");
 //		}
