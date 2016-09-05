@@ -94,13 +94,13 @@ public class ContestDAOimpl implements ContestDAO {
 	public static void main  (String []args) throws ParseException{
 		ContestDAOimpl dao = new ContestDAOimpl();
 		ContestVO contest = dao.findByPrimaryKey(1);
-		dao.delete(1);
-//		ContestVO contestVO = new ContestVO();
-//		contestVO.setContestName("hibernate3");
-//		contestVO.setPlace("干你屁事");
-//		contestVO.setStartDate(Date.valueOf("2016-3-13"));
+//		dao.delete(1);
+		ContestVO contestVO = new ContestVO();
+		contestVO.setContestName("hibernate3");
+		contestVO.setPlace("干你屁事");
+		contestVO.setStartDate(Date.valueOf("2016-3-13"));
 //		dao.delete(6);
-//		dao.insert(contestVO);
+		dao.insert(contestVO);
 //		List<ContestVO> list = dao.getAll();
 //		for(ContestVO item:list){
 ////			System.out.printf("10%s",item.getContestID());
@@ -112,5 +112,6 @@ public class ContestDAOimpl implements ContestDAO {
 //				System.out.printf("項目:10%s\n",event.getEventName());
 //			}
 //		}
+		System.out.println(contestVO.getContestID());
 	}
 }

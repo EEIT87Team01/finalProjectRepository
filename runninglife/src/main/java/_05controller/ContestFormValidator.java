@@ -1,14 +1,14 @@
 package _05controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 import org.springframework.validation.Errors;
+import org.springframework.validation.ObjectError;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
-import _05model.contest.ContestDAOimpl;
 import _05model.contest.ContestVO;
-import _05model.event.EventDAOimpl;
 
 @Service
 public class ContestFormValidator implements Validator {
@@ -45,8 +45,11 @@ public class ContestFormValidator implements Validator {
 //
 //		if (user.getSkill() == null || user.getSkill().size() < 3) {
 //			errors.rejectValue("skill", "Valid.userForm.skill");
-//		}
-
+//		}errors
+		List<ObjectError> list =errors.getAllErrors();
+		for(ObjectError err:list){
+			System.out.println(err.getCode());
+		}
 	}
 
 }

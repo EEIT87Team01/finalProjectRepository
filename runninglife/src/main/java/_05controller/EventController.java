@@ -1,6 +1,7 @@
 package _05controller;
 
 import java.io.File;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -8,6 +9,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -23,6 +25,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import _05model.clothes.ClothesDAOimpl;
+import _05model.contest.ContestDAO;
 import _05model.contest.ContestDAOimpl;
 import _05model.contest.ContestVO;
 import _05model.event.EventDAOimpl;
@@ -32,6 +35,7 @@ import _05model.runner.RunnerDAOimpl;
 import _05model.team.TeamDAOimpl;
 import _05model.team.TeamVO;
 import _05service.email.MailService;
+import _05validator.FileValidator;
 
 @Controller
 public class EventController {
@@ -50,6 +54,8 @@ public class EventController {
 	private MailService mailService;
 	@Autowired
 	private ContestFormValidator contestFormValidator;
+	@Autowired
+	private FileValidator fileValidator;
 
 	// show all contest
 	@RequestMapping("contest")
@@ -60,7 +66,7 @@ public class EventController {
 	}
 
 	// show contest
-	@RequestMapping(value="/contest/{contestID}", method = RequestMethod.GET)
+	@RequestMapping(value = "/contest/{contestID}", method = RequestMethod.GET)
 	public String showContest(@PathVariable int contestID, Model model) {
 		List<TeamVO> teams = teamDAO.getTeamById(contestID);
 		List<EventVO> events = eventDAO.getEventById(contestID);
@@ -92,7 +98,10 @@ public class EventController {
 	// show add form
 	@RequestMapping(value = "/contest/add", method = RequestMethod.GET)
 	public String showAddContestForm(Model model) {
-		return null;
+		ContestVO contest = new ContestVO();
+		model.addAttribute("contest", contest);
+		model.addAttribute("action", new Integer(1));
+		return "contestform";
 	}
 
 	// show updateform
@@ -100,6 +109,7 @@ public class EventController {
 	public String showUpdateContestForm(@PathVariable("id") int id, Model model) {
 		ContestVO contest = contestDAO.findByPrimaryKey(id);
 		model.addAttribute("contest", contest);
+		model.addAttribute("action", new Integer(2));
 		return "contestform";
 	}
 
@@ -109,31 +119,104 @@ public class EventController {
 		binder.setValidator(contestFormValidator);
 	}
 
-	/// save or update contest
-	@RequestMapping(value = "/contest/{contestID}", method = RequestMethod.POST)
-	public String saveOrUpdateUser(@ModelAttribute("contest") @Validated ContestVO contestVO, BindingResult result,
-			Model model, final RedirectAttributes redirectAttributes) {
+	@InitBinder("fileUpload")
+	protected void initBinderFile(WebDataBinder binder) {
+		binder.setValidator(fileValidator);
+	}
+
+	private String path = "c:/run/";
+
+	/// add contest
+	@RequestMapping(value = "/contest/add", method = RequestMethod.POST)
+	public String SaveUser(@ModelAttribute("contest") @Validated ContestVO contestVO, BindingResult result, Model model,
+			final RedirectAttributes redirectAttributes, @RequestParam @Validated CommonsMultipartFile[] fileUpload) {
 		if (result.hasErrors()) {
-			model.addAttribute("contest", contestVO);
 			return "contestform";
 		} else {
+			// 新增表單
+			contestDAO.insert(contestVO);
+			// 上傳圖片
+			if (fileUpload != null && fileUpload.length > 0) {
+
+				if (fileUpload[0].getSize() > 0) {
+					System.out.println("Saving file: " + path + contestVO.getContestID() + fileUpload[0]
+							.getOriginalFilename().substring(fileUpload[0].getOriginalFilename().indexOf(".")));
+
+					try {
+						fileUpload[0].transferTo(new File(path + contestVO.getContestID() + fileUpload[0]
+								.getOriginalFilename().substring(fileUpload[0].getOriginalFilename().indexOf("."))));
+						contestVO.setContestPhotoPath(contestVO.getContestID() + fileUpload[0].getOriginalFilename()
+								.substring(fileUpload[0].getOriginalFilename().indexOf(".")));
+					} catch (IllegalStateException e) {
+						e.printStackTrace();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+				if (fileUpload[1].getSize() > 0) {
+					System.out.println("Saving file: " + path + contestVO.getContestID() + "banner" + fileUpload[1]
+							.getOriginalFilename().substring(fileUpload[1].getOriginalFilename().indexOf(".")));
+					try {
+						fileUpload[1].transferTo(new File(path + contestVO.getContestID() + "banner" + fileUpload[1]
+								.getOriginalFilename().substring(fileUpload[1].getOriginalFilename().indexOf("."))));
+					} catch (IllegalStateException e) {
+						e.printStackTrace();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+			}
 
 			// Add message to flash scope
 			redirectAttributes.addFlashAttribute("css", "success");
-			if ((Integer) contestVO.getContestID() == null) {
-				redirectAttributes.addFlashAttribute("msg", "User added successfully!");
-			} else {
-				redirectAttributes.addFlashAttribute("msg", "User updated successfully!");
-			}
-
-			// userService.saveOrUpdate(user);
-
 			// POST/REDIRECT/GET
 			return "redirect:/contest/" + contestVO.getContestID();
 			// POST/FORWARD/GET
 			// return "user/list";
 		}
+	}
 
+	/// update contest
+	@RequestMapping(value = "/contest/{contestID}", method = RequestMethod.POST)
+	public String UpdateUser(@ModelAttribute("contest") @Validated ContestVO contestVO, BindingResult result,
+			Model model, final RedirectAttributes redirectAttributes,
+			@RequestParam @Validated CommonsMultipartFile[] fileUpload) {
+		if (result.hasErrors()) {
+			return "contestform";
+		} else {
+			// 更新表單
+			contestDAO.update(contestVO);
+			// 上傳圖片
+			if (fileUpload != null && fileUpload.length > 0) {
+
+				for (CommonsMultipartFile aFile : fileUpload) {
+					if (aFile.getSize() > 0) {
+						System.out.println("有檔案");
+						System.out.println("Saving file: " + path + contestVO.getContestID()
+								+ aFile.getOriginalFilename().substring(aFile.getOriginalFilename().indexOf(".")));
+
+						try {
+							aFile.transferTo(new File(path + contestVO.getContestID()
+									+ aFile.getOriginalFilename().substring(aFile.getOriginalFilename().indexOf("."))));
+							System.out.println("上傳圖片成功");
+							contestVO.setContestPhotoPath(contestVO.getContestID()
+									+ aFile.getOriginalFilename().substring(aFile.getOriginalFilename().indexOf(".")));
+						} catch (IllegalStateException e) {
+							e.printStackTrace();
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+					}
+				}
+			}
+
+			// Add message to flash scope
+			redirectAttributes.addFlashAttribute("css", "success");
+			// POST/REDIRECT/GET
+			return "redirect:/contest/" + contestVO.getContestID();
+			// POST/FORWARD/GET
+			// return "user/list";
+		}
 	}
 
 	// delete contest
@@ -148,13 +231,38 @@ public class EventController {
 
 		return "redirect:/contest";
 	}
-
-	private String saveDirectory = "c:/run/upload/";
+	// add event
 	
-	@RequestMapping(value ="contest/{id}/upload",method = RequestMethod.POST)
-	public String ContestPhotoUpload(@RequestParam CommonsMultipartFile[] fileUpload,@PathVariable("id") int id)
-			throws Exception {
+	@RequestMapping(value="/event/{id}/add")
+	public String addEvent(HttpServletRequest request,@PathVariable("id")Integer id){
+		String eventName =(String) request.getParameter("eventName");
+		System.out.println("ajxa------------------------------------");
+		System.out.println("ajxa------------------------------------");
+		System.out.println("ajxa------------------------------------");
+		System.out.println("ajxa------------------------------------");
+		System.out.println("ajxa------------------------------------");
+		System.out.println("ajxa------------------------------------");
+		System.out.println("ajxa------------------------------------");
+		System.out.println("ajxa------------------------------------");
+		
+		return "redirect:/contest";
+	}
+	
+	
+	@RequestMapping(value="/event/{id}/delete")
+	public String deleteEvent(HttpServletRequest request,@PathVariable("id")Integer id){
+		
+		eventDAO.delete(id);
+		
+		return "刪除成功";
+	}
+	
+	
+	private String saveDirectory = "c:/run/upload/";
 
+	@RequestMapping(value = "contest/{id}/upload", method = RequestMethod.POST)
+	public String ContestPhotoUpload(@RequestParam CommonsMultipartFile[] fileUpload, @PathVariable("id") int id)
+			throws Exception {
 
 		if (fileUpload != null && fileUpload.length > 0) {
 			for (CommonsMultipartFile aFile : fileUpload) {
@@ -162,12 +270,15 @@ public class EventController {
 				System.out.println("Saving file: " + aFile.getOriginalFilename());
 
 				if (!aFile.getOriginalFilename().equals("")) {
-//					aFile.transferTo(new File(saveDirectory + aFile.getOriginalFilename()));
-					File photo =new File(saveDirectory+id+".jpg");
-					if(!photo.exists()){photo.mkdirs();}
+					// aFile.transferTo(new File(saveDirectory +
+					// aFile.getOriginalFilename()));
+					File photo = new File(saveDirectory + id + ".jpg");
+					if (!photo.exists()) {
+						photo.mkdirs();
+					}
 					aFile.transferTo(photo);
-					ContestVO contest= contestDAO.findByPrimaryKey(id);
-					contest.setContestPhotoPath(id+".jpg");
+					ContestVO contest = contestDAO.findByPrimaryKey(id);
+					contest.setContestPhotoPath(id + ".jpg");
 					contestDAO.update(contest);
 				}
 			}

@@ -17,6 +17,7 @@ import org.springframework.web.servlet.resource.PathResourceResolver;
 
 @Configuration
 @ComponentScan(basePackages = "_05service.email")
+@ComponentScan(basePackages = "_05validator")
 @EnableWebMvc 
 public class AppConfig extends WebMvcConfigurerAdapter{
 	

@@ -37,14 +37,14 @@
 		<c:forEach var="contest" items="${contests}">
 			<div class="col-lg-9 col-md-9 col-sm-9">
 				<div class="col-lg-2 col-md-2 col-sm-3 col-xs-3 nopadding-right">
-					<a href="contest/${contest.contestID}" target="_blank"><img
+					<a href="/runninglife/contest/${contest.contestID}" target="_blank"><img
 						class="img-responsive thumbnail"
 						src="/runninglife/resources/${contest.contestPhotoPath}"></a>
 				</div>
 				<div class="col-lg-10 col-md-10 col-sm-9 col-xs-9 margin-bottom-0">
 					<div class="size-17 contest${contest.contestID} ">
-						<span class="badge badge-blue size-15">尚未開報</span> <a
-							class="text-muted" href="contest/${contest.contestID}"
+						<span class="badge badge-blue size-15">開放報名</span> <a
+							class="text-muted" href="/runninglife/contest/${contest.contestID}"
 							target="_blank">${contest.contestName}</a>
 					</div>
 				</div>
@@ -147,5 +147,9 @@
 	//     cancelButtonClass: "btn-default",
 	//     dialogClass: "modal-dialog modal-lg" // Bootstrap classes for large modal
 	// });
+	var currentdate = new Date();
+	if (currentdate < new Date('2016-08-09')){
+		console.log("yes");
+	}
 </script>
 </html>

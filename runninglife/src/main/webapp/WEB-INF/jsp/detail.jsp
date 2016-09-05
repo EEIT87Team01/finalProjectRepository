@@ -17,8 +17,8 @@
 
 
 </head>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script src="http://malsup.github.com/jquery.form.js"></script> 
 <script src="/runninglife/resources/js/jquery.countdown.min.js"></script>
 <script src="/runninglife/resources/js/bootstrap.min.js"></script>
 
@@ -29,10 +29,11 @@
 	<%-- 	${contest.goal}${contest.organizer}${contest.coorganizer} --%>
 	<%-- 	${contest.contestPhotoPath} --%>
 	<div id="timer">${timer}</div>
-	
+
 	<section id="slider">
 	<div>
-		<img class="img-responsive " src="/runninglife/resources/banner.jpg"
+		<img class="img-responsive "
+			src="/runninglife/resources/${contest.contestID}banner.jpg"
 			alt="banner">
 	</div>
 
@@ -66,11 +67,7 @@
 							</tr>
 							<tr>
 								<td>活動宗旨</td>
-								<td class="text-left">敬請期待</td>
-							</tr>
-							<tr>
-								<td>地區簡介</td>
-								<td class="text-left">神岡區早期為粵籍人士所開發，因此舊稱「新廣莊」，似有「新闢的廣大平原」之意，而「神岡」與「新廣」的粵語發音頗為相似，可能後來由於閩人入墾，加上日久口誤，而沿用「神岡」之名。清道光二十二年，神岡置莊，泉州人來此構居，於是遂成泉州人聚落。臺灣割讓日本後，日本把此地分為「神岡」、「社口」、「三角仔」等三個區域。神岡有「早期中部開發中心」之稱，先人入豐原、東勢、后里等地開墾，都需經由本地；因此古蹟很多，這些文化資產已成為神岡擁有發展觀光事業潛力。民國九年三區統一改為「神岡庄」，隸屬臺中州豐原郡神岡庄。臺灣光復後始設「神岡鄉」，民國九十九年十二月二十五日改為神岡區。</td>
+								<td class="text-left">${contest.goal}</td>
 							</tr>
 							<tr>
 								<td>主辦單位</td>
@@ -113,6 +110,7 @@
 								<th class="col-xs-2">開放名額</th>
 								<th class="col-xs-2">起跑時間</th>
 								<th class="col-xs-2">限制時間</th>
+								<th class="col-xs-2"></th>
 							</tr>
 						</thead>
 						<tbody>
@@ -124,8 +122,31 @@
 									<td>$${event.quota}</td>
 									<td>${event.whenToRun}</td>
 									<td>${event.limitTime }</td>
+									<td><a
+										href="/runninglife/contest/event/${event.eventID}/delete"
+										class="btn btn-danger  delete" role="button"
+										data-text="真的要刪除此項目嗎?" data-confirm-button="是的"
+										data-cancel-button="不了"data-confirm-button-class: "btn-danger">刪除</a></td>
 								</tr>
 							</c:forEach>
+							<tr>
+								<form id="jsonForm" onsubmit="ajax2()" action="/runninglife/contest/${contest.contestID}/event/add">
+									<td><input type="text" class="form-control" type="file"
+										id="eventName" name="eventName" /></td>
+									<td><input type="text" class="form-control" type="file"
+										id="fee" name="fee" /></td>
+									<td><input type=submit name="submit" value="click" /></td>
+									<td><input type="text" class="form-control" type="file"
+										id="quota" name="quota" /></td>
+									<td><input type="text" class="form-control" type="file"
+										id="whenToRun" name="whenToRun" /></td>
+									<td><input type="text" class="form-control" type="file"
+										id="limitTime" name="limitTime" /></td>
+									<td class="col-xs-2"><a
+										href="/runninglife/contest/${contest.contestID}/event/add"
+										class="btn btn-primary  delete" role="button">新增</a></td>
+								</form>
+							</tr>
 						</tbody>
 					</table>
 				</div>
@@ -269,5 +290,16 @@
 
 <script src="/runninglife/resources/js/time.js"></script>
 <script src="/runninglife/resources/js/jquery.countdown.js"></script>
+<script type="text/javascript">
 
+$('#jsonForm').ajaxForm({
+    type: 'post',
+    success: processJson
+});
+function processJson(data) {
+    //debugger;
+    alert("it worked" + data);
+    console.log("respose: " + data);
+}
+</script>
 </html>
