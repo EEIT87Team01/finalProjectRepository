@@ -1,7 +1,11 @@
 package _02.model.membercomplete.emergencyRelation;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "emergencyRelation")
 public class EmergencyRelationVO {
-	
+	@Id
 	private int relationID;
 	private String relationName;
 	
