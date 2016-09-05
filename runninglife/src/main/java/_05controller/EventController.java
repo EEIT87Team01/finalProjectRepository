@@ -7,9 +7,9 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,14 +18,15 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import _05model.clothes.ClothesDAOimpl;
-import _05model.contest.ContestDAO;
 import _05model.contest.ContestDAOimpl;
 import _05model.contest.ContestVO;
 import _05model.event.EventDAOimpl;
@@ -35,6 +36,7 @@ import _05model.runner.RunnerDAOimpl;
 import _05model.team.TeamDAOimpl;
 import _05model.team.TeamVO;
 import _05service.email.MailService;
+import _05validator.EventValidator;
 import _05validator.FileValidator;
 
 @Controller
@@ -56,6 +58,8 @@ public class EventController {
 	private ContestFormValidator contestFormValidator;
 	@Autowired
 	private FileValidator fileValidator;
+	@Autowired
+	private EventValidator eventValidator;
 
 	// show all contest
 	@RequestMapping("contest")
@@ -84,6 +88,8 @@ public class EventController {
 			e.printStackTrace();
 		}
 		long timer = millseconds.getTime();
+		EventVO event = new EventVO();
+		model.addAttribute("event",event);
 		System.out.println(timer);
 		model.addAttribute("timer", timer);
 		model.addAttribute("start", start);
@@ -134,6 +140,7 @@ public class EventController {
 			return "contestform";
 		} else {
 			// 新增表單
+			
 			contestDAO.insert(contestVO);
 			// 上傳圖片
 			if (fileUpload != null && fileUpload.length > 0) {
@@ -147,6 +154,9 @@ public class EventController {
 								.getOriginalFilename().substring(fileUpload[0].getOriginalFilename().indexOf("."))));
 						contestVO.setContestPhotoPath(contestVO.getContestID() + fileUpload[0].getOriginalFilename()
 								.substring(fileUpload[0].getOriginalFilename().indexOf(".")));
+						contestVO.setContestPhotoPath(contestVO.getContestID() + fileUpload[0].getOriginalFilename()
+								.substring(fileUpload[0].getOriginalFilename().indexOf(".")));
+						contestDAO.update(contestVO);
 					} catch (IllegalStateException e) {
 						e.printStackTrace();
 					} catch (IOException e) {
@@ -231,29 +241,34 @@ public class EventController {
 
 		return "redirect:/contest";
 	}
-	// add event
 	
-	@RequestMapping(value="/event/{id}/add")
-	public String addEvent(HttpServletRequest request,@PathVariable("id")Integer id){
-		String eventName =(String) request.getParameter("eventName");
-		System.out.println("ajxa------------------------------------");
-		System.out.println("ajxa------------------------------------");
-		System.out.println("ajxa------------------------------------");
-		System.out.println("ajxa------------------------------------");
-		System.out.println("ajxa------------------------------------");
-		System.out.println("ajxa------------------------------------");
-		System.out.println("ajxa------------------------------------");
-		System.out.println("ajxa------------------------------------");
-		
-		return "redirect:/contest";
+	
+	
+	@InitBinder("eventVO")
+	protected void initBinderEvent(WebDataBinder binder) {
+		binder.setValidator(eventValidator);
 	}
 	
 	
-	@RequestMapping(value="/event/{id}/delete")
-	public String deleteEvent(HttpServletRequest request,@PathVariable("id")Integer id){
+	// add event
+	@RequestMapping(value="/{id}/event/add",method =RequestMethod.POST,consumes="application/json",produces = "application/json; charset=UTF-8")
+	public @ResponseBody EventVO addEvent(@PathVariable("id")Integer id,@RequestBody @Validated EventVO eventVO,BindingResult result){
+		
+		eventVO.setContestID(id);
+		eventDAO.insert(eventVO);
+		System.out.println(eventVO);
+		System.out.println("ajxa------------------------------------");
+		
+		return eventVO;
+	}
+	
+	//delete event
+	@RequestMapping(value="/event/{id}/delete",method=RequestMethod.POST,produces = "text/html; charset=UTF-8")//produces = "text/html; charset=UTF-8"
+	public @ResponseBody String deleteEvent(HttpServletResponse response,@PathVariable("id")Integer id){
 		
 		eventDAO.delete(id);
-		
+		System.out.println("刪除eventID="+id);
+//		response.setCharacterEncoding("UTF-8");
 		return "刪除成功";
 	}
 	
@@ -285,6 +300,20 @@ public class EventController {
 		}
 		return "redirect:/contest";
 	}
+	
+	@RequestMapping(value = "/test", method = RequestMethod.POST)
+	public String testtest(HttpServletRequest req){
+		String param = (String) req.getAttribute("param");
+		System.out.println(param);
+		System.out.println(11111111);
+		return "aa";
+	}
+	
+	
+	
+	
+	
+	
 
 	@RequestMapping("email")
 	public String emailtest(Model model) {

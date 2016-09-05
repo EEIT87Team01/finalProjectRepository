@@ -17,8 +17,9 @@
 
 
 </head>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-<script src="http://malsup.github.com/jquery.form.js"></script> 
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script src="http://malsup.github.com/jquery.form.js"></script>
 <script src="/runninglife/resources/js/jquery.countdown.min.js"></script>
 <script src="/runninglife/resources/js/bootstrap.min.js"></script>
 
@@ -105,46 +106,49 @@
 						<thead>
 							<tr>
 								<th class="col-xs-2">項目名稱</th>
-								<th class="col-xs-2">報名金額</th>
-								<th class="col-xs-2">晶片押金</th>
+								<th class="col-xs-2">距離</th>
+								<th class="col-xs-2">報名費用</th>
 								<th class="col-xs-2">開放名額</th>
 								<th class="col-xs-2">起跑時間</th>
-								<th class="col-xs-2">限制時間</th>
+								<th class="col-xs-2">限制時間(分)</th>
 								<th class="col-xs-2"></th>
 							</tr>
 						</thead>
-						<tbody>
+						<tbody id="eventBody">
 							<c:forEach var="event" items="${events}">
 								<tr>
 									<td>${event.eventName}</td>
-									<td>${event.fee}</td>
-									<td>100</td>
-									<td>$${event.quota}</td>
+									<td>${event.distance}km</td>
+									<td>$${event.fee}</td>
+									<td>${event.quota}</td>
 									<td>${event.whenToRun}</td>
 									<td>${event.limitTime }</td>
-									<td><a
-										href="/runninglife/contest/event/${event.eventID}/delete"
+									<td><a id="/runninglife/event/${event.eventID}/delete"
 										class="btn btn-danger  delete" role="button"
 										data-text="真的要刪除此項目嗎?" data-confirm-button="是的"
 										data-cancel-button="不了"data-confirm-button-class: "btn-danger">刪除</a></td>
 								</tr>
 							</c:forEach>
 							<tr>
-								<form id="jsonForm" onsubmit="ajax2()" action="/runninglife/contest/${contest.contestID}/event/add">
-									<td><input type="text" class="form-control" type="file"
-										id="eventName" name="eventName" /></td>
-									<td><input type="text" class="form-control" type="file"
-										id="fee" name="fee" /></td>
-									<td><input type=submit name="submit" value="click" /></td>
-									<td><input type="text" class="form-control" type="file"
-										id="quota" name="quota" /></td>
-									<td><input type="text" class="form-control" type="file"
-										id="whenToRun" name="whenToRun" /></td>
-									<td><input type="text" class="form-control" type="file"
-										id="limitTime" name="limitTime" /></td>
-									<td class="col-xs-2"><a
-										href="/runninglife/contest/${contest.contestID}/event/add"
-										class="btn btn-primary  delete" role="button">新增</a></td>
+								<form id="eventForm"
+									action="/runninglife/${contest.contestID}/event/add">
+								<td><input type="text" class="form-control" id="eventName"
+									name="eventName" placeholder="項目名稱" /></td>
+								<td><input type="text" class="form-control" id="distance"
+									name="distance" placeholder="距離" /></td>
+								<td><input type="text" class="form-control" id="fee"
+									name="fee" placeholder="報名費用" /></td>
+								<td><input type="text" class="form-control" id="quota"
+									name="quota" placeholder="開放名額" /></td>
+								<td><input type="text" class="form-control" id="whenToRun"
+									name="whenToRun" placeholder="06:50:00" /></td>
+								<td><input type="text" class="form-control" id="limitTime"
+									name="limitTime" placeholder="90" /></td>
+
+								<td><input type="submit" class="form-control" name="submit" /></td>
+								<!-- 									<td class="col-xs-2"><a -->
+								<%-- 										href="/runninglife/contest/${contest.contestID}/event/add" --%>
+								<!-- 										class="btn btn-primary  delete" role="button">新增</a></td> -->
 								</form>
 							</tr>
 						</tbody>
@@ -168,7 +172,7 @@
 								<th style="display: none">年齡範圍</th>
 							</tr>
 						</thead>
-						<tbody>
+						<tbody id="teambody">
 							<c:forEach var='team' items='${teams}'>
 								<tr>
 									<td>${team.teamName}</td>
@@ -291,15 +295,105 @@
 <script src="/runninglife/resources/js/time.js"></script>
 <script src="/runninglife/resources/js/jquery.countdown.js"></script>
 <script type="text/javascript">
+	// 	$('#eventForm').ajaxForm({
+	// 		type : 'post',
+	// 		contentType: "application/jason;charset=UTF-8",
+	// 		success : processJson,
+	// 		processData : false,
+	// 		dataType : 'json'
+	// 	});
+	function processJson(data) {
+		//debugger;
+		alert(data);
+		console.log("respose: " + data);
+	}
+	$(function() {
+		$("#eventBody").on("click",".btn-danger",function() {
+							var eventIDUrl = $(this).attr("id");
+							console.log($(this).attr("id"));
+							$(this).parent().parent().remove();
+							$.ajax({
+										mimeType : "text/html; charset=UTF-8", //alert可以show出物件內容
+										type : "POST",
+										url : eventIDUrl,
+										contentType : "application/x-www-form-urlencoded;charset=UTF-8",
+										success : function(){
 
-$('#jsonForm').ajaxForm({
-    type: 'post',
-    success: processJson
-});
-function processJson(data) {
-    //debugger;
-    alert("it worked" + data);
-    console.log("respose: " + data);
-}
+											alert("刪除成功!!!")
+										}
+							});
+		});
+	});
+	//轉成json函式
+	(function($) {
+		$.fn.serializeFormJSON = function() {
+
+			var o = {};
+			var a = this.serializeArray();
+			$.each(a, function() {
+				if (o[this.name]) {
+					if (!o[this.name].push) {
+						o[this.name] = [ o[this.name] ];
+					}
+					o[this.name].push(this.value || "");
+				} else {
+					o[this.name] = this.value || "";
+				}
+			});
+			return o;
+		};
+	})(jQuery);
+	//新增event
+	$('#eventForm').submit(function(e) {
+		e.preventDefault();
+		alert($('#eventName').val());
+		alert($('#distance').val());
+		alert($('#fee').val());
+		alert($('#quota').val());
+		alert($('#whenToRun').val());
+		alert($('#limitTime').val());
+		
+		if($('#eventName').val()==""){
+			alert("請輸入名稱");
+		}else if($('#distance').val()==""){
+			alert("請輸入距離");
+		}else if($('#fee').val()==""){
+			alert("請輸入報名費用");
+		}else if($('#quota').val()==""){
+			alert("請輸入開放名額");
+		}else if($('#whenToRun').val()==""){
+			alert("請輸入起跑時間");
+		}else if($('#limitTime').val()==""){
+			alert("請輸入限制時間");
+		}
+
+		var data = $(this).serializeFormJSON();
+		var data2 = JSON.stringify(data);
+
+		console.log(data.eventName);
+		console.log(data.whenToRun);
+		console.log(data.distance);
+		console.log(data.quota);
+		
+		console.log(data2);
+		
+		
+		$.ajax({
+			type : "POST",
+			url : "/runninglife/${contest.contestID}/event/add",
+			contentType : "application/json",
+			data : data2,
+			mimeType : "application/json; charset=UTF-8",
+			success : showEvent
+		});
+		
+	});
+	function showEvent(event){
+		alert(event);
+// 		$('#eventBody').prepend('<tr><td>666666</td></tr>');
+			console.log(event.fee);
+			$('#eventForm').parent().before('<tr><td>'+event.eventName+'</td><td>'+event.distance+'km</td><td>$'+event.fee+'</td><td>'+event.quota+'</td><td>'+event.whenToRun+'</td><td>'+event.limitTime+'</td><td><a id="/runninglife/event/'+event.eventID+'/delete"class="btn btn-danger  delete" role="button"data-text="真的要刪除此項目嗎?" data-confirm-button="是的"data-cancel-button="不了"data-confirm-button-class: "btn-danger">刪除</a></td></tr>');
+
+	}
 </script>
 </html>

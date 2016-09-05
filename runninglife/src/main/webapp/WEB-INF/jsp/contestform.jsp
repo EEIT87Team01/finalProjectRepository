@@ -22,14 +22,14 @@
 			</div>
 			${action}
 
-			<c:choose>
-				<c:when test="${action == 1 }">
-      						 Salary is very low to survive.
-  				</c:when>
-				<c:otherwise>
-      					  No comment sir...
-   			 	</c:otherwise>
-			</c:choose>
+<%-- 			<c:choose> --%>
+<%-- 				<c:when test="${action == 1 }"> --%>
+<!--       						 Salary is very low to survive. -->
+<%--   				</c:when> --%>
+<%-- 				<c:otherwise> --%>
+<!--       					  No comment sir... -->
+<%--    			 	</c:otherwise> --%>
+<%-- 			</c:choose> --%>
 
 
 			<spring:url value="/contest/${contest.contestID}" var="updateContest" />
