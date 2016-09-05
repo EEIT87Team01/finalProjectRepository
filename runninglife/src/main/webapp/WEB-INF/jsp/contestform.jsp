@@ -42,7 +42,7 @@
 				<form:hidden path="contestID" />
 
 				<spring:bind path="contestName">
-					<div class="form-group ${status.error ? 'has-error' : ''}">
+					<div class="form-group ${status.error ? 'has-error' : 'has-success'}">
 						<label class="col-sm-2 control-label">賽事名稱</label>
 						<div class="col-sm-10">
 							<form:input path="contestName" type="text" class="form-control"
@@ -53,7 +53,7 @@
 				</spring:bind>
 
 				<spring:bind path="startDate">
-					<div class="form-group ${status.error ? 'has-error' : ''}">
+					<div class="form-group ${status.error ? 'has-error' : 'has-success'}">
 						<label class="col-sm-2 control-label">比賽日期</label>
 						<div class="col-sm-10">
 							<form:input path="startDate" class="form-control" id="startDate"
@@ -64,7 +64,7 @@
 				</spring:bind>
 
 				<spring:bind path="place">
-					<div class="form-group ${status.error ? 'has-error' : ''}">
+					<div class="form-group ${status.error ? 'has-error' : 'has-success'}">
 						<label class="col-sm-2 control-label">比賽地點</label>
 						<div class="col-sm-10">
 							<form:input path="place" class="form-control" id="place"
@@ -86,7 +86,7 @@
 				<%-- 			</spring:bind> --%>
 
 				<spring:bind path="registrationBegin">
-					<div class="form-group ${status.error ? 'has-error' : ''}">
+					<div class="form-group ${status.error ? 'has-error' : 'has-success'}">
 						<label class="col-sm-2 control-label">報名開始</label>
 						<div class="col-sm-10">
 							<form:input path="registrationBegin" rows="5"
@@ -98,7 +98,7 @@
 				</spring:bind>
 
 				<spring:bind path="registrationEnd">
-					<div class="form-group ${status.error ? 'has-error' : ''}">
+					<div class="form-group ${status.error ? 'has-error' : 'has-success'}">
 						<label class="col-sm-2 control-label">報名截止</label>
 						<div class="col-sm-10">
 							<form:input path="registrationEnd" rows="5" class="form-control"
@@ -109,7 +109,7 @@
 				</spring:bind>
 
 				<spring:bind path="organizer">
-					<div class="form-group ${status.error ? 'has-error' : ''}">
+					<div class="form-group ${status.error ? 'has-error' : 'has-success'}">
 						<label class="col-sm-2 control-label">主辦單位</label>
 						<div class="col-sm-10">
 							<form:textarea path="organizer" rows="5" class="form-control"
@@ -119,7 +119,7 @@
 					</div>
 				</spring:bind>
 				<spring:bind path="coorganizer">
-					<div class="form-group ${status.error ? 'has-error' : ''}">
+					<div class="form-group ${status.error ? 'has-error' : 'has-success'}">
 						<label class="col-sm-2 control-label">協辦單位</label>
 						<div class="col-sm-10">
 							<form:textarea path="coorganizer" rows="5" class="form-control"
@@ -130,7 +130,7 @@
 				</spring:bind>
 
 				<spring:bind path="goal">
-					<div class="form-group ${status.error ? 'has-error' : ''}">
+					<div class="form-group ${status.error ? 'has-error' : 'has-success'}">
 						<label class="col-sm-2 control-label">活動宗旨</label>
 						<div class="col-sm-10">
 							<form:textarea path="goal" rows="5" class="form-control"
@@ -141,7 +141,7 @@
 				</spring:bind>
 
 				<spring:bind path="contestPhotoPath">
-					<div class="form-group ${status.error ? 'has-error' : ''} hidden">
+					<div class="form-group ${status.error ? 'has-error' : 'has-success'} hidden">
 						<label class="col-sm-2 control-label">圖片</label>
 						<div class="col-sm-10">
 							<form:input path="contestPhotoPath" rows="5" class="form-control"
@@ -151,7 +151,7 @@
 					</div>
 				</spring:bind>
 
-				<div class="form-group ${status.error ? 'has-error' : ''}">
+				<div class="form-group ${status.error ? 'has-error' : 'has-success'}">
 					<label class="col-sm-2 control-label">封面</label>
 					<div class="col-sm-10">
 						<input class="form-control" type="file" id="fileUpload"

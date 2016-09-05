@@ -27,12 +27,14 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import _05model.clothes.ClothesDAOimpl;
+import _05model.clothes.ClothesVO;
 import _05model.contest.ContestDAOimpl;
 import _05model.contest.ContestVO;
 import _05model.event.EventDAOimpl;
 import _05model.event.EventVO;
 import _05model.member.MemberVO;
 import _05model.runner.RunnerDAOimpl;
+import _05model.runner.RunnerVO;
 import _05model.team.TeamDAOimpl;
 import _05model.team.TeamVO;
 import _05service.email.MailService;
@@ -61,20 +63,20 @@ public class EventController {
 	@Autowired
 	private EventValidator eventValidator;
 
-	// show all contest
+	// show all contests
 	@RequestMapping(value="contest",method = RequestMethod.GET)
 	public String showAllContests(Model model) {
 		List<ContestVO> contests = contestDAO.getAll();
 		model.addAttribute("contests", contests);
 		return "contest";
 	}
-
 	// show contest
 	@RequestMapping(value = "/contest/{contestID}", method = RequestMethod.GET)
 	public String showContest(@PathVariable int contestID, Model model) {
 		List<TeamVO> teams = teamDAO.getTeamById(contestID);
 		List<EventVO> events = eventDAO.getEventById(contestID);
 		ContestVO contest = contestDAO.findByPrimaryKey(contestID);
+		List<ClothesVO> clothes =clothesDAO.getAll();
 		// 修正時間
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd hh:mm");
 		String begin = sdf.format(contest.getRegistrationBegin());
@@ -95,10 +97,11 @@ public class EventController {
 		model.addAttribute("events", events);
 		model.addAttribute("teams", teams);
 		model.addAttribute("contest", contest);
+		model.addAttribute("clothes",clothes);
 		return "detail";
 	}
 
-	// show add form
+	// show add contest form
 	@RequestMapping(value = "/contest/add", method = RequestMethod.GET)
 	public String showAddContestForm(Model model) {
 		ContestVO contest = new ContestVO();
@@ -106,8 +109,7 @@ public class EventController {
 		model.addAttribute("action", new Integer(1));
 		return "contestform";
 	}
-
-	// show updateform
+	// show update contest form
 	@RequestMapping(value = "/contest/{id}/edit", method = RequestMethod.GET)
 	public String showUpdateContestForm(@PathVariable("id") int id, Model model) {
 		ContestVO contest = contestDAO.findByPrimaryKey(id);
@@ -238,9 +240,6 @@ public class EventController {
 
 		return "redirect:/contest";
 	}
-	
-	
-	
 	@InitBinder("eventVO")
 	protected void initBinderEvent(WebDataBinder binder) {
 		binder.setValidator(eventValidator);
@@ -249,13 +248,11 @@ public class EventController {
 	
 	// add event
 	@RequestMapping(value="/{id}/event/add",method =RequestMethod.POST,consumes="application/json",produces = "application/json; charset=UTF-8")
-	public @ResponseBody EventVO addEvent(@PathVariable("id")Integer id,@RequestBody @Validated EventVO eventVO,BindingResult result){
+	public @ResponseBody EventVO addEvent(@PathVariable("id")Integer id,@RequestBody @Validated EventVO eventVO){
 		
 		eventVO.setContestID(id);
 		eventDAO.insert(eventVO);
-		System.out.println(eventVO);
 		System.out.println("ajxa------------------------------------");
-		
 		return eventVO;
 	}
 	
@@ -273,15 +270,11 @@ public class EventController {
 	@RequestMapping(value="{id}/team/add",method =RequestMethod.POST,consumes="application/json",produces = "application/json; charset=UTF-8")
 	public @ResponseBody TeamVO addTeam(@PathVariable("id")Integer id,@RequestBody  TeamVO teamVO,HttpServletResponse res){
 		
-		if(id>0){
 		teamVO.setContestID(id);
 		teamDAO.insert(teamVO);
-		return null;}
 		System.out.println("ajxa------------------------------------");
 		return teamVO;
 	}
-	
-	
 	//delete team
 	@RequestMapping(value="/team/delete",method=RequestMethod.POST,produces = "text/html; charset=UTF-8")//produces = "text/html; charset=UTF-8"
 	public @ResponseBody String deleteTeam(HttpServletRequest req, @RequestParam Integer id){
@@ -318,6 +311,16 @@ public class EventController {
 		}
 		return "redirect:/contest";
 	}
+	// apply 
+	@RequestMapping(value="/apply",method=RequestMethod.GET)
+	public String ContestApply(@RequestParam Integer id,@ModelAttribute RunnerVO runner ,Model model){
+		System.out.println(id);
+		System.out.println(runner.getEventID());
+		
+		
+		return "redirect:/contest/"+id;
+	}
+	
 	
 //	@RequestMapping(value = "/test", method = RequestMethod.POST)
 //	public String testtest(HttpServletRequest req){

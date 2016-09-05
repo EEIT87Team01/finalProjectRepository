@@ -29,7 +29,7 @@ public class MailService {
 
 		MemberVO member = (MemberVO)object;
 		
-		MimeMessagePreparator preparator = getMessagePreparator(member);
+		MimeMessagePreparator preparator = getMessagePreparator(member,"register");
 		
 		try {
             mailSender.send(preparator);
@@ -41,7 +41,7 @@ public class MailService {
 	}
 	
 	
-	private MimeMessagePreparator getMessagePreparator(final MemberVO member){
+	private MimeMessagePreparator getMessagePreparator(final MemberVO member,String action){
 		
 		MimeMessagePreparator preparator = new MimeMessagePreparator() {
 
@@ -54,7 +54,7 @@ public class MailService {
      
                	Map<String, Object> model = new HashMap<String, Object>();
                 model.put("member", member);
-                String action = "register";
+//                String action = "register";
             	String text = geFreeMarkerTemplateContent(model,action);
                 System.out.println("Template content : "+text);
 

@@ -84,7 +84,7 @@ public  class TeamDAOimpl implements TeamDAO {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		try {
 			session.beginTransaction();
-			Query query = session.createQuery("from TeamVO where contestID = ? order by teamID");
+			Query query = session.createQuery("from TeamVO where contestID = ? order by ageRange desc");
 			query.setParameter(0, contestID);
 			list = query.list();
 			session.getTransaction().commit();

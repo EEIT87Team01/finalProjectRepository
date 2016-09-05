@@ -14,7 +14,8 @@
 	href="/runninglife/resources/css/bootstrap.min.css" type="text/css">
 <link rel="stylesheet"
 	href="/runninglife/resources/css/jquery.countdown.css" type="text/css">
-
+<link rel="stylesheet" href="/runninglife/resources/css/apply.css"
+	type="text/css">
 
 </head>
 <script
@@ -22,7 +23,6 @@
 <script src="http://malsup.github.com/jquery.form.js"></script>
 <script src="/runninglife/resources/js/jquery.countdown.min.js"></script>
 <script src="/runninglife/resources/js/bootstrap.min.js"></script>
-
 
 <body class="smoothscroll enable-animation">
 
@@ -134,16 +134,16 @@
 									action="/runninglife/${contest.contestID}/event/add">
 									<td><input type="text" class="form-control" id="eventName"
 										name="eventName" placeholder="項目名稱" /></td>
-									<td><input type="text" class="form-control" id="distance"
-										name="distance" placeholder="距離" /></td>
-									<td><input type="text" class="form-control" id="fee"
+									<td><input type="number" class="form-control"
+										id="distance" name="distance" placeholder="距離" /></td>
+									<td><input type="number" class="form-control" id="fee"
 										name="fee" placeholder="報名費用" /></td>
-									<td><input type="text" class="form-control" id="quota"
+									<td><input type="number" class="form-control" id="quota"
 										name="quota" placeholder="開放名額" /></td>
-									<td><input type="text" class="form-control" id="whenToRun"
-										name="whenToRun" placeholder="06:50:00" /></td>
-									<td><input type="text" class="form-control" id="limitTime"
-										name="limitTime" placeholder="90" /></td>
+									<td><input type="datetime" class="form-control"
+										id="whenToRun" name="whenToRun" placeholder="06:50:00" /></td>
+									<td><input type="number" class="form-control"
+										id="limitTime" name="limitTime" placeholder="90" /></td>
 
 									<td><input type="submit" class="form-control  btn-success"
 										name="submit" value="新增" /></td>
@@ -158,14 +158,14 @@
 					<h4>
 						<span>競賽分組</span>／全程馬拉松組、半程馬拉松組
 					</h4>
-					<p>依性別及年齡共分為10組，詳如下表</p>
+					<p>依性別及年齡分組，詳如下表</p>
 				</div>
 				<div class="table-responsive">
 					<table
 						class="table table-hover table-bordered lohas-table text-center ">
 						<thead>
 							<tr>
-								
+
 								<th class="col-xs-1">組別編號</th>
 								<th class="col-xs-5">組別</th>
 								<th class="col-xs-5">年齡範圍</th>
@@ -175,7 +175,7 @@
 						<tbody id="teamBody">
 							<c:forEach var='team' items='${teams}'>
 								<tr>
-									<td class="teamID" >${team.teamID}</td>
+									<td class="teamID">${team.teamID}</td>
 									<td>${team.teamName}</td>
 									<td>${team.ageRange}~${team.ageRange + 9}</td>
 									<td><a class="btn btn-danger  delete" role="button"
@@ -185,18 +185,49 @@
 							</c:forEach>
 							<tr>
 								<form id="teamForm">
-								<td><input type="text" class="form-control" name="teamID"
-									id="teamID" disabled="disabled" placeholder="" /></td>
-								<td><input type="text" class="form-control" name="teamName"
-									id="teamName" placeholder="男甲組" /></td>
-								<td><input type="text" class="form-control" name="ageRange"
-									id="ageRange" placeholder="19" /></td>
-								<td><input type="submit" class="form-control  btn-success"
-									name="submit" value="新增" /></td>
+									<td><input type="text" class="form-control" name="teamID"
+										id="teamID" disabled="disabled" placeholder="" /></td>
+									<td><input type="text" class="form-control"
+										name="teamName" id="teamName" placeholder="男甲組" /></td>
+									<td><input type="number" class="form-control"
+										name="ageRange" id="ageRange" placeholder="19" /></td>
+									<td><input type="submit" class="form-control  btn-success"
+										name="submit" value="新增" /></td>
 								</form>
 							</tr>
 
 						</tbody>
+					</table>
+				</div>
+				<!-- 衣服尺寸 -->
+				<div
+					class="heading-title heading-border heading-color margin-top-40">
+					<h4>
+						<span>紀念衣尺寸</span>
+					</h4>
+					<p>尺寸詳如下表</p>
+				</div>
+				<div class="table-responsive">
+					<table
+						class="table table-hover table-bordered lohas-table text-center ">
+						<tr>
+							<td>尺寸</td>
+							<c:forEach var='aClothes' items='${clothes}'>
+								<td>${aClothes.clothesSize}</td>
+							</c:forEach>
+						</tr>
+						<tr>
+							<td>胸圍(cm)</td>
+							<c:forEach var='aClothes' items='${clothes}'>
+								<td>${aClothes.breast}</td>
+							</c:forEach>
+						</tr>
+						<tr>
+							<td>衣長(cm)</td>
+							<c:forEach var='aClothes' items='${clothes}'>
+								<td>${aClothes.length}</td>
+							</c:forEach>
+						</tr>
 					</table>
 				</div>
 				<!--退費說明 -->
@@ -288,7 +319,6 @@
 						<p class="size-18">
 							賽事問題請洽<br>神豐國際同濟會
 						</p>
-						<hr>
 						<p class="size-18">報名問題請洽樂活資訊</p>
 						<p class="size-14">
 							<i class="fa fa-phone margin-right-10"></i>05-5336010 <br>聯絡時間：週一至週五
@@ -298,15 +328,54 @@
 							<i class="fa fa-envelope margin-right-10"></i>lohasnet.tw@gmail.com
 						</p>
 					</div>
-					<hr>
-					<a href="#" class="btn btn-lg btn-default btn-bordered"> <span>立即報名</span>
+					<a id="applyLink" class="btn btn-lg btn-default btn-bordered">
+						<span>立即報名</span>
 					</a>
 				</div>
 			</div>
-
 		</div>
 	</div>
 	</section>
+	<div id="applyForm">
+		<!-- Popup Div Starts Here -->
+		<div id="popupContact">
+			<!-- Contact Us Form -->
+			<form action="/runninglife/apply?id=${contest.contestID}" id="form" method="get" name="runner">
+				<img id="close" src="/runninglife/resources/images/Close-2-icon.png"
+					onclick="div_hide()">
+				<h2>${contest.contestName}</h2>
+				<hr>
+				<div>
+				<label for="disabledTextInput">會員帳號(測試用)</label>
+				<input type="text" class="form-control" name="member"/>
+				</div>
+				<input type="text" name="id" class="" value="${contest.contestID}" >
+<%-- 				<input type="text" class="form-control" name="eventID" value="${contest.contestName}"/> --%>
+				<select class="form-control" name="eventID" >
+					<option value="0">項目</option>
+					<c:forEach var="event" items="${events}">
+						<label class="control-label">項目</label>
+						<option value="${event.eventID}">${event.eventName}</option>
+					</c:forEach>
+				</select> <select class="form-control" name="teamID">
+					<option value="0">組別</option>
+					<c:forEach var="team" items="${teams}">
+						<option value="${team.teamID}">${team.teamName}</option>
+					</c:forEach>
+				</select> <select class="form-control" name="clothesSize">
+					<option value="0">衣服尺寸</option>
+					<c:forEach var="aClothes" items="${clothes}">
+						<option value="${aClothes.clothesSize}">${aClothes.clothesSize}</option>
+					</c:forEach>
+<%-- 				<a href="/runninglife/contest/apply?id=${contest.contestID}" --%>
+<!-- 					id="submit">Send</a> -->
+					<input class="form-control btn btn-info" type="submit"/>
+			</form>
+		</div>
+		<!-- Popup Div Ends Here -->
+	</div>
+	<h1>Click Button To Popup Form Using Javascript</h1>
+	<button id="popup" onclick="div_show()">Popup</button>
 </body>
 
 <script src="/runninglife/resources/js/time.js"></script>
@@ -334,8 +403,9 @@
 						function() {
 							var eventIDUrl = $(this).attr("id");
 							console.log($(this).attr("id"));
-							var eventRow=$(this).parent().parent();
-							$.ajax({
+							var eventRow = $(this).parent().parent();
+							$
+									.ajax({
 										mimeType : "text/html; charset=UTF-8", //alert可以show出物件內容
 										type : "POST",
 										url : eventIDUrl,
@@ -344,30 +414,30 @@
 											alert("刪除成功!!!")
 											eventRow.remove();
 										}
-							});
+									});
 						});
 		//分組刪除按鈕綁定
-		$("#teamBody").on("click",".btn-danger",function(){
-			var teamID =$(this).parent().parent().children(".teamID").text();
+		$("#teamBody").on("click", ".btn-danger", function() {
+			var teamID = $(this).parent().parent().children(".teamID").text();
 			alert(teamID);
-	
-			var teamRow =$(this).parent().parent();
+
+			var teamRow = $(this).parent().parent();
 			$.ajax({
 				mimeType : "text/html; charset=UTF-8", //alert可以show出物件內容
 				type : "POST",
 				url : "/runninglife/team/delete",
-				data:{ name: "John",id: teamID},
+				data : {
+					name : "John",
+					id : teamID
+				},
 				success : function() {
 					alert("刪除成功!!!")
 					teamRow.remove();
 				}
 			});
 		});
-		
+
 	});
-	
-	
-	
 
 	//轉成json函式
 	(function($) {
@@ -388,31 +458,41 @@
 			return o;
 		};
 	})(jQuery);
-	$('#teamForm').submit(function(e){
+	$('#teamForm').submit(function(e) {
 		e.preventDefault();
-		var JsonObj=$(this).serializeFormJSON();
-		var JsonStr=JSON.stringify(JsonObj);
-		var contestID=$("#contestID").text();
+		var JsonObj = $(this).serializeFormJSON();
+		var JsonStr = JSON.stringify(JsonObj);
+		var contestID = $("#contestID").text();
 		alert(JsonStr);
 		alert(contestID);
 		$.ajax({
 			type : "POST",
-			url : "/runninglife/"+contestID+"/team/add",
+			url : "/runninglife/" + contestID + "/team/add",
 			contentType : "application/json",
 			data : JsonStr,
 			mimeType : "application/json; charset=UTF-8",
 			success : showTeam
 		});
-		
+
 	})
-	function showTeam(team){
-		var upper = team.ageRange+9;
+	function showTeam(team) {
+		var upper = team.ageRange + 9;
 		alert(upper);
 		alert("showTeam");
-		$('#teamForm').parent().before('<tr><td class="teamID">'+team.teamID+'</td><td>'+team.teamName+'</td><td>'+team.ageRange+'~'+upper+'</td><td><a class="btn btn-danger  delete" role="button"data-text="真的要刪除此項目嗎?" data-confirm-button="是的"data-cancel-button="不了"data-confirm-button-class: "btn-danger">刪除</a></td></tr>');
+		$('#teamForm')
+				.parent()
+				.before(
+						'<tr><td class="teamID">'
+								+ team.teamID
+								+ '</td><td>'
+								+ team.teamName
+								+ '</td><td>'
+								+ team.ageRange
+								+ '~'
+								+ upper
+								+ '</td><td><a class="btn btn-danger  delete" role="button"data-text="真的要刪除此項目嗎?" data-confirm-button="是的"data-cancel-button="不了"data-confirm-button-class: "btn-danger">刪除</a></td></tr>');
 	}
-	
-	
+
 	//新增event
 	$('#eventForm').submit(function(e) {
 		e.preventDefault();
@@ -472,6 +552,29 @@
 								+ event.eventID
 								+ '/delete"class="btn btn-danger  delete" role="button"data-text="真的要刪除此項目嗎?" data-confirm-button="是的"data-cancel-button="不了"data-confirm-button-class: "btn-danger">刪除</a></td></tr>');
 
+	}
+	$("#applyLink").on("click", function() {
+		document.getElementById('applyForm').style.display = "block";
+	})
+
+	// Validating Empty Field
+	function check_empty() {
+		if (document.getElementById('name').value == ""
+				|| document.getElementById('email').value == ""
+				|| document.getElementById('msg').value == "") {
+			alert("Fill All Fields !");
+		} else {
+			document.getElementById('form').submit();
+			alert("Form Submitted Successfully...");
+		}
+	}
+	//Function To Display Popup
+	function div_show() {
+		document.getElementById('applyForm').style.display = "block";
+	}
+	//Function to Hide Popup
+	function div_hide() {
+		document.getElementById('applyForm').style.display = "none";
 	}
 </script>
 </html>
