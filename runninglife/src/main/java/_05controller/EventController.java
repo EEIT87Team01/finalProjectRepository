@@ -62,7 +62,7 @@ public class EventController {
 	private EventValidator eventValidator;
 
 	// show all contest
-	@RequestMapping("contest")
+	@RequestMapping(value="contest",method = RequestMethod.GET)
 	public String showAllContests(Model model) {
 		List<ContestVO> contests = contestDAO.getAll();
 		model.addAttribute("contests", contests);
@@ -87,11 +87,8 @@ public class EventController {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		long timer = millseconds.getTime();
 		EventVO event = new EventVO();
 		model.addAttribute("event",event);
-		System.out.println(timer);
-		model.addAttribute("timer", timer);
 		model.addAttribute("start", start);
 		model.addAttribute("begin", begin);
 		model.addAttribute("end", end);
@@ -272,6 +269,27 @@ public class EventController {
 		return "刪除成功";
 	}
 	
+	// add team
+	@RequestMapping(value="{id}/team/add",method =RequestMethod.POST,consumes="application/json",produces = "application/json; charset=UTF-8")
+	public @ResponseBody TeamVO addTeam(@PathVariable("id")Integer id,@RequestBody  TeamVO teamVO,HttpServletResponse res){
+		
+		if(id>0){
+		teamVO.setContestID(id);
+		teamDAO.insert(teamVO);
+		return null;}
+		System.out.println("ajxa------------------------------------");
+		return teamVO;
+	}
+	
+	
+	//delete team
+	@RequestMapping(value="/team/delete",method=RequestMethod.POST,produces = "text/html; charset=UTF-8")//produces = "text/html; charset=UTF-8"
+	public @ResponseBody String deleteTeam(HttpServletRequest req, @RequestParam Integer id){
+		teamDAO.delete(id);
+		System.out.println("刪除teamID="+id);
+		return "刪除成功";
+	}
+	
 	
 	private String saveDirectory = "c:/run/upload/";
 
@@ -301,13 +319,13 @@ public class EventController {
 		return "redirect:/contest";
 	}
 	
-	@RequestMapping(value = "/test", method = RequestMethod.POST)
-	public String testtest(HttpServletRequest req){
-		String param = (String) req.getAttribute("param");
-		System.out.println(param);
-		System.out.println(11111111);
-		return "aa";
-	}
+//	@RequestMapping(value = "/test", method = RequestMethod.POST)
+//	public String testtest(HttpServletRequest req){
+//		String param = (String) req.getAttribute("param");
+//		System.out.println(param);
+//		System.out.println(11111111);
+//		return "aa";
+//	}
 	
 	
 	

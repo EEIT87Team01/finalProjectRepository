@@ -10,7 +10,7 @@ import _05hibernate.util.HibernateUtil;
 import _05model.runner.RunnerVO;
 @Service
 public  class TeamDAOimpl implements TeamDAO {
-	private static final String GET_ALL_STMT = "from TeamVO order by teamID";
+	private static final String GET_ALL_STMT = "from TeamVO order by ageRange";
 	@Override
 	public void insert(TeamVO teamVO) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
