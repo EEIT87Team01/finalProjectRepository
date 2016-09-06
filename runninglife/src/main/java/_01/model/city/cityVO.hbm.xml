@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="hibernate._01.model.city.CityBean" table="city">
+        <id name="cityID" column="cityID">
+        	<generator class="assigned"/>
+        </id>
+        <many-to-one name="countryID" class="hibernate._01.model.country.CountryBean" lazy="false">
+        	<column name="countryID"></column>
+        </many-to-one>
+        <property name="cityName" column="cityName"/>
+        
+    </class>
+</hibernate-mapping>

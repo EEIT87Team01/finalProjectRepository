@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="hibernate._01.model.country.CountryBean" table="country">
+        <id name="countryID" column="countryID">
+        	<generator class="assigned"/>
+        </id>
+        <property name="country" column="country"/>
+        <set name="citys" table="city" lazy="false" cascade="all" inverse="true">
+        	<key><column name="countryID"/></key>
+        	<one-to-many class="hibernate._01.model.city.CityBean"/>
+        </set>
+        
+        
+    </class>
+</hibernate-mapping>

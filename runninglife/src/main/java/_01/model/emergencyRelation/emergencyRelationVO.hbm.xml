@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016/8/29 ?W?? 09:00:54 by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping>
+    <class name="hibernate._01.model.emergencyRelation.EmergencyRelationBean" table="emergencyRelation">
+        <id name="relationID" column="relationID">
+        	<generator class="identity"/>
+        </id>
+        <property name="relationName" column="relationName"/>
+    </class>
+</hibernate-mapping>
