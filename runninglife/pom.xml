@@ -14,6 +14,21 @@
     </properties>
 
     <dependencies>
+    	<!-- https://mvnrepository.com/artifact/javax.validation/validation-api -->
+		<dependency>
+		    <groupId>javax.validation</groupId>
+		    <artifactId>validation-api</artifactId>
+		    <version>1.1.0.Final</version>
+		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-validator -->
+		<dependency>
+		    <groupId>org.hibernate</groupId>
+		    <artifactId>hibernate-validator</artifactId>
+		    <version>5.2.4.Final</version>
+		</dependency>
+
+		
     	<!-- sqljdbc Driver -->
         <dependency>
         	<groupId>com.microsoft.jdbc.sqlserver</groupId>
@@ -34,6 +49,14 @@
 		    <artifactId>slf4j-log4j12</artifactId>
 		    <version>1.7.21</version>
 		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/org.springframework/spring-tx -->
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-tx</artifactId>
+		    <version>4.3.2.RELEASE</version>
+		</dependency>
+		
 		
 		<!-- https://mvnrepository.com/artifact/org.springframework/spring-core -->
 		<dependency>
@@ -106,6 +129,25 @@
             <version>4.8.2</version>
             <scope>test</scope>
         </dependency>
+        
+        <!-- Jackson JSON Mapper -->
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-mapper-asl</artifactId>
+			<version>1.9.10</version>
+		</dependency>
+		
+		<dependency>
+	        <groupId>com.fasterxml.jackson.core</groupId>
+	        <artifactId>jackson-core</artifactId>
+	        <version>2.4.3</version>
+	    </dependency>
+	    <dependency>
+	        <groupId>com.fasterxml.jackson.core</groupId>
+	        <artifactId>jackson-databind</artifactId>
+	        <version>2.4.3</version>
+	    </dependency>
+		
     </dependencies>
     <build>
         <finalName>${project.artifactId}-${project.version}</finalName>

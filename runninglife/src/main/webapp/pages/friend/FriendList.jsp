@@ -10,7 +10,7 @@
 <body>
 
 朋友名單<br>
-<c:forEach var="friend" items="${sessionScope.member.friends}">
+<c:forEach var="friend" items="${member.friends}">
 	${friend.firstName}, ${friend.lastName}<br>
 </c:forEach>
 

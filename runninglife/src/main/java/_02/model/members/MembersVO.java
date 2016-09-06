@@ -1,8 +1,18 @@
 package _02.model.members;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -25,24 +35,23 @@ public class MembersVO implements java.io.Serializable {
 	
 	private String password;
 	
-	@ManyToMany(cascade={CascadeType.MERGE}, fetch = FetchType.EAGER)
+	@ManyToMany(cascade={CascadeType.MERGE}, fetch = FetchType.LAZY)
 	@JoinTable(name="friendRequest",
 		joinColumns={@JoinColumn(name="requesterID")},
 		inverseJoinColumns={@JoinColumn(name="receiverID")})
-	private List<MembersVO> friendRequest;
+	private Set<MembersVO> friendRequest = new HashSet<MembersVO>();
 	
-	@ManyToMany(mappedBy="friendRequest", fetch = FetchType.EAGER)
-	private List<MembersVO> friendReceive;
+	@ManyToMany(mappedBy="friendRequest", fetch = FetchType.LAZY)
+	private Set<MembersVO> friendReceive = new HashSet<MembersVO>();
 	
-	@ManyToMany(cascade={CascadeType.MERGE}, fetch = FetchType.EAGER)
+	@ManyToMany(cascade={CascadeType.MERGE}, fetch = FetchType.LAZY)
 	@JoinTable(name="friendRelationship",
 		joinColumns={@JoinColumn(name="memberID")},
 		inverseJoinColumns={@JoinColumn(name="friendID")})
-	private List<MembersVO> friends;
+	private Set<MembersVO> friends = new HashSet<MembersVO>();
 
-	@ManyToMany(mappedBy="friends", fetch = FetchType.EAGER)
-	private List<MembersVO> inverseFriends;
-	
+	@ManyToMany(mappedBy="friends", fetch = FetchType.LAZY)
+	private Set<MembersVO> inverseFriends = new HashSet<MembersVO>();
 	
 	@Override
 	public String toString() {
@@ -97,39 +106,36 @@ public class MembersVO implements java.io.Serializable {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
-	public List<MembersVO> getFriendRequest() {
+	
+	public Set<MembersVO> getFriendRequest() {
 		return friendRequest;
 	}
 
-	public void setFriendRequest(List<MembersVO> friendRequest) {
+	public void setFriendRequest(Set<MembersVO> friendRequest) {
 		this.friendRequest = friendRequest;
 	}
 
-	public List<MembersVO> getFriendReceive() {
+	public Set<MembersVO> getFriendReceive() {
 		return friendReceive;
 	}
 
-	public void setFriendReceive(List<MembersVO> friendReceive) {
+	public void setFriendReceive(Set<MembersVO> friendReceive) {
 		this.friendReceive = friendReceive;
 	}
 
-	public List<MembersVO> getFriends() {
+	public Set<MembersVO> getFriends() {
 		return friends;
 	}
 
-	public void setFriends(List<MembersVO> friends) {
+	public void setFriends(Set<MembersVO> friends) {
 		this.friends = friends;
 	}
 
-	public List<MembersVO> getInverseFriends() {
+	public Set<MembersVO> getInverseFriends() {
 		return inverseFriends;
 	}
 
-	public void setInverseFriends(List<MembersVO> inverseFriends) {
+	public void setInverseFriends(Set<MembersVO> inverseFriends) {
 		this.inverseFriends = inverseFriends;
 	}
-	
-	
-	
 }

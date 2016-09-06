@@ -1,119 +1,54 @@
 package _02.model.friendRequest;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import org.hibernate.Query;
-import org.hibernate.Session;
+import org.hibernate.Criteria;
+import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
-import _02.model.HibernateUtil;
-import _02.model.members.MembersVO;
-
+@Repository("friendRequestDAO")
 public class FriendRequestDAO implements FriendRequestDAO_interface {
 	
-	static private final String GET_BY_REQUESTER_STMT = "FROM FriendRequestVO WHERE requesterID=?";
-	static private final String GET_BY_RECEIVER_STMT = "FROM FriendRequestVO WHERE receiverID=?";
-	static private final String GET_ALL_STMT = "FROM FriendRequestVO";
-
+	@Autowired
+	private SessionFactory sessionFactory;
+	 
+	public FriendRequestDAO(SessionFactory sessionFactory) {this.sessionFactory = sessionFactory;}
+	public FriendRequestDAO() {super();}
+	public SessionFactory getSessionFactory() {return sessionFactory;}
+	public void setSessionFactory(SessionFactory sessionFactory) {this.sessionFactory = sessionFactory;}
+	
 	@Override
 	public void insert(FriendRequestVO friendRequestVO) {
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		
-		try{
-			session.beginTransaction();
-			session.saveOrUpdate(friendRequestVO);
-			session.getTransaction().commit();
-		} catch  (RuntimeException e) {
-			session.getTransaction().rollback();
-			throw e;
-		}
+		sessionFactory.getCurrentSession().persist(friendRequestVO);
 	}
 
 	@Override
 	public void update(FriendRequestVO friendRequestVO) {
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		
-		try{
-			session.beginTransaction();
-			session.saveOrUpdate(friendRequestVO);
-			session.getTransaction().commit();
-		} catch  (RuntimeException e) {
-			session.getTransaction().rollback();
-			throw e;
-		}
+		sessionFactory.getCurrentSession().saveOrUpdate(friendRequestVO);
 	}
 
 	@Override
-	public void delete(FriendRequestVO friendRequestVO) {
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		
-		try{
-			session.beginTransaction();
-			session.delete(friendRequestVO);
-			session.getTransaction().commit();
-		} catch  (RuntimeException e) {
-			session.getTransaction().rollback();
-			throw e;
-		}
+	public void deleteByPrimaryKey(FriendRequestPK friendRequestPK) {
+		Criteria cri = sessionFactory.getCurrentSession().createCriteria(FriendRequestVO.class)
+					   .add(Restrictions.eq("friendRequestPK", friendRequestPK));
+		FriendRequestVO frvo = (FriendRequestVO) cri.uniqueResult();
+		sessionFactory.getCurrentSession().delete(frvo);
 	}
 
 	@Override
 	public FriendRequestVO findByPrimaryKey(FriendRequestPK friendRequestPK) {
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		FriendRequestVO frsvo = new FriendRequestVO();
-		
-		try{
-			session.beginTransaction();
-			frsvo = (FriendRequestVO) session.get(FriendRequestVO.class, friendRequestPK);
-			session.getTransaction().commit();
-		} catch  (RuntimeException e) {
-			session.getTransaction().rollback();
-			throw e;
-		}
-		
-		return frsvo;
+		Criteria cri = sessionFactory.getCurrentSession().createCriteria(FriendRequestVO.class)
+				   .add(Restrictions.eq("friendRequestPK", friendRequestPK));
+		return (FriendRequestVO) cri.uniqueResult();
 	}
 
-	@Override
-	public List<FriendRequestVO> findByRequesterID(MembersVO membersVO) {
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		List<FriendRequestVO> frsvos = new ArrayList<FriendRequestVO>();
-		
-		try{
-			session.beginTransaction();
-			Query query = session.createQuery(GET_BY_REQUESTER_STMT);
-			query.setString(1, membersVO.getMemberID());
-			frsvos = query.list();
-			session.getTransaction().commit();
-		} catch  (RuntimeException e) {
-			session.getTransaction().rollback();
-			throw e;
-		}
-		
-		return frsvos;
-	}
-
-	@Override
-	public List<FriendRequestVO> findByReceiverID(MembersVO membersVO) {
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		List<FriendRequestVO> frsvos = new ArrayList<FriendRequestVO>();
-		
-		try{
-			session.beginTransaction();
-			Query query = session.createQuery(GET_ALL_STMT);
-			frsvos = query.list();
-			session.getTransaction().commit();
-		} catch  (RuntimeException e) {
-			session.getTransaction().rollback();
-			throw e;
-		}
-		
-		return frsvos;
-	}
-
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<FriendRequestVO> getAll() {
-		return null;
+		Criteria cri = sessionFactory.getCurrentSession().createCriteria(FriendRequestVO.class);
+		return (List<FriendRequestVO>)cri.list();
 	}
 
 }

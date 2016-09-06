@@ -1,176 +1,106 @@
 package _02.model.members;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
-import javax.transaction.Transactional;
+import org.hibernate.Criteria;
+import org.hibernate.Hibernate;
+import org.hibernate.criterion.Restrictions;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
-import org.hibernate.Query;
-import org.hibernate.Session;
-
-import _02.model.HibernateUtil;
-
+@Repository("membersDAO")
 public class MembersDAO implements MembersDAO_interface{
 	
-	static private final String FIND_BY_FIRSTNAME_STMT = "FROM MembersVO WHERE firstName=?";
-	static private final String FIND_BY_FIRSTNAME_AND_LASTNAME_STMT = "FROM MembersVO WHERE firstName=? or lastName=?";
-	static private final String FIND_BY_ACCOUNT_STMT = "FROM MembersVO WHERE account=?";
-	static private final String GET_ALL_STMT = "FROM MembersVO";
+	@Autowired
+	private SessionFactory sessionFactory;
+	 
+	public MembersDAO(SessionFactory sessionFactory) {this.sessionFactory = sessionFactory;}
+	public MembersDAO() {super();}
+	public SessionFactory getSessionFactory() {return sessionFactory;}
+	public void setSessionFactory(SessionFactory sessionFactory) {this.sessionFactory = sessionFactory;}
 
 	@Override
 	public void insert(MembersVO memberVo) {
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		
-		try {
-			session.beginTransaction();
-			session.saveOrUpdate(memberVo);
-			session.getTransaction().commit();
-			
-		} catch (RuntimeException e) {
-			session.getTransaction().rollback();
-			throw e;
-		}
+		sessionFactory.getCurrentSession().persist(memberVo);
 	}
 
 	@Override
 	public void update(MembersVO memberVo) {
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		
-		try {
-			session.beginTransaction();
-			session.saveOrUpdate(memberVo);
-			session.getTransaction().commit();
-			
-		} catch (RuntimeException e) {
-			session.getTransaction().rollback();
-			throw e;
-		}
+		sessionFactory.getCurrentSession().saveOrUpdate(memberVo);
 	}
 
 	@Override
-	public void delete(String memberID) {
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		
-		try {
-			session.beginTransaction();
-			MembersVO mvo = (MembersVO) session.get(MembersVO.class, memberID);
-			session.delete(mvo);
-			session.getTransaction().commit();
-			
-		} catch (RuntimeException e) {
-			session.getTransaction().rollback();
-			throw e;
-		}
+	public void deleteByPrimaryKey(String memberID) {
+		Criteria cri = sessionFactory.getCurrentSession().createCriteria(MembersVO.class)
+				.add(Restrictions.eq("memberID", memberID));
+		MembersVO mvo = (MembersVO) cri.uniqueResult();
+		sessionFactory.getCurrentSession().delete(mvo);
 	}
 
 	@Override
 	public MembersVO findByID(String memberID) {
-		MembersVO mvo = new MembersVO();
-		
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		
-		try {
-			session.beginTransaction();
-			mvo = (MembersVO) session.get(MembersVO.class, memberID);
-			session.getTransaction().commit();
-			} catch (RuntimeException e) {
-				session.getTransaction().rollback();
-				throw e;
-		}
+		Criteria cri = sessionFactory.getCurrentSession().createCriteria(MembersVO.class)
+				.add(Restrictions.eq("memberID", memberID));
+		MembersVO mvo = (MembersVO) cri.uniqueResult();
 		return mvo;
 	}
 	
 	@Override
 	public MembersVO findByFirstName(String firstName) {
-		MembersVO mvo = new MembersVO();
-		
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		
-		try {
-			session.beginTransaction();
-			Query query = session.createQuery(FIND_BY_FIRSTNAME_STMT);
-			query.setString(0, firstName);
-			mvo = (MembersVO) query.uniqueResult();
-			session.getTransaction().commit();
-			} catch (RuntimeException e) {
-				session.getTransaction().rollback();
-				throw e;
-		}
+		Criteria cri = sessionFactory.getCurrentSession().createCriteria(MembersVO.class)
+				.add(Restrictions.eq("firstName", firstName));
+		MembersVO mvo = (MembersVO) cri.uniqueResult();
 		return mvo;
 	}
 
 	@Override
 	public List<MembersVO> getAll() {
-		List<MembersVO> mvos = new ArrayList<MembersVO>();
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		
-		try {
-			session.beginTransaction();
-			Query query = session.createQuery(GET_ALL_STMT);
-			mvos = query.list();
-			session.getTransaction().commit();
-			} catch (RuntimeException e) {
-				session.getTransaction().rollback();
-				throw e;
-		}
+		Criteria cri = sessionFactory.getCurrentSession().createCriteria(MembersVO.class);
+		@SuppressWarnings("unchecked")
+		List<MembersVO> mvos = (List<MembersVO>)cri.list();
 		return mvos;
 	}
-
+	
 	@Override
 	public MembersVO findByAccount(String account) {
-		MembersVO mvo = new MembersVO();
-		
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		
-		try {
-			session.beginTransaction();
-			Query query = session.createQuery(FIND_BY_ACCOUNT_STMT);
-			query.setString(0, account);
-			mvo = (MembersVO) query.uniqueResult();
-			session.getTransaction().commit();
-			} catch (RuntimeException e) {
-				session.getTransaction().rollback();
-				throw e;
+		Criteria cri = sessionFactory.getCurrentSession().createCriteria(MembersVO.class)
+				.add(Restrictions.eq("account", account));
+		MembersVO mvo = (MembersVO) cri.uniqueResult();
+		return mvo;
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<MembersVO> findByFirstNameOrLastName(String name) {
+		Criteria cri = sessionFactory.getCurrentSession().createCriteria(MembersVO.class)
+				.add(Restrictions.disjunction()
+						.add(Restrictions.eq("firstName", name))
+						.add(Restrictions.eq("lastName", name))
+						);
+		List<MembersVO> mvos = (List<MembersVO>) cri.list();
+		return mvos;
+	}
+	
+	@Override
+	public MembersVO listFriend(String memberID){
+		Criteria cri = sessionFactory.getCurrentSession().createCriteria(MembersVO.class)
+				.add(Restrictions.eq("memberID", memberID));
+		MembersVO mvo = (MembersVO) cri.uniqueResult();
+		if (mvo != null){
+			Hibernate.initialize(mvo.getFriends());
 		}
 		return mvo;
 	}
 	
 	@Override
-	public List<MembersVO> listFriend(MembersVO memberVO){
-		List<MembersVO> friends = null;
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		
-		try {
-			session.beginTransaction();
-			friends = ((MembersVO) session.load(MembersVO.class, memberVO.getMemberID())).getFriends();
-			session.getTransaction().commit();
-			} catch (RuntimeException e) {
-				session.getTransaction().rollback();
-				throw e;
+	public MembersVO listFriendReceive(String memberID){
+		Criteria cri = sessionFactory.getCurrentSession().createCriteria(MembersVO.class)
+				.add(Restrictions.eq("memberID", memberID));
+		MembersVO mvo = (MembersVO) cri.uniqueResult();
+		if (mvo != null){
+			Hibernate.initialize(mvo.getFriendReceive());
 		}
-		
-		return friends;
-		
+		return mvo;
 	}
-
-	@Override
-	public List<MembersVO> findByFirstNameOrLastName(String name) {
-		List<MembersVO> mvos = null;
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		
-		try {
-			session.beginTransaction();
-			Query query = session.createQuery(FIND_BY_FIRSTNAME_AND_LASTNAME_STMT);
-			query.setString(0, name);
-			query.setString(1, name);
-			mvos = query.list();
-			session.getTransaction().commit();
-			} catch (RuntimeException e) {
-				session.getTransaction().rollback();
-				throw e;
-		}
-		return mvos;
-	}
-
 }
