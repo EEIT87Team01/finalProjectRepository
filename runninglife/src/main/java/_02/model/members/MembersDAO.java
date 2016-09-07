@@ -81,26 +81,4 @@ public class MembersDAO implements MembersDAO_interface{
 		List<MembersVO> mvos = (List<MembersVO>) cri.list();
 		return mvos;
 	}
-	
-	@Override
-	public MembersVO listFriend(String memberID){
-		Criteria cri = sessionFactory.getCurrentSession().createCriteria(MembersVO.class)
-				.add(Restrictions.eq("memberID", memberID));
-		MembersVO mvo = (MembersVO) cri.uniqueResult();
-		if (mvo != null){
-			Hibernate.initialize(mvo.getFriends());
-		}
-		return mvo;
-	}
-	
-	@Override
-	public MembersVO listFriendReceive(String memberID){
-		Criteria cri = sessionFactory.getCurrentSession().createCriteria(MembersVO.class)
-				.add(Restrictions.eq("memberID", memberID));
-		MembersVO mvo = (MembersVO) cri.uniqueResult();
-		if (mvo != null){
-			Hibernate.initialize(mvo.getFriendReceive());
-		}
-		return mvo;
-	}
 }

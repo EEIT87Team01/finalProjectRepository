@@ -12,6 +12,4 @@ public interface MembersService_interface {
 	public MembersVO findByFirstName(String firstName);
 	public List<MembersVO> findByFirstNameOrLastName(String name);
 	public MembersVO findByAccount(String account);
-	public MembersVO listFriend(String memberID);
-	public MembersVO listFriendReceive(String memberID);
 }

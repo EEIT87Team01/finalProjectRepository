@@ -5,15 +5,26 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<!-- 最新編譯和最佳化的 CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+	<!-- 選擇性佈景主題 -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
+	<!-- 最新編譯和最佳化的 JavaScript -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
 <title>FriendList</title>
 </head>
 <body>
 
-朋友名單<br>
-<c:forEach var="friend" items="${member.friends}">
-	${friend.firstName}, ${friend.lastName}<br>
+<table  class="table" id="receivedList" style="width: 300px">
+<tr><th>FirstName</th><th>LastName</th><th></th></tr>
+<c:forEach var="friend" items="${friends}">
+	<tr><td>${friend.friendRelationshipPK.friendID.firstName}</td>
+		<td>${friend.friendRelationshipPK.friendID.lastName}</td>
+		<td>
+		<button class="btn btn-danger" id="">刪除</button>
+	</tr>
 </c:forEach>
-
-
+</table>
 </body>
 </html>

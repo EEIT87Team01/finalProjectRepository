@@ -8,6 +8,8 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import _02.model.members.MembersVO;
+
 @Repository("friendRelationshipDAO")
 public class FriendRelationshipDAO implements FriendRelationshipDAO_interface {
 	
@@ -22,19 +24,11 @@ public class FriendRelationshipDAO implements FriendRelationshipDAO_interface {
 	@Override
 	public void insert(FriendRelationshipVO friendRelationshipVO) {
 		sessionFactory.getCurrentSession().persist(friendRelationshipVO);
-		sessionFactory.getCurrentSession().persist(new FriendRelationshipVO (
-										new FriendRelationshipPK(
-												friendRelationshipVO.getFriendRelationshipPK().getFriendID(),
-												friendRelationshipVO.getFriendRelationshipPK().getMemberID())));
 	}
 
 	@Override
 	public void deleteByPrimaryKey(FriendRelationshipPK friendRelationshipPK) {
 		sessionFactory.getCurrentSession().delete(new FriendRelationshipVO (friendRelationshipPK));
-		sessionFactory.getCurrentSession().delete(new FriendRelationshipVO (
-										new FriendRelationshipPK(
-												friendRelationshipPK.getFriendID(),
-												friendRelationshipPK.getMemberID())));
 	}
 
 	@Override
@@ -44,6 +38,13 @@ public class FriendRelationshipDAO implements FriendRelationshipDAO_interface {
 		return (FriendRelationshipVO) cri.uniqueResult();
 	}
 
+	@Override
+	public List<FriendRelationshipVO> findByMemberID(MembersVO memberID) {
+		Criteria cri = sessionFactory.getCurrentSession().createCriteria(FriendRelationshipVO.class)
+				.add(Restrictions.eq("friendRelationshipPK.memberID", memberID));
+		return (List<FriendRelationshipVO>)cri.list();
+	}
+	
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<FriendRelationshipVO> getAll() {

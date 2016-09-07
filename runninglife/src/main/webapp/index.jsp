@@ -8,18 +8,12 @@
 </head>
 <body>
 
-<a href="MemberTest">MemberJNDI Test</a><br>
-<a href="FriendTest">FriendJNDI Test</a>
-
-<!-- <form action="LoginService" method="post"> -->
-<form action="Login" method="post">
+<form action="member/Login" method="post">
 	<h3>Login</h3>
 	帳號：<input type="text" name="account" /><br>
 	密碼：<input type="password" name="pass" /><br>
 	<button type="submit">login</button><br>
 </form>
 
-	<a href="locList">SpringMVC Test</a>
-	<a href="hello.html">SpringMVC Test</a>
 </body>
 </html>

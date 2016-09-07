@@ -35,24 +35,6 @@ public class MembersVO implements java.io.Serializable {
 	
 	private String password;
 	
-	@ManyToMany(cascade={CascadeType.MERGE}, fetch = FetchType.LAZY)
-	@JoinTable(name="friendRequest",
-		joinColumns={@JoinColumn(name="requesterID")},
-		inverseJoinColumns={@JoinColumn(name="receiverID")})
-	private Set<MembersVO> friendRequest = new HashSet<MembersVO>();
-	
-	@ManyToMany(mappedBy="friendRequest", fetch = FetchType.LAZY)
-	private Set<MembersVO> friendReceive = new HashSet<MembersVO>();
-	
-	@ManyToMany(cascade={CascadeType.MERGE}, fetch = FetchType.LAZY)
-	@JoinTable(name="friendRelationship",
-		joinColumns={@JoinColumn(name="memberID")},
-		inverseJoinColumns={@JoinColumn(name="friendID")})
-	private Set<MembersVO> friends = new HashSet<MembersVO>();
-
-	@ManyToMany(mappedBy="friends", fetch = FetchType.LAZY)
-	private Set<MembersVO> inverseFriends = new HashSet<MembersVO>();
-	
 	@Override
 	public String toString() {
 		return "MembersVO [memberID=" + memberID + ", firstName=" + firstName + ", lastName=" + lastName + ", nickname="
@@ -107,35 +89,4 @@ public class MembersVO implements java.io.Serializable {
 		this.password = password;
 	}
 	
-	public Set<MembersVO> getFriendRequest() {
-		return friendRequest;
-	}
-
-	public void setFriendRequest(Set<MembersVO> friendRequest) {
-		this.friendRequest = friendRequest;
-	}
-
-	public Set<MembersVO> getFriendReceive() {
-		return friendReceive;
-	}
-
-	public void setFriendReceive(Set<MembersVO> friendReceive) {
-		this.friendReceive = friendReceive;
-	}
-
-	public Set<MembersVO> getFriends() {
-		return friends;
-	}
-
-	public void setFriends(Set<MembersVO> friends) {
-		this.friends = friends;
-	}
-
-	public Set<MembersVO> getInverseFriends() {
-		return inverseFriends;
-	}
-
-	public void setInverseFriends(Set<MembersVO> inverseFriends) {
-		this.inverseFriends = inverseFriends;
-	}
 }

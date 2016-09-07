@@ -52,14 +52,4 @@ public class MembersService implements MembersService_interface {
 	public MembersVO findByAccount(String account) {
 		return membersDAO.findByAccount(account);
 	}
-
-	@Override
-	public MembersVO listFriend(String memberID) {
-		return membersDAO.listFriend(memberID);
-	}
-	
-	public MembersVO listFriendReceive(String memberID){
-		return membersDAO.listFriendReceive(memberID);
-	}
-
 }
