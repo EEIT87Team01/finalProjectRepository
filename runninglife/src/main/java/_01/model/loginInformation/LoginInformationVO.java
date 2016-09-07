@@ -8,6 +8,8 @@ import javax.persistence.CascadeType;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -18,9 +20,12 @@ import _01.model.members.MembersVO;
 public class LoginInformationVO implements Serializable{
 	
 	@EmbeddedId
-	private LoginInformationPK memberID;
+	private LoginInformationPK memberAccount;
 	
-	private String memberAccount;
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "memberID")
+	private MembersVO  memberID;
+	
 	private String password;
 	private String status;
 	
@@ -28,57 +33,44 @@ public class LoginInformationVO implements Serializable{
 
 	}
 
-	public LoginInformationVO(LoginInformationPK memberID, String memberAccount, String password, String status) {
+	public LoginInformationVO(LoginInformationPK memberAccount, MembersVO memberID, String password, String status) {
 		super();
-		this.memberID = memberID;
 		this.memberAccount = memberAccount;
+		this.memberID = memberID;
 		this.password = password;
 		this.status = status;
 	}
 
-	public LoginInformationPK getLoginInformationID() {
-		return memberID;
-	}
-
-
-	public void setLoginInformationID(LoginInformationPK memberID) {
-		this.memberID = memberID;
-	}
-
-
-	public String getMemberAccount() {
+	public LoginInformationPK getMemberAccount() {
 		return memberAccount;
 	}
 
-
-	public void setMemberAccount(String memberAccount) {
+	public void setMemberAccount(LoginInformationPK memberAccount) {
 		this.memberAccount = memberAccount;
 	}
 
+	public MembersVO getMemberID() {
+		return memberID;
+	}
+
+	public void setMemberID(MembersVO memberID) {
+		this.memberID = memberID;
+	}
 
 	public String getPassword() {
 		return password;
 	}
 
-
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
 
 	public String getStatus() {
 		return status;
 	}
 
-
 	public void setStatus(String status) {
 		this.status = status;
 	}
 
-	@Override
-	public String toString() {
-		return "LoginInformationVO [membersID=" + memberID + ", memberAccount=" + memberAccount + ", password="
-				+ password + ", status=" + status + "]";
-	}
-	
 }

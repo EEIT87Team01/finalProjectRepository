@@ -77,19 +77,24 @@ public class LoginInformationDAO implements LoginInformationInterface{
 			
 			loginInformationBean = 
 					(LoginInformationVO)session.get(LoginInformationVO.class,loginInformationPK);
-			System.out.println("MemberAccount: "+loginInformationBean.getLoginInformationID().getMemberID() +", ");
-			System.out.println("Password: "+loginInformationBean.getMemberAccount() + ", ");
-			System.out.println("LoginMethod: "+loginInformationBean.getPassword() + ", ");
-			System.out.println("MemberID: "+loginInformationBean.getLoginInformationID().getLoginMethod() + ", ");
-			System.out.println("MemberID: "+loginInformationBean.getStatus());
-			System.out.println(" ");
-			
-			session.getTransaction().commit();
+			if(loginInformationBean != null){
+				System.out.println("MemberAccount: "+loginInformationBean.getMemberAccount().getMemberAccount()+ ", ");
+				System.out.println("Password: "+loginInformationBean.getPassword() + ", ");
+				System.out.println("MemberID: "+loginInformationBean.getMemberID() +", ");
+				System.out.println("LoginMethod: "+loginInformationBean.getMemberAccount().getLoginMethod() + ", ");
+				System.out.println("Status: "+loginInformationBean.getStatus());
+				System.out.println(" ");
+				
+				session.getTransaction().commit();
+				return loginInformationBean;
+			}else{
+				return null;
+			}
 		} catch(RuntimeException ex){
 			session.getTransaction().rollback();
 			throw ex;
 		} 
-		return loginInformationBean;
+//		return loginInformationBean;
 	}
 
 	@Override

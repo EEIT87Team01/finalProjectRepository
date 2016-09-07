@@ -87,7 +87,39 @@
             <version>4.8.2</version>
             <scope>test</scope>
         </dependency>
+		<!--         Spring -->
+		<!-- spring-orm -->
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-orm</artifactId>
+		    <version>4.3.2.RELEASE</version>
+		</dependency>
+
+        <dependency>  
+		    <groupId>org.springframework</groupId>  
+		    <artifactId>spring-core</artifactId>  
+		    <version>4.3.2.RELEASE</version>  
+		</dependency>  
+		
+		<dependency>  
+		    <groupId>org.springframework</groupId>  
+		    <artifactId>spring-context</artifactId>  
+		    <version>4.3.2.RELEASE</version>  
+		</dependency>
+		  
+		<dependency>  
+		    <groupId>org.springframework</groupId>  
+		    <artifactId>spring-beans</artifactId>  
+		    <version>4.3.2.RELEASE</version>  
+		</dependency> 
+		 
+		<dependency>  
+		    <groupId>org.springframework</groupId>  
+		    <artifactId>spring-webmvc</artifactId>  
+		    <version>4.3.2.RELEASE</version>  
+		</dependency>  
     </dependencies>
+    
     <build>
         <finalName>${project.artifactId}-${project.version}</finalName>
         <plugins>

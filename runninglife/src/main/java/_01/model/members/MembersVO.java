@@ -65,7 +65,7 @@ public class MembersVO implements Serializable{
 	private String createDate;
 	private String lastOnlineDateTime;
 	
-	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="memberID.memberID")
+	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="memberID")
 	private Set<LoginInformationVO> members = new HashSet<LoginInformationVO>();
 	
 	public MembersVO() {

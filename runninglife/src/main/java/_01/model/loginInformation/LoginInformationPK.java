@@ -16,37 +16,43 @@ import _01.model.members.MembersVO;
 @Embeddable
 public class LoginInformationPK implements Serializable{
 	
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "memberID")
-	private MembersVO  memberID;
 	
+	private String memberAccount;
 	private String loginMethod;
+	
 	
 	public LoginInformationPK() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public LoginInformationPK(MembersVO memberID, String loginMethod) {
+
+	public LoginInformationPK(String memberAccount, String loginMethod) {
 		super();
-		this.memberID = memberID;
+		this.memberAccount = memberAccount;
 		this.loginMethod = loginMethod;
 	}
 
-	public MembersVO getMemberID() {
-		return memberID;
+
+	public String getMemberAccount() {
+		return memberAccount;
 	}
 
-	public void setMemberID(MembersVO memberID) {
-		this.memberID = memberID;
+
+	public void setMemberAccount(String memberAccount) {
+		this.memberAccount = memberAccount;
 	}
+
 
 	public String getLoginMethod() {
 		return loginMethod;
 	}
 
+
 	public void setLoginMethod(String loginMethod) {
 		this.loginMethod = loginMethod;
 	}
+
+	
 
 }
