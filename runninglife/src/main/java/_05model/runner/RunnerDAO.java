@@ -3,7 +3,7 @@ package _05model.runner;
 import java.util.List;
 
 public interface RunnerDAO {
-	public void insert(RunnerVO runnerVO);
+	public String insert(RunnerVO runnerVO);
 
 	public void update(RunnerVO runnerVO);
 

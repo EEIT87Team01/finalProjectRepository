@@ -19,17 +19,10 @@
 
 </head>
 <body>
-
-
+	
+	<div>memberID:${member.memberID}</div>
 	<div id="auth" class="">admin</div>
-	<!-- 	<div id="auth" class="">${member.auth}</div> -->
-	<c:url var="saveUrl" value="/event//${contest.contestID}" />
 
-	<%-- 				<td><a href="<c:url  value="/contest/${contest.contestID}" />">${contest.contestName}</a></td> --%>
-	<%-- 				<td>${contest.place}</td> --%>
-	<%-- 				<td>${contest.startDate}</td> --%>
-	<%-- 				<td>${contest.organizer}</td> --%>
-	<%-- 				<td>${contest.coorganizer}</td> --%>
 
 	<!-- 	載入列表	 -->
 	<section>

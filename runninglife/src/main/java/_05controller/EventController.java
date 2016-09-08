@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -42,6 +43,7 @@ import _05validator.EventValidator;
 import _05validator.FileValidator;
 
 @Controller
+@SessionAttributes("member")
 public class EventController {
 
 	@Autowired
@@ -313,12 +315,18 @@ public class EventController {
 	}
 	// apply 
 	@RequestMapping(value="/apply",method=RequestMethod.GET)
-	public String ContestApply(@RequestParam Integer id,@ModelAttribute RunnerVO runner ,Model model){
-		System.out.println(id);
-		System.out.println(runner.getEventID());
+	public String ContestApply(@ModelAttribute RunnerVO runner ,Model model){
+		System.out.println("event:"+runner.getEventID());
+		System.out.println("team:"+runner.getTeamID());
+		System.out.println("clothes:"+runner.getClothesSize());
 		
+		System.out.println(runner.getPk());
+		System.out.println("contestID:"+runner.getPk().getContestID());
+		System.out.println("contestID:"+runner.getPk().getMemberID());
 		
-		return "redirect:/contest/"+id;
+		String msg = runnerDAO.insert(runner);
+		System.out.println(msg);
+		return "redirect:/contest/1";
 	}
 	
 	
@@ -329,9 +337,6 @@ public class EventController {
 //		System.out.println(11111111);
 //		return "aa";
 //	}
-	
-	
-	
 	
 	
 	
@@ -347,6 +352,15 @@ public class EventController {
 		return "/../../index";
 	}
 
+	
+	@ModelAttribute("member")
+	public MemberVO login(){
+		MemberVO member = new MemberVO();
+		member.setEmail("artashur@gmail.com");
+		member.setLastName("Arthur");
+		member.setMemberID("arthur");
+		return member;
+	}
 	// @ModelAttribute("contests")
 	// public List<ContestVO> getContests(){
 	// List<ContestVO>contests =contestDAO.getAll();

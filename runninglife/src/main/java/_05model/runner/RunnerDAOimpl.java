@@ -11,7 +11,7 @@ import _05hibernate.util.HibernateUtil;
 public class RunnerDAOimpl implements RunnerDAO {
 	private static final String GET_ALL_STMT = "from RunnerVO order by runnerID ";
 	@Override
-	public void insert(RunnerVO runnerVO) {
+	public String insert(RunnerVO runnerVO) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		try {
 			session.beginTransaction();
@@ -19,8 +19,9 @@ public class RunnerDAOimpl implements RunnerDAO {
 			session.getTransaction().commit();
 		} catch (RuntimeException ex) {
 			session.getTransaction().rollback();
-			System.out.println("已經報名過了");
+			return "已經報名過了";
 		}
+		return "成功";
 	}
 
 	@Override

@@ -337,9 +337,9 @@
 	</div>
 	</section>
 	<div id="applyForm">
-		<!-- Popup Div Starts Here -->
+		<!-- 彈出報名 -->
 		<div id="popupContact">
-			<!-- Contact Us Form -->
+			<!-- 報名表單 -->
 			<form action="/runninglife/apply?id=${contest.contestID}" id="form" method="get" name="runner">
 				<img id="close" src="/runninglife/resources/images/Close-2-icon.png"
 					onclick="div_hide()">
@@ -347,9 +347,9 @@
 				<hr>
 				<div>
 				<label for="disabledTextInput">會員帳號(測試用)</label>
-				<input type="text" class="form-control" name="member"/>
+				<input type="text" class="form-control" name="pk.memberID" value="${member.memberID}"/>
 				</div>
-				<input type="text" name="id" class="" value="${contest.contestID}" >
+				<input type="text" class="form-control" name="pk.contestID"  value="${contest.contestID}" >
 <%-- 				<input type="text" class="form-control" name="eventID" value="${contest.contestName}"/> --%>
 				<select class="form-control" name="eventID" >
 					<option value="0">項目</option>
