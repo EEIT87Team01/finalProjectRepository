@@ -75,8 +75,8 @@ public class MembersDAO implements MembersDAO_interface{
 	public List<MembersVO> findByFirstNameOrLastName(String name) {
 		Criteria cri = sessionFactory.getCurrentSession().createCriteria(MembersVO.class)
 				.add(Restrictions.disjunction()
-						.add(Restrictions.eq("firstName", name))
-						.add(Restrictions.eq("lastName", name))
+						.add(Restrictions.like("firstName", "%" + name + "%"))
+						.add(Restrictions.like("lastName", "%" + name + "%"))
 						);
 		List<MembersVO> mvos = (List<MembersVO>) cri.list();
 		return mvos;

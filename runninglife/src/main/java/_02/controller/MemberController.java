@@ -51,4 +51,10 @@ public class MemberController {
 		return new ModelAndView("LoginError");
 		}
 	}
+	
+	@RequestMapping(value = {"/searchmembers"}, produces = "application/json", method = RequestMethod.POST)
+	public @ResponseBody List<MembersVO> searchMembers(@RequestParam String name){
+		List<MembersVO> mvos = memberService.findByFirstNameOrLastName(name);
+		return mvos;
+	}	
 }

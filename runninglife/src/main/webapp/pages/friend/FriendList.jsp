@@ -22,9 +22,27 @@
 	<tr><td>${friend.friendRelationshipPK.friendID.firstName}</td>
 		<td>${friend.friendRelationshipPK.friendID.lastName}</td>
 		<td>
-		<button class="btn btn-danger" id="">刪除</button>
+		<button class="btn btn-danger" id="memberid=${friend.friendRelationshipPK.memberID.memberID}&friendid=${friend.friendRelationshipPK.friendID.memberID}">刪除</button>
 	</tr>
 </c:forEach>
 </table>
+
+<script type="text/javascript">
+$(function(){
+	$("button").click(function(){
+		var deletefriend = $(this).attr("id");
+		var btn = $(this);
+		console.log(deletefriend);
+		$.ajax({
+			type: "get", 
+			datatype: "json",
+			url: "/runninglife/friend/deletefriend_" + deletefriend,
+			success: function(){
+				$(btn).parents("tr").remove();
+			}
+		});
+	});
+});
+</script>
 </body>
 </html>

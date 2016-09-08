@@ -56,11 +56,28 @@ public class FriendController {
 	//接受邀請
 	@RequestMapping(value = {"/acceptRequest_requestid={requestID}&receiverid={receiveID}"}, method = RequestMethod.GET)
 	@ResponseStatus(value = HttpStatus.OK)
-	public String acceptRequest(@PathVariable String requestID, @PathVariable String receiveID){
+	public void acceptRequest(@PathVariable String requestID, @PathVariable String receiveID){
 		MembersVO receiveMVO = memberService.findByID(receiveID);
 		MembersVO requestMVO = memberService.findByID(requestID);
 		friendRequestService.deleteByPrimaryKey(new FriendRequestPK(requestMVO,receiveMVO));
 		friendRelationshipService.insert(new FriendRelationshipVO(new FriendRelationshipPK(receiveMVO, requestMVO)));
-		return null;
+	}
+	
+	//寄送邀請
+	@RequestMapping(value = {"/sendRequest_requestid={requestID}&receiverid={receiveID}"}, method = RequestMethod.GET)
+	@ResponseStatus(value = HttpStatus.OK)
+	public void sendRequest(@PathVariable String requestID, @PathVariable String receiveID){
+		MembersVO receiveMVO = memberService.findByID(receiveID);
+		MembersVO requestMVO = memberService.findByID(requestID);
+		friendRequestService.insert(new FriendRequestVO (new FriendRequestPK(requestMVO,receiveMVO)));
+	}
+	
+	//刪除好友
+	@RequestMapping(value = {"/deletefriend_memberid={memberID}&friendid={friendID}"}, method = RequestMethod.GET)
+	@ResponseStatus(value = HttpStatus.OK)
+	public void deleteFriend(@PathVariable String memberID, @PathVariable String friendID){
+		MembersVO memberMVO = memberService.findByID(memberID);
+		MembersVO friendMVO = memberService.findByID(friendID);
+		friendRelationshipService.deleteByPrimaryKey(new FriendRelationshipPK(memberMVO,friendMVO));
 	}
 }
