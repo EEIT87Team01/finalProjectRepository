@@ -5,13 +5,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<!-- 最新編譯和最佳化的 CSS -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
-	<!-- 選擇性佈景主題 -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
-	<!-- 最新編譯和最佳化的 JavaScript -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="/runninglife/static/css/bootstrap.min.css" />
+<link rel="stylesheet" href="/runninglife/static/css/bootstrap-theme.min.css"></link>
+<script src="/runninglife/static/js/jquery-3.1.0.min.js"></script>
+<script src="/runninglife/static/js/bootstrap.min.js"></script>
 <title>FriendList</title>
 </head>
 <body>

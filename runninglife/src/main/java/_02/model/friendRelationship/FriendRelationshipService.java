@@ -37,13 +37,18 @@ public class FriendRelationshipService implements FriendRelationshipService_inte
 	}
 	
 	@Override
-	public List<FriendRelationshipVO> findByMemberID(MembersVO MemberID) {
-		return friendRelationshipDAO.findByMemberID(MemberID);
+	public List<FriendRelationshipVO> findByMemberID(MembersVO memberID) {
+		return friendRelationshipDAO.findByMemberID(memberID);
 	}
 
 	@Override
 	public List<FriendRelationshipVO> getAll() {
 		return friendRelationshipDAO.getAll();
+	}
+
+	@Override
+	public List<MembersVO> findByMemberIDALLFriendID(MembersVO memberID) {
+		return friendRelationshipDAO.findByMemberIDALLFriendID(memberID);
 	}
 
 

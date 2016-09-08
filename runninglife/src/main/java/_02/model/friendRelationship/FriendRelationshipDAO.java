@@ -1,5 +1,6 @@
 package _02.model.friendRelationship;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -38,6 +39,7 @@ public class FriendRelationshipDAO implements FriendRelationshipDAO_interface {
 		return (FriendRelationshipVO) cri.uniqueResult();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<FriendRelationshipVO> findByMemberID(MembersVO memberID) {
 		Criteria cri = sessionFactory.getCurrentSession().createCriteria(FriendRelationshipVO.class)
@@ -50,6 +52,17 @@ public class FriendRelationshipDAO implements FriendRelationshipDAO_interface {
 	public List<FriendRelationshipVO> getAll() {
 		Criteria cri = sessionFactory.getCurrentSession().createCriteria(FriendRelationshipVO.class);
 		return (List<FriendRelationshipVO>)cri.list();
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<MembersVO> findByMemberIDALLFriendID(MembersVO memberID) {
+		Criteria cri = sessionFactory.getCurrentSession().createCriteria(FriendRelationshipVO.class)
+				.add(Restrictions.eq("friendRelationshipPK.memberID", memberID));
+		List<FriendRelationshipVO> lfrsvo = cri.list();
+		List<MembersVO> mvos = new ArrayList<MembersVO>();
+		for (FriendRelationshipVO frsvo : lfrsvo) mvos.add(frsvo.getFriendRelationshipPK().getFriendID());
+		return mvos;
 	}
 
 }

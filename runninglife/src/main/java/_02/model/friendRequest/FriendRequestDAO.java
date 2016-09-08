@@ -1,5 +1,6 @@
 package _02.model.friendRequest;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -63,10 +64,32 @@ public class FriendRequestDAO implements FriendRequestDAO_interface {
 	
 	@SuppressWarnings("unchecked")
 	@Override
+	public List<MembersVO> findByRequesterIDALLReceiver(MembersVO requesterID) {
+		Criteria cri = sessionFactory.getCurrentSession().createCriteria(FriendRequestVO.class)
+				.add(Restrictions.eq("friendRequestPK.requesterID", requesterID));
+		List<FriendRequestVO> lfrvo = (List<FriendRequestVO>)cri.list();
+		List<MembersVO> mvos = new ArrayList<MembersVO>();
+		for(FriendRequestVO fr : lfrvo) mvos.add(fr.getFriendRequestPK().getReceiverID());
+		return mvos;
+	}
+	
+	
+	@SuppressWarnings("unchecked")
+	@Override
 	public List<FriendRequestVO> findByReceiverID(MembersVO receiverID) {
 		Criteria cri = sessionFactory.getCurrentSession().createCriteria(FriendRequestVO.class)
 				   .add(Restrictions.eq("friendRequestPK.receiverID", receiverID));
 		return (List<FriendRequestVO>)cri.list();
 	}
 	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<MembersVO> findByReceiverIDALLRequester(MembersVO receiverID) {
+		Criteria cri = sessionFactory.getCurrentSession().createCriteria(FriendRequestVO.class)
+				.add(Restrictions.eq("friendRequestPK.receiverID", receiverID));
+		List<FriendRequestVO> lfrvo = (List<FriendRequestVO>)cri.list();
+		List<MembersVO> mvos = new ArrayList<MembersVO>();
+		for(FriendRequestVO fr : lfrvo) mvos.add(fr.getFriendRequestPK().getRequesterID());
+		return mvos;
+	}
 }

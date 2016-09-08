@@ -8,6 +8,7 @@ public interface FriendRelationshipService_interface {
 	public void insert(FriendRelationshipVO friendRelationshipVO);
 	public void deleteByPrimaryKey(FriendRelationshipPK friendRelationshipPK);
 	public FriendRelationshipVO findByPrimaryKey(FriendRelationshipPK friendRelationshipPK);
-	public List<FriendRelationshipVO> findByMemberID(MembersVO MemberID);
+	public List<FriendRelationshipVO> findByMemberID(MembersVO memberID);
+	public List<MembersVO> findByMemberIDALLFriendID(MembersVO memberID);
 	public List<FriendRelationshipVO> getAll();
 }

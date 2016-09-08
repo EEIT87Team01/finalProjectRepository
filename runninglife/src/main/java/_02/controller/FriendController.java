@@ -5,10 +5,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
@@ -64,9 +64,9 @@ public class FriendController {
 	}
 	
 	//寄送邀請
-	@RequestMapping(value = {"/sendRequest_requestid={requestID}&receiverid={receiveID}"}, method = RequestMethod.GET)
+	@RequestMapping(value = {"/sendRequest"}, method = RequestMethod.POST)
 	@ResponseStatus(value = HttpStatus.OK)
-	public void sendRequest(@PathVariable String requestID, @PathVariable String receiveID){
+	public void sendRequest(@RequestParam String requestID, @RequestParam String receiveID){
 		MembersVO receiveMVO = memberService.findByID(receiveID);
 		MembersVO requestMVO = memberService.findByID(requestID);
 		friendRequestService.insert(new FriendRequestVO (new FriendRequestPK(requestMVO,receiveMVO)));

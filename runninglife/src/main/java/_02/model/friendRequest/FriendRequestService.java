@@ -50,6 +50,16 @@ public class FriendRequestService implements FriendRequestService_interface {
 		return friendRequestDAO.getAll();
 	}
 
+	@Override
+	public List<MembersVO> findByRequesterIDALLReceiver(MembersVO requesterID) {
+		return friendRequestDAO.findByRequesterIDALLReceiver(requesterID);
+	}
+
+	@Override
+	public List<MembersVO> findByReceiverIDALLRequester(MembersVO receiverID) {
+		return friendRequestDAO.findByReceiverIDALLRequester(receiverID);
+	}
+
 	
 	
 }
