@@ -7,6 +7,7 @@ import org.hibernate.Session;
 import org.springframework.stereotype.Service;
 
 import _05hibernate.util.HibernateUtil;
+import _05model.runner.RunnerDAOimpl;
 import _05model.runner.RunnerVO;
 @Service
 public  class TeamDAOimpl implements TeamDAO {
@@ -37,9 +38,17 @@ public  class TeamDAOimpl implements TeamDAO {
 	}
 	@Override
 	public void delete(Integer teamID) {
+		RunnerDAOimpl runnerDAOimpl = new RunnerDAOimpl();
+		List<RunnerVO>list =runnerDAOimpl.getTeamGroup(teamID);
+		
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		
+
 		try {
 			session.beginTransaction();
+			for(RunnerVO runner :list){
+				session.delete(runner);
+			}
 			TeamVO teamVO = (TeamVO) session.get(TeamVO.class, teamID);
 			session.delete(teamVO);
 			session.getTransaction().commit();

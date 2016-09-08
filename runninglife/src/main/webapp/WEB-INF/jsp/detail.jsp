@@ -25,7 +25,7 @@
 <script src="/runninglife/resources/js/bootstrap.min.js"></script>
 
 <body class="smoothscroll enable-animation">
-
+	<div id="msg">message:${status}</div>
 	<div id="contestID" class="hidden">${contest.contestID}</div>
 	<div id="timer" class="hidden">${timer}</div>
 	<section id="slider">
@@ -129,7 +129,7 @@
 							<tr>
 								<form id="eventForm"
 									action="/runninglife/${contest.contestID}/event/add">
-									<td><input type="text" class="form-control" id="eventName"
+									<td><input type="text" class="form-group form-control has-error has-feedback" id="eventName"
 										name="eventName" placeholder="項目名稱" /></td>
 									<td><input type="number" class="form-control"
 										id="distance" name="distance" placeholder="距離" /></td>
@@ -386,8 +386,21 @@
 		alert(data);
 		console.log("respose: " + data);
 	}
-
+	
+	function getParameterByName(name, url) {
+	    if (!url) url = window.location.href;
+	    name = name.replace(/[\[\]]/g, "\\$&");
+	    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+	        results = regex.exec(url);
+	    if (!results) return null;
+	    if (!results[2]) return '';
+	    return decodeURIComponent(results[2].replace(/\+/g, " "));
+	}
 	$(function() {
+		
+		var msg = getParameterByName('msg');
+		if(msg!=null){alert(msg)}else{alert(nothing)}
+		
 		//項目刪除按鈕綁定
 		$("#eventBody")
 				.on(
@@ -403,8 +416,8 @@
 										type : "POST",
 										url : eventIDUrl,
 										contentType : "application/x-www-form-urlencoded;charset=UTF-8",
-										success : function() {
-											alert("刪除成功!!!")
+										success : function(data) {
+											alert(data)
 											eventRow.remove();
 										}
 									});
@@ -412,19 +425,17 @@
 		//分組刪除按鈕綁定
 		$("#teamBody").on("click", ".btn-danger", function() {
 			var teamID = $(this).parent().parent().children(".teamID").text();
-			alert(teamID);
-
+// 			alert(teamID);
 			var teamRow = $(this).parent().parent();
 			$.ajax({
 				mimeType : "text/html; charset=UTF-8", //alert可以show出物件內容
 				type : "POST",
 				url : "/runninglife/team/delete",
 				data : {
-					name : "John",
 					id : teamID
 				},
-				success : function() {
-					alert("刪除成功!!!")
+				success : function(data) {
+					alert(data)
 					teamRow.remove();
 				}
 			});
@@ -451,6 +462,7 @@
 			return o;
 		};
 	})(jQuery);
+	//ㄒㄧㄣ
 	$('#teamForm').submit(function(e) {
 		e.preventDefault();
 		var JsonObj = $(this).serializeFormJSON();
@@ -458,6 +470,10 @@
 		var contestID = $("#contestID").text();
 		alert(JsonStr);
 		alert(contestID);
+		
+		if($('#teamName').val()==""||$('#ageRange').val()==""){
+			alert("請輸入完整資料");
+		}else{
 		$.ajax({
 			type : "POST",
 			url : "/runninglife/" + contestID + "/team/add",
@@ -466,11 +482,10 @@
 			mimeType : "application/json; charset=UTF-8",
 			success : showTeam
 		});
-
+		}
 	})
 	function showTeam(team) {
 		var upper = team.ageRange + 9;
-		alert(upper);
 		alert("showTeam");
 		$('#teamForm')
 				.parent()
@@ -490,6 +505,7 @@
 	$('#eventForm').submit(function(e) {
 		e.preventDefault();
 		if ($('#eventName').val() == "") {
+			$('#eventName').switchClass()
 			alert("請輸入名稱");
 		} else if ($('#distance').val() == "") {
 			alert("請輸入距離");

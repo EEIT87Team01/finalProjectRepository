@@ -1,11 +1,10 @@
 package _05controller;
 
 import java.io.File;
-import java.io.IOException;
-import java.sql.Time;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -86,7 +85,8 @@ public class EventController {
 		ContestVO contest = contestDAO.findByPrimaryKey(contestID);
 		List<ClothesVO> clothes = clothesDAO.getAll();
 		// 修正時間
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd hh:mm");
+		System.out.println("a:"+contest.getRegistrationBegin());System.out.println("b:"+contest.getRegistrationEnd());System.out.println("c:"+contest.getStartDate());
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日 hh:mm");
 		String begin = sdf.format(contest.getRegistrationBegin());
 		String end = sdf.format(contest.getRegistrationEnd());
 		SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy年MM月dd日 (E)");
@@ -245,13 +245,14 @@ public class EventController {
 
 	// apply
 	@RequestMapping(value = "/apply", method = RequestMethod.POST)
-	public String ContestApply(@ModelAttribute RunnerVO runner, @SessionAttribute MemberVO member, Model model) {
+	public String ContestApply(@ModelAttribute RunnerVO runner, @SessionAttribute MemberVO member, Model model,HttpServletRequest req) {
 		Integer id = runner.getPk().getContestID();
 		try {
-			String msg = runnerDAO.insert(runner);
+			String status = runnerDAO.insert(runner);
 			ContestVO contest = contestDAO.findByPrimaryKey(runner.getPk().getContestID());
 			mailService.sendApplyEmail(member, contest);
-			System.out.println(msg);
+			req.setAttribute("status", "e幹你娘");
+			System.out.println(status);
 		} catch (Exception ex) {
 			System.out.println("-----------------------------------------------");
 		}

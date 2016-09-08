@@ -7,11 +7,17 @@ import org.hibernate.Session;
 import org.springframework.stereotype.Service;
 
 import _05hibernate.util.HibernateUtil;
+import _05model.event.EventDAOimpl;
+import _05model.team.TeamDAOimpl;
+
 @Service
 public class RunnerDAOimpl implements RunnerDAO {
 	private static final String GET_ALL_STMT = "from RunnerVO order by runnerID ";
-	private static final String GET_MY_CONTEST = "from RunnerVO where memberID = :memberID order by contestID ";
+	private static final String GET_MY_CONTEST = "from RunnerVO where memberID = :memberID order by contestID";
 	private static final String GET_SCORE_GROUP = "from RunnerVO where eventID = :eventID and teamID=:teamID";
+	private static final String GET_EVENT_GROUP = "from RunnerVO where eventID = :eventID";
+	private static final String GET_TEAM_GROUP = "from RunnerVO where teamID =:teamID";
+
 	@Override
 	public String insert(RunnerVO runnerVO) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
@@ -45,8 +51,8 @@ public class RunnerDAOimpl implements RunnerDAO {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		try {
 			session.beginTransaction();
-			RunnerVO contestVO = (RunnerVO) session.get(RunnerVO.class, pk);
-			session.delete(contestVO);
+			RunnerVO runnerVO = (RunnerVO) session.get(RunnerVO.class, pk);
+			session.delete(runnerVO);
 			session.getTransaction().commit();
 		} catch (RuntimeException ex) {
 			session.getTransaction().rollback();
@@ -84,7 +90,7 @@ public class RunnerDAOimpl implements RunnerDAO {
 		}
 		return list;
 	}
-	
+
 	public List<RunnerVO> getMyContest(String memberID) {
 		List<RunnerVO> list = null;
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
@@ -100,8 +106,8 @@ public class RunnerDAOimpl implements RunnerDAO {
 		}
 		return list;
 	}
-	
-	public List<RunnerVO> getScoreGroup(Integer eventID,Integer teamID) {
+
+	public List<RunnerVO> getScoreGroup(Integer eventID, Integer teamID) {
 		List<RunnerVO> list = null;
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		try {
@@ -117,20 +123,53 @@ public class RunnerDAOimpl implements RunnerDAO {
 		}
 		return list;
 	}
+	
+	public List<RunnerVO> getEventGroup(Integer eventID) {
+		List<RunnerVO> list = null;
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		try {
+			session.beginTransaction();
+			Query query = session.createQuery(GET_EVENT_GROUP);
+			query.setParameter("eventID", eventID);
+			list = query.list();
+			session.getTransaction().commit();
+		} catch (RuntimeException ex) {
+			session.getTransaction().rollback();
+			throw ex;
+		}
+		return list;
+	}
+	
+	
+	public List<RunnerVO> getTeamGroup(Integer teamID) {
+		List<RunnerVO> list = null;
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		try {
+			session.beginTransaction();
+			Query query = session.createQuery(GET_TEAM_GROUP);
+			query.setParameter("teamID", teamID);
+			list = query.list();
+			session.getTransaction().commit();
+		} catch (RuntimeException ex) {
+			session.getTransaction().rollback();
+			throw ex;
+		}
+		return list;
+	}
 
 	public static void main(String[] args) {
 		RunnerDAOimpl dao = new RunnerDAOimpl();
 		RunnerVO runner = new RunnerVO();
 		RunnerPK pk = new RunnerPK();
-		List<RunnerVO> list =dao.getScoreGroup(1, 2);
-		for(RunnerVO a:list){
-			System.out.println("memberID:"+a.getPk().getMemberID());
+		List<RunnerVO> list = dao.getScoreGroup(1, 2);
+		for (RunnerVO a : list) {
+			System.out.println("memberID:" + a.getPk().getMemberID());
 			System.out.println(a.getPk().getContestID());
 			System.out.println(a.getEventID());
 			System.out.println(a.getTeamID());
 			System.out.println(a.getClothesSize());
 		}
-		
+
 	}
 
 }

@@ -4,12 +4,11 @@ import java.util.List;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.springframework.stereotype.Service;
 
 import _05hibernate.util.HibernateUtil;
-import _05model.contest.ContestVO;
-import _05model.team.TeamVO;
+import _05model.runner.RunnerDAOimpl;
+import _05model.runner.RunnerVO;
 @Service
 public class EventDAOimpl implements EventDAO {
 	private static final String GET_ALL_STMT = "from EventVO order by eventID";
@@ -19,19 +18,6 @@ public class EventDAOimpl implements EventDAO {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		try {
 			session.beginTransaction();
-			//自動生成eventID
-			//取最大值+1
-//			Query query  = session.createQuery(" from EventVO where contestID=:contestID order by eventID desc");
-//			query.setParameter("contestID",eventVO.getEventPK().getContestID());
-//			List<EventVO> events =query.list();
-//			int eventID=0;
-//			if(!events.isEmpty()){
-//			eventID=events.get(0).getEventPK().getEventID();
-//			}
-//			eventVO.getEventPK().setEventID(eventID+1);
-//			for(EventVO aEvent:events){
-//				System.out.println(aEvent.getEventPK().getEventID());
-//			} 
 			session.save(eventVO);
 			session.getTransaction().commit();
 		} catch (RuntimeException ex) {
@@ -54,9 +40,17 @@ public class EventDAOimpl implements EventDAO {
 	}
 	@Override
 	public void delete(Integer eventID) {
+		RunnerDAOimpl runnerDAO = new RunnerDAOimpl();
+		List<RunnerVO> list =runnerDAO.getEventGroup(eventID);
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		try {
 			session.beginTransaction();
+			for(RunnerVO runner:list){
+				
+				session.delete(runner);
+				int i =0;
+				System.out.println(i++);
+			}
 			EventVO eventVO = (EventVO) session.get(EventVO.class, eventID);
 			session.delete(eventVO);
 			session.getTransaction().commit();

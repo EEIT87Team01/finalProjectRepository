@@ -1,23 +1,14 @@
 package _05model.event;
 
-import java.io.Serializable;
 import static javax.persistence.GenerationType.IDENTITY;
-import java.sql.Time;
-import java.util.Set;
 
-import javax.persistence.CascadeType;
+import java.io.Serializable;
+import java.sql.Time;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.IdClass;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
-import _05model.contest.ContestVO;
-import _05model.runner.RunnerVO;
-import _05model.team.TeamVO;
 
 @Entity
 @Table(name = "event")
@@ -36,7 +27,7 @@ public class EventVO implements Serializable {
 	@Column
 	private int quota;
 	@Column
-	private Time whenToRun;
+	private java.sql.Time whenToRun;
 	@Column
 	private int limitTime;
 	//偷吃
