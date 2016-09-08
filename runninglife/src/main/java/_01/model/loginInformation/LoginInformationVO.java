@@ -26,14 +26,14 @@ public class LoginInformationVO implements Serializable{
 	@JoinColumn(name = "memberID")
 	private MembersVO  memberID;
 	
-	private String password;
+	private byte[] password;
 	private String status;
 	
 	public LoginInformationVO() {
 
 	}
 
-	public LoginInformationVO(LoginInformationPK memberAccount, MembersVO memberID, String password, String status) {
+	public LoginInformationVO(LoginInformationPK memberAccount, MembersVO memberID, byte[] password, String status) {
 		super();
 		this.memberAccount = memberAccount;
 		this.memberID = memberID;
@@ -57,11 +57,11 @@ public class LoginInformationVO implements Serializable{
 		this.memberID = memberID;
 	}
 
-	public String getPassword() {
+	public byte[] getPassword() {
 		return password;
 	}
 
-	public void setPassword(String password) {
+	public void setPassword(byte[] password) {
 		this.password = password;
 	}
 

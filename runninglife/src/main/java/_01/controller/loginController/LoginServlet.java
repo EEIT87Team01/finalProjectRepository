@@ -1,6 +1,7 @@
 package _01.controller.loginController;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -27,6 +28,19 @@ public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		LoginDBCheck(request,response);
+//		ForgetPasseord(request,response);
+					
+	}
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+	
+		LoginDBCheck(request,response);
+//		ForgetPasseord(request,response);
+	}
+
+	protected void LoginDBCheck(HttpServletRequest request,HttpServletResponse response)throws ServletException, IOException{
 		request.setCharacterEncoding("UTF-8");
 		String  memberAccount = request.getParameter("memberAccount");
 		String password = request.getParameter("password");
@@ -95,65 +109,18 @@ public class LoginServlet extends HttpServlet {
 			return;
 		}
 		
-//--------------------------------------------------------------------------------------		
-		//servlet 無Service
-		//輸入帳號CO Hibernate
-//		loginInfo = loginInfoDAO.selectOne(loginInfoPK);
-//		if(loginInfo != null){
-//			String dbAccount = loginInfo.getMemberAccount().getMemberAccount(); 
-//			
-//			if(dbAccount.equals(memberAccount)){
-//				//輸入密碼CO Hibernate
-//				
-//				String dbPassword = loginInfo.getPassword().trim();
-//				if(dbPassword != null && dbPassword.equals(password)){
-//					
-//				    message.add("登入成功");
-//				    /***************************3.查詢完成,準備轉交(Send the Success view)*************/
-//					request.setAttribute("loginAccount", loginInfoPK);
-//					request.setAttribute("loginPassword", loginInfo);
-//					request.setAttribute("message", message);
-//					
-//					MembersVO membersVO = new MembersVO();
-//					MembersDAO membersDAO = new MembersDAO();
-//					String memberID = null;
-//					memberID = loginInfo.getMemberID().getMemberID();
-//					membersVO.setMemberID(memberID);
-////					System.out.println(loginInfo.getMemberID());
-//					membersVO = membersDAO.selectOne(memberID);
-////					UUID uuid = UUID.fromString(memberID);
-////					membersVO = membersDAO.selectOne(uuid.toString().trim());
-//					
-//					HttpSession session = request.getSession();
-//					session.setAttribute("membersVO", membersVO);
-//					
-//					RequestDispatcher rd = request.getRequestDispatcher("/pages/login/show.jsp");
-//					rd.forward(request, response);
-//					
-//					/***************************其他可能的錯誤處理*************************************/
-//				}else{
-//					errorMessage.add("密碼錯誤");
-//					request.setAttribute("loginAccount", loginInfoPK);
-//
-//					request.setAttribute("errorMessage", errorMessage);
-//					RequestDispatcher rd = request.getRequestDispatcher("/pages/login/show.jsp");
-//					rd.forward(request, response);
-//					return;
-//				}
-//			}
-//		}else{
-//			errorMessage.add("查無此帳號");
-//
-//			request.setAttribute("errorMessage", errorMessage);
-//			RequestDispatcher rd = request.getRequestDispatcher("/pages/login/show.jsp");
-//			rd.forward(request, response);
-//			return;
-//		}
+		
+		/***************************忘記密碼*************/
+		
 	}
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+	
+	public void ForgetPasseord(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException{
+		request.setCharacterEncoding("UTF-8");
+		String  memberAccount = request.getParameter("memberAccount");
+		String email = request.getParameter("memberEmail");
+		
+		System.out.println(memberAccount);
+		System.out.println(email);
 	}
-
+	
 }
