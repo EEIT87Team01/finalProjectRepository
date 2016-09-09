@@ -50,7 +50,7 @@ public class MembersVO implements Serializable{
 	private Double height;
 	private Double weight;
 	private String phone;
-	private Blob photo;
+	private byte[] photo;
 	@ManyToOne
 	@JoinColumn(name = "competenceID", referencedColumnName = "competenceID")
 	private CompetenceVO competenceID;
@@ -74,7 +74,7 @@ public class MembersVO implements Serializable{
 	
 	public MembersVO(String memberID, String firstName, String lastName, String nickname, String email, String gender,
 			String birthday, LocationVO locationID, String address, Double height,
-			Double weight, String phone, Blob photo, CompetenceVO competenceID, String identityID, String emergencyContact,
+			Double weight, String phone, byte[] photo, CompetenceVO competenceID, String identityID, String emergencyContact,
 			String emergencyPhone, EmergencyRelationVO emergencyRelation, String createDate, String lastOnlineDateTime) {
 		super();
 		this.memberID = memberID;
@@ -195,11 +195,11 @@ public class MembersVO implements Serializable{
 		this.phone = phone;
 	}
 
-	public Blob getPhoto() {
+	public byte[] getPhoto() {
 		return photo;
 	}
 
-	public void setPhoto(Blob photo) {
+	public void setPhoto(byte[] photo) {
 		this.photo = photo;
 	}
 

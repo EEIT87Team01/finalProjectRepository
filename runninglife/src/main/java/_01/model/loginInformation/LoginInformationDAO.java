@@ -5,10 +5,12 @@ import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.springframework.stereotype.Repository;
 
 import _01.model.hibernate.util.HibernateUtil;
 import _01.model.writer.WriterVO;
 
+@Repository("LoginInformationDAO")
 public class LoginInformationDAO implements LoginInformationInterface{
 
 	private static final String GET_ALL_STMT = "from LoginInformationVO order by memberID";
@@ -32,17 +34,17 @@ public class LoginInformationDAO implements LoginInformationInterface{
 
 	@Override
 	public int update(LoginInformationVO loginInformationVO) {
-//		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		int count = 0;
-//		try{
-//			session.beginTransaction();
-//			session.saveOrUpdate(loginInformationVO);
-//			session.getTransaction().commit();
-//		} catch(RuntimeException ex){
-//			session.getTransaction().rollback();
-//			throw ex;
-//		} 
-//		count++;
+		try{
+			session.beginTransaction();
+			session.saveOrUpdate(loginInformationVO);
+			session.getTransaction().commit();
+		} catch(RuntimeException ex){
+			session.getTransaction().rollback();
+			throw ex;
+		} 
+		count++;
 		return count;
 	}
 

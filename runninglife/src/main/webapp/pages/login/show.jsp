@@ -15,41 +15,9 @@ table, th, td {
 <table border='1'>
 <tr>
   <td>
-       帳號 :${loginAccount}
-  </td> 
-  <td>
-       密碼 :${loginPassword}
-  </td> 
-  <td>
-       ${message}
        ${errorMessage}
   </td>
 </tr> 
-<tr>
-  <td>
-       FirstName :${membersVO.firstName}<br/>
-       lastName :${membersVO.lastName}<br/>
-       nickname :${membersVO.nickname}<br/>
-       email :${membersVO.email}<br/>
-       gender :${membersVO.gender}<br/>
-       birthday :${membersVO.birthday}<br/>
-       locationID :${membersVO.locationID.locationID.locationID}<br/>
-       cityID :${membersVO.locationID.locationID.cityID.cityID.cityID}<br/>
-       locationID :${membersVO.locationID.locationID.cityID.cityID.countryID.countryID}<br/>
-       address :${membersVO.address}<br/>
-       height :${membersVO.height}<br/>
-       weight :${membersVO.weight}<br/>
-       phone :${membersVO.phone}<br/>
-       photo :${membersVO.photo}<br/>
-       competenceID :${membersVO.competenceID}<br/>
-       identityID :${membersVO.identityID}<br/>
-       emergencyContact :${membersVO.emergencyContact}<br/>
-       emergencyPhone :${membersVO.emergencyPhone}<br/>
-       emergencyRelation :${membersVO.emergencyRelation.relationID}<br/>
-       createDate :${membersVO.createDate}<br/>
-       lastOnlineDateTime :${membersVO.lastOnlineDateTime}<br/>
-  </td> 
-</tr>
 <tr>
 	<td>
 		姓氏:<input type="text" value="${membersVO.firstName}"/><br/>

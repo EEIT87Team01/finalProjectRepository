@@ -23,7 +23,8 @@
 </head>
 <body>
 <!-- 	get || post -->
-	<form action='<c:url value="/LoginServlet" />' method="post">
+<!-- /Login/DBCheck -->
+	<form action='<c:url value="/Login/DBCheck" />' method="post">
 	<table>
 		<thead>
 			<tr>
@@ -51,7 +52,12 @@
 			</tr>
 			<tr>
 				<td>
-					<a href="forgetPwsd.jsp">忘記密碼?</a>
+					<a href="forgetPaswd.jsp">忘記密碼?</a>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<a href="createAccount.jsp">新增用戶</a>
 				</td>
 			</tr>
 		</tbody>

@@ -27,6 +27,7 @@ public class MainCountry {
 		countryDao.selectOne("TWN");
 //		countryDao.selectAll();
 		
+		
 		//Unit test
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		Transaction tx = null;

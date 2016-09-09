@@ -27,34 +27,29 @@ public class MainLoginInformation {
 		}
 		//------------------------
 		//insert or update
-//		UUID uuid = UUID.fromString("38400000-8cf0-11bd-b23e-10b96e4ef00d");
-//		System.out.println(uuid);
-//		loginInformationPK.setMemberID(uuid);
 		membersVO.setMemberID("F349A8E2-DE67-4F70-838B-C099C687D57F");
-		loginInformationPK.setMemberAccount("admin1");
+		loginInformationPK.setMemberAccount("admin4");
 		loginInformationPK.setLoginMethod("1");
 		loginInformationVO.setMemberAccount(loginInformationPK);
 		loginInformationVO.setMemberID(membersVO);
-		String password = "12345678";
+		String password = "2266";
 		byte[] temp = password.getBytes("UTF-8");	//明碼  //使用者輸入byte[]
 		temp = mDigest.digest(temp); 		//亂碼
-		loginInformationVO.setPassword(temp);
-		loginInformationVO.setStatus("login_OK");
-		loginInformationDao.insert(loginInformationVO);
 		
-//		writerDao.insert(writerVO);
+		loginInformationVO.setPassword(temp);
+		int loginSataus = (int)(Math.random() *100 + 1);
+		loginInformationVO.setStatus(Integer.toString(loginSataus));
+		loginInformationDao.insert(loginInformationVO);
 		
 //------------------------------------------
 		//selectOne
 		MembersDAO membersDAO = new MembersDAO();
-		loginInformationPK.setMemberAccount("admin1");
+		loginInformationPK.setMemberAccount("admin4");
 		loginInformationPK.setLoginMethod("1");
 		loginInformationVO = loginInformationDao.selectOne(loginInformationPK);
 		System.out.println(loginInformationVO.getMemberID().getMemberID());
 		System.out.println(loginInformationVO.getPassword());
-		loginInformationVO.getMemberID();
 		
-		System.out.println(loginInformationVO);
 		//------------------------
 		
 		//selectAll

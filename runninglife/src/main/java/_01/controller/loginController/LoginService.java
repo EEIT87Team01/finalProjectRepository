@@ -2,7 +2,9 @@ package _01.controller.loginController;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,20 +19,9 @@ public class LoginService implements LoginService_Interface{
 	LoginInformationVO loginInfo = new LoginInformationVO();
 	LoginInformationPK loginInfoPK = new LoginInformationPK();
 	LoginInformationDAO loginInfoDAO = new LoginInformationDAO();
+	MembersVO membersVO = new MembersVO();
+	MembersDAO membersDAO = new MembersDAO();
 	
-	
-	
-
-	
-//	public LoginInformationVO addInfo(LoginInformationPK memberAccount,MembersVO  memberID,String password,String status){
-//		LoginInformationVO infoVO = new LoginInformationVO();
-//		infoVO.setMemberAccount(memberAccount);
-//		infoVO.setPassword(password);
-//		infoVO.setMemberID(memberID);
-//		infoVO.setStatus(status);
-//		loginDao.insert(infoVO);
-//		return infoVO;
-//	}
 	@Override
 	public Map<String ,Object> checkPassword(String memberAccount,String password){
 		MessageDigest mDigest = null;
@@ -40,7 +31,7 @@ public class LoginService implements LoginService_Interface{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-//		Collection<String> errorMessage = new ArrayList<String>();
+		
 		String message = null;
 		byte[] insetPswd = null;
 		Map<String ,Object> InfoMsg = new HashMap<String ,Object>();
@@ -48,7 +39,7 @@ public class LoginService implements LoginService_Interface{
 		loginInfoPK.setMemberAccount(memberAccount);
 		loginInfoPK.setLoginMethod("1");
 		
-		//輸入帳號CO Hibernate
+				//輸入帳號CO Hibernate
 				loginInfo = loginInfoDAO.selectOne(loginInfoPK);
 				//確認資料庫有此帳號
 				if(loginInfo != null){
@@ -88,9 +79,6 @@ public class LoginService implements LoginService_Interface{
 	
 	@Override
 	public MembersVO insertMember(Map<String ,Object> loginInfo){
-		
-		MembersVO membersVO = new MembersVO();
-		MembersDAO membersDAO = new MembersDAO();
 		String memberID = null;
 		memberID = ((LoginInformationVO)loginInfo.get("Info")).getMemberID().getMemberID();
 		membersVO.setMemberID(memberID);
@@ -119,7 +107,49 @@ public class LoginService implements LoginService_Interface{
 		}
 	}
 	
+	public String ForgetPaswd(String memberAccount,String memberEmail){
+		String DBEmail = null;
+		String message = null;
+		String memberID = null;
+		loginInfoPK.setMemberAccount(memberAccount);
+		loginInfoPK.setLoginMethod("1");
+		//輸入帳號CO Hibernate
+		loginInfo = loginInfoDAO.selectOne(loginInfoPK);
+		if(loginInfo != null){
+//			message = "帳號無誤";
+			membersVO = membersDAO.selectOne(loginInfo.getMemberID().getMemberID().toString());
+			DBEmail = membersVO.getEmail();
+			return DBEmail;
+		}else {
+			message = "無此帳號";
+			return message;
+		}
+	}
+	
+	public Map<String ,Object> CheckVerification(String memberAccount,String loginSataus){
+		String dbStatus = null;
+		String newStatus = null;
+		Map<String ,Object> returnInfo = new HashMap<String ,Object>();
+		loginInfoPK.setMemberAccount(memberAccount);
+		loginInfoPK.setLoginMethod("1");
+		loginInfo = loginInfoDAO.selectOne(loginInfoPK);
+		dbStatus = loginInfo.getStatus();
+		//與DB比對
+		if(loginSataus.equals(dbStatus.trim())){
+			newStatus = "login_OK";
+			returnInfo.put("status", newStatus);
+			returnInfo.put("Info",loginInfo); 
+			
+			loginInfo.setStatus(newStatus);
+			loginInfoDAO.update(loginInfo);
+			
+			return returnInfo;
+		}else{
 
+			returnInfo.put("status","驗證失敗");
+			return returnInfo;
+		}
+	}
 	
 	//正規表示式確認
 	public void regExpCheck(String memberAccount,String password){

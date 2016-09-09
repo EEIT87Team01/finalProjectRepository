@@ -39,14 +39,16 @@ public class MainMembers {
 		//-------------
 		String photoName = "chngstar.gif";
 		File photo = new File("E:\\EEIT87-1P\\FinalProject\\images",photoName);
-		InputStream fin = null;
-		try {
-			fin = new FileInputStream(photo);
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
+		byte[] imageData = null;
+		try{
+		FileInputStream fileInputStream = new FileInputStream(photo);
+		imageData = new byte[(int) photo.length()];
+		fileInputStream.read(imageData);
+		fileInputStream.close();
+		}catch(Exception e){
 			e.printStackTrace();
 		}
-		long flen = photo.length();
+		
 //		membersVO.setMemberID(memberID);
 		membersVO.setFirstName("Allen");
 		membersVO.setLastName("Jiang");
@@ -67,7 +69,8 @@ public class MainMembers {
 		membersVO.setAddress("亞特蘭提斯");
 		membersVO.setHeight(200.0);
 		membersVO.setWeight(250.0);
-//		membersBean.setPhoto(photo);
+		membersVO.setPhone("0987597864");
+		membersVO.setPhoto(imageData);
 		competenceVO.setCompetenceID(1);
 		membersVO.setCompetenceID(competenceVO);
 		membersVO.setIdentityID("B987987987");
@@ -84,7 +87,7 @@ public class MainMembers {
 
 		
 		//delete
-//		membersDAO.delete("F349A8E2-DE67-4F70-838B-C099C687D57F");
+//		membersDAO.delete("37119303-D36F-486E-A8CA-EB86F4C8F8AA");
 		//selectOne
 //		membersDAO.selectOne("F349A8E2-DE67-4F70-838B-C099C687D57F");
 		//selectAll

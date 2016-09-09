@@ -13,7 +13,17 @@
 
 <%= java.util.Calendar.getInstance().getTime() %>
 
-<a href="hello">click here</a>
+<a href="hello">hello click here</a>
+<a href="welcome">welcome click here</a>
+
+<form action="hello.html" method="post">
+Name:<input type="text" name="name">
+Password:<input type="password" name="password">
+<input type="submit" value="login">
+</form>
+
+<a href="empform">Add Employee</a>  
+<a href="viewemp">View Employees</a>  
  
 <%-- <h3>Welcome ${user.custid}</h3> --%>
 <%-- <h3><a href="<c:url value="/secure/login.jsp" />">Login</a></h3> --%>

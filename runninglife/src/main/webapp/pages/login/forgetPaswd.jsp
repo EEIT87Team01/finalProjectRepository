@@ -17,7 +17,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<form action='<c:url value="/LoginServlet" />' method="post">
+	<form action="/runninglife/Login/CheckPaswd" method="post">
 		<table>
 			<thead>
 				<tr>
@@ -26,11 +26,13 @@
 			</thead>
 			<tbody>
 				<tr>
-					<td>帳號:<input type="text" class="form-control" name="memberAccount" placeholder="請輸入帳號"/>
+					<td>帳號:<input type="text" class="form-control" name="memberAccount" 
+											value="${param.memberAccount}" placeholder="請輸入帳號"/>
 					<span class="glyphicon glyphicon-question-sign"></span></td>
 				</tr>
 				<tr>
-					<td>Email:<input type="text" class="form-control" name="memberEmail" placeholder="請輸入Email" /></td>
+					<td>Email:<input type="text" class="form-control" name="memberEmail" 
+											value="${param.memberEmail}" placeholder="請輸入Email" /></td>
 				</tr>
 				<tr>
 					<td><input type="submit" class="btn btn-primary" value="送出"></td>
