@@ -102,21 +102,25 @@
 						class="table table-hover table-bordered lohas-table text-center">
 						<thead>
 							<tr>
+
+								<th class="col-xs-1">編號</th>
 								<th class="col-xs-2">項目名稱</th>
 								<th class="col-xs-2">距離</th>
 								<th class="col-xs-2">報名費用</th>
 								<th class="col-xs-2">開放名額</th>
 								<th class="col-xs-2">起跑時間</th>
 								<th class="col-xs-2">限制時間(分)</th>
-								<th class="col-xs-2"></th>
+								<th class="col-xs-4"></th>
+<!-- 								<th class="col-xs-2"></th> -->
 							</tr>
 						</thead>
 						<tbody id="eventBody">
 							<c:forEach var="event" items="${events}">
 								<tr>
+									<td>${event.eventID}</td>
 									<td>${event.eventName}</td>
-									<td>${event.distance}km</td>
-									<td>$${event.fee}</td>
+									<td>${event.distance}</td>
+									<td>${event.fee}</td>
 									<td>${event.quota}</td>
 									<td>${event.whenToRun}</td>
 									<td>${event.limitTime }</td>
@@ -124,13 +128,34 @@
 										class="btn btn-danger  delete" role="button"
 										data-text="真的要刪除此項目嗎?" data-confirm-button="是的"
 										data-cancel-button="不了"data-confirm-button-class: "btn-danger">刪除</a></td>
+									<td><a class="btn btn-warning  delete" role="button">修改</a></td>
+
+
+<!-- 									<td> -->
+<!-- 										<div class="dropdown"> -->
+<!-- 											<button class="btn btn-primary dropdown-toggle" type="button" -->
+<!-- 												data-toggle="dropdown"> -->
+<!-- 												編輯<span class="caret"></span> -->
+<!-- 											</button> -->
+<!-- 											<ul class="dropdown-menu"> -->
+<%-- 												<li><a id="/runninglife/event/${event.eventID}/delete" --%>
+<!-- 										class="btn btn-danger  delete" role="button" -->
+<!-- 										data-text="真的要刪除此項目嗎?" data-confirm-button="是的" -->
+<!-- 										data-cancel-button="不了"data-confirm-button-class: "btn-danger">刪除</a></li> -->
+<!-- 												<li><a class="btn btn-warning  delete" role="button">修改</a></li> -->
+<!-- 											</ul> -->
+<!-- 										</div> -->
+<!-- 									</td> -->
 								</tr>
 							</c:forEach>
 							<tr>
 								<form id="eventForm"
 									action="/runninglife/${contest.contestID}/event/add">
-									<td><input type="text" class="form-group form-control has-error has-feedback" id="eventName"
-										name="eventName" placeholder="項目名稱" /></td>
+									<td><input type="text"
+										class="form-group form-control readonly" id="eventID"
+										name="eventID" placeholder="標號" /></td>
+									<td><input type="text" class="form-group form-control"
+										id="eventName" name="eventName" placeholder="項目名稱" /></td>
 									<td><input type="number" class="form-control"
 										id="distance" name="distance" placeholder="距離" /></td>
 									<td><input type="number" class="form-control" id="fee"
@@ -141,9 +166,8 @@
 										id="whenToRun" name="whenToRun" placeholder="06:50:00" /></td>
 									<td><input type="number" class="form-control"
 										id="limitTime" name="limitTime" placeholder="90" /></td>
-
 									<td><input type="submit" class="form-control  btn-success"
-										name="submit" value="新增" /></td>
+										name="submit" value="更新" /></td>
 								</form>
 							</tr>
 						</tbody>
@@ -158,8 +182,7 @@
 					<p>依性別及年齡分組，詳如下表</p>
 				</div>
 				<div class="table-responsive">
-					<table
-						class="table table-hover table-bordered lohas-table text-center ">
+					<table class="table table-hover table-bordered text-center ">
 						<thead>
 							<tr>
 
@@ -227,6 +250,26 @@
 						</tr>
 					</table>
 				</div>
+				<!-- 報名辦法 -->
+				<div
+					class="heading-title heading-border heading-color margin-top-40">
+					<h4>
+						<span>報名辦法</span>
+					</h4>
+				</div>
+				<ol>
+					<li>本次賽會僅採用網路報名，不接受現場報名。</li>
+					<li>填寫網路報名資料後系統會產生一組繳費帳號，每組帳號均為唯一帳號，不會與它人或其它參賽團隊重複，請依照指定時間內進行繳費才算完成報名。</li>
+					<li>繳費方式：7-ELEVEN超商ibon繳費、ATM繳款</li>
+					<li>繳費完成後約30分鐘後即可到報名系統查詢報名及繳費狀態。</li>
+					<li>繳費帳號逾期未繳者，若已逾報名時間，視同放棄報名資格。</li>
+					<li>RunningLife僅代收報名費，代收的報名費全數轉交主辦(承辦)單位，收據或發票皆由賽事主辦(承辦)單位開立。倘若報名者對報名費的處理方式有疑慮請洽該主辦(承辦)單位。</li>
+					<li>報名時請詳加評估自身實力，報名手續完成者不得改參加比賽項目。</li>
+					<li>請注意已完成報名手續並轉帳或匯款成功之選手，報名網路上之資料即無法修改。請於轉帳前先行確認報名資料是否正確，並於轉帳後至原報名網頁確認繳費是否成功。</li>
+					<li>大會保有更改所有參賽禮物品樣式之權利。</li>
+					<li>若您有網路報名、繳費操作問題請洽【樂活資訊】 <br>電話：(05)533-6010 <br>聯絡時間：週一至週五(08:30~12:00、13:30~17:00)
+					</li>
+				</ol>
 				<!--退費說明 -->
 				<div
 					class="heading-title heading-border heading-color margin-top-40">
@@ -234,6 +277,7 @@
 						<span>退費說明</span>
 					</h4>
 				</div>
+				<p>退費請致電承辦單位05-5336010提出取消申請，一旦確認取消即喪失參賽權，物資所有權，依照申請時間而有不同的退費標準，請斟酌情況再提出申請。</p>
 				<ol>
 					<li>開報後14天內(報名費全額退費，另酌收100元手續費)。</li>
 					<li>開報後14至28天(退還報名費50%，另酌收100元手續費)。</li>
@@ -299,11 +343,10 @@
 		<div class="col-lg-3 col-md-3 col-sm-3" id="activity-sidebar">
 			<div id="countdown" class="countdownHolder breadcrumb size-10"></div>
 			<!-- 籃圈 -->
-			<div
-				class="panel-group text-center margin-bottom-40"
+			<div class="panel-group text-center margin-bottom-40"
 				style="min-height: 351px;">
 				<div class="panel panel-primary"
-					style="min-height:351px; background-color: rgb(115, 185, 220);">
+					style="min-height: 351px; background-color: rgb(115, 185, 220);">
 					<div class="box-icon-title">
 						<i class="fa fa-pencil-square-o"></i>
 					</div>
@@ -321,9 +364,9 @@
 						</p>
 					</div>
 					<div class="panel-footer">
-					<a id="applyLink" class="btn btn-lg btn-default btn-bordered">
-						<span>立即報名</span>
-					</a>
+						<a id="applyLink" class="btn btn-lg btn-default btn-bordered">
+							<span>立即報名</span>
+						</a>
 					</div>
 				</div>
 			</div>
@@ -332,43 +375,105 @@
 	</section>
 	<div id="applyForm">
 		<!-- 彈出報名 -->
-		<div id="popupContact">
+		<div id="popupApply" class="">
 			<!-- 報名表單 -->
-			<form action="/runninglife/apply" id="runnerForm" method="post" name="runner">
+			<form action="/runninglife/apply" id="runnerForm" method="post"
+				name="runner">
 				<img id="close" src="/runninglife/resources/images/Close-2-icon.png"
 					onclick="div_hide()">
-				<h2>${contest.contestName}</h2>
+				<h3>報名賽事</h3>
 				<hr>
 				<div>
-				<label for="disabledTextInput">會員帳號(測試用)</label>
-				<input type="text" class="form-control" name="pk.memberID" value="${member.memberID}"/>
+					<label for="disabledTextInput">會員帳號(測試用)</label> <input type="text"
+						class="form-control" name="pk.memberID" value="${member.memberID}" />
 				</div>
-				<input type="text" class="form-control" name="pk.contestID"  value="${contest.contestID}" >
-<%-- 				<input type="text" class="form-control" name="eventID" value="${contest.contestName}"/> --%>
-				<select class="form-control" name="eventID" >
-					<option value="0">項目</option>
-					<c:forEach var="event" items="${events}">
-						<label class="control-label">項目</label>
-						<option value="${event.eventID}">${event.eventName}</option>
-					</c:forEach>
-				</select> <select class="form-control" name="teamID">
-					<option value="0">組別</option>
-					<c:forEach var="team" items="${teams}">
-						<option value="${team.teamID}">${team.teamName}</option>
-					</c:forEach>
-				</select> <select class="form-control" name="clothesSize">
-					<option value="0">衣服尺寸</option>
-					<c:forEach var="aClothes" items="${clothes}">
-						<option value="${aClothes.clothesSize}">${aClothes.clothesSize}</option>
-					</c:forEach>
-<%-- 				<a href="/runninglife/contest/apply?id=${contest.contestID}" --%>
-<!-- 					id="submit">Send</a> -->
-					<input class="form-control btn btn-info" type="submit"/>
+				<div>
+					<label for="disabledTextInput">賽事編號(測試用)</label> <input type="text"
+						class="form-control" name="pk.contestID"
+						value="${contest.contestID}">
+				</div>
+
+				<div>
+					<label for="disabledTextInput">項目</label> <select
+						class="form-control" name="eventID">
+						<option value="0">請選擇</option>
+						<c:forEach var="event" items="${events}">
+							<option value="${event.eventID}">${event.eventName}</option>
+						</c:forEach>
+					</select>
+				</div>
+				<div>
+					<label for="disabledTextInput">紀念衣尺寸</label> <select
+						class="form-control" name="clothesSize">
+						<option value="0">請選擇</option>
+						<c:forEach var="aClothes" items="${clothes}">
+							<option value="${aClothes.clothesSize}">${aClothes.clothesSize}</option>
+						</c:forEach>
+					</select>
+				</div>
+				<div>
+					<input class="btn btn-info" type="submit" />
+				</div>
+
 			</form>
 		</div>
 		<!-- Popup Div Ends Here -->
 	</div>
-	<button id="popup" onclick="div_show()">Popup</button>
+
+	<!-- 	<div id="eventPopForm"> -->
+	<!-- 		<!-- 彈出報名 -->
+	-->
+	<!-- 		<div id="popupEvent" class="form-group"> -->
+	<!-- 			<!-- 報名表單 -->
+	-->
+	<%-- 			<form action="/runninglife/event/add" id="eventFormNew" method="post" --%>
+	<%-- 				name="event"> --%>
+	<!-- 				<img id="closeEvent" -->
+	<!-- 					src="/runninglife/resources/images/Close-2-icon.png" -->
+	<!-- 					onclick="div_hide()"> -->
+	<!-- 				<h2>編輯項目</h2> -->
+	<!-- 				<hr> -->
+	<!-- 				<div class="form-group"> -->
+	<!-- 					<label for="disabledTextInput"></label> <input type="text" -->
+	<!-- 						class="form-control" id="contestID" name="contestID" value=""> -->
+	<!-- 				</div> -->
+	<!-- 				<div class="form-group"> -->
+	<!-- 					<label for="disabledTextInput">賽事名稱</label> <input type="text" -->
+	<!-- 						class="form-control" id="contestName" name="contestName" value=""> -->
+	<!-- 				</div> -->
+	<!-- 				<div class="form-group"> -->
+	<!-- 					<label for="disabledTextInput">距離</label> <input type="text" -->
+	<!-- 						class="form-control" id="distance" name="distance" value=""> -->
+	<!-- 				</div> -->
+	<!-- 				<div class="form-group"> -->
+	<!-- 					<label for="disabledTextInput">費用</label> <input type="text" -->
+	<!-- 						class="form-control" id="fee" name="fee" value=""> -->
+	<!-- 				</div> -->
+	<!-- 				<div class="form-group"> -->
+	<!-- 					<label for="disabledTextInput">名額</label> <input type="text" -->
+	<!-- 						class="form-control" id="quota" name="quota" value=""> -->
+	<!-- 				</div> -->
+	<!-- 				<div class="form-group"> -->
+	<!-- 					<label for="disabledTextInput">起跑時間</label> <input type="text" -->
+	<!-- 						class="form-control" id="whenToRun" name="whenToRun" value=""> -->
+	<!-- 				</div> -->
+	<!-- 				<div class="form-group"> -->
+	<!-- 					<label for="disabledTextInput">時間限制</label> -->
+	<!-- 				</div> -->
+	<!-- 				<div class="form-group"> -->
+	<!-- 					<input type="text" class="form-control" id="limitTime" -->
+	<!-- 						name="limitTime" value=""> -->
+	<!-- 				</div> -->
+
+
+	<%-- 			</form> --%>
+	<!-- 		</div> -->
+	<!-- 		<!-- Popup Div Ends Here -->
+	-->
+	<!-- 	</div> -->
+
+
+
 </body>
 
 <script src="/runninglife/resources/js/time.js"></script>
@@ -386,21 +491,8 @@
 		alert(data);
 		console.log("respose: " + data);
 	}
-	
-	function getParameterByName(name, url) {
-	    if (!url) url = window.location.href;
-	    name = name.replace(/[\[\]]/g, "\\$&");
-	    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
-	        results = regex.exec(url);
-	    if (!results) return null;
-	    if (!results[2]) return '';
-	    return decodeURIComponent(results[2].replace(/\+/g, " "));
-	}
+	var eventMark;
 	$(function() {
-		
-		var msg = getParameterByName('msg');
-		if(msg!=null){alert(msg)}else{alert(nothing)}
-		
 		//項目刪除按鈕綁定
 		$("#eventBody")
 				.on(
@@ -422,10 +514,42 @@
 										}
 									});
 						});
+		//更新按鈕榜定
+		$("#eventBody").on(
+				"click",
+				".btn-warning",
+				function() {
+					var eventID = $(this).parent().parent().children(
+							"td:nth-child(1)").text();
+					var eventName = $(this).parent().parent().children(
+							"td:nth-child(2)").text();
+					var distance = $(this).parent().parent().children(
+							"td:nth-child(3)").text();
+					var fee = $(this).parent().parent().children(
+							"td:nth-child(4)").text();
+					var quota = $(this).parent().parent().children(
+							"td:nth-child(5)").text();
+					var whenToRun = $(this).parent().parent().children(
+							"td:nth-child(6)").text();
+					var limitTime = $(this).parent().parent().children(
+							"td:nth-child(7)").text();
+
+					console.log("eventID:" + eventID);
+
+					eventMark = $(this);
+					$('#eventID').val(eventID);
+					$('#eventName').val(eventName);
+					$('#distance').val(distance);
+					$('#fee').val(fee);
+					$('#quota').val(quota);
+					$('#whenToRun').val(whenToRun);
+					$('#limitTime').val(limitTime);
+				})
+
 		//分組刪除按鈕綁定
 		$("#teamBody").on("click", ".btn-danger", function() {
 			var teamID = $(this).parent().parent().children(".teamID").text();
-// 			alert(teamID);
+			// 			alert(teamID);
 			var teamRow = $(this).parent().parent();
 			$.ajax({
 				mimeType : "text/html; charset=UTF-8", //alert可以show出物件內容
@@ -440,7 +564,6 @@
 				}
 			});
 		});
-
 	});
 
 	//轉成json函式
@@ -470,18 +593,18 @@
 		var contestID = $("#contestID").text();
 		alert(JsonStr);
 		alert(contestID);
-		
-		if($('#teamName').val()==""||$('#ageRange').val()==""){
+
+		if ($('#teamName').val() == "" || $('#ageRange').val() == "") {
 			alert("請輸入完整資料");
-		}else{
-		$.ajax({
-			type : "POST",
-			url : "/runninglife/" + contestID + "/team/add",
-			contentType : "application/json",
-			data : JsonStr,
-			mimeType : "application/json; charset=UTF-8",
-			success : showTeam
-		});
+		} else {
+			$.ajax({
+				type : "POST",
+				url : "/runninglife/" + contestID + "/team/add",
+				contentType : "application/json",
+				data : JsonStr,
+				mimeType : "application/json; charset=UTF-8",
+				success : showTeam
+			});
 		}
 	})
 	function showTeam(team) {
@@ -500,12 +623,10 @@
 								+ upper
 								+ '</td><td><a class="btn btn-danger  delete" role="button"data-text="真的要刪除此項目嗎?" data-confirm-button="是的"data-cancel-button="不了"data-confirm-button-class: "btn-danger">刪除</a></td></tr>');
 	}
-
 	//新增event
 	$('#eventForm').submit(function(e) {
 		e.preventDefault();
 		if ($('#eventName').val() == "") {
-			$('#eventName').switchClass()
 			alert("請輸入名稱");
 		} else if ($('#distance').val() == "") {
 			alert("請輸入距離");
@@ -526,26 +647,40 @@
 		console.log(data.whenToRun);
 		console.log(data.distance);
 		console.log(data.quota);
-
 		console.log(data2);
+		if ($.trim($('#eventID').val()) == "") {
+			alert("新增");
+			$.ajax({
+				type : "POST",
+				url : "/runninglife/${contest.contestID}/event/add",
+				contentType : "application/json",
+				data : data2,
+				mimeType : "application/json; charset=UTF-8",
+				success : addEvent
+			});
+		} else {
+			alert("更新");
+			$.ajax({
+				type : "POST",
+				url : "/runninglife/${contest.contestID}/event/add",
+				contentType : "application/json",
+				data : data2,
+				mimeType : "application/json; charset=UTF-8",
+				success : updateEvent
+			});
 
-		$.ajax({
-			type : "POST",
-			url : "/runninglife/${contest.contestID}/event/add",
-			contentType : "application/json",
-			data : data2,
-			mimeType : "application/json; charset=UTF-8",
-			success : showEvent
-		});
+		}
 
 	});
-	function showEvent(event) {
+	function addEvent(event) {
 		alert(event);
-		console.log(event.fee);
+		alert("更新成功")
 		$('#eventForm')
 				.parent()
 				.before(
 						'<tr><td>'
+								+ event.eventID
+								+ '</td><td>'
 								+ event.eventName
 								+ '</td><td>'
 								+ event.distance
@@ -559,10 +694,35 @@
 								+ event.limitTime
 								+ '</td><td><a id="/runninglife/event/'
 								+ event.eventID
-								+ '/delete"class="btn btn-danger  delete" role="button"data-text="真的要刪除此項目嗎?" data-confirm-button="是的"data-cancel-button="不了"data-confirm-button-class: "btn-danger">刪除</a></td></tr>');
+								+ '/delete"class="btn btn-danger  delete" role="button"data-text="真的要刪除此項目嗎?" data-confirm-button="是的"data-cancel-button="不了"data-confirm-button-class: "btn-danger">刪除</a></td>'
+								+ '<td><a class="btn btn-warning  delete" role="button">修改</a></td></tr>');
+
+		$('#eventID').val("");
+		$('#even' + 'tName').val("");
+		$('#distance').val("");
+		$('#fee').val("");
+		$('#quota').val("");
+		$('#limitTime').val("");
+		$('#whenToRun').val("");
+	}
+	function updateEvent(event) {
+		alert("新增成功");
+		eventMark.parent().parent().children("td:nth-child(1)").text(
+				event.eventID);
+		eventMark.parent().parent().children("td:nth-child(2)").text(
+				event.eventName);
+		eventMark.parent().parent().children("td:nth-child(3)").text(
+				event.distance);
+		eventMark.parent().parent().children("td:nth-child(4)").text(event.fee);
+		eventMark.parent().parent().children("td:nth-child(5)").text(
+				event.quota);
+		eventMark.parent().parent().children("td:nth-child(6)").text(
+				event.whenToRun);
+		eventMark.parent().parent().children("td:nth-child(7)").text(
+				event.limitTime);
 
 	}
-	
+
 	$("#applyLink").on("click", function() {
 		document.getElementById('applyForm').style.display = "block";
 	})

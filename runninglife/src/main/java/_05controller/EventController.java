@@ -247,11 +247,28 @@ public class EventController {
 	@RequestMapping(value = "/apply", method = RequestMethod.POST)
 	public String ContestApply(@ModelAttribute RunnerVO runner, @SessionAttribute MemberVO member, Model model,HttpServletRequest req) {
 		Integer id = runner.getPk().getContestID();
+		
+		int age =20;//從member取出年齡
+//		age =member.getAge();
+		TeamDAOimpl teamDAO = new TeamDAOimpl();
+		List <TeamVO> list =teamDAO.getTeamById(id);
+		TeamVO yourTeam=list.get(list.size()-1);//預設最年輕組
+		for(TeamVO team :list){
+			System.out.println(team);
+			if(team.getAgeRange()<=age &&  team.getAgeRange()+9 > age){
+				age  = team.getAgeRange();
+				yourTeam = team;
+				System.out.println("被分派到組別:"+team.getTeamName());
+				System.out.println("組別範圍:"+team.getAgeRange()+"~"+(team.getAgeRange()+9));
+			}
+		}
+		runner.setTeamID(yourTeam.getTeamID());
+		
+		
 		try {
 			String status = runnerDAO.insert(runner);
 			ContestVO contest = contestDAO.findByPrimaryKey(runner.getPk().getContestID());
-			mailService.sendApplyEmail(member, contest);
-			req.setAttribute("status", "e幹你娘");
+//			mailService.sendApplyEmail(member, contest);
 			System.out.println(status);
 		} catch (Exception ex) {
 			System.out.println("-----------------------------------------------");
@@ -264,13 +281,6 @@ public class EventController {
 		return "score";
 	}
 
-	// @RequestMapping(value = "/test", method = RequestMethod.POST)
-	// public String testtest(HttpServletRequest req){
-	// String param = (String) req.getAttribute("param");
-	// System.out.println(param);
-	// System.out.println(11111111);
-	// return "aa";
-	// }
 	@RequestMapping("email")
 	public String emailtest(Model model, @SessionAttribute("member") MemberVO member) {
 		mailService.sendEmail(member);

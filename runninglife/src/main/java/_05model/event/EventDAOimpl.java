@@ -18,7 +18,7 @@ public class EventDAOimpl implements EventDAO {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		try {
 			session.beginTransaction();
-			session.save(eventVO);
+			session.saveOrUpdate(eventVO);
 			session.getTransaction().commit();
 		} catch (RuntimeException ex) {
 			session.getTransaction().rollback();

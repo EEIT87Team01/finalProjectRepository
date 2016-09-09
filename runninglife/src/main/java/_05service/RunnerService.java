@@ -1,0 +1,30 @@
+package _05service;
+
+import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
+
+import _05model.runner.RunnerDAOimpl;
+import _05model.runner.RunnerVO;
+
+public class RunnerService {
+	public List <RunnerVO> getMyContestByDate(String memberID,Date begin,Date end){
+		RunnerDAOimpl dao = new RunnerDAOimpl();
+		List<RunnerVO> list = dao.getMyContest("arthur");
+		List<RunnerVO> runner = new ArrayList<RunnerVO>();
+		begin.getTime();
+		end.getTime();
+		System.out.println("開始:"+begin);
+		System.out.println("結束:"+end);
+		System.out.println("---------------------------------------");
+		for(RunnerVO a:list){
+			a.getContest().getStartDate().getTime();
+			
+			if(begin.getTime()<a.getContest().getStartDate().getTime()&&a.getContest().getStartDate().getTime()<end.getTime()){
+			runner.add(a);
+			System.out.println("符合的賽事:"+a.getContest().getContestName());
+			}
+		}
+		return runner;
+	}
+}

@@ -13,7 +13,7 @@ position:fixed;
 background-color:#313131;
 overflow:auto
 }
-#abc {
+#eventPopForm {
 width:100%;
 height:100%;
 opacity:.95;
@@ -30,13 +30,20 @@ right:-14px;
 top:-14px;
 cursor:pointer
 }
-div#popupContact {
+img#closeEvent {
+position:absolute;
+right:-14px;
+top:-14px;
+cursor:pointer
+}
+div#popupApply, div#popupEvent{
 position:absolute;
 left:50%;
 top:17%;
 margin-left:-202px;
 font-family:'Raleway',sans-serif
 }
+
 form {
 max-width:300px;
 min-width:250px;

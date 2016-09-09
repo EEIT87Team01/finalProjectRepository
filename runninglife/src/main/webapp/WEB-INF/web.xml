@@ -43,6 +43,7 @@
 	    <param-name>contextConfigLocation</param-name>
 	    <param-value>_05service.email.config.AppConfig</param-value>
 	</context-param>
+	
 	<servlet>
 		<servlet-name>event</servlet-name>
         <servlet-class>
