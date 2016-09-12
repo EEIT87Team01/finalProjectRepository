@@ -230,7 +230,7 @@
 				<div class="table-responsive">
 					<table
 						class="table table-hover table-bordered lohas-table text-center ">
-						<tr>
+						<tr class="danger">
 							<td>尺寸</td>
 							<c:forEach var='aClothes' items='${clothes}'>
 								<td>${aClothes.clothesSize}</td>
