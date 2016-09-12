@@ -2,6 +2,9 @@ package _05service;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,9 +20,10 @@ import _05model.team.TeamDAOimpl;
 import _05service.email.MailService;
 import _05validator.EventValidator;
 import _05validator.FileValidator;
+
 @Service
 public class ContestService {
-	
+
 	@Autowired
 	private ContestDAOimpl contestDAO;
 	@Autowired
@@ -38,19 +42,37 @@ public class ContestService {
 	private FileValidator fileValidator;
 	@Autowired
 	private EventValidator eventValidator;
-	
-	public String createContest(ContestVO contest){
+
+	public String createContest(ContestVO contest) {
 		contestDAO.insert(contest);
 		return null;
 	}
-	
-	public String updateContest(ContestVO contest){
+
+	public String updateContest(ContestVO contest) {
 		contestDAO.update(contest);
 		return null;
 	}
-	
-	
-	//賽事新增圖片
+
+	public List<ContestVO> QueryContest(Date begin, Date end) {
+		List<ContestVO> list = contestDAO.getAll();
+		List<ContestVO> contests = new ArrayList<>();
+		System.out.println("開始搜尋符合賽事");
+		System.out.println("開始:"+begin);
+		System.out.println("結束:"+end);
+		for (ContestVO a : list) {
+			a.getStartDate().getTime();
+			if (begin.getTime() <= a.getStartDate().getTime() && a.getStartDate().getTime() < end.getTime()) {
+				contests.add(a);
+				System.out.println("搜尋到符合的賽事");
+				System.out.println(a.getContestName());
+			}
+
+		}
+		return contests;
+
+	}
+
+	// 賽事新增圖片
 	public String photo(CommonsMultipartFile[] fileUpload, ContestVO contest) {
 		String path = "c:/run/";
 

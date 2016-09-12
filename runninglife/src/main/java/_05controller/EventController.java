@@ -1,15 +1,15 @@
 package _05controller;
 
 import java.io.File;
+import java.sql.Date;
 import java.text.SimpleDateFormat;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -40,6 +40,7 @@ import _05model.runner.RunnerVO;
 import _05model.team.TeamDAOimpl;
 import _05model.team.TeamVO;
 import _05service.ContestService;
+import _05service.RunnerService;
 import _05service.email.MailService;
 import _05validator.EventValidator;
 import _05validator.FileValidator;
@@ -68,12 +69,28 @@ public class EventController {
 	private EventValidator eventValidator;
 	@Autowired
 	private ContestService contestService;
+	@Autowired
+	private RunnerService runnerService;
 
 	// show all contests
-	@RequestMapping(value = "contest", method = RequestMethod.GET)
+	@RequestMapping(value = "/contest", method = RequestMethod.GET)
 	public String showAllContests(Model model) {
 		List<ContestVO> contests = contestDAO.getAll();
 		model.addAttribute("contests", contests);
+		return "contest";
+	}
+	
+	
+	@RequestMapping(value = "/contest/search", method = RequestMethod.GET)
+	public String showQueryContests(Model model, HttpServletRequest req) {
+		
+		System.out.println(req.getParameter("month"));
+		System.out.println(req.getParameter("year"));
+		List<ContestVO> contests = contestDAO.getAll();
+		Date begin =Date.valueOf("2016-08-01");
+		Date end =Date.valueOf("2016-12-02");
+		List<ContestVO> queryContests =contestService.QueryContest(begin, end);
+		model.addAttribute("contests", queryContests);
 		return "contest";
 	}
 

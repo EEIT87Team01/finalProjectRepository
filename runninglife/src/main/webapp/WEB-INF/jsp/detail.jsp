@@ -111,7 +111,7 @@
 								<th class="col-xs-2">起跑時間</th>
 								<th class="col-xs-2">限制時間(分)</th>
 								<th class="col-xs-4"></th>
-<!-- 								<th class="col-xs-2"></th> -->
+								<!-- 								<th class="col-xs-2"></th> -->
 							</tr>
 						</thead>
 						<tbody id="eventBody">
@@ -128,24 +128,24 @@
 										class="btn btn-danger  delete" role="button"
 										data-text="真的要刪除此項目嗎?" data-confirm-button="是的"
 										data-cancel-button="不了"data-confirm-button-class: "btn-danger">刪除</a></td>
-									<td><a class="btn btn-warning  delete" role="button">修改</a></td>
+									<td><a class="btn btn-warning  edit" role="button">修改</a></td>
 
 
-<!-- 									<td> -->
-<!-- 										<div class="dropdown"> -->
-<!-- 											<button class="btn btn-primary dropdown-toggle" type="button" -->
-<!-- 												data-toggle="dropdown"> -->
-<!-- 												編輯<span class="caret"></span> -->
-<!-- 											</button> -->
-<!-- 											<ul class="dropdown-menu"> -->
-<%-- 												<li><a id="/runninglife/event/${event.eventID}/delete" --%>
-<!-- 										class="btn btn-danger  delete" role="button" -->
-<!-- 										data-text="真的要刪除此項目嗎?" data-confirm-button="是的" -->
-<!-- 										data-cancel-button="不了"data-confirm-button-class: "btn-danger">刪除</a></li> -->
-<!-- 												<li><a class="btn btn-warning  delete" role="button">修改</a></li> -->
-<!-- 											</ul> -->
-<!-- 										</div> -->
-<!-- 									</td> -->
+									<!-- 									<td> -->
+									<!-- 										<div class="dropdown"> -->
+									<!-- 											<button class="btn btn-primary dropdown-toggle" type="button" -->
+									<!-- 												data-toggle="dropdown"> -->
+									<!-- 												編輯<span class="caret"></span> -->
+									<!-- 											</button> -->
+									<!-- 											<ul class="dropdown-menu"> -->
+									<%-- 												<li><a id="/runninglife/event/${event.eventID}/delete" --%>
+									<!-- 										class="btn btn-danger  delete" role="button" -->
+									<!-- 										data-text="真的要刪除此項目嗎?" data-confirm-button="是的" -->
+									<!-- 										data-cancel-button="不了"data-confirm-button-class: "btn-danger">刪除</a></li> -->
+									<!-- 												<li><a class="btn btn-warning  delete" role="button">修改</a></li> -->
+									<!-- 											</ul> -->
+									<!-- 										</div> -->
+									<!-- 									</td> -->
 								</tr>
 							</c:forEach>
 							<tr>
@@ -153,7 +153,7 @@
 									action="/runninglife/${contest.contestID}/event/add">
 									<td><input type="text"
 										class="form-group form-control readonly" id="eventID"
-										name="eventID" placeholder="標號" /></td>
+										name="eventID" placeholder="標號" readonly/></td>
 									<td><input type="text" class="form-group form-control"
 										id="eventName" name="eventName" placeholder="項目名稱" /></td>
 									<td><input type="number" class="form-control"
@@ -201,12 +201,13 @@
 									<td><a class="btn btn-danger  delete" role="button"
 										data-text="真的要刪除此項目嗎?" data-confirm-button="是的"
 										data-cancel-button="不了"data-confirm-button-class: "btn-danger">刪除</a></td>
+									<td><a class="btn btn-warning  edit" role="button">修改</a></td>
 								</tr>
 							</c:forEach>
 							<tr>
 								<form id="teamForm">
 									<td><input type="text" class="form-control" name="teamID"
-										id="teamID" disabled="disabled" placeholder="" /></td>
+										id="teamID"  placeholder="" readonly/></td>
 									<td><input type="text" class="form-control"
 										name="teamName" id="teamName" placeholder="男甲組" /></td>
 									<td><input type="number" class="form-control"
@@ -491,7 +492,9 @@
 		alert(data);
 		console.log("respose: " + data);
 	}
-	var eventMark;
+	
+	var eventMark=$('#contestID');
+	var teamMark=$('#contestID');
 	$(function() {
 		//項目刪除按鈕綁定
 		$("#eventBody")
@@ -514,11 +517,14 @@
 										}
 									});
 						});
-		//更新按鈕榜定
+		//項目更新按鈕榜定
 		$("#eventBody").on(
 				"click",
 				".btn-warning",
 				function() {
+					if (eventMark.length) {
+						eventMark.parent().parent().removeClass("warning");
+					}
 					var eventID = $(this).parent().parent().children(
 							"td:nth-child(1)").text();
 					var eventName = $(this).parent().parent().children(
@@ -533,7 +539,7 @@
 							"td:nth-child(6)").text();
 					var limitTime = $(this).parent().parent().children(
 							"td:nth-child(7)").text();
-
+					$(this).parent().parent().addClass("warning");
 					console.log("eventID:" + eventID);
 
 					eventMark = $(this);
@@ -564,6 +570,29 @@
 				}
 			});
 		});
+		//分組更新按鈕榜定
+		$("#teamBody").on("click",".btn-warning",function(){
+			if (teamMark.length) {
+				teamMark.parent().parent().removeClass("warning");
+			}
+			
+			
+			var teamID=$(this).parent().parent().children('td:nth-child(1)').text();
+			var teamName=$(this).parent().parent().children('td:nth-child(2)').text();
+			var ageRange=$(this).parent().parent().children('td:nth-child(3)').text().substr(0,2);
+			
+			$(this).parent().parent().addClass("warning");
+			
+			teamMark=$(this);
+			$('#teamID').val(teamID);
+			$('#teamName').val(teamName);
+			$('#ageRange').val(ageRange);
+			
+		})
+		
+		
+		
+		
 	});
 
 	//轉成json函式
@@ -585,31 +614,46 @@
 			return o;
 		};
 	})(jQuery);
-	//ㄒㄧㄣ
+	//送出分組
 	$('#teamForm').submit(function(e) {
 		e.preventDefault();
 		var JsonObj = $(this).serializeFormJSON();
 		var JsonStr = JSON.stringify(JsonObj);
 		var contestID = $("#contestID").text();
 		alert(JsonStr);
-		alert(contestID);
 
-		if ($('#teamName').val() == "" || $('#ageRange').val() == "") {
-			alert("請輸入完整資料");
-		} else {
+// 		if ($('#teamName').val() == "" || $('#ageRange').val() == "") {
+// 			alert("請輸入完整資料");
+// 		}
+		if($.trim($('#teamID').val())==""){
+			alert('新增');
 			$.ajax({
 				type : "POST",
 				url : "/runninglife/" + contestID + "/team/add",
 				contentType : "application/json",
 				data : JsonStr,
 				mimeType : "application/json; charset=UTF-8",
-				success : showTeam
+				success : addTeam
+			});
+		}else{
+			alert("更新");
+			$.ajax({
+				type : "POST",
+				url : "/runninglife/" + contestID + "/team/add",
+				contentType : "application/json",
+				data : JsonStr,
+				mimeType : "application/json; charset=UTF-8",
+				success : updateTeam
 			});
 		}
+			
+		
+
+		
 	})
-	function showTeam(team) {
+	function addTeam(team) {
 		var upper = team.ageRange + 9;
-		alert("showTeam");
+		alert("新增成功");
 		$('#teamForm')
 				.parent()
 				.before(
@@ -622,8 +666,26 @@
 								+ '~'
 								+ upper
 								+ '</td><td><a class="btn btn-danger  delete" role="button"data-text="真的要刪除此項目嗎?" data-confirm-button="是的"data-cancel-button="不了"data-confirm-button-class: "btn-danger">刪除</a></td></tr>');
+	
+		$('#teamID').val("");
+		$('#teamName').val("");
+		$('#ageRange').val("");
 	}
-	//新增event
+	function updateTeam(team){
+		alert("更新成功");
+		teamMark.parent().parent().children('td:nth-child(2)').text(team.teamName);
+		teamMark.parent().parent().children('td:nth-child(3)').text(team.ageRange);
+		teamMark.parent().parent().removeClass("warning");
+		
+		$('#teamID').val("");
+		$('#teamName').val("");
+		$('#ageRange').val("");
+		
+	}
+	
+	
+	
+	//送出event
 	$('#eventForm').submit(function(e) {
 		e.preventDefault();
 		if ($('#eventName').val() == "") {
@@ -648,6 +710,7 @@
 		console.log(data.distance);
 		console.log(data.quota);
 		console.log(data2);
+		
 		if ($.trim($('#eventID').val()) == "") {
 			alert("新增");
 			$.ajax({
@@ -673,7 +736,6 @@
 
 	});
 	function addEvent(event) {
-		alert(event);
 		alert("更新成功")
 		$('#eventForm')
 				.parent()
@@ -706,7 +768,7 @@
 		$('#whenToRun').val("");
 	}
 	function updateEvent(event) {
-		alert("新增成功");
+		alert("更新成功");
 		eventMark.parent().parent().children("td:nth-child(1)").text(
 				event.eventID);
 		eventMark.parent().parent().children("td:nth-child(2)").text(
@@ -720,7 +782,15 @@
 				event.whenToRun);
 		eventMark.parent().parent().children("td:nth-child(7)").text(
 				event.limitTime);
-
+		eventMark.parent().parent().removeClass("warning");
+		
+		$('#eventID').val("");
+		$('#even' + 'tName').val("");
+		$('#distance').val("");
+		$('#fee').val("");
+		$('#quota').val("");
+		$('#limitTime').val("");
+		$('#whenToRun').val("");
 	}
 
 	$("#applyLink").on("click", function() {

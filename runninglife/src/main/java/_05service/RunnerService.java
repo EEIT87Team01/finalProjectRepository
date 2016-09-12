@@ -4,13 +4,16 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import _05model.runner.RunnerDAOimpl;
 import _05model.runner.RunnerVO;
-
+@Service
 public class RunnerService {
 	public List <RunnerVO> getMyContestByDate(String memberID,Date begin,Date end){
 		RunnerDAOimpl dao = new RunnerDAOimpl();
 		List<RunnerVO> list = dao.getMyContest("arthur");
+//		List<RunnerVO> list = dao.getMyContest(memberID);
 		List<RunnerVO> runner = new ArrayList<RunnerVO>();
 		begin.getTime();
 		end.getTime();
