@@ -1,13 +1,18 @@
 package _01.controller.loginController;
 
+import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+import _01.model.city.CityDAO;
+import _01.model.city.CityPK;
+import _01.model.city.CityVO;
+import _01.model.country.CountryDAO;
+import _01.model.location.LocationPK;
+import _01.model.location.LocationVO;
 import _01.model.loginInformation.LoginInformationDAO;
 import _01.model.loginInformation.LoginInformationPK;
 import _01.model.loginInformation.LoginInformationVO;
@@ -71,7 +76,7 @@ public class LoginService implements LoginService_Interface{
 						return InfoMsg;
 					}
 				}else{
-					message = "查無此帳號";
+					message = "帳號不存在";
 					InfoMsg.put("Msg",message);
 					return InfoMsg;
 				}
@@ -149,6 +154,82 @@ public class LoginService implements LoginService_Interface{
 			returnInfo.put("status","驗證失敗");
 			return returnInfo;
 		}
+	}
+	
+	
+	//更換密碼
+	public MembersVO changePaswd(String memberAccount,String password){
+		String memberID = null;
+		MessageDigest mDigest = null;
+		try {
+			mDigest = MessageDigest.getInstance("MD5");
+		} catch (NoSuchAlgorithmException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		//查詢會員
+		loginInfoPK.setMemberAccount(memberAccount);
+		loginInfoPK.setLoginMethod("1");
+		loginInfo = loginInfoDAO.selectOne(loginInfoPK);
+		memberID = loginInfo.getMemberID().getMemberID();
+		membersVO = membersDAO.selectOne(memberID);
+		
+		byte[] temp = password.getBytes();	//明碼  //使用者輸入byte[]
+		temp = mDigest.digest(temp); 		//亂碼
+		loginInfo.setPassword(temp);
+		loginInfoDAO.update(loginInfo);
+		
+		return membersVO;
+	}
+	
+	//正規表示式確認
+	public MembersVO createMember(String memberAccount,String password,String firstName,String lastName,String nickname,String gender,
+			String email,String birthday,String location,String address,String identityID){
+		CityDAO cityDAO = new CityDAO();
+		CountryDAO countryDAO = new CountryDAO();
+		
+		CityPK cityPK = new CityPK();
+		CityVO cityVO = new CityVO();
+		LocationVO locationVO = new LocationVO();
+		LocationPK locationPK = new LocationPK();
+		MessageDigest mDigest = null;
+		try {
+			mDigest = MessageDigest.getInstance("MD5");
+		} catch (NoSuchAlgorithmException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		loginInfoPK.setMemberAccount(memberAccount);
+		loginInfoPK.setLoginMethod("1");
+		loginInfo.setMemberAccount(loginInfoPK);
+		byte[] temp = password.getBytes();	//明碼  //使用者輸入byte[]
+		temp = mDigest.digest(temp); 
+		loginInfo.setPassword(temp);
+		loginInfoDAO.update(loginInfo);
+		
+		membersVO.setFirstName(firstName);
+		membersVO.setLastName(lastName);
+		membersVO.setNickname(nickname);
+		membersVO.setGender(gender);
+		membersVO.setEmail(email);
+		membersVO.setBirthday(birthday);
+		cityPK.setCountryID(countryDAO.selectOne("TWN"));
+		cityPK.setCityID("TPE");
+		cityVO.setCityID(cityPK);
+		locationPK.setCityID(cityDAO.selectOne(cityPK));
+		locationPK.setLocationID("777");
+		locationVO.setLocationID(locationPK);
+		locationVO.setLocationName(location);
+		membersVO.setLocationID(locationVO);
+//		LocationVO locationVO = new LocationVO();
+//		locationVO.setLocationName(location);
+//		membersVO.setLocationID(locationVO);
+		membersVO.setAddress(address);
+		membersVO.setIdentityID(identityID);
+		membersDAO.insert(membersVO);
+		System.out.println(membersVO.getFirstName());
+		return membersVO;
 	}
 	
 	//正規表示式確認

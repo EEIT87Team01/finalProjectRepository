@@ -17,7 +17,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<form action="/runninglife/Login/CheckPaswd" method="post">
+	<form action="/runninglife/Login/CheckAccount" method="post">
 		<table>
 			<thead>
 				<tr>

@@ -67,23 +67,23 @@
 	
 <!-- 	jquery -->
 	<script>
-// 	$(function(){
+	$(function(){
 		
-// 		$('#username').focusout(function(){
-// 			var input = $('#username').val();
-// 			$.get("../../../../main/java/_01/controller/loginController/LoginServlet",{'name':input},function(data){
-// 				switch(data){
-// 				case "查無此帳號":
-// 					$('#span1').removeClass().addClass('glyphicon glyphicon-ok-sign');
-// 					break;
-// 				case "帳號已存在":
-// 					$('#span1').removeClass().addClass('glyphicon glyphicon-remove-sign');
-// 					break;
-// 				}
-// 			});
-// 		});
+		$('#username').focusout(function(){
+			var input = $('#username').val();
+			$.get("../../../../main/java/_01/controller/loginController/LoginServlet",{'name':input},function(data){
+				switch(data){
+				case "查無此帳號":
+					$('#span1').removeClass().addClass('glyphicon glyphicon-ok-sign');
+					break;
+				case "帳號已存在":
+					$('#span1').removeClass().addClass('glyphicon glyphicon-remove-sign');
+					break;
+				}
+			});
+		});
 		
-// 	});
+	});
 	</script>
 </body>
 </html>

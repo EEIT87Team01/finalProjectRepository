@@ -28,11 +28,11 @@ public class MainLoginInformation {
 		//------------------------
 		//insert or update
 		membersVO.setMemberID("F349A8E2-DE67-4F70-838B-C099C687D57F");
-		loginInformationPK.setMemberAccount("admin4");
+		loginInformationPK.setMemberAccount("admin5");
 		loginInformationPK.setLoginMethod("1");
 		loginInformationVO.setMemberAccount(loginInformationPK);
 		loginInformationVO.setMemberID(membersVO);
-		String password = "2266";
+		String password = "741852A";
 		byte[] temp = password.getBytes("UTF-8");	//明碼  //使用者輸入byte[]
 		temp = mDigest.digest(temp); 		//亂碼
 		

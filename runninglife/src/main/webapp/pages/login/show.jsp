@@ -12,6 +12,7 @@ table, th, td {
 </style>
 </head>
 <body>
+<form action="/runninglife/Login/Logout" method="get">
 <table border='1'>
 <tr>
   <td>
@@ -43,6 +44,12 @@ table, th, td {
 		最後上線時間:<input type="text" value="${membersVO.lastOnlineDateTime}"/><br/>
 	</td>
 </tr>
+<tr>
+	<td>
+		<input type="submit" class="btn btn-primary" value="登出">
+	</td>
+</tr>
 </table>
+</form>
 </body>
 </html>
