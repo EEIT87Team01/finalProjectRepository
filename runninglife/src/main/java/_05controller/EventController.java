@@ -3,13 +3,13 @@ package _05controller;
 import java.io.File;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -72,29 +72,40 @@ public class EventController {
 	@Autowired
 	private RunnerService runnerService;
 
-	// show all contests
+	// show all some contests
 	@RequestMapping(value = "/contest", method = RequestMethod.GET)
-	public String showAllContests(Model model) {
-		List<ContestVO> contests = contestDAO.getAll();
+	public String showAllContests(Model model, HttpServletRequest req) {
+
+		//2016-08-08
+		List<ContestVO> contests = new ArrayList<>();
+		if (req.getParameter("year") != null && req.getParameter("month") != null&& Integer.valueOf(req.getParameter("year")) != 0&& Integer.valueOf(req.getParameter("month")) !=0) {
+			Integer year = Integer.valueOf(req.getParameter("year"));
+			Integer month = Integer.valueOf(req.getParameter("month"));
+			Date date=Date.valueOf(year+"-"+month+"-01");
+			contests = contestService.QueryContest(date);
+		} else {
+			contests = contestDAO.getAll();
+		}
+
 		model.addAttribute("contests", contests);
 		return "contest";
 	}
-	
-	
-	@RequestMapping(value = "/contest/search", method = RequestMethod.GET)
-	public String showQueryContests(Model model, HttpServletRequest req) {
-		
-		System.out.println(req.getParameter("month"));
-		System.out.println(req.getParameter("year"));
-		List<ContestVO> contests = contestDAO.getAll();
-		Date begin =Date.valueOf("2016-08-01");
-		Date end =Date.valueOf("2016-12-02");
-		List<ContestVO> queryContests =contestService.QueryContest(begin, end);
-		model.addAttribute("contests", queryContests);
-		return "contest";
-	}
 
-	// show contest
+	// show some contests
+//	@RequestMapping(value = "/contest/search", method = RequestMethod.GET)
+//	public String showQueryContests(Model model, HttpServletRequest req) {
+//
+//		System.out.println(req.getParameter("month"));
+//		System.out.println(req.getParameter("year"));
+//		List<ContestVO> contests = contestDAO.getAll();
+//		Date begin = Date.valueOf("2016-08-01");
+//		Date end = Date.valueOf("2016-12-02");
+//		List<ContestVO> queryContests = contestService.QueryContest(begin, end);
+//		model.addAttribute("contests", queryContests);
+//		return "contest";
+//	}
+
+	// show 1contest
 	@RequestMapping(value = "/contest/{contestID}", method = RequestMethod.GET)
 	public String showContest(@PathVariable int contestID, Model model) {
 		List<TeamVO> teams = teamDAO.getTeamById(contestID);
@@ -102,7 +113,9 @@ public class EventController {
 		ContestVO contest = contestDAO.findByPrimaryKey(contestID);
 		List<ClothesVO> clothes = clothesDAO.getAll();
 		// 修正時間
-		System.out.println("a:"+contest.getRegistrationBegin());System.out.println("b:"+contest.getRegistrationEnd());System.out.println("c:"+contest.getStartDate());
+		System.out.println("a:" + contest.getRegistrationBegin());
+		System.out.println("b:" + contest.getRegistrationEnd());
+		System.out.println("c:" + contest.getStartDate());
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日 hh:mm");
 		String begin = sdf.format(contest.getRegistrationBegin());
 		String end = sdf.format(contest.getRegistrationEnd());
@@ -110,7 +123,7 @@ public class EventController {
 		String start = sdf2.format(contest.getStartDate());
 		EventVO event = new EventVO();
 		long timer = contest.getStartDate().getTime();
-		model.addAttribute("timer",timer);
+		model.addAttribute("timer", timer);
 		model.addAttribute("event", event);
 		model.addAttribute("start", start);
 		model.addAttribute("begin", begin);
@@ -122,14 +135,13 @@ public class EventController {
 		return "detail";
 	}
 
-
 	// show contest form
 	@RequestMapping(value = "/contest/edit", method = RequestMethod.GET)
 	public String showUpdateContestForm(Model model, HttpServletRequest req) {
 		ContestVO contest = new ContestVO();
 		try {
 			Integer id = Integer.valueOf(req.getParameter("id"));
-			System.out.println("修改賽事:"+id);
+			System.out.println("修改賽事:" + id);
 			contest = contestDAO.findByPrimaryKey(id);
 		} catch (Exception e) {
 			System.out.println("新增賽事");
@@ -262,30 +274,30 @@ public class EventController {
 
 	// apply
 	@RequestMapping(value = "/apply", method = RequestMethod.POST)
-	public String ContestApply(@ModelAttribute RunnerVO runner, @SessionAttribute MemberVO member, Model model,HttpServletRequest req) {
+	public String ContestApply(@ModelAttribute RunnerVO runner, @SessionAttribute MemberVO member, Model model,
+			HttpServletRequest req) {
 		Integer id = runner.getPk().getContestID();
-		
-		int age =20;//從member取出年齡
-//		age =member.getAge();
+
+		int age = 20;// 從member取出年齡
+		// age =member.getAge();
 		TeamDAOimpl teamDAO = new TeamDAOimpl();
-		List <TeamVO> list =teamDAO.getTeamById(id);
-		TeamVO yourTeam=list.get(list.size()-1);//預設最年輕組
-		for(TeamVO team :list){
+		List<TeamVO> list = teamDAO.getTeamById(id);
+		TeamVO yourTeam = list.get(list.size() - 1);// 預設最年輕組
+		for (TeamVO team : list) {
 			System.out.println(team);
-			if(team.getAgeRange()<=age &&  team.getAgeRange()+9 > age){
-				age  = team.getAgeRange();
+			if (team.getAgeRange() <= age && team.getAgeRange() + 9 > age) {
+				age = team.getAgeRange();
 				yourTeam = team;
-				System.out.println("被分派到組別:"+team.getTeamName());
-				System.out.println("組別範圍:"+team.getAgeRange()+"~"+(team.getAgeRange()+9));
+				System.out.println("被分派到組別:" + team.getTeamName());
+				System.out.println("組別範圍:" + team.getAgeRange() + "~" + (team.getAgeRange() + 9));
 			}
 		}
 		runner.setTeamID(yourTeam.getTeamID());
-		
-		
+
 		try {
 			String status = runnerDAO.insert(runner);
 			ContestVO contest = contestDAO.findByPrimaryKey(runner.getPk().getContestID());
-//			mailService.sendApplyEmail(member, contest);
+			// mailService.sendApplyEmail(member, contest);
 			System.out.println(status);
 		} catch (Exception ex) {
 			System.out.println("-----------------------------------------------");
@@ -303,6 +315,7 @@ public class EventController {
 		mailService.sendEmail(member);
 		return "/../../index";
 	}
+
 	@ModelAttribute("member")
 	public MemberVO login() {
 		MemberVO member = new MemberVO();

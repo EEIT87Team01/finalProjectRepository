@@ -23,6 +23,7 @@
 <script src="http://malsup.github.com/jquery.form.js"></script>
 <script src="/runninglife/resources/js/jquery.countdown.min.js"></script>
 <script src="/runninglife/resources/js/bootstrap.min.js"></script>
+<script src="/runninglife/resources/js/jquery.confirm.min.js"></script>
 
 <body class="smoothscroll enable-animation">
 	<div id="msg">message:${status}</div>
@@ -153,7 +154,7 @@
 									action="/runninglife/${contest.contestID}/event/add">
 									<td><input type="text"
 										class="form-group form-control readonly" id="eventID"
-										name="eventID" placeholder="標號" readonly/></td>
+										name="eventID" placeholder="標號" readonly /></td>
 									<td><input type="text" class="form-group form-control"
 										id="eventName" name="eventName" placeholder="項目名稱" /></td>
 									<td><input type="number" class="form-control"
@@ -207,7 +208,7 @@
 							<tr>
 								<form id="teamForm">
 									<td><input type="text" class="form-control" name="teamID"
-										id="teamID"  placeholder="" readonly/></td>
+										id="teamID" placeholder="" readonly /></td>
 									<td><input type="text" class="form-control"
 										name="teamName" id="teamName" placeholder="男甲組" /></td>
 									<td><input type="number" class="form-control"
@@ -505,7 +506,14 @@
 							var eventIDUrl = $(this).attr("id");
 							console.log($(this).attr("id"));
 							var eventRow = $(this).parent().parent();
-							$
+							$(this).confirm({
+								post : true,
+								confirmButtonClass : "btn-danger btn-sm",
+								cancelButtonClass : "btn-default btn-sm",
+								dialogClass : "modal-dialog modal-sm", // Bootstrap classes for large modal
+								confirm: function(button) {
+									console.log(123);
+									$
 									.ajax({
 										mimeType : "text/html; charset=UTF-8", //alert可以show出物件內容
 										type : "POST",
@@ -516,6 +524,12 @@
 											eventRow.remove();
 										}
 									});
+								    },
+								cancel: function(button) {
+									console.log(12345);// nothing to do
+								    }
+							});
+						
 						});
 		//項目更新按鈕榜定
 		$("#eventBody").on(
@@ -556,6 +570,7 @@
 		$("#teamBody").on("click", ".btn-danger", function() {
 			var teamID = $(this).parent().parent().children(".teamID").text();
 			// 			alert(teamID);
+			
 			var teamRow = $(this).parent().parent();
 			$.ajax({
 				mimeType : "text/html; charset=UTF-8", //alert可以show出物件內容
@@ -805,5 +820,20 @@
 	function div_hide() {
 		document.getElementById('applyForm').style.display = "none";
 	}
+// 	$(".delete").confirm({
+// 		post : true,
+// 		confirmButtonClass : "btn-danger btn-sm",
+// 		cancelButtonClass : "btn-default btn-sm",
+// 		dialogClass : "modal-dialog modal-sm", // Bootstrap classes for large modal
+// 		confirm: function(button) {
+		        
+// 		    },
+// 		cancel: function(button) {
+// 		        // nothing to do
+// 		    }
+// 	});
+	
+	
+	
 </script>
 </html>

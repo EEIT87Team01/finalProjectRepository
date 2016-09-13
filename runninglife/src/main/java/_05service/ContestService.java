@@ -53,9 +53,21 @@ public class ContestService {
 		return null;
 	}
 
-	public List<ContestVO> QueryContest(Date begin, Date end) {
+	public List<ContestVO> QueryContest(Date date) {
 		List<ContestVO> list = contestDAO.getAll();
 		List<ContestVO> contests = new ArrayList<>();
+		String dateStr =date.toString();
+		System.out.println(dateStr);
+		Integer year =Integer.valueOf(dateStr.substring(0,4));
+		Integer month =Integer.valueOf(dateStr.substring(5,7));
+		System.out.println("年:"+year);
+		System.out.println("月:"+month);
+		Date begin =Date.valueOf(year+"-"+month+"-01");
+		if(month==12){
+			year++;
+			month=0;
+		}
+		Date end =Date.valueOf(year+"-"+(month+1)+"-01");
 		System.out.println("開始搜尋符合賽事");
 		System.out.println("開始:"+begin);
 		System.out.println("結束:"+end);
