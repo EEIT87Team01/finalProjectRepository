@@ -437,77 +437,7 @@ span[class=ios-color-hack3] a {
 				<table bgcolor="#E1E1E1" border="0" cellpadding="0" cellspacing="0"
 					width="500" id="emailHeader">
 
-					<!-- HEADER ROW // -->
-					<tr>
-						<td align="center" valign="top">
-							<!-- CENTERING TABLE // -->
-							<table border="0" cellpadding="0" cellspacing="0" width="100%">
-								<tr>
-									<td align="center" valign="top">
-										<!-- FLEXIBLE CONTAINER // -->
-										<table border="0" cellpadding="10" cellspacing="0" width="500"
-											class="flexibleContainer">
-											<tr>
-												<td valign="top" width="500" class="flexibleContainerCell">
 
-													<!-- CONTENT TABLE // -->
-													<table align="left" border="0" cellpadding="0"
-														cellspacing="0" width="100%">
-														<tr>
-
-
-															<!--
-																		The "invisibleIntroduction" is the text used for short preview
-																		of the email before the user opens it (50 characters max). Sometimes,
-																		you do not want to show this message depending on your design but this
-																		text is highly recommended.
-																		You do not have to worry if it is hidden, the next <td> will automatically
-																		center and apply to the width 100% and also shrink to 50% if the first <td>
-																		is visible.
-																	-->
-															<td align="left" valign="middle"
-																id="invisibleIntroduction" class="flexibleContainerBox"
-																style="display: none !important; mso-hide: all;">
-																<table border="0" cellpadding="0" cellspacing="0"
-																	width="100%" style="max-width: 100%;">
-																	<tr>
-																		<td align="left" class="textContent">
-																			<div
-																				style="font-family: Helvetica, Arial, sans-serif; font-size: 13px; color: #828282; text-align: center; line-height: 120%;">
-																				RunningLife 賽事報名成功</div>
-																		</td>
-																	</tr>
-																</table>
-															</td>
-															<td align="right" valign="middle"
-																class="flexibleContainerBox">
-																<table border="0" cellpadding="0" cellspacing="0"
-																	width="100%" style="max-width: 100%;">
-																	<tr>
-																		<td align="left" class="textContent">
-																			<!-- CONTENT // -->
-																			<div
-																				style="font-family: Helvetica, Arial, sans-serif; font-size: 13px; color: #828282; text-align: center; line-height: 120%;">
-																				If you can't see this message, <a href="#"
-																					target="_blank"
-																					style="text-decoration: none; border-bottom: 1px solid #828282; color: #828282;"><span
-																					style="color: #828282;">view&nbsp;it&nbsp;in&nbsp;your&nbsp;browser</span></a>.
-																			</div>
-																		</td>
-																	</tr>
-																</table>
-															</td>
-														</tr>
-													</table>
-												</td>
-											</tr>
-										</table> <!-- // FLEXIBLE CONTAINER -->
-									</td>
-								</tr>
-							</table> <!-- // CENTERING TABLE -->
-						</td>
-					</tr>
-					<!-- // END -->
 
 				</table> <!-- // END --> <!-- EMAIL BODY // --> <!--
 							The table "emailBody" is the email's container.
@@ -747,7 +677,7 @@ span[class=ios-color-hack3] a {
 																style="padding-top: 15px; padding-bottom: 15px; padding-right: 15px; padding-left: 15px;">
 																<a
 																style="color: #FFFFFF; text-decoration: none; font-family: Helvetica, Arial, sans-serif; font-size: 20px; line-height: 135%;"
-																href="#" target="_blank">詳細資訊</a>
+																href="http://localhost:8080/runninglife/contest/${contest.contestID}" target="_blank">詳細資訊</a>
 															</td>
 														</tr>
 													</table> <!-- // CONTENT TABLE -->
@@ -1015,111 +945,8 @@ span[class=ios-color-hack3] a {
 						</td>
 					</tr>
 					<!-- // END -->
-					<!-- MODULE ROW // -->
-					<tr>
-						<td align="center" valign="top">
-							<!-- CENTERING TABLE // -->
-							<table border="0" cellpadding="0" cellspacing="0" width="100%">
-								<tr>
-									<td align="center" valign="top">
-										<!-- FLEXIBLE CONTAINER // -->
-										<table border="0" cellpadding="30" cellspacing="0" width="500"
-											class="flexibleContainer">
-											<tr>
-												<td style="padding-top: 0;" align="center" valign="top"
-													width="500" class="flexibleContainerCell">
-													<!-- CONTENT TABLE // -->
-													<table align="left" border="0" cellpadding="0"
-														cellspacing="0" class="flexibleContainer">
-														<tr>
-															<td align="left" valign="top" class="textContent">
-																<div
-																	style="text-align: left; font-family: Helvetica, Arial, sans-serif; font-size: 15px; margin-bottom: 0; margin-top: 10px; color: #5F5F5F; line-height: 135%;">Pellentesque
-																	habitant morbi tristique senectus netus malesuada et
-																	fames ac turpis egestas. Vestibulum tortor quam,
-																	feugiat vitae, ultricies eget, tempor sit amet, ante.</div>
-															</td>
-														</tr>
-													</table> <!-- // CONTENT TABLE -->
-
-												</td>
-											</tr>
-										</table> <!-- // FLEXIBLE CONTAINER -->
-									</td>
-								</tr>
-							</table> <!-- // CENTERING TABLE -->
-						</td>
-					</tr>
-					<!-- // MODULE ROW -->
-
-
-					<!-- MODULE ROW // -->
-					<tr>
-						<td align="center" valign="top">
-							<!-- CENTERING TABLE // -->
-							<table border="0" cellpadding="0" cellspacing="0" width="100%">
-								<tr>
-									<td align="center" valign="top">
-										<!-- FLEXIBLE CONTAINER // -->
-										<table border="0" cellpadding="0" cellspacing="0" width="500"
-											class="flexibleContainer">
-											<tr>
-												<td valign="top" width="500" class="flexibleContainerCell">
-
-													<!-- CONTENT TABLE // -->
-													<table align="left" border="0" cellpadding="0"
-														cellspacing="0" width="100%">
-														<tr>
-															<td align="left" valign="top"
-																class="flexibleContainerBox"
-																style="background-color: #5F5F5F;">
-																<table border="0" cellpadding="30" cellspacing="0"
-																	width="100%" style="max-width: 100%;">
-																	<tr>
-																		<td align="left" class="textContent">
-																			<h3
-																				style="color: #FFFFFF; line-height: 125%; font-family: Helvetica, Arial, sans-serif; font-size: 20px; font-weight: normal; margin-top: 0; margin-bottom: 3px; text-align: left;">Left
-																				Column</h3>
-																			<div
-																				style="text-align: left; font-family: Helvetica, Arial, sans-serif; font-size: 15px; margin-bottom: 0; color: #FFFFFF; line-height: 135%;">Pellentesque
-																				habitant morbi tristique senectus et netus et
-																				malesuada fames ac turpis.</div>
-																		</td>
-																	</tr>
-																</table>
-															</td>
-															<td align="right" valign="top"
-																class="flexibleContainerBox"
-																style="background-color: #27ae60;">
-																<table class="flexibleContainerBoxNext" border="0"
-																	cellpadding="30" cellspacing="0" width="100%"
-																	style="max-width: 100%;">
-																	<tr>
-																		<td align="left" class="textContent">
-																			<h3
-																				style="color: #FFFFFF; line-height: 125%; font-family: Helvetica, Arial, sans-serif; font-size: 20px; font-weight: normal; margin-top: 0; margin-bottom: 3px; text-align: left;">Right
-																				Column</h3>
-																			<div
-																				style="text-align: left; font-family: Helvetica, Arial, sans-serif; font-size: 15px; margin-bottom: 0; color: #FFFFFF; line-height: 135%;">Pellentesque
-																				habitant morbi tristique senectus et netus et
-																				malesuada fames ac turpis.</div>
-																		</td>
-																	</tr>
-																</table>
-															</td>
-														</tr>
-													</table> <!-- // CONTENT TABLE -->
-
-												</td>
-											</tr>
-										</table> <!-- // FLEXIBLE CONTAINER -->
-									</td>
-								</tr>
-							</table> <!-- // CENTERING TABLE -->
-						</td>
-					</tr>
-					<!-- // MODULE ROW -->
-
+		
+	
 
 					<!-- MODULE ROW // -->
 					<tr>
@@ -1201,14 +1028,8 @@ span[class=ios-color-hack3] a {
 																			href="http://www.charlesmudy.com/respmail/"
 																			target="_blank"
 																			style="text-decoration: none; color: #828282;"><span
-																			style="color: #828282;">Respmail</span></a>.
+																			style="color: #828282;">RunningLife</span></a>.
 																		All&nbsp;rights&nbsp;reserved.
-																	</div>
-																	<div>
-																		If you do not want to recieve emails from us, you can
-																		<a href="#" target="_blank"
-																			style="text-decoration: none; color: #828282;"><span
-																			style="color: #828282;">unsubscribe</span></a>.
 																	</div>
 																</div>
 

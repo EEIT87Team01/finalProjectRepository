@@ -4,6 +4,7 @@ import java.io.File;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -77,14 +78,14 @@ public class EventController {
 	public String showAllContests(Model model, HttpServletRequest req) {
 
 		//2016-08-08
-		List<ContestVO> contests = new ArrayList<>();
+		Collection<ContestVO> contests = new ArrayList<>();
 		if (req.getParameter("year") != null && req.getParameter("month") != null&& Integer.valueOf(req.getParameter("year")) != 0&& Integer.valueOf(req.getParameter("month")) !=0) {
 			Integer year = Integer.valueOf(req.getParameter("year"));
 			Integer month = Integer.valueOf(req.getParameter("month"));
 			Date date=Date.valueOf(year+"-"+month+"-01");
 			contests = contestService.QueryContest(date);
 		} else {
-			contests = contestDAO.getAll();
+			contests = contestDAO.page();
 		}
 
 		model.addAttribute("contests", contests);
@@ -297,7 +298,7 @@ public class EventController {
 		try {
 			String status = runnerDAO.insert(runner);
 			ContestVO contest = contestDAO.findByPrimaryKey(runner.getPk().getContestID());
-			// mailService.sendApplyEmail(member, contest);
+			 mailService.sendApplyEmail(member, contest);
 			System.out.println(status);
 		} catch (Exception ex) {
 			System.out.println("-----------------------------------------------");
@@ -312,7 +313,6 @@ public class EventController {
 
 	@RequestMapping("email")
 	public String emailtest(Model model, @SessionAttribute("member") MemberVO member) {
-		mailService.sendEmail(member);
 		return "/../../index";
 	}
 
