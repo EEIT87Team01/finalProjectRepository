@@ -42,6 +42,7 @@ public class LoginService implements LoginService_Interface{
 		String message = null;
 		byte[] insetPswd = null;
 		Map<String ,Object> InfoMsg = new HashMap<String ,Object>();
+		
 		/***************************2.開始查詢資料*****************************************/
 		loginInfoPK.setMemberAccount(memberAccount);
 		loginInfoPK.setLoginMethod("1");

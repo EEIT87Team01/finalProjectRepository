@@ -23,9 +23,9 @@
 		
     	<!-- sqljdbc Driver -->
         <dependency>
-        	<groupId>com.microsoft.jdbc.sqlserver</groupId>
+        	<groupId>com.microsoft.sqlserver.jdbc</groupId>
         	<artifactId>sqljdbc</artifactId>
-        	<version>42</version>
+        	<version>42</version> 
         </dependency>
     
     	<!-- https://mvnrepository.com/artifact/log4j/log4j -->

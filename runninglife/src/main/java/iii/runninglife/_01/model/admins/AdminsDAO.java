@@ -3,9 +3,7 @@ package iii.runninglife._01.model.admins;
 import java.util.List;
 
 import org.hibernate.Query;
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -15,7 +13,7 @@ public class AdminsDAO implements AdminsInterface{
 	private static final String GET_ALL_STMT = "from AdminsVO order by adminAccount";
 	
 	@Autowired
-	SessionFactory sessionFactory;
+	private SessionFactory sessionFactory;
 	
 	public AdminsDAO() { super(); }
 	public AdminsDAO(SessionFactory sessionFactory) { this.sessionFactory = sessionFactory; }

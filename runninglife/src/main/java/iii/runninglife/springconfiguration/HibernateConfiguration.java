@@ -1,4 +1,4 @@
-package springconfiguration;
+package iii.runninglife.springconfiguration;
 
 import java.util.Properties;
 
@@ -29,7 +29,7 @@ public class HibernateConfiguration {
     public LocalSessionFactoryBean sessionFactory() {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
         sessionFactory.setDataSource(dataSource());
-        sessionFactory.setPackagesToScan(new String[] { "iii.runninglife._01.model","iii.runninglife._02.model" });
+        sessionFactory.setPackagesToScan(new String[] { "iii.runninglife._02.model" });
         sessionFactory.setHibernateProperties(hibernateProperties());
         return sessionFactory;
     }

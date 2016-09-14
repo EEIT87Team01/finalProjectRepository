@@ -1,4 +1,4 @@
-package springconfiguration;
+package iii.runninglife.springconfiguration;
 
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
