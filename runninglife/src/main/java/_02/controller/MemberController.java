@@ -1,48 +1,43 @@
 package _02.controller;
 
-import java.util.List;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
-import _02.model.friendRelationship.FriendRelationshipService_interface;
-import _02.model.friendRequest.FriendRequestService_interface;
 import _02.model.members.MembersService_interface;
 import _02.model.members.MembersVO;
 
 @Controller
 @RequestMapping("/member")
+@SessionAttributes("member")
 public class MemberController {
 	
 	@Autowired
 	MembersService_interface memberService;
 	
-	@Autowired
-	FriendRequestService_interface friendRequestService;
-	
-	@Autowired
-	FriendRelationshipService_interface friendRelationshipService;
-	
-	@RequestMapping(value = {"/Login"}, method = RequestMethod.POST)
-	public ModelAndView login(@RequestParam String account, @RequestParam String pass){
+	//登入(偽)
+	@RequestMapping(value = {"/login"}, method = RequestMethod.POST)
+	public ModelAndView login(@RequestParam String account, @RequestParam String password, HttpServletRequest request){
 		MembersVO mvo = memberService.findByAccount(account);
-		if (mvo.getPassword().equals(pass))return new ModelAndView("MemberInfo", "member", mvo);
+		String referer = request.getHeader("Referer");
+		if (mvo.getPassword().equals(password)) return new ModelAndView("redirect:" + referer, "member", mvo);
 		else return new ModelAndView("LoginError");
 	}
 	
-	@RequestMapping(value = {"/searchmembersforrequestfriend"}, produces = "application/json", method = RequestMethod.POST)
-	public @ResponseBody List<MembersVO> searchMembers(@RequestParam String name, @RequestParam String memberID){
-		MembersVO member = memberService.findByID(memberID);
-		List<MembersVO> mvos = memberService.findByFirstNameOrLastName(name);
-		List<MembersVO> compare = friendRelationshipService.findByMemberIDALLFriendID(member);
-		compare.addAll(friendRequestService.findByReceiverIDALLRequester(member));
-		compare.addAll(friendRequestService.findByRequesterIDALLReceiver(member));
-		mvos.removeAll(compare);
-		return mvos;
+	//登出(偽)
+	@RequestMapping(value = {"/logout"}, method = RequestMethod.GET)
+	public ModelAndView logout(@ModelAttribute("member") MembersVO member, HttpServletRequest request, SessionStatus status){
+		status.setComplete();
+		return new ModelAndView("redirect:/index_test.jsp");
 	}
+	
+	
 }

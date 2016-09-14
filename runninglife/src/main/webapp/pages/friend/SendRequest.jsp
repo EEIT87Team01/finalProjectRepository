@@ -25,9 +25,11 @@
 </tbody>
 </table>
 
+<a href="../MemberInfo.jsp">上一頁</a>
+
 <script>
 $(function(){
-	var member = '1B98BB09-4904-4FDA-9C14-A65FB4C03973';
+	var member = "${sessionScope.member.memberID}";
 	$('#name').keypress(function(event){
 	    if (event.keyCode === 10 || event.keyCode === 13){
 	        event.preventDefault();
@@ -35,7 +37,7 @@ $(function(){
 		    }
 	  });
 	$("#search").on("click", function(event) {
-		$.post("/runninglife/member/searchmembersforrequestfriend",
+		$.post("/runninglife/member/searchmembersforrequestfriend.do",
 				{ "name" : $("#name").val(), "memberID" : member},
 				function(data){
 			$("#searchResult").empty();
@@ -45,9 +47,12 @@ $(function(){
 				requestbtn = $("<button></button>").text("邀請").attr("id", data[x].memberID).attr("class","btn btn-success"),
 				td = $("<td></td>");
 				requestbtn.bind("click", function(event){
-					$.post("/runninglife/friend/sendRequest", {"requestID" : member , "receiveID" : $(this).attr("id")});
-						$(this).text("已邀請").attr("class","btn btn-primary");
-						$(this).off();
+					btn = $(this);
+					$.post("/runninglife/friend/sendRequest", {"requestID" : member , "receiveID" : $(this).attr("id")},
+							function(){
+						btn.text("已邀請").attr("class","btn btn-primary");
+						btn.off();
+						});
 					});
 				td.append(requestbtn);
 				$("#searchResult").append(tr.append(display, td));

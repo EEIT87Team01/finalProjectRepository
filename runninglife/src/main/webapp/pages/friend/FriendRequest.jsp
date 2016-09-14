@@ -12,27 +12,30 @@
 <title>ListRequestFriend</title>
 </head>
 <body>
+Hello, ${sessionScope.member.firstName}
 <table  class="table" id="receivedList" style="width: 300px">
 <tr><th>FirstName</th><th>LastName</th><th></th></tr>
-<c:forEach var="memberRequest" items="${member}">
+<c:forEach var="memberRequest" items="${receivedRequest}">
 	<tr><td>${memberRequest.friendRequestPK.requesterID.firstName}</td>
 		<td>${memberRequest.friendRequestPK.requesterID.lastName}</td>
 		<td>
-		<button class="btn btn-success" id="${memberRequest.friendRequestPK.requesterID.memberID}&receiverid=${memberRequest.friendRequestPK.receiverID.memberID}">接受</button>
-	</tr>
+		<button class="btn btn-success" id="${memberRequest.friendRequestPK.requesterID.memberID}">接受</button>
+	</tr>	
 </c:forEach>
 </table>
+
+<a href="../pages/MemberInfo.jsp">上一頁</a>
 
 <script type="text/javascript">
 $(function(){
 	$("button").click(function(){
-		var requesterID = $(this).attr("id");
+		var requestID = $(this).attr("id");
 		var btn = $(this);
-		console.log(requesterID);
 		$.ajax({
-			type: "get", 
+			type: "post", 
+			data: { "requestID" : requestID },
 			datatype: "json",
-			url: "/runninglife/friend/acceptRequest_requestid=" + requesterID,
+			url: "/runninglife/friend/acceptRequest.do",
 			success: function(){
 				$(btn).parents("tr").remove();
 			}

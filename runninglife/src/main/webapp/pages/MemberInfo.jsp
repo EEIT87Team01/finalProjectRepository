@@ -11,10 +11,11 @@
 <title>Insert title here</title>
 </head>
 <body>
-<h1>Hello, ${member.firstName}</h1><br>
-<a href="/runninglife/friend/listFriend_id=${member.memberID}">好友名單</a><br>
-<a href="/runninglife/pages/friend/SendRequest.jsp">邀請好友</a><br>
-<a href="/runninglife/friend/listFriendRequest_id=${member.memberID}">收到的邀請</a><br>
+<h1>Hello, ${member.firstName} (By Model)</h1><br>
+<h1>Hello, ${sessionScope.member.firstName} (By Session)</h1><br>
+<a href="../friend/listFriend.do" >好友名單</a><br>
+<a href="../friend/listFriendRequest.do">收到的邀請</a><br>
+<a href="../pages/friend/SendRequest.jsp">邀請好友</a><br>
 
 
 </body>
