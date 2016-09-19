@@ -56,21 +56,21 @@ public class ContestService {
 	public List<ContestVO> QueryContest(Date date) {
 		List<ContestVO> list = contestDAO.getAll();
 		List<ContestVO> contests = new ArrayList<>();
-		String dateStr =date.toString();
+		String dateStr = date.toString();
 		System.out.println(dateStr);
-		Integer year =Integer.valueOf(dateStr.substring(0,4));
-		Integer month =Integer.valueOf(dateStr.substring(5,7));
-		System.out.println("年:"+year);
-		System.out.println("月:"+month);
-		Date begin =Date.valueOf(year+"-"+month+"-01");
-		if(month==12){
+		Integer year = Integer.valueOf(dateStr.substring(0, 4));
+		Integer month = Integer.valueOf(dateStr.substring(5, 7));
+		System.out.println("年:" + year);
+		System.out.println("月:" + month);
+		Date begin = Date.valueOf(year + "-" + month + "-01");
+		if (month == 12) {
 			year++;
-			month=0;
+			month = 0;
 		}
-		Date end =Date.valueOf(year+"-"+(month+1)+"-01");
+		Date end = Date.valueOf(year + "-" + (month + 1) + "-01");
 		System.out.println("開始搜尋符合賽事");
-		System.out.println("開始:"+begin);
-		System.out.println("結束:"+end);
+		System.out.println("開始:" + begin);
+		System.out.println("結束:" + end);
 		for (ContestVO a : list) {
 			a.getStartDate().getTime();
 			if (begin.getTime() <= a.getStartDate().getTime() && a.getStartDate().getTime() < end.getTime()) {
@@ -82,6 +82,21 @@ public class ContestService {
 		}
 		return contests;
 
+	}
+
+	public List<ContestVO> pagination(List<ContestVO> queryContests,Integer page) {
+		Integer pageSize = 10;
+		List<ContestVO>contests=new ArrayList<ContestVO>();
+		if (queryContests.size() >= pageSize * page) {
+			for (int i = pageSize * (page - 1); i < pageSize * page; i++) {
+				contests.add(queryContests.get(i));
+			}
+		}else{
+			for (int i = pageSize * (page - 1); i < queryContests.size(); i++) {
+				contests.add(queryContests.get(i));
+			}
+		}
+		return contests;
 	}
 
 	// 賽事新增圖片

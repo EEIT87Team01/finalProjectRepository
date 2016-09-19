@@ -76,16 +76,20 @@ public class EventController {
 	// show all some contests
 	@RequestMapping(value = "/contest", method = RequestMethod.GET)
 	public String showAllContests(Model model, HttpServletRequest req) {
-
-		//2016-08-08
-		Collection<ContestVO> contests = new ArrayList<>();
-		if (req.getParameter("year") != null && req.getParameter("month") != null&& Integer.valueOf(req.getParameter("year")) != 0&& Integer.valueOf(req.getParameter("month")) !=0) {
+		Integer page = 1;
+		Integer pageSize = 10;
+		// 2016-08-08
+		List<ContestVO> contests = new ArrayList<>();
+		if (req.getParameter("year") != null && req.getParameter("month") != null
+				&& Integer.valueOf(req.getParameter("year")) != 0 && Integer.valueOf(req.getParameter("month")) != 0) {
 			Integer year = Integer.valueOf(req.getParameter("year"));
 			Integer month = Integer.valueOf(req.getParameter("month"));
-			Date date=Date.valueOf(year+"-"+month+"-01");
-			contests = contestService.QueryContest(date);
+			Date date = Date.valueOf(year + "-" + month + "-01");
+			List<ContestVO> Querycontests = contestService.QueryContest(date);
+			contests=contestService.pagination(Querycontests, page);
 		} else {
-			contests = contestDAO.page();
+			contests = contestDAO.page(1);
+
 		}
 
 		model.addAttribute("contests", contests);
@@ -93,18 +97,18 @@ public class EventController {
 	}
 
 	// show some contests
-//	@RequestMapping(value = "/contest/search", method = RequestMethod.GET)
-//	public String showQueryContests(Model model, HttpServletRequest req) {
-//
-//		System.out.println(req.getParameter("month"));
-//		System.out.println(req.getParameter("year"));
-//		List<ContestVO> contests = contestDAO.getAll();
-//		Date begin = Date.valueOf("2016-08-01");
-//		Date end = Date.valueOf("2016-12-02");
-//		List<ContestVO> queryContests = contestService.QueryContest(begin, end);
-//		model.addAttribute("contests", queryContests);
-//		return "contest";
-//	}
+	// @RequestMapping(value = "/contest/search", method = RequestMethod.GET)
+	// public String showQueryContests(Model model, HttpServletRequest req) {
+	//
+	// System.out.println(req.getParameter("month"));
+	// System.out.println(req.getParameter("year"));
+	// List<ContestVO> contests = contestDAO.getAll();
+	// Date begin = Date.valueOf("2016-08-01");
+	// Date end = Date.valueOf("2016-12-02");
+	// List<ContestVO> queryContests = contestService.QueryContest(begin, end);
+	// model.addAttribute("contests", queryContests);
+	// return "contest";
+	// }
 
 	// show 1contest
 	@RequestMapping(value = "/contest/{contestID}", method = RequestMethod.GET)
@@ -298,7 +302,7 @@ public class EventController {
 		try {
 			String status = runnerDAO.insert(runner);
 			ContestVO contest = contestDAO.findByPrimaryKey(runner.getPk().getContestID());
-			 mailService.sendApplyEmail(member, contest);
+			mailService.sendApplyEmail(member, contest);
 			System.out.println(status);
 		} catch (Exception ex) {
 			System.out.println("-----------------------------------------------");

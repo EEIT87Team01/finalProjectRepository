@@ -115,7 +115,8 @@
 								<!-- 								<th class="col-xs-2"></th> -->
 							</tr>
 						</thead>
-						<tbody id="eventBody">
+						<tbody id="eventBody" data-text="真的要刪除此項目嗎?" data-confirm-button="是的"
+										data-cancel-button="不了"data-confirm-button-class: "btn-danger">
 							<c:forEach var="event" items="${events}">
 								<tr>
 									<td>${event.eventID}</td>
@@ -151,7 +152,7 @@
 							</c:forEach>
 							<tr>
 								<form id="eventForm"
-									action="/runninglife/${contest.contestID}/event/add">
+									action="/runninglife/${contest.contestID}/event/add" >
 									<td><input type="text"
 										class="form-group form-control readonly" id="eventID"
 										name="eventID" placeholder="標號" readonly /></td>
@@ -493,9 +494,11 @@
 		alert(data);
 		console.log("respose: " + data);
 	}
-	
-	var eventMark=$('#contestID');
-	var teamMark=$('#contestID');
+
+	var eventMark = $('#contestID');
+	var teamMark = $('#contestID');
+	var eventIDUrl;
+	var eventRow;
 	$(function() {
 		//項目刪除按鈕綁定
 		$("#eventBody")
@@ -503,34 +506,36 @@
 						"click",
 						".btn-danger",
 						function() {
-							var eventIDUrl = $(this).attr("id");
+							eventIDUrl = $(this).attr("id");
 							console.log($(this).attr("id"));
-							var eventRow = $(this).parent().parent();
-							$(this).confirm({
-								post : true,
-								confirmButtonClass : "btn-danger btn-sm",
-								cancelButtonClass : "btn-default btn-sm",
-								dialogClass : "modal-dialog modal-sm", // Bootstrap classes for large modal
-								confirm: function(button) {
-									console.log(123);
-									$
-									.ajax({
-										mimeType : "text/html; charset=UTF-8", //alert可以show出物件內容
-										type : "POST",
-										url : eventIDUrl,
-										contentType : "application/x-www-form-urlencoded;charset=UTF-8",
-										success : function(data) {
-											alert(data)
-											eventRow.remove();
-										}
-									});
-								    },
-								cancel: function(button) {
-									console.log(12345);// nothing to do
-								    }
-							});
-						
-						});
+							eventRow = $(this).parent().parent();
+							
+									
+
+						}).confirm(
+								{
+									post : true,
+									confirmButtonClass : "btn-danger btn-sm",
+									cancelButtonClass : "btn-default btn-sm",
+									dialogClass : "modal-dialog modal-sm",
+									confirm : function(button) {
+										$.ajax({
+													mimeType : "text/html; charset=UTF-8",
+													type : "POST",
+													url : eventIDUrl,
+													contentType : "application/x-www-form-urlencoded;charset=UTF-8",
+													success : function(
+															data) {
+														alert(data)
+														eventRow
+																.remove();
+													}
+												});
+									},
+									cancel : function(button) {
+										console.log("取消確認");
+									}
+								});
 		//項目更新按鈕榜定
 		$("#eventBody").on(
 				"click",
@@ -570,7 +575,7 @@
 		$("#teamBody").on("click", ".btn-danger", function() {
 			var teamID = $(this).parent().parent().children(".teamID").text();
 			// 			alert(teamID);
-			
+
 			var teamRow = $(this).parent().parent();
 			$.ajax({
 				mimeType : "text/html; charset=UTF-8", //alert可以show出物件內容
@@ -586,28 +591,30 @@
 			});
 		});
 		//分組更新按鈕榜定
-		$("#teamBody").on("click",".btn-warning",function(){
-			if (teamMark.length) {
-				teamMark.parent().parent().removeClass("warning");
-			}
-			
-			
-			var teamID=$(this).parent().parent().children('td:nth-child(1)').text();
-			var teamName=$(this).parent().parent().children('td:nth-child(2)').text();
-			var ageRange=$(this).parent().parent().children('td:nth-child(3)').text().substr(0,2);
-			
-			$(this).parent().parent().addClass("warning");
-			
-			teamMark=$(this);
-			$('#teamID').val(teamID);
-			$('#teamName').val(teamName);
-			$('#ageRange').val(ageRange);
-			
-		})
-		
-		
-		
-		
+		$("#teamBody").on(
+				"click",
+				".btn-warning",
+				function() {
+					if (teamMark.length) {
+						teamMark.parent().parent().removeClass("warning");
+					}
+
+					var teamID = $(this).parent().parent().children(
+							'td:nth-child(1)').text();
+					var teamName = $(this).parent().parent().children(
+							'td:nth-child(2)').text();
+					var ageRange = $(this).parent().parent().children(
+							'td:nth-child(3)').text().substr(0, 2);
+
+					$(this).parent().parent().addClass("warning");
+
+					teamMark = $(this);
+					$('#teamID').val(teamID);
+					$('#teamName').val(teamName);
+					$('#ageRange').val(ageRange);
+
+				})
+
 	});
 
 	//轉成json函式
@@ -637,10 +644,10 @@
 		var contestID = $("#contestID").text();
 		alert(JsonStr);
 
-// 		if ($('#teamName').val() == "" || $('#ageRange').val() == "") {
-// 			alert("請輸入完整資料");
-// 		}
-		if($.trim($('#teamID').val())==""){
+		// 		if ($('#teamName').val() == "" || $('#ageRange').val() == "") {
+		// 			alert("請輸入完整資料");
+		// 		}
+		if ($.trim($('#teamID').val()) == "") {
 			alert('新增');
 			$.ajax({
 				type : "POST",
@@ -650,7 +657,7 @@
 				mimeType : "application/json; charset=UTF-8",
 				success : addTeam
 			});
-		}else{
+		} else {
 			alert("更新");
 			$.ajax({
 				type : "POST",
@@ -661,10 +668,7 @@
 				success : updateTeam
 			});
 		}
-			
-		
 
-		
 	})
 	function addTeam(team) {
 		var upper = team.ageRange + 9;
@@ -681,25 +685,25 @@
 								+ '~'
 								+ upper
 								+ '</td><td><a class="btn btn-danger  delete" role="button"data-text="真的要刪除此項目嗎?" data-confirm-button="是的"data-cancel-button="不了"data-confirm-button-class: "btn-danger">刪除</a></td></tr>');
-	
+
 		$('#teamID').val("");
 		$('#teamName').val("");
 		$('#ageRange').val("");
 	}
-	function updateTeam(team){
+	function updateTeam(team) {
 		alert("更新成功");
-		teamMark.parent().parent().children('td:nth-child(2)').text(team.teamName);
-		teamMark.parent().parent().children('td:nth-child(3)').text(team.ageRange);
+		teamMark.parent().parent().children('td:nth-child(2)').text(
+				team.teamName);
+		teamMark.parent().parent().children('td:nth-child(3)').text(
+				team.ageRange);
 		teamMark.parent().parent().removeClass("warning");
-		
+
 		$('#teamID').val("");
 		$('#teamName').val("");
 		$('#ageRange').val("");
-		
+
 	}
-	
-	
-	
+
 	//送出event
 	$('#eventForm').submit(function(e) {
 		e.preventDefault();
@@ -725,7 +729,7 @@
 		console.log(data.distance);
 		console.log(data.quota);
 		console.log(data2);
-		
+
 		if ($.trim($('#eventID').val()) == "") {
 			alert("新增");
 			$.ajax({
@@ -798,7 +802,7 @@
 		eventMark.parent().parent().children("td:nth-child(7)").text(
 				event.limitTime);
 		eventMark.parent().parent().removeClass("warning");
-		
+
 		$('#eventID').val("");
 		$('#even' + 'tName').val("");
 		$('#distance').val("");
@@ -820,20 +824,17 @@
 	function div_hide() {
 		document.getElementById('applyForm').style.display = "none";
 	}
-// 	$(".delete").confirm({
-// 		post : true,
-// 		confirmButtonClass : "btn-danger btn-sm",
-// 		cancelButtonClass : "btn-default btn-sm",
-// 		dialogClass : "modal-dialog modal-sm", // Bootstrap classes for large modal
-// 		confirm: function(button) {
-		        
-// 		    },
-// 		cancel: function(button) {
-// 		        // nothing to do
-// 		    }
-// 	});
-	
-	
-	
+	// 	$(".delete").confirm({
+	// 		post : true,
+	// 		confirmButtonClass : "btn-danger btn-sm",
+	// 		cancelButtonClass : "btn-default btn-sm",
+	// 		dialogClass : "modal-dialog modal-sm", // Bootstrap classes for large modal
+	// 		confirm: function(button) {
+
+	// 		    },
+	// 		cancel: function(button) {
+	// 		        // nothing to do
+	// 		    }
+	// 	});
 </script>
 </html>
