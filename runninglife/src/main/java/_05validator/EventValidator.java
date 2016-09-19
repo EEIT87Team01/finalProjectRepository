@@ -14,14 +14,10 @@ public class EventValidator implements Validator {
 	public boolean supports(Class<?> clazz) {
 		return EventVO.class.isAssignableFrom(clazz);
 	}
-
 	public void validate(Object obj, Errors errors) {
 		EventVO event = (EventVO) obj;
-
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "eventName", "NotEmpty.eventName");
 //		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "startDate", "NotEmpty.contestForm.startDate");
 //		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "place", "NotEmpty.contestForm.place");
-		
-		
 	}
 }

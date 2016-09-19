@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.hibernate.Criteria;
 import org.hibernate.Query;
@@ -12,6 +13,7 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Service;
 
 import _05hibernate.util.HibernateUtil;
+import _05model.event.EventVO;
 
 @Service
 public class ContestDAOimpl implements ContestDAO {
@@ -138,11 +140,13 @@ public class ContestDAOimpl implements ContestDAO {
 	// }
 	public static void main(String[] args) throws ParseException {
 		ContestDAOimpl dao = new ContestDAOimpl();
+
 		List<ContestVO> list = new ArrayList<>();
 		list =dao.date();
 		for(ContestVO a: list){
 			System.out.println(a);
 		}
+
 
 	}
 }

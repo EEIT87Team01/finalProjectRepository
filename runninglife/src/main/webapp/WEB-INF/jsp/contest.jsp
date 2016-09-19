@@ -16,7 +16,6 @@
 <link rel="stylesheet"
 	href="/runninglife/resources/css/bootstrap.min.css">
 
-<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.11.2/css/bootstrap-select.min.css"> -->
 </head>
 <body>
 	<div>memberID:${member.memberID}</div>
@@ -76,12 +75,12 @@
 						title="" target="_blank" data-original-title="活動地點">${contest.place}</a>
 				</div>
 				<div
-					class="col-lg-10 col-md-10 col-sm-9 col-xs-9 margin-bottom-10 hidden-sm hidden-xs"></div>
+					class="col-lg-10 col-md-10 col-sm-9 col-xs-9 margin-bottom-10 hidden-sm hidden-xs">${contest.goal}</div>
 				<div class="col-lg-10 col-md-10 col-sm-9 col-xs-12">
 					<a href="contest/${contest.contestID}"
 						class="btn btn-3d btn-xs btn-reveal btn-red" target="_blank"><i
 						class="fa fa-info-circle"></i><span class="size-14">簡章</span></a><span
-						class="text-danger"> 報名時間：敬請期待</span>
+						class="text-danger"> 報名時間：${contest.registrationBegin} ~ ${contest.registrationEnd}</span>
 				</div>
 				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 					<div class="divider margin-top-0 margin-bottom-10"></div>
@@ -96,24 +95,33 @@
 					class="btn btn-danger  delete" role="button" data-text="真的要刪除此賽事嗎?"
 					data-confirm-button="是的" data-cancel-button="不了"data-confirm-button-class: "btn-danger">刪除</a>
 			</div>
-<!-- 			<div class="col-lg-3 col-md-3 col-sm-3"> -->
-<%-- 				<form method="post" --%>
-<%-- 					action="/runninglife/contest/${contest.contestID}/upload" --%>
-<%-- 					enctype="multipart/form-data"> --%>
-<!-- 					<table border="0"> -->
-<!-- 						<tr> -->
-<!-- 							<td><input type="file" name="fileUpload" size="50" /></td> -->
-<!-- 						</tr> -->
-<!-- 						<tr> -->
-<!-- 							<td colspan="2" align="center"><input type="submit" -->
-<!-- 								value="Upload" /></td> -->
-<!-- 						</tr> -->
-<!-- 					</table> -->
-<%-- 				</form> --%>
-<!-- 			</div> -->
+			<!-- 			<div class="col-lg-3 col-md-3 col-sm-3"> -->
+			<%-- 				<form method="post" --%>
+			<%-- 					action="/runninglife/contest/${contest.contestID}/upload" --%>
+			<%-- 					enctype="multipart/form-data"> --%>
+			<!-- 					<table border="0"> -->
+			<!-- 						<tr> -->
+			<!-- 							<td><input type="file" name="fileUpload" size="50" /></td> -->
+			<!-- 						</tr> -->
+			<!-- 						<tr> -->
+			<!-- 							<td colspan="2" align="center"><input type="submit" -->
+			<!-- 								value="Upload" /></td> -->
+			<!-- 						</tr> -->
+			<!-- 					</table> -->
+			<%-- 				</form> --%>
+			<!-- 			</div> -->
 
 		</c:forEach>
+		<div>
+			<ul id="pagination" class="pagination-sm"></ul>
+		</div>
+		<div>
+			<ul id="pagination-query" class="pagination-sm"></ul>
+		</div>
+
+
 	</div>
+
 	</section>
 	<script></script>
 </body>
@@ -121,19 +129,27 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 <script src="/runninglife/resources/js/jquery.confirm.min.js"></script>
 <script src="/runninglife/resources/js/bootstrap.min.js"></script>
+<script src="/runninglife/resources/js/jquery.twbsPagination.js"></script>
 <script>
 	$(document).ready(auth());
 	function auth() {
 		if ($('#auth').text() == 1) {
 			$("#auth").addClass("hidden");
-			console.log(2);
 		}
 	}
-	//隱藏刪除編輯按鈕	
+	//隱藏刪除編輯按鈕分頁	
 	$(function() {
 		if ($('#auth').text() != "admin") {
 			$('.delete').addClass("hidden");
 			$('.edit').addClass("hidden");
+		}
+		var year = getParameterByName('year');
+		var month = getParameterByName('month');
+		console.log('result:' + year + '/' + month);
+		if (getParameterByName('year') && getParameterByName('month')) {
+			$('#pagination').addClass("hidden");
+		} else {
+			$('#pagination-query').addClass("hidden");
 		}
 	});
 	//刪除確認視窗
@@ -147,12 +163,12 @@
 	// $(".delete").confirm({
 	//     text: "Are you sure you want to delete that comment?",
 	//     title: "Confirmation required",
-// 	    confirm: function(button) {
-// 	        delete();
-// 	    },
-// 	    cancel: function(button) {
-// 	        // nothing to do
-// 	    },
+	// 	    confirm: function(button) {
+	// 	        delete();
+	// 	    },
+	// 	    cancel: function(button) {
+	// 	        // nothing to do
+	// 	    },
 	//     confirmButton: "Yes I am",
 	//     cancelButton: "No",
 	//     post: true,
@@ -178,5 +194,36 @@
 
 	// 	});
 	//日期搜尋
+	//分個頁
+	$('#pagination').twbsPagination({
+		totalPages : 5,
+		visiblePages : 5,
+		href : '?page={{pageNumber}}',
+		hrefVariable : '{{pageNumber}}',
+	});
+	$('#pagination-query').twbsPagination(
+			{
+				totalPages : 5,
+				visiblePages : 5,
+				href : (window.location.href + '&page={{pageNumber}}')
+						.substring(0,
+								(window.location.href + '&page={{pageNumber}}')
+										.indexOf("page"))
+						+ 'page={{pageNumber}}',
+				hrefVariable : '{{pageNumber}}',
+			});
+
+	function getParameterByName(name, url) {
+		if (!url)
+			url = window.location.href;
+		name = name.replace(/[\[\]]/g, "\\$&");
+		var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"), results = regex
+				.exec(url);
+		if (!results)
+			return null;
+		if (!results[2])
+			return '';
+		return decodeURIComponent(results[2].replace(/\+/g, " "));
+	}
 </script>
 </html>

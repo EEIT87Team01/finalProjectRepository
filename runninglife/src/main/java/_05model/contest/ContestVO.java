@@ -4,6 +4,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -48,9 +49,13 @@ public class ContestVO {
 	private Set<EventVO> events ;
 	//偷吃
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "contestID",cascade=CascadeType.ALL)
-	private Set<TeamVO> Teams ;
-	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "contest",cascade=CascadeType.ALL)
+	private Set<TeamVO> teams ;
+//	偷吃
+//	@OneToMany(fetch = FetchType.EAGER, mappedBy = "contest",cascade=CascadeType.ALL)
+//	private Set<EventVO> events ;
+//	@OneToMany(fetch = FetchType.EAGER, mappedBy = "contest",cascade=CascadeType.ALL)
+//	private Set<TeamVO> teams ;
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "contest",cascade=CascadeType.ALL)
 	private Set<RunnerVO> runners ;
 	
 	public Set<EventVO> getEvents() {
@@ -60,10 +65,10 @@ public class ContestVO {
 		this.events = events;
 	}
 	public Set<TeamVO> getTeams() {
-		return Teams;
+		return teams;
 	}
 	public void setTeams(Set<TeamVO> teams) {
-		Teams = teams;
+		this.teams = teams;
 	}
 	public Set<RunnerVO> getRunners() {
 		return runners;
@@ -95,14 +100,16 @@ public class ContestVO {
 	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
 	}
-	public Timestamp getRegistrationBegin() {
-		return registrationBegin;
+	public String getRegistrationBegin() {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日 hh:mm");
+		return sdf.format(registrationBegin);
 	}
 	public void setRegistrationBegin(Timestamp registrationBegin) {
 		this.registrationBegin = registrationBegin;
 	}
-	public Timestamp getRegistrationEnd() {
-		return registrationEnd;
+	public String getRegistrationEnd() {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日 hh:mm");
+		return sdf.format(registrationEnd);
 	}
 	public void setRegistrationEnd(Timestamp registrationEnd) {
 		this.registrationEnd = registrationEnd;

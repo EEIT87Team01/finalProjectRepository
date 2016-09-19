@@ -4,11 +4,18 @@ import static javax.persistence.GenerationType.IDENTITY;
 
 import java.io.Serializable;
 import java.sql.Time;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import _05model.runner.RunnerVO;
 
 @Entity
 @Table(name = "event")
@@ -30,8 +37,15 @@ public class EventVO implements Serializable {
 	private java.sql.Time whenToRun;
 	@Column
 	private int limitTime;
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "event",cascade=CascadeType.ALL)
+	private Set<RunnerVO> runners ;
+	public Set<RunnerVO> getRunners() {
+		return runners;
+	}
+	public void setRunners(Set<RunnerVO> runners) {
+		this.runners = runners;
+	}
 	//偷吃
-
 	public int getContestID() {
 		return contestID;
 	}
