@@ -44,17 +44,10 @@ public class ContestVO {
 	@Column
 	private String contestPhotoPath;
 	//一對多
-	//偷吃
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "contestID",cascade=CascadeType.ALL)
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "contestID",cascade=CascadeType.ALL)
 	private Set<EventVO> events ;
-	//偷吃
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "contestID",cascade=CascadeType.ALL)
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "contestID",cascade=CascadeType.ALL)
 	private Set<TeamVO> teams ;
-//	偷吃
-//	@OneToMany(fetch = FetchType.EAGER, mappedBy = "contest",cascade=CascadeType.ALL)
-//	private Set<EventVO> events ;
-//	@OneToMany(fetch = FetchType.EAGER, mappedBy = "contest",cascade=CascadeType.ALL)
-//	private Set<TeamVO> teams ;
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "contest",cascade=CascadeType.ALL)
 	private Set<RunnerVO> runners ;
 	

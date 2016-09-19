@@ -81,11 +81,20 @@ public class ContestService {
 
 		}
 		return contests;
-
+	}
+	public List<ContestVO>QueryContest2(Integer year,Integer month,Integer page){
+		Date stDate = Date.valueOf(year+"-"+month+"-01");
+		if(month==12){
+			year++;
+			month=0;
+		}
+		Date edDate = Date.valueOf(year+"-"+(month+1)+"-01");
+		List<ContestVO> list=contestDAO.date2(stDate, edDate, page);
+		return list;
 	}
 
 	public List<ContestVO> pagination(List<ContestVO> queryContests,Integer page) {
-		Integer pageSize = 10;
+		Integer pageSize = 5;
 		List<ContestVO>contests=new ArrayList<ContestVO>();
 		if (queryContests.size() >= pageSize * page) {
 			for (int i = pageSize * (page - 1); i < pageSize * page; i++) {

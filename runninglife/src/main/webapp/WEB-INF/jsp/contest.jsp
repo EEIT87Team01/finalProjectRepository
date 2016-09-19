@@ -18,13 +18,16 @@
 
 </head>
 <body>
+	<div id="countPage" class="hidden">${countPage}</div>
+	<div>共有${countPage}頁</div>
 	<div>memberID:${member.memberID}</div>
 	<div id="auth" class="">admin</div>
 
 	<!-- 	載入列表	 -->
 	<section>
 	<div class="container">
-		<form id="queryContest" method="get" action="/runninglife/contest/">
+	
+		<form class ="text-center" id="queryContest" method="get" action="/runninglife/contest/">
 			<div>
 				<select class="selectpicker" id="year" name="year">
 					<option value="0">年</option>
@@ -95,28 +98,13 @@
 					class="btn btn-danger  delete" role="button" data-text="真的要刪除此賽事嗎?"
 					data-confirm-button="是的" data-cancel-button="不了"data-confirm-button-class: "btn-danger">刪除</a>
 			</div>
-			<!-- 			<div class="col-lg-3 col-md-3 col-sm-3"> -->
-			<%-- 				<form method="post" --%>
-			<%-- 					action="/runninglife/contest/${contest.contestID}/upload" --%>
-			<%-- 					enctype="multipart/form-data"> --%>
-			<!-- 					<table border="0"> -->
-			<!-- 						<tr> -->
-			<!-- 							<td><input type="file" name="fileUpload" size="50" /></td> -->
-			<!-- 						</tr> -->
-			<!-- 						<tr> -->
-			<!-- 							<td colspan="2" align="center"><input type="submit" -->
-			<!-- 								value="Upload" /></td> -->
-			<!-- 						</tr> -->
-			<!-- 					</table> -->
-			<%-- 				</form> --%>
-			<!-- 			</div> -->
 
 		</c:forEach>
-		<div>
-			<ul id="pagination" class="pagination-sm"></ul>
+		<div class="col-lg-10 col-md-10 col-sm-9 col-xs-9 ">
+			<ul class ="text-center"id="pagination" class="pagination-sm"></ul>
 		</div>
-		<div>
-			<ul id="pagination-query" class="pagination-sm"></ul>
+		<div class="col-lg-10 col-md-10 col-sm-9 col-xs-9 text-center">
+			<ul class ="text-center"id="pagination-query" class="pagination-sm"></ul>
 		</div>
 
 
@@ -196,23 +184,27 @@
 	//日期搜尋
 	//分個頁
 	$('#pagination').twbsPagination({
-		totalPages : 5,
-		visiblePages : 5,
+		totalPages : $('#countPage').text(),
+		visiblePages : $('#countPage').text(),
 		href : '?page={{pageNumber}}',
 		hrefVariable : '{{pageNumber}}',
 	});
 	$('#pagination-query').twbsPagination(
 			{
-				totalPages : 5,
-				visiblePages : 5,
+				totalPages : $('#countPage').text(),
+				visiblePages : $('#countPage').text(),
 				href : (window.location.href + '&page={{pageNumber}}')
 						.substring(0,
 								(window.location.href + '&page={{pageNumber}}')
 										.indexOf("page"))
 						+ 'page={{pageNumber}}',
 				hrefVariable : '{{pageNumber}}',
+				first:'第一頁',
+				prev:'上一頁',
+				next:'下一頁',
+				last:'最後一頁'
 			});
-
+	//js拿取queryStr
 	function getParameterByName(name, url) {
 		if (!url)
 			url = window.location.href;

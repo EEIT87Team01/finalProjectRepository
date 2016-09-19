@@ -75,23 +75,28 @@ public class EventController {
 
 	// show all some contests
 	@RequestMapping(value = "/contest", method = RequestMethod.GET)
-	public String showAllContests(Model model, HttpServletRequest req) {
-		Integer page = 1;
-		Integer pageSize = 10;
+	public String showAllContests(Model model, HttpServletRequest req,@RequestParam(required=false,value="page") Integer page ) {
+//		Integer pageSize = 5;
 		// 2016-08-08
+		int countPage=1;
+		if(page==null){
+			page=1;
+		}
 		List<ContestVO> contests = new ArrayList<>();
 		if (req.getParameter("year") != null && req.getParameter("month") != null
 				&& Integer.valueOf(req.getParameter("year")) != 0 && Integer.valueOf(req.getParameter("month")) != 0) {
 			Integer year = Integer.valueOf(req.getParameter("year"));
 			Integer month = Integer.valueOf(req.getParameter("month"));
 			Date date = Date.valueOf(year + "-" + month + "-01");
-			List<ContestVO> Querycontests = contestService.QueryContest(date);
-			contests=contestService.pagination(Querycontests, page);
-		} else {
-			contests = contestDAO.page(1);
-
+//			List<ContestVO> Querycontests = contestService.QueryContest(date);
+//			contests=contestService.pagination(Querycontests, page);
+			contests=contestService.QueryContest2(year, month, page);
+			countPage = contestDAO.countPageBetweenDay(year, month);
+		} else{
+			contests = contestDAO.page(page);
+			countPage = contestDAO.countPage();
 		}
-
+		model.addAttribute("countPage",countPage);
 		model.addAttribute("contests", contests);
 		return "contest";
 	}

@@ -200,6 +200,8 @@ h2.no-span {
 
 
 <body class="smoothscroll enable-animation">
+	
+
 	<div id="msg">message:${status}</div>
 	<div id="contestID" class="hidden">${contest.contestID}</div>
 	<div id="timer" class="hidden">${timer}</div>
@@ -297,7 +299,7 @@ h2.no-span {
 									<!-- 								<th class="col-xs-2"></th> -->
 								</tr>
 							</thead>
-							<tbody id="eventBody">
+							<tbody id="eventBody" >
 								<c:forEach var="event" items="${events}">
 									<tr>
 										<td>${event.eventID}</td>
@@ -308,27 +310,9 @@ h2.no-span {
 										<td>${event.whenToRun}</td>
 										<td>${event.limitTime }</td>
 										<td><a id="/runninglife/event/${event.eventID}/delete"
-											class="btn btn-danger  delete" role="button"
-											data-text="真的要刪除此項目嗎?" data-confirm-button="是的"
-											data-cancel-button="不了"data-confirm-button-class: "btn-danger">刪除</a></td>
-										<td><a class="btn btn-warning  edit" role="button">修改</a></td>
-
-
-										<!-- 									<td> -->
-										<!-- 										<div class="dropdown"> -->
-										<!-- 											<button class="btn btn-primary dropdown-toggle" type="button" -->
-										<!-- 												data-toggle="dropdown"> -->
-										<!-- 												編輯<span class="caret"></span> -->
-										<!-- 											</button> -->
-										<!-- 											<ul class="dropdown-menu"> -->
-										<%-- 												<li><a id="/runninglife/event/${event.eventID}/delete" --%>
-										<!-- 										class="btn btn-danger  delete" role="button" -->
-										<!-- 										data-text="真的要刪除此項目嗎?" data-confirm-button="是的" -->
-										<!-- 										data-cancel-button="不了"data-confirm-button-class: "btn-danger">刪除</a></li> -->
-										<!-- 												<li><a class="btn btn-warning  delete" role="button">修改</a></li> -->
-										<!-- 											</ul> -->
-										<!-- 										</div> -->
-										<!-- 									</td> -->
+											class="btn btn-danger  eventDelete" role="button" data-text="真的要刪除此項目嗎?"
+								data-confirm-button="是的" data-cancel-button="不了"data-confirm-button-class: "btn-danger">刪除</a></td>
+										<td><a class="btn btn-warning  edit" role="button" >修改</a></td>
 									</tr>
 								</c:forEach>
 								<tr>
@@ -375,15 +359,14 @@ h2.no-span {
 									<th class="col-xs-1"></th>
 								</tr>
 							</thead>
-							<tbody id="teamBody">
+							<tbody id="teamBody" >
 								<c:forEach var='team' items='${teams}'>
 									<tr>
 										<td class="teamID">${team.teamID}</td>
 										<td>${team.teamName}</td>
 										<td>${team.ageRange}~${team.ageRange + 9}</td>
-										<td><a class="btn btn-danger  delete" role="button"
-											data-text="真的要刪除此項目嗎?" data-confirm-button="是的"
-											data-cancel-button="不了"data-confirm-button-class: "btn-danger">刪除</a></td>
+										<td><a class="btn btn-danger  teamDelete" role="button" data-text="真的要刪除此項目嗎?"
+								data-confirm-button="是的" data-cancel-button="不了"data-confirm-button-class: "btn-danger">刪除</a></td>
 										<td><a class="btn btn-warning  edit" role="button">修改</a></td>
 									</tr>
 								</c:forEach>
@@ -548,7 +531,8 @@ h2.no-span {
 						</h4>
 					</div>
 					<div class="row">
-						<table class="table table-hover table-bordered lohas-table text-center">
+						<table
+							class="table table-hover table-bordered lohas-table text-center">
 							<thead>
 								<tr role="row">
 									<th width="10%" class="sorting_disabled" rowspan="1"
@@ -576,7 +560,7 @@ h2.no-span {
 							</tbody>
 						</table>
 					</div>
-					
+
 				</div>
 
 			</div>
@@ -731,46 +715,41 @@ h2.no-span {
 		console.log("respose: " + data);
 	}
 
+	var eventRow;
+	var eventIDUrl;
 	var eventMark = $('#contestID');
 	var teamMark = $('#contestID');
 	$(function() {
 		//項目刪除按鈕綁定
-		$("#eventBody")
-				.on(
-						"click",
-						".btn-danger",
-						function() {
-							var eventIDUrl = $(this).attr("id");
-							console.log($(this).attr("id"));
-							var eventRow = $(this).parent().parent();
-							$(this)
-									.confirm(
-											{
-												post : true,
-												confirmButtonClass : "btn-danger btn-sm",
-												cancelButtonClass : "btn-default btn-sm",
-												dialogClass : "modal-dialog modal-sm", // Bootstrap classes for large modal
-												confirm : function(button) {
-													console.log(123);
-													$
-															.ajax({
-																mimeType : "text/html; charset=UTF-8", //alert可以show出物件內容
-																type : "POST",
-																url : eventIDUrl,
-																contentType : "application/x-www-form-urlencoded;charset=UTF-8",
-																success : function(
-																		data) {
-																	alert(data)
-																	eventRow
-																			.remove();
-																}
-															});
-												},
-												cancel : function(button) {
-													console.log(12345);// nothing to do
-												}
-											});
-
+		$("#eventBody").on("click", ".btn-danger", function() {
+			eventIDUrl = $(this).attr("id");
+			console.log($(this).attr("id"));
+			eventRow = $(this).parent().parent();
+		});
+		$(".eventDelete")
+				.confirm(
+						{
+							post : true,
+							confirmButtonClass : "btn-danger btn-sm",
+							cancelButtonClass : "btn-default btn-sm",
+							dialogClass : "modal-dialog modal-sm", // Bootstrap classes for large modal
+							confirm : function(button) {
+								// 								console.log("確認刪除!");
+								$
+										.ajax({
+											mimeType : "text/html; charset=UTF-8", //alert可以show出物件內容
+											type : "POST",
+											url : eventIDUrl,
+											contentType : "application/x-www-form-urlencoded;charset=UTF-8",
+											success : function(data) {
+												alert(data)
+												eventRow.remove();
+											}
+										});
+							},
+							cancel : function(button) {
+								// 								console.log("取消刪除");
+							}
 						});
 		//項目更新按鈕榜定
 		$("#eventBody").on(
@@ -806,25 +785,36 @@ h2.no-span {
 					$('#whenToRun').val(whenToRun);
 					$('#limitTime').val(limitTime);
 				})
-
+		var teamRow;
+		var teamID;
 		//分組刪除按鈕綁定
 		$("#teamBody").on("click", ".btn-danger", function() {
-			var teamID = $(this).parent().parent().children(".teamID").text();
-			// 			alert(teamID);
-
-			var teamRow = $(this).parent().parent();
-			$.ajax({
-				mimeType : "text/html; charset=UTF-8", //alert可以show出物件內容
-				type : "POST",
-				url : "/runninglife/team/delete",
-				data : {
-					id : teamID
-				},
-				success : function(data) {
-					alert(data)
-					teamRow.remove();
-				}
-			});
+			teamID = $(this).parent().parent().children(".teamID").text();
+			teamRow = $(this).parent().parent();
+		});
+		$(".teamDelete").confirm({
+			post : true,
+			confirmButtonClass : "btn-danger btn-sm",
+			cancelButtonClass : "btn-default btn-sm",
+			dialogClass : "modal-dialog modal-sm", // Bootstrap classes for large modal
+			confirm : function(button) {
+				console.log("確認刪除!");
+				$.ajax({
+					mimeType : "text/html; charset=UTF-8", //alert可以show出物件內容
+					type : "POST",
+					url : "/runninglife/team/delete",
+					data : {
+						id : teamID
+					},
+					success : function(data) {
+						alert(data)
+						teamRow.remove();
+					}
+				});
+			},
+			cancel : function(button) {
+				console.log("取消刪除");
+			}
 		});
 		//分組更新按鈕榜定
 		$("#teamBody").on(
@@ -938,7 +928,7 @@ h2.no-span {
 		$('#ageRange').val("");
 	}
 
-	//送出event
+	//送出項目
 	$('#eventForm').submit(function(e) {
 		e.preventDefault();
 		if ($('#eventName').val() == "") {
