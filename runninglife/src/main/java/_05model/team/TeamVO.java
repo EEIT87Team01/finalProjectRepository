@@ -1,13 +1,19 @@
 package _05model.team;
 
 import java.io.Serializable;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import _05model.runner.RunnerVO;
 
 @Entity
 @Table(name="team")
@@ -21,6 +27,15 @@ public class TeamVO implements Serializable{
 	private String teamName;
 	@Column
 	private int ageRange;
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "team",cascade=CascadeType.ALL)
+	private Set<RunnerVO> runners ;
+	
+	public Set<RunnerVO> getRunners() {
+		return runners;
+	}
+	public void setRunners(Set<RunnerVO> runners) {
+		this.runners = runners;
+	}
 	public int getTeamID() {
 		return teamID;
 	}

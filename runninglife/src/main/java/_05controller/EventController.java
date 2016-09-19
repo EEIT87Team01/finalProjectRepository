@@ -113,26 +113,19 @@ public class EventController {
 		List<EventVO> events = eventDAO.getEventById(contestID);
 		ContestVO contest = contestDAO.findByPrimaryKey(contestID);
 		List<ClothesVO> clothes = clothesDAO.getAll();
+		List<RunnerVO>runners =runnerDAO.getList(1);
 		// 修正時間
-		System.out.println("a:" + contest.getRegistrationBegin());
-		System.out.println("b:" + contest.getRegistrationEnd());
-		System.out.println("c:" + contest.getStartDate());
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日 hh:mm");
-		String begin = sdf.format(contest.getRegistrationBegin());
-		String end = sdf.format(contest.getRegistrationEnd());
 		SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy年MM月dd日 (E)");
 		String start = sdf2.format(contest.getStartDate());
-		EventVO event = new EventVO();
 		long timer = contest.getStartDate().getTime();
+
 		model.addAttribute("timer", timer);
-		model.addAttribute("event", event);
 		model.addAttribute("start", start);
-		model.addAttribute("begin", begin);
-		model.addAttribute("end", end);
 		model.addAttribute("events", events);
 		model.addAttribute("teams", teams);
 		model.addAttribute("contest", contest);
 		model.addAttribute("clothes", clothes);
+		model.addAttribute("runners",runners);
 		return "detail";
 	}
 

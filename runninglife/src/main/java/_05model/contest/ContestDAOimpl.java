@@ -3,6 +3,7 @@ package _05model.contest;
 import java.sql.Date;
 import java.text.ParseException;
 import java.util.List;
+import java.util.Set;
 
 import org.hibernate.Criteria;
 import org.hibernate.Query;
@@ -15,6 +16,7 @@ import org.hibernate.criterion.Subqueries;
 import org.springframework.stereotype.Service;
 
 import _05hibernate.util.HibernateUtil;
+import _05model.event.EventVO;
 
 @Service
 public class ContestDAOimpl implements ContestDAO {
@@ -130,25 +132,26 @@ public class ContestDAOimpl implements ContestDAO {
 	// }
 	public static void main(String[] args) throws ParseException {
 		ContestDAOimpl dao = new ContestDAOimpl();
-		ContestVO contest = dao.findByPrimaryKey(1);
+//		ContestVO contest = dao.findByPrimaryKey(1);
 		// dao.delete(1);
-		ContestVO contestVO = new ContestVO();
-		contestVO.setContestName("hibernate3");
-		contestVO.setPlace("干你屁事");
-		contestVO.setStartDate(Date.valueOf("2016-3-13"));
+//		ContestVO contestVO = new ContestVO();
+//		contestVO.setContestName("hibernate3");
+//		contestVO.setPlace("干你屁事");
+//		contestVO.setStartDate(Date.valueOf("2016-3-13"));
 		// dao.delete(6);
-		dao.insert(contestVO);
-		// List<ContestVO> list = dao.getAll();
-		// for(ContestVO item:list){
-		//// System.out.printf("10%s",item.getContestID());
-		// System.out.printf("賽事:10%s",item.getContestName());
-		// System.out.printf("地點:10%s\n",item.getPlace());
-		// Set <EventVO> events = item.getEvents();
-		// for(EventVO event :events){
-		//// System.out.printf("10%s\n",event.getEventID());
-		// System.out.printf("項目:10%s\n",event.getEventName());
-		// }
-		// }
-		System.out.println(contestVO.getContestID());
+//		dao.insert(contestVO);
+		 List<ContestVO> list = dao.getAll();
+		 for(ContestVO item:list){
+		// System.out.printf("10%s",item.getContestID());
+		 System.out.printf("賽事:%s",item.getContestName());
+		 System.out.printf("地點:%s\n",item.getPlace());
+		 System.out.printf("報名開始:%s\n",item.getRegistrationBegin());
+		 System.out.printf("報名結束:%s\n",item.getRegistrationEnd());
+		 Set <EventVO> events = item.getEvents();
+		 for(EventVO event :events){
+		// System.out.printf("10%s\n",event.getEventID());
+		 System.out.printf("項目:%s\n",event.getEventName());
+		 }
+		 }
 	}
 }

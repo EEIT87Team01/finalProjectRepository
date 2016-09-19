@@ -12,6 +12,7 @@ import _05hibernate.util.HibernateUtil;
 @Service
 public class RunnerDAOimpl implements RunnerDAO {
 	private static final String GET_ALL_STMT = "from RunnerVO order by memberID ";
+	private static final String GET_ALL_LIST = "from RunnerVO where contestID = :contestID order by memberID";
 	private static final String GET_MY_CONTEST = "from RunnerVO where memberID = :memberID order by contestID";
 	private static final String GET_SCORE_GROUP = "from RunnerVO where eventID = :eventID and teamID=:teamID";
 	private static final String GET_EVENT_GROUP = "from RunnerVO where eventID = :eventID";
@@ -81,6 +82,22 @@ public class RunnerDAOimpl implements RunnerDAO {
 		try {
 			session.beginTransaction();
 			Query query = session.createQuery(GET_ALL_STMT);
+			list = query.list();
+			session.getTransaction().commit();
+		} catch (RuntimeException ex) {
+			session.getTransaction().rollback();
+			throw ex;
+		}
+		return list;
+	}
+	
+	public List<RunnerVO> getList(Integer contestID) {
+		List<RunnerVO> list = null;
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		try {
+			session.beginTransaction();
+			Query query = session.createQuery(GET_ALL_LIST);
+			query.setParameter("contestID", contestID);
 			list = query.list();
 			session.getTransaction().commit();
 		} catch (RuntimeException ex) {

@@ -11,6 +11,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import _05model.contest.ContestVO;
+import _05model.event.EventVO;
+import _05model.team.TeamVO;
 
 @Entity
 @Table(name = "runner")
@@ -33,7 +35,24 @@ public class RunnerVO implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "contestID", referencedColumnName = "contestID",insertable = false, updatable = false)
 	private ContestVO contest;
-
+	@ManyToOne
+	@JoinColumn(name = "eventID", referencedColumnName = "eventID",insertable = false, updatable = false)
+	private EventVO event;
+	@ManyToOne
+	@JoinColumn(name = "teamID", referencedColumnName = "teamID",insertable = false, updatable = false)
+	private TeamVO team;
+	public TeamVO getTeam() {
+		return team;
+	}
+	public void setTeam(TeamVO team) {
+		this.team = team;
+	}
+	public EventVO getEvent() {
+		return event;
+	}
+	public void setEvent(EventVO event) {
+		this.event = event;
+	}
 	public ContestVO getContest() {
 		return contest;
 	}
