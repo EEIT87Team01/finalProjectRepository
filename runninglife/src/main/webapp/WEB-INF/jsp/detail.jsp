@@ -16,6 +16,9 @@
 	href="/runninglife/resources/css/jquery.countdown.css" type="text/css">
 <link rel="stylesheet" href="/runninglife/resources/css/apply.css"
 	type="text/css">
+<link rel="stylesheet"
+	href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css"
+	type="text/css">
 <style>
 .bs-callout {
 	padding: 10px;
@@ -191,16 +194,11 @@ h2.no-span {
 }
 </style>
 </head>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-<script src="http://malsup.github.com/jquery.form.js"></script>
-<script src="/runninglife/resources/js/jquery.countdown.min.js"></script>
-<script src="/runninglife/resources/js/bootstrap.min.js"></script>
-<script src="/runninglife/resources/js/jquery.confirm.min.js"></script>
+
 
 
 <body class="smoothscroll enable-animation">
-	
+
 
 	<div id="msg">message:${status}</div>
 	<div id="contestID" class="hidden">${contest.contestID}</div>
@@ -299,8 +297,8 @@ h2.no-span {
 									<!-- 								<th class="col-xs-2"></th> -->
 								</tr>
 							</thead>
-							<tbody id="eventBody" >
-								<c:forEach var="event" items="${events}">
+							<tbody id="eventBody">
+								<c:forEach var="event" items="${contest.events}">
 									<tr>
 										<td>${event.eventID}</td>
 										<td>${event.eventName}</td>
@@ -310,9 +308,10 @@ h2.no-span {
 										<td>${event.whenToRun}</td>
 										<td>${event.limitTime }</td>
 										<td><a id="/runninglife/event/${event.eventID}/delete"
-											class="btn btn-danger  eventDelete" role="button" data-text="真的要刪除此項目嗎?"
-								data-confirm-button="是的" data-cancel-button="不了"data-confirm-button-class: "btn-danger">刪除</a></td>
-										<td><a class="btn btn-warning  edit" role="button" >修改</a></td>
+											class="btn btn-danger  eventDelete" role="button"
+											data-text="真的要刪除此項目嗎?" data-confirm-button="是的"
+											data-cancel-button="不了"data-confirm-button-class: "btn-danger">刪除</a></td>
+										<td><a class="btn btn-warning  edit" role="button">修改</a></td>
 									</tr>
 								</c:forEach>
 								<tr>
@@ -359,14 +358,15 @@ h2.no-span {
 									<th class="col-xs-1"></th>
 								</tr>
 							</thead>
-							<tbody id="teamBody" >
-								<c:forEach var='team' items='${teams}'>
+							<tbody id="teamBody">
+								<c:forEach var='team' items='${contest.teams}'>
 									<tr>
 										<td class="teamID">${team.teamID}</td>
 										<td>${team.teamName}</td>
 										<td>${team.ageRange}~${team.ageRange + 9}</td>
-										<td><a class="btn btn-danger  teamDelete" role="button" data-text="真的要刪除此項目嗎?"
-								data-confirm-button="是的" data-cancel-button="不了"data-confirm-button-class: "btn-danger">刪除</a></td>
+										<td><a class="btn btn-danger  teamDelete" role="button"
+											data-text="真的要刪除此項目嗎?" data-confirm-button="是的"
+											data-cancel-button="不了"data-confirm-button-class: "btn-danger">刪除</a></td>
 										<td><a class="btn btn-warning  edit" role="button">修改</a></td>
 									</tr>
 								</c:forEach>
@@ -523,38 +523,78 @@ h2.no-span {
 						</div>
 					</div>
 				</div>
-
+				<!-- 參賽名單 -->
 				<div id="runnerList" class="tab-pane fade">
+
+
+
+
+
+
 					<div class="bs-callout bs-callout-info">
 						<h4 class="">
 							<span style="color: #5bc0de">參賽名單</span>
 						</h4>
 					</div>
+
 					<div class="row">
-						<table
-							class="table table-hover table-bordered lohas-table text-center">
+						<div class="form-group">
+							<div class="col-md-5 col-sm-12">
+								<div>1. 請選擇比賽項目及組別查詢總名單</div>
+								<div class="col-md-12">
+									<label id="gameitem"> <label for="select_gameitem">&nbsp;&nbsp;比賽項目：<select
+											id="select_gameitem" name="se1">
+												<option value="">請選擇</option>
+												<c:forEach var="event" items="${contest.events}">
+													<option value="${event.eventID}">${event.eventName}</option>
+												</c:forEach>
+										</select>
+									</label></label> <label id="gameitem1"><label for="select_gg"
+										id="hide_select">&nbsp;&nbsp;參加組別：<select
+											id="select_gg"><option value="">請選擇</option>
+												<c:forEach var="team" items="${contest.teams}">
+													<option value="${team.teamID}">${team.teamName}</option>
+												</c:forEach>
+										</select></label></label>
+								</div>
+							</div>
+							<div class="col-md-7 col-sm-12">
+								<div>2. 或請單獨輸入您的參賽資料查詢</div>
+								<div class="col-md-10">
+									<label for="show_text"> <input type="text"
+										class="form-control" id="show_name"
+										placeholder="請輸入「姓名」或「號碼布」或「團隊名稱」查詢">
+									</label>
+								</div>
+								<div class="col-md-2 pull-right">
+									<input type="button" class="btn btn-info btn-md" id="message"
+										value="送出">
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<br> <br> <br> <br>
+
+					<div class="row">
+						<table id="runnerTable" class="table table-striped table-bordered">
 							<thead>
-								<tr role="row">
-									<th width="10%" class="sorting_disabled" rowspan="1"
-										colspan="1" style="width: 10px;">姓名</th>
-									<th width="10%" class="sorting_disabled" rowspan="1"
-										colspan="1" style="width: 10px;">性別</th>
-									<th width="10%" class="sorting_disabled" rowspan="1"
-										colspan="1" style="width: 10px;">項目</th>
-									<th width="10%" class="sorting_disabled" rowspan="1"
-										colspan="1" style="width: 10px;">分組</th>
-									<th width="10%" class="sorting_disabled" rowspan="1"
-										colspan="1" style="width: 10px;">衣服</th>
+								<tr role="row" class="success">
+									<th>姓名</th>
+									<th>項目</th>
+									<th>分組</th>
+									<th>衣服</th>
+									<th>個人成績</th>
 								</tr>
 							</thead>
 							<tbody>
 								<c:forEach var='runner' items="${contest.runners}">
 									<tr>
 										<td>${runner.pk.memberID}</td>
-										<td>2</td>
 										<td>${runner.event.eventName}</td>
 										<td>${runner.team.teamName}</td>
 										<td>${runner.clothesSize}</td>
+										<td></td>
 									</tr>
 								</c:forEach>
 							</tbody>
@@ -698,9 +738,15 @@ h2.no-span {
 
 
 </body>
-
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script src="/runninglife/resources/js/jquery.countdown.min.js"></script>
+<script src="/runninglife/resources/js/bootstrap.min.js"></script>
+<script src="/runninglife/resources/js/jquery.confirm.min.js"></script>
 <script src="/runninglife/resources/js/time.js"></script>
 <script src="/runninglife/resources/js/jquery.countdown.js"></script>
+<script
+	src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript">
 	// 	$('#eventForm').ajaxForm({
 	// 		type : 'post',
@@ -720,6 +766,7 @@ h2.no-span {
 	var eventMark = $('#contestID');
 	var teamMark = $('#contestID');
 	$(function() {
+
 		//項目刪除按鈕綁定
 		$("#eventBody").on("click", ".btn-danger", function() {
 			eventIDUrl = $(this).attr("id");
@@ -840,6 +887,25 @@ h2.no-span {
 					$('#ageRange').val(ageRange);
 
 				})
+		$('#runnerTable').DataTable({
+
+			"lengthMenu" : [ [ 5, 10, 15, -1 ], [ 5, 10, 15, "全部" ] ],
+			"language" : {
+				"info" : "",
+				"infoEmpty" : "沒有資料",
+				"infoFiltered" : "",
+				"zeroRecords" : "沒有符合的結果",
+				"lengthMenu" : "顯示 _MENU_ 筆資料",
+				"search" : "搜尋",
+				"paginate" : {
+					"first" : "首頁",
+					"previous" : "上一頁",
+					"next" : "下一頁",
+					"last" : "尾頁"
+				}
+			}
+
+		});
 
 	});
 

@@ -21,6 +21,7 @@ public class ContestDAOimpl implements ContestDAO {
 	private String countContest = "Select count(*) from ContestVO";
 	private static final String GET_ALL_BETWEEN_DATE = "from ContestVO where startDate between :stDate and :edDate  order by startDate";
 	private static final String COUNT_ALL_BETWEEN_DATE = "Select count(*) from ContestVO where startDate between :stDate and :edDate ";
+	private static final String FIND_BY_PRIMARYKEY = "from ContestVO where contestID=:contestID";
 
 	@Override
 	public void insert(ContestVO contestVO) {
@@ -75,6 +76,22 @@ public class ContestDAOimpl implements ContestDAO {
 			throw ex;
 		}
 		return contestVO;
+	}
+	
+	public List findByPrimaryKey2(Integer contestID) {
+		List<ContestVO> list = null;
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		try {
+			session.beginTransaction();
+			Query query = session.createQuery(FIND_BY_PRIMARYKEY);
+			query.setParameter("contestID", contestID);
+			list =  query.list();
+			session.getTransaction().commit();
+		} catch (RuntimeException ex) {
+			session.getTransaction().rollback();
+			throw ex;
+		}
+		return list;
 	}
 
 	@Override

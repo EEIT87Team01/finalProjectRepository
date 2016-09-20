@@ -5,7 +5,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -44,29 +44,29 @@ public class ContestVO {
 	@Column
 	private String contestPhotoPath;
 	//一對多
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "contestID",cascade=CascadeType.ALL)
-	private Set<EventVO> events ;
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "contestID",cascade=CascadeType.ALL)
-	private Set<TeamVO> teams ;
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "contest",cascade=CascadeType.ALL)
-	private Set<RunnerVO> runners ;
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "contest",cascade=CascadeType.REMOVE)
+	private List<EventVO> events ;
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "contest",cascade=CascadeType.REMOVE)
+	private List<TeamVO> teams ;
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "contest",cascade=CascadeType.REMOVE)
+	private List<RunnerVO> runners ;
 	
-	public Set<EventVO> getEvents() {
+	public List<EventVO> getEvents() {
 		return events;
 	}
-	public void setEvents(Set<EventVO> events) {
+	public void setEvents(List<EventVO> events) {
 		this.events = events;
 	}
-	public Set<TeamVO> getTeams() {
+	public List<TeamVO> getTeams() {
 		return teams;
 	}
-	public void setTeams(Set<TeamVO> teams) {
+	public void setTeams(List<TeamVO> teams) {
 		this.teams = teams;
 	}
-	public Set<RunnerVO> getRunners() {
+	public List<RunnerVO> getRunners() {
 		return runners;
 	}
-	public void setRunners(Set<RunnerVO> runners) {
+	public void setRunners(List<RunnerVO> runners) {
 		this.runners = runners;
 	}
 	public int getContestID() {

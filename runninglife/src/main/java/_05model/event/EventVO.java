@@ -12,9 +12,14 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
+import _05model.contest.ContestVO;
 import _05model.runner.RunnerVO;
 
 @Entity
@@ -37,8 +42,14 @@ public class EventVO implements Serializable {
 	private java.sql.Time whenToRun;
 	@Column
 	private int limitTime;
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "event",cascade=CascadeType.ALL)
+	@ManyToOne
+	@JsonBackReference
+	@JoinColumn(name = "contestID", referencedColumnName = "contestID",insertable = false, updatable = false)
+	private ContestVO contest;
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "event",orphanRemoval = true,cascade=CascadeType.REMOVE)
+	@JsonBackReference
 	private Set<RunnerVO> runners ;
+	
 	public Set<RunnerVO> getRunners() {
 		return runners;
 	}
@@ -53,7 +64,13 @@ public class EventVO implements Serializable {
 	public EventVO() {
 		super();
 	}
-
+	
+	public ContestVO getContest() {
+		return contest;
+	}
+	public void setContest(ContestVO contest) {
+		this.contest = contest;
+	}
 	public void setContestID(int contestID) {
 		this.contestID = contestID;
 	}

@@ -1,6 +1,7 @@
 package _05model.event;
 
 import java.util.List;
+import java.util.Set;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -9,10 +10,12 @@ import org.springframework.stereotype.Service;
 import _05hibernate.util.HibernateUtil;
 import _05model.runner.RunnerDAOimpl;
 import _05model.runner.RunnerVO;
+
 @Service
 public class EventDAOimpl implements EventDAO {
 	private static final String GET_ALL_STMT = "from EventVO order by eventID";
-	private static final String GET_EVENT_BY_ID="from EventVO where contestID = :contestID order by EventID";
+	private static final String GET_EVENT_BY_ID = "from EventVO where contestID = :contestID order by EventID";
+
 	@Override
 	public void insert(EventVO eventVO) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
@@ -26,31 +29,30 @@ public class EventDAOimpl implements EventDAO {
 		}
 
 	}
+
 	@Override
 	public void update(EventVO eventVO) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		try{
+		try {
 			session.beginTransaction();
 			session.saveOrUpdate(eventVO);
 			session.getTransaction();
-		}catch(RuntimeException ex){
+		} catch (RuntimeException ex) {
 			session.getTransaction();
 			throw ex;
 		}
 	}
+
 	@Override
 	public void delete(Integer eventID) {
 		RunnerDAOimpl runnerDAO = new RunnerDAOimpl();
-		List<RunnerVO> list =runnerDAO.getEventGroup(eventID);
+		List<RunnerVO> list = runnerDAO.getEventGroup(eventID);
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		try {
 			session.beginTransaction();
-			for(RunnerVO runner:list){
-				
-				session.delete(runner);
-				int i =0;
-				System.out.println(i++);
-			}
+//			for (RunnerVO runner : list) {
+//				session.delete(runner);
+//			}
 			EventVO eventVO = (EventVO) session.get(EventVO.class, eventID);
 			session.delete(eventVO);
 			session.getTransaction().commit();
@@ -62,7 +64,7 @@ public class EventDAOimpl implements EventDAO {
 
 	@Override
 	public EventVO findByPrimaryKey(Integer eventID) {
-		EventVO eventVO =null;
+		EventVO eventVO = null;
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		try {
 			session.beginTransaction();
@@ -74,6 +76,7 @@ public class EventDAOimpl implements EventDAO {
 		}
 		return eventVO;
 	}
+
 	@Override
 	public List<EventVO> getAll() {
 		List<EventVO> list = null;
@@ -89,6 +92,7 @@ public class EventDAOimpl implements EventDAO {
 		}
 		return list;
 	}
+
 	public List<EventVO> getEventById(Integer contestID) {
 		List<EventVO> list = null;
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
@@ -110,7 +114,7 @@ public class EventDAOimpl implements EventDAO {
 		EventVO eventVO = new EventVO();
 		eventVO.setContestID(1);
 		dao.insert(eventVO);
-//		dao.delete(5);
+		// dao.delete(5);
 	}
 
 }

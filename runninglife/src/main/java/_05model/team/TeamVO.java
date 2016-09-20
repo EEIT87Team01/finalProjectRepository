@@ -10,9 +10,14 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
+import _05model.contest.ContestVO;
 import _05model.runner.RunnerVO;
 
 @Entity
@@ -27,9 +32,22 @@ public class TeamVO implements Serializable{
 	private String teamName;
 	@Column
 	private int ageRange;
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "team",cascade=CascadeType.ALL)
+	@ManyToOne
+	@JsonBackReference
+	@JoinColumn(name = "contestID", referencedColumnName = "contestID",insertable = false, updatable = false)
+	private ContestVO contest;
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "team",orphanRemoval = true,cascade=CascadeType.REMOVE)
+	@JsonBackReference
 	private Set<RunnerVO> runners ;
 	
+	
+	
+	public ContestVO getContest() {
+		return contest;
+	}
+	public void setContest(ContestVO contest) {
+		this.contest = contest;
+	}
 	public Set<RunnerVO> getRunners() {
 		return runners;
 	}

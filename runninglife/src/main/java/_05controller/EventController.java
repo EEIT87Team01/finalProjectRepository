@@ -120,9 +120,11 @@ public class EventController {
 	public String showContest(@PathVariable int contestID, Model model) {
 		List<TeamVO> teams = teamDAO.getTeamById(contestID);
 		List<EventVO> events = eventDAO.getEventById(contestID);
-		ContestVO contest = contestDAO.findByPrimaryKey(contestID);
+		List<ContestVO> contests = contestDAO.findByPrimaryKey2(contestID);
+		ContestVO contest = contests.get(0);
+//		ContestVO contest=contestDAO.findByPrimaryKey(contestID);
 		List<ClothesVO> clothes = clothesDAO.getAll();
-		List<RunnerVO>runners =runnerDAO.getList(1);
+		List<RunnerVO>runners =runnerDAO.getList(contestID);
 		// 修正時間
 		SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy年MM月dd日 (E)");
 		String start = sdf2.format(contest.getStartDate());
@@ -317,6 +319,20 @@ public class EventController {
 	public String emailtest(Model model, @SessionAttribute("member") MemberVO member) {
 		return "/../../index";
 	}
+	
+	@RequestMapping(value = "/api/score/{contestID}/{eventID}/{teamID}", method = RequestMethod.GET, produces = "application/json; charset=UTF-8")
+	public @ResponseBody List<RunnerVO> apiQueryScore(@PathVariable Integer contestID,@PathVariable Integer eventID, @PathVariable Integer teamID ) {
+		List<RunnerVO> list = new ArrayList<>();
+		list =runnerDAO.getScoreGroup(1,1,3);
+		for(RunnerVO a :list){
+			System.out.println(a);
+		}
+		return list;
+	}
+	
+	
+	
+	
 
 	@ModelAttribute("member")
 	public MemberVO login() {

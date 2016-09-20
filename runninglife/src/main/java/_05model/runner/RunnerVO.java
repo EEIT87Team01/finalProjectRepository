@@ -10,6 +10,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import _05model.contest.ContestVO;
 import _05model.event.EventVO;
 import _05model.team.TeamVO;
@@ -33,6 +35,7 @@ public class RunnerVO implements Serializable {
 //	@JoinColumn(name = "contestID", referencedColumnName = "contestID", updatable = false, insertable = false)
 //	private int contestID;
 	@ManyToOne
+	@JsonBackReference
 	@JoinColumn(name = "contestID", referencedColumnName = "contestID",insertable = false, updatable = false)
 	private ContestVO contest;
 	@ManyToOne

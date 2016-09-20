@@ -38,17 +38,14 @@ public  class TeamDAOimpl implements TeamDAO {
 	}
 	@Override
 	public void delete(Integer teamID) {
-		RunnerDAOimpl runnerDAOimpl = new RunnerDAOimpl();
-		List<RunnerVO>list =runnerDAOimpl.getTeamGroup(teamID);
-		
+		RunnerDAOimpl runnerDAO = new RunnerDAOimpl();
+		List<RunnerVO>list =runnerDAO.getTeamGroup(teamID);
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		
-
 		try {
 			session.beginTransaction();
-			for(RunnerVO runner :list){
-				session.delete(runner);
-			}
+//			for(RunnerVO runner :list){
+//				session.delete(runner);
+//			}
 			TeamVO teamVO = (TeamVO) session.get(TeamVO.class, teamID);
 			session.delete(teamVO);
 			session.getTransaction().commit();

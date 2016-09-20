@@ -12,7 +12,7 @@ import _05hibernate.util.HibernateUtil;
 @Service
 public class RunnerDAOimpl implements RunnerDAO {
 	private static final String GET_ALL_STMT = "from RunnerVO order by memberID ";
-	private static final String GET_ALL_LIST = "from RunnerVO where contestID = :contestID order by memberID";
+	private static final String GET_ALL_LIST_BY_CONTESTID = "from RunnerVO where contestID = :contestID order by memberID";
 	private static final String GET_MY_CONTEST = "from RunnerVO where memberID = :memberID order by contestID";
 	private static final String GET_SCORE_GROUP = "from RunnerVO where eventID = :eventID and teamID=:teamID";
 	private static final String GET_EVENT_GROUP = "from RunnerVO where eventID = :eventID";
@@ -96,7 +96,7 @@ public class RunnerDAOimpl implements RunnerDAO {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		try {
 			session.beginTransaction();
-			Query query = session.createQuery(GET_ALL_LIST);
+			Query query = session.createQuery(GET_ALL_LIST_BY_CONTESTID);
 			query.setParameter("contestID", contestID);
 			list = query.list();
 			session.getTransaction().commit();
@@ -123,7 +123,7 @@ public class RunnerDAOimpl implements RunnerDAO {
 		return list;
 	}
 
-	public List<RunnerVO> getScoreGroup(Integer eventID, Integer teamID) {
+	public List<RunnerVO> getScoreGroup(Integer contestID ,Integer eventID, Integer teamID) {
 		List<RunnerVO> list = null;
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		try {
@@ -174,46 +174,9 @@ public class RunnerDAOimpl implements RunnerDAO {
 
 	public static void main(String[] args) {
 		RunnerDAOimpl dao = new RunnerDAOimpl();
-		RunnerVO runner = new RunnerVO();
-		RunnerPK pk = new RunnerPK();
-		List<RunnerVO> list = dao.getAll();
-		List<RunnerVO> want = new ArrayList<RunnerVO>();
-		int index = 0;
-		Boolean b;
-
-		for (RunnerVO a : list) {
-			System.out.println("memberID:" + a.getPk().getMemberID());
-			System.out.println(a.getPk().getContestID());
-			System.out.println(a.getEventID());
-			System.out.println(a.getTeamID());
-			System.out.println(a.getClothesSize());
-			System.out.println(a.getContest().getContestName());
-			System.out.println(a.getContest().getPlace());
-			System.out.println(a.getContest().getStartDate());
-			System.out.println(a.getContest().getStartDate().getTime() > System.currentTimeMillis());
-			b = a.getContest().getStartDate().getTime() > System.currentTimeMillis();
-			System.out.println(b);
-
-			System.out.println(list.indexOf(a));
-			if (b) {
-				want.add(a);
-			}
-		}
-
-		for (RunnerVO a : want) {
-			System.out.println("want------------------------------------------");
-			System.out.println("memberID:" + a.getPk().getMemberID());
-			System.out.println(a.getPk().getContestID());
-			System.out.println(a.getEventID());
-			System.out.println(a.getTeamID());
-			System.out.println(a.getClothesSize());
-			System.out.println(a.getContest().getContestName());
-			System.out.println(a.getContest().getPlace());
-			System.out.println(a.getContest().getStartDate());
-			System.out.println(a.getContest().getStartDate().getTime() > System.currentTimeMillis());
-			b = a.getContest().getStartDate().getTime() > System.currentTimeMillis();
-			System.out.println(b);
-
+		List<RunnerVO>list = dao.getScoreGroup(1 ,1, 3);
+		for(RunnerVO a :list){
+			System.out.println(a);
 		}
 
 	}
