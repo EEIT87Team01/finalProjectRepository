@@ -26,14 +26,17 @@
 	<!-- 	載入列表	 -->
 	<section>
 	<div class="container">
-	
-		<form class ="text-center" id="queryContest" method="get" action="/runninglife/contest/">
+
+		<form class="text-center form-control" id="queryContest" method="get"
+			action="/runninglife/contest/">
 			<div>
-				<select class="selectpicker" id="year" name="year">
-					<option value="0">年</option>
-					<option value="2016">2016</option>
-					<option value="2017">2017</option>
-				</select> <select class="selectpicker" id="month" name="month">
+				<label>搜尋 <select class="selectpicker" id="year" name="year">
+						<option value="0">年</option>
+						<option value="2000">列出全部</option>
+						<option value="2016">2016</option>
+						<option value="2017">2017</option>
+				</select>
+				</label><select class="selectpicker hidden" id="month" name="month">
 					<option value="0">月</option>
 					<option value="1">1</option>
 					<option value="2">2</option>
@@ -47,7 +50,7 @@
 					<option value="10">10</option>
 					<option value="11">11</option>
 					<option value="12">12</option>
-				</select> <input type="submit" value="查詢" />
+				</select> <input class="hidden" id="dateQuery" type="submit" value="查詢" />
 			</div>
 		</form>
 
@@ -61,8 +64,9 @@
 				</div>
 				<div class="col-lg-10 col-md-10 col-sm-9 col-xs-9 margin-bottom-0">
 					<div class="size-17 contest${contest.contestID} ">
-						<span class="label ${contest.start ? 'label-success size-15' : 'label label-default'}">${contest.start ? '開放報名' : '結束報名'}</span> <a
-							class="text-muted"
+						<span
+							class="label ${contest.start ? 'label-success size-15' : 'label label-default'}">${contest.start ? '開放報名' : '結束報名'}</span>
+						<a class="text-muted"
 							href="/runninglife/contest/${contest.contestID}" target="_blank">${contest.contestName}</a>
 					</div>
 				</div>
@@ -101,10 +105,10 @@
 
 		</c:forEach>
 		<div class="col-lg-10 col-md-10 col-sm-9 col-xs-9 ">
-			<ul class ="text-center"id="pagination" class="pagination-sm"></ul>
+			<ul class="text-center" id="pagination" class="pagination-sm"></ul>
 		</div>
 		<div class="col-lg-10 col-md-10 col-sm-9 col-xs-9 text-center">
-			<ul class ="text-center"id="pagination-query" class="pagination-sm"></ul>
+			<ul class="text-center" id="pagination-query" class="pagination-sm"></ul>
 		</div>
 
 
@@ -139,6 +143,26 @@
 		} else {
 			$('#pagination-query').addClass("hidden");
 		}
+
+		$('#year').change(function() {
+			
+			if ($('#year').val() == 2000) {
+				window.location.href = "/runninglife/contest";
+				return;
+			} else if ($('#year').val() != 0 && $('#month').val() != 0) {
+				$('#queryContest').submit();
+			}
+			$('#month').removeClass('hidden');
+		});
+
+		$('#month').change(function() {
+			console.log(year);
+			console.log(month);
+			if ($('#year').val() != 0 && $('#month').val() != 0) {
+				$('#queryContest').submit();
+			}
+
+		});
 	});
 	//刪除確認視窗
 	$(".delete").confirm({
@@ -199,10 +223,10 @@
 										.indexOf("page"))
 						+ 'page={{pageNumber}}',
 				hrefVariable : '{{pageNumber}}',
-				first:'第一頁',
-				prev:'上一頁',
-				next:'下一頁',
-				last:'最後一頁'
+				first : '第一頁',
+				prev : '上一頁',
+				next : '下一頁',
+				last : '最後一頁'
 			});
 	//js拿取queryStr
 	function getParameterByName(name, url) {

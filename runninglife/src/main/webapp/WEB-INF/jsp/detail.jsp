@@ -286,56 +286,63 @@ h2.no-span {
 							class="table table-hover table-bordered lohas-table text-center">
 							<thead>
 								<tr class="info">
-
-									<th class="col-xs-1">編號</th>
+									<th
+										class="col-xs-1 ${member.memberID == 'admin' ? '':'hidden' }">編號</th>
+									<!-- 隱藏 -->
 									<th class="col-xs-2">項目名稱</th>
 									<th class="col-xs-2">距離</th>
 									<th class="col-xs-2">報名費用</th>
 									<th class="col-xs-2">開放名額</th>
 									<th class="col-xs-2">起跑時間</th>
-									<th class="col-xs-2">限制時間(分)</th>
-									<th class="col-xs-4"></th>
+									<th class="col-xs-2">限制時間(分)</th> ${member.memberID =='arthur'?'<th colspan="2" class="col-xs-2"></th>':'' }
+									<!-- 隱藏 -->
+
 									<!-- 								<th class="col-xs-2"></th> -->
 								</tr>
 							</thead>
 							<tbody id="eventBody">
 								<c:forEach var="event" items="${contest.events}">
 									<tr>
-										<td>${event.eventID}</td>
+										<td
+											class="eventID ${member.memberID == 'admin' ? '':'hidden' }">${event.eventID}</td>
+										<!-- 隱藏 -->
 										<td>${event.eventName}</td>
 										<td>${event.distance}</td>
 										<td>${event.fee}</td>
 										<td>${event.quota}</td>
 										<td>${event.whenToRun}</td>
-										<td>${event.limitTime }</td>
-										<td><a id="/runninglife/event/${event.eventID}/delete"
+										<td>${event.limitTime }</td> ${member.memberID == 'arthur' ? '<td><a id="/runninglife/event/${event.eventID}/delete"    
 											class="btn btn-danger  eventDelete" role="button"
 											data-text="真的要刪除此項目嗎?" data-confirm-button="是的"
 											data-cancel-button="不了"data-confirm-button-class: "btn-danger">刪除</a></td>
-										<td><a class="btn btn-warning  edit" role="button">修改</a></td>
+										<td><a class="btn btn-warning  edit" role="button">修改</a></td>':''}
+										<!-- 隱藏 -->
 									</tr>
 								</c:forEach>
-								<tr>
+								<!-- 隱藏 -->
+								
+								<tr class="${member.memberID == 'admin' ? '':'hidden' }">
 									<form id="eventForm"
 										action="/runninglife/${contest.contestID}/event/add">
-										<td><input type="text"
-											class="form-group form-control readonly" id="eventID"
-											name="eventID" placeholder="標號" readonly /></td>
-										<td><input type="text" class="form-group form-control"
-											id="eventName" name="eventName" placeholder="項目名稱" /></td>
-										<td><input type="number" class="form-control"
-											id="distance" name="distance" placeholder="距離" /></td>
-										<td><input type="number" class="form-control" id="fee"
-											name="fee" placeholder="報名費用" /></td>
-										<td><input type="number" class="form-control" id="quota"
-											name="quota" placeholder="開放名額" /></td>
-										<td><input type="datetime" class="form-control"
-											id="whenToRun" name="whenToRun" placeholder="06:50:00" /></td>
-										<td><input type="number" class="form-control"
-											id="limitTime" name="limitTime" placeholder="90" /></td>
-										<td><input type="submit"
-											class="form-control  btn-success" name="submit" value="更新" /></td>
+									<td><input
+										type="text" class="form-group form-control readonly"
+										id="eventID" name="eventID" placeholder="" readonly /></td>
+									<td><input type="text" class="form-group form-control"
+										id="eventName" name="eventName" placeholder="項目名稱" /></td>
+									<td><input type="number" class="form-control"
+										id="distance" name="distance" placeholder="距離" /></td>
+									<td><input type="number" class="form-control" id="fee"
+										name="fee" placeholder="報名費用" /></td>
+									<td><input type="number" class="form-control" id="quota"
+										name="quota" placeholder="開放名額" /></td>
+									<td><input type="datetime" class="form-control"
+										id="whenToRun" name="whenToRun" placeholder="06:50:00" /></td>
+									<td><input type="number" class="form-control"
+										id="limitTime" name="limitTime" placeholder="90" /></td>
+									<td colspan="2"><input type="submit"
+										class="form-control  btn-success" name="submit" value="更新" /></td>
 									</form>
+									<!-- 隱藏 -->
 								</tr>
 							</tbody>
 						</table>
@@ -346,41 +353,44 @@ h2.no-span {
 						<h4 class="bs-callout bs-callout-info">
 							<span style="color: #5bc0de">競賽分組</span>
 						</h4>
-						<p>依性別及年齡分組，詳如下表</p>
+						<p>依年齡分組，詳如下表</p>
 					</div>
 					<div class="table-responsive">
 						<table class="table table-hover table-bordered text-center ">
 							<thead>
 								<tr class="info">
-
-									<th class="col-xs-1">組別編號</th>
-									<th class="col-xs-5">組別</th>
-									<th class="col-xs-5">年齡範圍</th>
-									<th class="col-xs-1"></th>
+									<th
+										class="col-xs-1 ${member.memberID == 'admin' ? '':'hidden' }">組別編號</th>
+									<th class="col-xs-5 text-center">組別</th>
+									<th class="col-xs-5 text-center">年齡範圍</th>
+									<th colspan="2"
+										class="col-xs-1 ${member.memberID == 'admin' ? '':'hidden' }"></th>
 								</tr>
 							</thead>
 							<tbody id="teamBody">
 								<c:forEach var='team' items='${contest.teams}'>
 									<tr>
-										<td class="teamID">${team.teamID}</td>
+										<td
+											class="teamID ${member.memberID == 'admin' ? '':'hidden' }">${team.teamID}</td>
 										<td>${team.teamName}</td>
 										<td>${team.ageRange}~${team.ageRange + 9}</td>
-										<td><a class="btn btn-danger  teamDelete" role="button"
+										${member.memberID == 'admin' ? '<td><a class="btn btn-danger  teamDelete" role="button"
 											data-text="真的要刪除此項目嗎?" data-confirm-button="是的"
 											data-cancel-button="不了"data-confirm-button-class: "btn-danger">刪除</a></td>
-										<td><a class="btn btn-warning  edit" role="button">修改</a></td>
+										<td><a class="btn btn-warning  edit" role="button">修改</a></td>':'' }
 									</tr>
 								</c:forEach>
-								<tr>
+								<tr class="${member.memberID == 'admin' ? '':'hidden' }">
 									<form id="teamForm">
-										<td><input type="text" class="form-control" name="teamID"
-											id="teamID" placeholder="" readonly /></td>
+										<td><input type="text"
+											class="form-control ${member.memberID == 'admin' ? '':'hidden' }"
+											name="teamID" id="teamID" placeholder="" readonly /></td>
 										<td><input type="text" class="form-control"
 											name="teamName" id="teamName" placeholder="男甲組" /></td>
 										<td><input type="number" class="form-control"
 											name="ageRange" id="ageRange" placeholder="19" /></td>
-										<td><input type="submit"
-											class="form-control  btn-success" name="submit" value="新增" /></td>
+										<td colspan="2"><input type="submit"
+											class="form-control  btn-success" name="submit" value="更新" /></td>
 									</form>
 								</tr>
 
@@ -656,7 +666,8 @@ h2.no-span {
 						</p>
 					</div>
 					<div class="panel-footer">
-						<a id="applyLink" class="btn btn-lg btn-default btn-bordered ${contest.start ? '':'disabled'}" >
+						<a id="applyLink"
+							class="btn btn-lg btn-default btn-bordered ${contest.start ? '':'disabled'}">
 							<span style="color:${contest.start ? '#5cb85c':'#f0ad4e'}">${contest.start ? '立即報名':'報名截止'}</span>
 						</a>
 					</div>
@@ -786,16 +797,15 @@ h2.no-span {
 		alert(data);
 		console.log("respose: " + data);
 	}
-
+	var eventID;
 	var eventRow;
-	var eventIDUrl;
 	var eventMark = $('#contestID');
 	var teamMark = $('#contestID');
 	$(function() {
 
 		//項目刪除按鈕綁定
 		$("#eventBody").on("click", ".btn-danger", function() {
-			eventIDUrl = $(this).attr("id");
+			eventID = $(this).parent().parent().children(".eventID").text();
 			console.log($(this).attr("id"));
 			eventRow = $(this).parent().parent();
 		});
@@ -812,7 +822,10 @@ h2.no-span {
 										.ajax({
 											mimeType : "text/html; charset=UTF-8", //alert可以show出物件內容
 											type : "POST",
-											url : eventIDUrl,
+											url : "/runninglife/event/delete",
+											data : {
+												id : eventID
+											},
 											contentType : "application/x-www-form-urlencoded;charset=UTF-8",
 											success : function(data) {
 												alert(data)

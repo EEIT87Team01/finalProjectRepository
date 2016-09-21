@@ -218,12 +218,11 @@ public class EventController {
 	}
 
 	// delete event
-	@RequestMapping(value = "/event/{id}/delete", method = RequestMethod.POST, produces = "text/html; charset=UTF-8") // produces
+	@RequestMapping(value = "/event/delete", method = RequestMethod.POST, produces = "text/html; charset=UTF-8") // produces
 																														// =
 																														// "text/html;
 																														// charset=UTF-8"
-	public @ResponseBody String deleteEvent(HttpServletResponse response, @PathVariable("id") Integer id) {
-
+	public @ResponseBody String deleteEvent(HttpServletResponse response, @RequestParam Integer id) {
 		eventDAO.delete(id);
 		System.out.println("刪除eventID=" + id);
 		// response.setCharacterEncoding("UTF-8");
@@ -339,7 +338,7 @@ public class EventController {
 		MemberVO member = new MemberVO();
 		member.setEmail("artashur@gmail.com");
 		member.setLastName("Arthur");
-		member.setMemberID("arthur");
+		member.setMemberID("admin");
 		return member;
 	}
 	// @ModelAttribute("contests")
