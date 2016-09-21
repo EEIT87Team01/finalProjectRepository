@@ -656,8 +656,8 @@ h2.no-span {
 						</p>
 					</div>
 					<div class="panel-footer">
-						<a id="applyLink" class="btn btn-lg btn-default btn-bordered">
-							<span>立即報名</span>
+						<a id="applyLink" class="btn btn-lg btn-default btn-bordered ${contest.start ? '':'disabled'}" >
+							<span style="color:${contest.start ? '#5cb85c':'#f0ad4e'}">${contest.start ? '立即報名':'報名截止'}</span>
 						</a>
 					</div>
 				</div>
@@ -1023,12 +1023,12 @@ h2.no-span {
 		var JsonObj = $(this).serializeFormJSON();
 		var JsonStr = JSON.stringify(JsonObj);
 		var contestID = $("#contestID").text();
-// 		alert(JsonStr);
+		// 		alert(JsonStr);
 
 		if ($('#teamName').val() == "" || $('#ageRange').val() == "") {
 			alert("請輸入完整資料");
 		} else if ($.trim($('#teamID').val()) == "") {
-// 			alert('新增');
+			// 			alert('新增');
 			$.ajax({
 				type : "POST",
 				url : "/runninglife/" + contestID + "/team/add",
@@ -1038,7 +1038,7 @@ h2.no-span {
 				success : addTeam
 			});
 		} else {
-// 			alert("更新");
+			// 			alert("更新");
 			$.ajax({
 				type : "POST",
 				url : "/runninglife/" + contestID + "/team/add",

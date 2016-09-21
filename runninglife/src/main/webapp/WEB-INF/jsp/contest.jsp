@@ -61,7 +61,7 @@
 				</div>
 				<div class="col-lg-10 col-md-10 col-sm-9 col-xs-9 margin-bottom-0">
 					<div class="size-17 contest${contest.contestID} ">
-						<span class="badge badge-blue size-15">開放報名</span> <a
+						<span class="label ${contest.start ? 'label-success size-15' : 'label label-default'}">${contest.start ? '開放報名' : '結束報名'}</span> <a
 							class="text-muted"
 							href="/runninglife/contest/${contest.contestID}" target="_blank">${contest.contestName}</a>
 					</div>

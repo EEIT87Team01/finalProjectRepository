@@ -17,9 +17,9 @@ import _05model.event.EventVO;
 
 @Service
 public class ContestDAOimpl implements ContestDAO {
-	private static final String GET_ALL_STMT = "from ContestVO order by startDate";
+	private static final String GET_ALL_STMT = "from ContestVO order by startDate desc";
 	private String countContest = "Select count(*) from ContestVO";
-	private static final String GET_ALL_BETWEEN_DATE = "from ContestVO where startDate between :stDate and :edDate  order by startDate";
+	private static final String GET_ALL_BETWEEN_DATE = "from ContestVO where startDate between :stDate and :edDate  order by startDate desc";
 	private static final String COUNT_ALL_BETWEEN_DATE = "Select count(*) from ContestVO where startDate between :stDate and :edDate ";
 	private static final String FIND_BY_PRIMARYKEY = "from ContestVO where contestID=:contestID";
 

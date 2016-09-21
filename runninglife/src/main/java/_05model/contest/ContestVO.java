@@ -142,5 +142,14 @@ public class ContestVO {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日 hh:mm");
 		return sdf.format(registrationEnd);
 	}
-	
+	public Boolean getStart(){
+		Boolean status = false;
+		long current =System.currentTimeMillis();
+		long begin= getRegistrationBegin().getTime();
+		long end= getRegistrationEnd().getTime();
+		if(current>begin && current<end){
+			status = true;
+		}
+		return status;
+	}
 }

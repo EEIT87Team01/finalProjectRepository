@@ -2,6 +2,7 @@ package _05controller;
 
 import java.io.File;
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -96,6 +97,7 @@ public class EventController {
 			contests = contestDAO.page(page);
 			countPage = contestDAO.countPage();
 		}
+		model.addAttribute("current",countPage);
 		model.addAttribute("countPage",countPage);
 		model.addAttribute("contests", contests);
 		return "contest";
