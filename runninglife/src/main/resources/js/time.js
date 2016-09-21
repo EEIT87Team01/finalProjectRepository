@@ -16,19 +16,19 @@ $(function(){
 		timestamp	: ts,
 		callback	: function(days, hours, minutes, seconds){
 
-			var message = "";
+			var message = "報名截止剩餘";
 
-			message += days + " 天" + ( days==1 ? '':'s' ) + ", ";
-			message += hours + " 時" + ( hours==1 ? '':'s' ) + ", ";
-			message += minutes + " 分" + ( minutes==1 ? '':'s' ) + " and ";
-			message += seconds + " 秒" + ( seconds==1 ? '':'s' ) + " <br />";
+			message += days + " 天" + ( days==1 ? '':'秒' ) + ", ";
+			message += hours + " 時" + ( hours==1 ? '':'秒' ) + ", ";
+			message += minutes + " 分" + ( minutes==1 ? '':'秒' ) + " and ";
+			message += seconds + " 秒" + ( seconds==1 ? '':'秒' ) + " <br />";
 
-			if(newYear){
-				message += "left until the new year!";
-			}
-			else {
-				message += "left to 10 days from now!";
-			}
+//			if(newYear){
+//				message += "left until the new year!";
+//			}
+//			else {
+//				message += "left to 10 days from now!";
+//			}
 
 			note.html(message);
 		}

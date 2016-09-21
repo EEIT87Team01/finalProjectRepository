@@ -112,7 +112,6 @@ public class EventDAOimpl implements EventDAO {
 	public static void main(String[] args) {
 		EventDAOimpl dao = new EventDAOimpl();
 		EventVO eventVO = new EventVO();
-		eventVO.setContestID(1);
 		dao.insert(eventVO);
 		// dao.delete(5);
 	}

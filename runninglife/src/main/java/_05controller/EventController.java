@@ -170,7 +170,7 @@ public class EventController {
 
 	/// add.update contest
 	@RequestMapping(value = "/contest/edit", method = RequestMethod.POST)
-	public String SaveUser(@ModelAttribute("contest") @Validated ContestVO contest, BindingResult result, Model model,
+	public String SaveUser(@ModelAttribute("contest")  @Validated ContestVO contest, BindingResult result, Model model,
 			final RedirectAttributes redirectAttributes, @RequestParam @Validated CommonsMultipartFile[] fileUpload) {
 		if (result.hasErrors()) {
 			return "contestform";
@@ -207,8 +207,9 @@ public class EventController {
 	// add event
 	@RequestMapping(value = "/{id}/event/add", method = RequestMethod.POST, consumes = "application/json", produces = "application/json; charset=UTF-8")
 	public @ResponseBody EventVO addEvent(@PathVariable("id") Integer id, @RequestBody @Validated EventVO eventVO) {
-
-		eventVO.setContestID(id);
+		
+		ContestVO contest = (ContestVO) contestDAO.findByPrimaryKey2(id).get(0);
+		eventVO.setContest(contest);
 		eventDAO.insert(eventVO);
 		System.out.println("ajxa------------------------------------");
 		return eventVO;
@@ -323,15 +324,12 @@ public class EventController {
 	@RequestMapping(value = "/api/score/{contestID}/{eventID}/{teamID}", method = RequestMethod.GET, produces = "application/json; charset=UTF-8")
 	public @ResponseBody List<RunnerVO> apiQueryScore(@PathVariable Integer contestID,@PathVariable Integer eventID, @PathVariable Integer teamID ) {
 		List<RunnerVO> list = new ArrayList<>();
-		list =runnerDAO.getScoreGroup(1,1,3);
+		list =runnerDAO.getScoreGroup(contestID,eventID,teamID);
 		for(RunnerVO a :list){
 			System.out.println(a);
 		}
 		return list;
 	}
-	
-	
-	
 	
 
 	@ModelAttribute("member")

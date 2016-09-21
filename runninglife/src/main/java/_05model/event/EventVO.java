@@ -25,8 +25,8 @@ import _05model.runner.RunnerVO;
 @Entity
 @Table(name = "event")
 public class EventVO implements Serializable {
-	@Column
-	private int contestID;
+//	@Column
+//	private int contestID;
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
 	private int eventID;
@@ -43,11 +43,11 @@ public class EventVO implements Serializable {
 	@Column
 	private int limitTime;
 	@ManyToOne
-	@JsonBackReference
-	@JoinColumn(name = "contestID", referencedColumnName = "contestID",insertable = false, updatable = false)
+	@JsonBackReference(value="event-contest")
+	@JoinColumn(name = "contestID", referencedColumnName = "contestID",insertable = true, updatable = false)
 	private ContestVO contest;
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "event",orphanRemoval = true,cascade=CascadeType.REMOVE)
-	@JsonBackReference
+	@JsonBackReference(value="event-runners")
 	private Set<RunnerVO> runners ;
 	
 	public Set<RunnerVO> getRunners() {
@@ -56,10 +56,7 @@ public class EventVO implements Serializable {
 	public void setRunners(Set<RunnerVO> runners) {
 		this.runners = runners;
 	}
-	//偷吃
-	public int getContestID() {
-		return contestID;
-	}
+
 
 	public EventVO() {
 		super();
@@ -71,9 +68,13 @@ public class EventVO implements Serializable {
 	public void setContest(ContestVO contest) {
 		this.contest = contest;
 	}
-	public void setContestID(int contestID) {
-		this.contestID = contestID;
-	}
+	//偷吃
+//	public int getContestID() {
+//		return contestID;
+//	}
+//	public void setContestID(int contestID) {
+//		this.contestID = contestID;
+//	}
 
 	public int getEventID() {
 		return eventID;

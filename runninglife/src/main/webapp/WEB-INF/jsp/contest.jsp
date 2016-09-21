@@ -83,7 +83,7 @@
 					<a href="contest/${contest.contestID}"
 						class="btn btn-3d btn-xs btn-reveal btn-red" target="_blank"><i
 						class="fa fa-info-circle"></i><span class="size-14">簡章</span></a><span
-						class="text-danger"> 報名時間：${contest.registrationBegin} ~ ${contest.registrationEnd}</span>
+						class="text-danger"> 報名時間：${contest.begin} ~ ${contest.end}</span>
 				</div>
 				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 					<div class="divider margin-top-0 margin-bottom-10"></div>

@@ -1,0 +1,41 @@
+﻿[{	"pk":
+	{
+		"memberID":"劉忠勳",
+	},
+	"eventID":1,
+	"teamID":3,
+	"clothesSize":"M",
+	"runTime":"02:14:13",
+	"event":
+	{
+		"eventName":"半程馬拉松組",
+	},
+	"team":
+	{
+		"contestID":1,
+		"teamName":"甲組",
+	},
+	"eventOrder":1,
+	"teamOrder":1
+},
+[{	"pk":
+	{
+		"memberID":"吳家魁",
+	},
+	"eventID":1,
+	"teamID":3,
+	"clothesSize":"M",
+	"runTime":"02:34:20",
+	"event":
+	{
+		"eventName":"半程馬拉松組",
+	},
+	"team":
+	{
+		"contestID":1,
+		"teamName":"甲組",
+	},
+	"eventOrder":1,
+	"teamOrder":2
+},
+	

@@ -225,6 +225,7 @@ h2.no-span {
 					data-toggle="tab">競賽規程</a></li>
 				<li role="presentation"><a href="#map" data-toggle="tab">競賽路線</a></li>
 				<li role="presentation"><a href="#runnerList" data-toggle="tab">參賽名單</a></li>
+				<li role="presentation"><a href="#scoreList" data-toggle="tab">成績查詢</a></li>
 			</ul>
 
 			<div class="tab-content size-16">
@@ -523,61 +524,17 @@ h2.no-span {
 						</div>
 					</div>
 				</div>
-				<!-- 參賽名單 -->
+				<!-- tab參賽名單 -->
 				<div id="runnerList" class="tab-pane fade">
-
-
-
-
-
-
 					<div class="bs-callout bs-callout-info">
 						<h4 class="">
 							<span style="color: #5bc0de">參賽名單</span>
 						</h4>
 					</div>
-
+					<!-- 參賽名單  -->
 					<div class="row">
-						<div class="form-group">
-							<div class="col-md-5 col-sm-12">
-								<div>1. 請選擇比賽項目及組別查詢總名單</div>
-								<div class="col-md-12">
-									<label id="gameitem"> <label for="select_gameitem">&nbsp;&nbsp;比賽項目：<select
-											id="select_gameitem" name="se1">
-												<option value="">請選擇</option>
-												<c:forEach var="event" items="${contest.events}">
-													<option value="${event.eventID}">${event.eventName}</option>
-												</c:forEach>
-										</select>
-									</label></label> <label id="gameitem1"><label for="select_gg"
-										id="hide_select">&nbsp;&nbsp;參加組別：<select
-											id="select_gg"><option value="">請選擇</option>
-												<c:forEach var="team" items="${contest.teams}">
-													<option value="${team.teamID}">${team.teamName}</option>
-												</c:forEach>
-										</select></label></label>
-								</div>
-							</div>
-							<div class="col-md-7 col-sm-12">
-								<div>2. 或請單獨輸入您的參賽資料查詢</div>
-								<div class="col-md-10">
-									<label for="show_text"> <input type="text"
-										class="form-control" id="show_name"
-										placeholder="請輸入「姓名」或「號碼布」或「團隊名稱」查詢">
-									</label>
-								</div>
-								<div class="col-md-2 pull-right">
-									<input type="button" class="btn btn-info btn-md" id="message"
-										value="送出">
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<br> <br> <br> <br>
-
-					<div class="row">
-						<table id="runnerTable" class="table table-striped table-bordered">
+						<table id="runnerTable" class="table table-striped table-bordered"
+							width="100%">
 							<thead>
 								<tr role="row" class="success">
 									<th>姓名</th>
@@ -601,13 +558,82 @@ h2.no-span {
 						</table>
 					</div>
 
-				</div>
 
+
+				</div>
+				<!-- tab成績查詢 -->
+				<div id="scoreList" class="tab-pane fade">
+					<!-- 成績查詢 -->
+					<div class="bs-callout bs-callout-info">
+						<h4 class="">
+							<span style="color: #5bc0de">成績查詢</span>
+						</h4>
+					</div>
+					<!-- 查詢選項 -->
+					<div class="row">
+						<div class="form-group">
+							<div class="col-md-5 col-sm-12">
+								<div>1. 請選擇比賽項目及組別查詢總名單</div>
+								<div class="col-md-12">
+									<label id="gameitem"> <label for="select_gameitem">&nbsp;&nbsp;比賽項目：<select
+											id="select_eventItem" name="se1">
+												<option value="">請選擇</option>
+												<c:forEach var="event" items="${contest.events}">
+													<option value="${event.eventID}">${event.eventName}</option>
+												</c:forEach>
+										</select>
+									</label></label> <label id="gameitem1"><label for="select_gg"
+										id="hide_select">&nbsp;&nbsp;參加組別：<select
+											id="select_teamItem"><option value="">請選擇</option>
+												<c:forEach var="team" items="${contest.teams}">
+													<option value="${team.teamID}">${team.teamName}</option>
+												</c:forEach>
+										</select></label></label>
+								</div>
+							</div>
+							<div class="col-md-7 col-sm-12">
+								<div>2. 或請單獨輸入您的參賽資料查詢</div>
+								<div class="col-md-10">
+									<label for="show_text"> <input type="text"
+										class="form-control" id="show_name"
+										placeholder="請輸入「姓名」或「號碼布」或「團隊名稱」查詢">
+									</label>
+								</div>
+								<div class="col-md-2 pull-right">
+									<input type="button" class="btn btn-info btn-md"
+										id="querySubmit" value="送出">
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- 成績結果 -->
+					>
+					<div class="row">
+						<table id="testTable" class="table table-striped table-bordered"
+							width="100%">
+							<thead>
+								<tr role="row" class="success">
+									<th>姓名</th>
+									<th>項目</th>
+									<th>分組</th>
+									<th>名次</th>
+									<th>個人成績</th>
+								</tr>
+							</thead>
+						</table>
+					</div>
+
+
+
+				</div>
 			</div>
+
+
 			<!-- 11 -->
 		</div>
 		<div class="col-lg-3 col-md-3 col-sm-3" id="activity-sidebar">
 			<div id="countdown" class="countdownHolder breadcrumb size-10"></div>
+			<div id="note"></div>
 			<!-- 籃圈 -->
 			<div class="panel-group text-center margin-bottom-40"
 				style="min-height: 351px;">
@@ -831,6 +857,9 @@ h2.no-span {
 					$('#quota').val(quota);
 					$('#whenToRun').val(whenToRun);
 					$('#limitTime').val(limitTime);
+
+					$('#eventName').focus();
+
 				})
 		var teamRow;
 		var teamID;
@@ -886,6 +915,8 @@ h2.no-span {
 					$('#teamName').val(teamName);
 					$('#ageRange').val(ageRange);
 
+					$('#teamName').focus();
+
 				})
 		$('#runnerTable').DataTable({
 
@@ -906,6 +937,64 @@ h2.no-span {
 			}
 
 		});
+		//成績查詢
+		$('#querySubmit').on(
+				"click",
+				function() {
+
+					var contestID = $("#contestID").text();
+					var eventItem = $('#select_eventItem').val();
+					var teamItem = $('#select_teamItem').val();
+
+					if (eventItem != 0 && teamItem != 0) {
+						console.log(eventItem);
+						console.log(teamItem);
+
+						$('#testTable').dataTable().fnDestroy();
+						$('#testTable').DataTable(
+								{
+									"ajax" : {
+										url : "/runninglife/api/score/"
+												+ contestID + "/" + eventItem
+												+ "/" + teamItem,
+										// 									url : "/runninglife/resources/abc.txt",
+										dataSrc : ''
+									},
+									// 				rowId: 'pk.memberID',
+									"processing" : true,
+									// 								"serverSide" : true,
+									"columns" : [ {
+										data : 'pk.memberID'
+									}, {
+										data : 'event.eventName'
+									}, {
+										data : 'team.teamName'
+									}, {
+										data : 'runTime'
+									}, {
+										data : 'runTime'
+									} ],
+									"order" : [ [ 4, "asc" ] ],
+									"lengthMenu" : [ [ 5, 10, 15, -1 ],
+											[ 5, 10, 15, "全部" ] ],
+									"language" : {
+										"info" : "",
+										"infoEmpty" : "沒有資料",
+										"infoFiltered" : "",
+										"zeroRecords" : "沒有符合的結果",
+										"lengthMenu" : "顯示 _MENU_ 筆資料",
+										"search" : "搜尋",
+										"paginate" : {
+											"first" : "首頁",
+											"previous" : "上一頁",
+											"next" : "下一頁",
+											"last" : "尾頁"
+										}
+									}
+
+								});
+					}
+				})
 
 	});
 
@@ -934,13 +1023,12 @@ h2.no-span {
 		var JsonObj = $(this).serializeFormJSON();
 		var JsonStr = JSON.stringify(JsonObj);
 		var contestID = $("#contestID").text();
-		alert(JsonStr);
+// 		alert(JsonStr);
 
-		// 		if ($('#teamName').val() == "" || $('#ageRange').val() == "") {
-		// 			alert("請輸入完整資料");
-		// 		}
-		if ($.trim($('#teamID').val()) == "") {
-			alert('新增');
+		if ($('#teamName').val() == "" || $('#ageRange').val() == "") {
+			alert("請輸入完整資料");
+		} else if ($.trim($('#teamID').val()) == "") {
+// 			alert('新增');
 			$.ajax({
 				type : "POST",
 				url : "/runninglife/" + contestID + "/team/add",
@@ -950,7 +1038,7 @@ h2.no-span {
 				success : addTeam
 			});
 		} else {
-			alert("更新");
+// 			alert("更新");
 			$.ajax({
 				type : "POST",
 				url : "/runninglife/" + contestID + "/team/add",

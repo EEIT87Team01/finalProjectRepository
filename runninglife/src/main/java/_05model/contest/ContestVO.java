@@ -93,16 +93,19 @@ public class ContestVO {
 	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
 	}
-	public String getRegistrationBegin() {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日 hh:mm");
-		return sdf.format(registrationBegin);
+	public Timestamp getRegistrationBegin() {
+//		SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日 hh:mm");
+//		return sdf.format(registrationBegin);
+		return registrationBegin;
 	}
+
 	public void setRegistrationBegin(Timestamp registrationBegin) {
 		this.registrationBegin = registrationBegin;
 	}
-	public String getRegistrationEnd() {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日 hh:mm");
-		return sdf.format(registrationEnd);
+	public Timestamp getRegistrationEnd() {
+//		SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日 hh:mm");
+//		return sdf.format(registrationEnd);
+		return registrationEnd;
 	}
 	public void setRegistrationEnd(Timestamp registrationEnd) {
 		this.registrationEnd = registrationEnd;
@@ -131,6 +134,13 @@ public class ContestVO {
 	public void setContestPhotoPath(String contestPhotoPath) {
 		this.contestPhotoPath = contestPhotoPath;
 	}
-	
+	public String getBegin() { 
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日 hh:mm");
+		return sdf.format(registrationBegin);
+	}
+	public String getEnd() {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日 hh:mm");
+		return sdf.format(registrationEnd);
+	}
 	
 }

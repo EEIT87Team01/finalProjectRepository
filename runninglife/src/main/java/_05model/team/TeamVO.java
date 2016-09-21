@@ -33,11 +33,11 @@ public class TeamVO implements Serializable{
 	@Column
 	private int ageRange;
 	@ManyToOne
-	@JsonBackReference
+	@JsonBackReference(value="team-contest")
 	@JoinColumn(name = "contestID", referencedColumnName = "contestID",insertable = false, updatable = false)
 	private ContestVO contest;
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "team",orphanRemoval = true,cascade=CascadeType.REMOVE)
-	@JsonBackReference
+	@JsonBackReference(value="team-runners")
 	private Set<RunnerVO> runners ;
 	
 	

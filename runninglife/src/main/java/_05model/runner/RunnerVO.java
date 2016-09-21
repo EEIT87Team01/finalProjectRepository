@@ -35,7 +35,7 @@ public class RunnerVO implements Serializable {
 //	@JoinColumn(name = "contestID", referencedColumnName = "contestID", updatable = false, insertable = false)
 //	private int contestID;
 	@ManyToOne
-	@JsonBackReference
+	@JsonBackReference(value="runner-contest")
 	@JoinColumn(name = "contestID", referencedColumnName = "contestID",insertable = false, updatable = false)
 	private ContestVO contest;
 	@ManyToOne

@@ -14,7 +14,7 @@ public class RunnerDAOimpl implements RunnerDAO {
 	private static final String GET_ALL_STMT = "from RunnerVO order by memberID ";
 	private static final String GET_ALL_LIST_BY_CONTESTID = "from RunnerVO where contestID = :contestID order by memberID";
 	private static final String GET_MY_CONTEST = "from RunnerVO where memberID = :memberID order by contestID";
-	private static final String GET_SCORE_GROUP = "from RunnerVO where eventID = :eventID and teamID=:teamID";
+	private static final String GET_SCORE_GROUP = "from RunnerVO where contestID = :contestID and eventID = :eventID and teamID=:teamID" ;
 	private static final String GET_EVENT_GROUP = "from RunnerVO where eventID = :eventID";
 	private static final String GET_TEAM_GROUP = "from RunnerVO where teamID =:teamID";
 
@@ -129,6 +129,7 @@ public class RunnerDAOimpl implements RunnerDAO {
 		try {
 			session.beginTransaction();
 			Query query = session.createQuery(GET_SCORE_GROUP);
+			query.setParameter("contestID", contestID);
 			query.setParameter("eventID", eventID);
 			query.setParameter("teamID", teamID);
 			list = query.list();
