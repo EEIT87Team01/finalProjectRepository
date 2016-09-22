@@ -44,6 +44,22 @@ public class RunnerVO implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "teamID", referencedColumnName = "teamID",insertable = false, updatable = false)
 	private TeamVO team;
+	
+	public RunnerVO() {
+		super();
+	}
+	public RunnerVO(RunnerPK pk, int eventID, int teamID, String clothesSize, Time runTime, ContestVO contest,
+			EventVO event, TeamVO team) {
+		super();
+		this.pk = pk;
+		this.eventID = eventID;
+		this.teamID = teamID;
+		this.clothesSize = clothesSize;
+		this.runTime = runTime;
+		this.contest = contest;
+		this.event = event;
+		this.team = team;
+	}
 	public TeamVO getTeam() {
 		return team;
 	}

@@ -2,12 +2,23 @@ package _05service.email.config;
 
 import java.util.Properties;
 
+import javax.sql.DataSource;
+
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.core.env.Environment;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.orm.hibernate4.HibernateTransactionManager;
+import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
+import org.springframework.orm.hibernate4.LocalSessionFactoryBuilder;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.ui.freemarker.FreeMarkerConfigurationFactoryBean;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -20,6 +31,8 @@ import org.springframework.web.servlet.resource.PathResourceResolver;
 @ComponentScan(basePackages = "_05validator")
 @ComponentScan(basePackages = "_05controller")
 @ComponentScan(basePackages = "_05model")
+@PropertySource(value = "classpath:database.properties")
+@EnableTransactionManagement
 @EnableWebMvc 
 public class AppConfig extends WebMvcConfigurerAdapter{
 	
@@ -84,5 +97,44 @@ public class AppConfig extends WebMvcConfigurerAdapter{
 	    resolver.setDefaultEncoding("utf-8");
 	    return resolver;
 	}
+	
+	   @Autowired
+	    private Environment environment;
+	 
+	    @Bean
+	    public LocalSessionFactoryBean sessionFactory() {
+	        LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
+	        sessionFactory.setDataSource(dataSource());
+	        sessionFactory.setPackagesToScan(new String[] { "_05model" });
+	        sessionFactory.setHibernateProperties(hibernateProperties());
+	        return sessionFactory;
+	     }
+	     
+	    @Bean
+	    public DataSource dataSource() {
+	        DriverManagerDataSource dataSource = new DriverManagerDataSource();
+	        dataSource.setDriverClassName(environment.getRequiredProperty("jdbc.driverClassName"));
+	        dataSource.setUrl(environment.getRequiredProperty("jdbc.url"));
+	        dataSource.setUsername(environment.getRequiredProperty("jdbc.username"));
+	        dataSource.setPassword(environment.getRequiredProperty("jdbc.password"));
+	        return dataSource;
+	    }
+	     
+	    private Properties hibernateProperties() {
+	        Properties properties = new Properties();
+	        properties.put("hibernate.dialect", environment.getRequiredProperty("hibernate.dialect"));
+	        properties.put("hibernate.show_sql", environment.getRequiredProperty("hibernate.show_sql"));
+	        properties.put("hibernate.format_sql","false");
+	        return properties;        
+	    }
+	     
+	    @Bean
+	    @Autowired
+	    public HibernateTransactionManager transactionManager(SessionFactory s) {
+	       HibernateTransactionManager txManager = new HibernateTransactionManager();
+	       txManager.setSessionFactory(s);
+	       return txManager;
+	    }
+	
 	
 }

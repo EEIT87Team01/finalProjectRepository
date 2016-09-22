@@ -8,6 +8,8 @@ public interface EventDAO {
     public void delete(Integer eventID);
     public EventVO findByPrimaryKey(Integer eventID);
     public List<EventVO> getAll();
+    public List<EventVO> getEventById(Integer contestID);
+    
     //查詢某部門的員工(一對多)(回傳 Set)
 //    public Set<EmpVO> getEmpsByDeptno(Integer deptno);
 }

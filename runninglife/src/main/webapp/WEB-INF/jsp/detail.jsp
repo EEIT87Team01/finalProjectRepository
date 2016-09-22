@@ -294,7 +294,7 @@ h2.no-span {
 									<th class="col-xs-2">報名費用</th>
 									<th class="col-xs-2">開放名額</th>
 									<th class="col-xs-2">起跑時間</th>
-									<th class="col-xs-2">限制時間(分)</th> ${member.memberID =='arthur'?'<th colspan="2" class="col-xs-2"></th>':'' }
+									<th class="col-xs-2">限制時間(分)</th> ${member.memberID =='admin'?'<th colspan="2" class="col-xs-2"></th>':'' }
 									<!-- 隱藏 -->
 
 									<!-- 								<th class="col-xs-2"></th> -->
@@ -311,7 +311,7 @@ h2.no-span {
 										<td>${event.fee}</td>
 										<td>${event.quota}</td>
 										<td>${event.whenToRun}</td>
-										<td>${event.limitTime }</td> ${member.memberID == 'arthur' ? '<td><a id="/runninglife/event/${event.eventID}/delete"    
+										<td>${event.limitTime }</td> ${member.memberID == 'admin' ? '<td><a id="/runninglife/event/${event.eventID}/delete"    
 											class="btn btn-danger  eventDelete" role="button"
 											data-text="真的要刪除此項目嗎?" data-confirm-button="是的"
 											data-cancel-button="不了"data-confirm-button-class: "btn-danger">刪除</a></td>

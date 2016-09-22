@@ -6,16 +6,24 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.Resource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import _05controller.ContestFormValidator;
+import _05model.clothes.ClothesDAO;
 import _05model.clothes.ClothesDAOimpl;
+import _05model.contest.ContestDAO;
 import _05model.contest.ContestDAOimpl;
 import _05model.contest.ContestVO;
+import _05model.event.EventDAO;
 import _05model.event.EventDAOimpl;
+import _05model.runner.RunnerDAO;
 import _05model.runner.RunnerDAOimpl;
+import _05model.team.TeamDAO;
 import _05model.team.TeamDAOimpl;
 import _05service.email.MailService;
 import _05validator.EventValidator;
@@ -24,16 +32,16 @@ import _05validator.FileValidator;
 @Service
 public class ContestService {
 
+	@Resource
+	private ContestDAO contestDAO;
 	@Autowired
-	private ContestDAOimpl contestDAO;
+	private EventDAO eventDAO;
 	@Autowired
-	private EventDAOimpl eventDAO;
+	private TeamDAO teamDAO;
 	@Autowired
-	private TeamDAOimpl teamDAO;
+	private RunnerDAO runnerDAO;
 	@Autowired
-	private RunnerDAOimpl runnerDAO;
-	@Autowired
-	private ClothesDAOimpl clothesDAO;
+	private ClothesDAO clothesDAO;
 	@Autowired
 	private MailService mailService;
 	@Autowired
@@ -146,6 +154,8 @@ public class ContestService {
 		}
 
 		return null;
+	}
+	public void test(){
 	}
 
 }

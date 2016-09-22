@@ -30,15 +30,21 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import _05model.clothes.ClothesDAO;
 import _05model.clothes.ClothesDAOimpl;
 import _05model.clothes.ClothesVO;
+import _05model.contest.ContestDAO;
 import _05model.contest.ContestDAOimpl;
 import _05model.contest.ContestVO;
+import _05model.event.EventDAO;
 import _05model.event.EventDAOimpl;
 import _05model.event.EventVO;
 import _05model.member.MemberVO;
+import _05model.runner.RunnerDAO;
 import _05model.runner.RunnerDAOimpl;
+import _05model.runner.RunnerForm;
 import _05model.runner.RunnerVO;
+import _05model.team.TeamDAO;
 import _05model.team.TeamDAOimpl;
 import _05model.team.TeamVO;
 import _05service.ContestService;
@@ -52,15 +58,15 @@ import _05validator.FileValidator;
 public class EventController {
 
 	@Autowired
-	private ContestDAOimpl contestDAO;
+	private ContestDAO contestDAO;
 	@Autowired
-	private EventDAOimpl eventDAO;
+	private EventDAO eventDAO;
 	@Autowired
-	private TeamDAOimpl teamDAO;
+	private TeamDAO teamDAO;
 	@Autowired
-	private RunnerDAOimpl runnerDAO;
+	private RunnerDAO runnerDAO;
 	@Autowired
-	private ClothesDAOimpl clothesDAO;
+	private ClothesDAO clothesDAO;
 	@Autowired
 	private MailService mailService;
 	@Autowired
@@ -76,12 +82,13 @@ public class EventController {
 
 	// show all some contests
 	@RequestMapping(value = "/contest", method = RequestMethod.GET)
-	public String showAllContests(Model model, HttpServletRequest req,@RequestParam(required=false,value="page") Integer page ) {
-//		Integer pageSize = 5;
+	public String showAllContests(Model model, HttpServletRequest req,
+			@RequestParam(required = false, value = "page") Integer page) {
+		// Integer pageSize = 5;
 		// 2016-08-08
-		int countPage=1;
-		if(page==null){
-			page=1;
+		int countPage = 1;
+		if (page == null) {
+			page = 1;
 		}
 		List<ContestVO> contests = new ArrayList<>();
 		if (req.getParameter("year") != null && req.getParameter("month") != null
@@ -89,16 +96,17 @@ public class EventController {
 			Integer year = Integer.valueOf(req.getParameter("year"));
 			Integer month = Integer.valueOf(req.getParameter("month"));
 			Date date = Date.valueOf(year + "-" + month + "-01");
-//			List<ContestVO> Querycontests = contestService.QueryContest(date);
-//			contests=contestService.pagination(Querycontests, page);
-			contests=contestService.QueryContest2(year, month, page);
-			countPage = contestDAO.countPageBetweenDay(year, month);
-		} else{
+			// List<ContestVO> Querycontests =
+			// contestService.QueryContest(date);
+			// contests=contestService.pagination(Querycontests, page);
+			contests = contestService.QueryContest2(year, month, page);
+			countPage = contestDAO.countPageBetweenDate(year, month);
+		} else {
 			contests = contestDAO.page(page);
 			countPage = contestDAO.countPage();
 		}
-		model.addAttribute("current",countPage);
-		model.addAttribute("countPage",countPage);
+		model.addAttribute("current", countPage);
+		model.addAttribute("countPage", countPage);
 		model.addAttribute("contests", contests);
 		return "contest";
 	}
@@ -124,9 +132,9 @@ public class EventController {
 		List<EventVO> events = eventDAO.getEventById(contestID);
 		List<ContestVO> contests = contestDAO.findByPrimaryKey2(contestID);
 		ContestVO contest = contests.get(0);
-//		ContestVO contest=contestDAO.findByPrimaryKey(contestID);
+		// ContestVO contest=contestDAO.findByPrimaryKey(contestID);
 		List<ClothesVO> clothes = clothesDAO.getAll();
-		List<RunnerVO>runners =runnerDAO.getList(contestID);
+		List<RunnerVO> runners = runnerDAO.getList(contestID);
 		// 修正時間
 		SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy年MM月dd日 (E)");
 		String start = sdf2.format(contest.getStartDate());
@@ -138,7 +146,7 @@ public class EventController {
 		model.addAttribute("teams", teams);
 		model.addAttribute("contest", contest);
 		model.addAttribute("clothes", clothes);
-		model.addAttribute("runners",runners);
+		model.addAttribute("runners", runners);
 		return "detail";
 	}
 
@@ -172,7 +180,7 @@ public class EventController {
 
 	/// add.update contest
 	@RequestMapping(value = "/contest/edit", method = RequestMethod.POST)
-	public String SaveUser(@ModelAttribute("contest")  @Validated ContestVO contest, BindingResult result, Model model,
+	public String SaveUser(@ModelAttribute("contest") @Validated ContestVO contest, BindingResult result, Model model,
 			final RedirectAttributes redirectAttributes, @RequestParam @Validated CommonsMultipartFile[] fileUpload) {
 		if (result.hasErrors()) {
 			return "contestform";
@@ -209,7 +217,7 @@ public class EventController {
 	// add event
 	@RequestMapping(value = "/{id}/event/add", method = RequestMethod.POST, consumes = "application/json", produces = "application/json; charset=UTF-8")
 	public @ResponseBody EventVO addEvent(@PathVariable("id") Integer id, @RequestBody @Validated EventVO eventVO) {
-		
+
 		ContestVO contest = (ContestVO) contestDAO.findByPrimaryKey2(id).get(0);
 		eventVO.setContest(contest);
 		eventDAO.insert(eventVO);
@@ -219,9 +227,9 @@ public class EventController {
 
 	// delete event
 	@RequestMapping(value = "/event/delete", method = RequestMethod.POST, produces = "text/html; charset=UTF-8") // produces
-																														// =
-																														// "text/html;
-																														// charset=UTF-8"
+																													// =
+																													// "text/html;
+																													// charset=UTF-8"
 	public @ResponseBody String deleteEvent(HttpServletResponse response, @RequestParam Integer id) {
 		eventDAO.delete(id);
 		System.out.println("刪除eventID=" + id);
@@ -312,26 +320,58 @@ public class EventController {
 		return "redirect:/contest/" + id;
 	}
 
-	@RequestMapping(value = "/score", method = RequestMethod.GET)
+	// show update runner form
+	@RequestMapping(value = "/test0922", method = RequestMethod.GET)
 	public String showScore(Model model) {
-		return "score";
+
+		List<RunnerVO> list = runnerDAO.getAll();
+		RunnerForm runnerForm = new RunnerForm();
+		runnerForm.setRunners(list);
+
+		List<EventVO> events = eventDAO.getEventById(1);
+		List<ClothesVO> clothes = clothesDAO.getAll();
+		model.addAttribute("clothes", clothes);
+		model.addAttribute("events", events);
+		model.addAttribute("runnerForm", runnerForm);
+
+		return "runnerform";
+	}
+
+	// updateAll
+	@RequestMapping(value = "/runner/update", method = RequestMethod.POST)
+	public String updateRunner(@ModelAttribute RunnerForm runnerForm) {
+		int pageSize = 5;
+		int lengh = runnerForm.getRunners().size();
+		int index = lengh - pageSize;
+		System.out.println(index);
+		for (int i = 0; i < index; i++) {
+			runnerForm.getRunners().remove(0);
+		}
+		runnerDAO.updateAll(runnerForm);
+		return "redirect:/test0922";
 	}
 
 	@RequestMapping("email")
 	public String emailtest(Model model, @SessionAttribute("member") MemberVO member) {
 		return "/../../index";
 	}
-	
+
 	@RequestMapping(value = "/api/score/{contestID}/{eventID}/{teamID}", method = RequestMethod.GET, produces = "application/json; charset=UTF-8")
-	public @ResponseBody List<RunnerVO> apiQueryScore(@PathVariable Integer contestID,@PathVariable Integer eventID, @PathVariable Integer teamID ) {
+	public @ResponseBody List<RunnerVO> apiQueryScore(@PathVariable Integer contestID, @PathVariable Integer eventID,
+			@PathVariable Integer teamID) {
 		List<RunnerVO> list = new ArrayList<>();
-		list =runnerDAO.getScoreGroup(contestID,eventID,teamID);
-		for(RunnerVO a :list){
+		list = runnerDAO.getScoreGroup(contestID, eventID, teamID);
+		for (RunnerVO a : list) {
 			System.out.println(a);
 		}
 		return list;
 	}
-	
+
+	@RequestMapping("/newh")
+	public String test333333(Model model) {
+		contestService.test();
+		return "/../../index";
+	}
 
 	@ModelAttribute("member")
 	public MemberVO login() {
