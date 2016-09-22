@@ -18,6 +18,8 @@
 
 </head>
 <body>
+<%-- 	<jsp:include page="${request.contextPath}/contest/1"/> --%>
+	<%@ include file="/header.jsp"%>
 	<div id="countPage" class="hidden">${countPage}</div>
 	<div>共有${countPage}頁</div>
 	<div>memberID:${member.memberID}</div>
@@ -115,6 +117,7 @@
 	</div>
 
 	</section>
+	<%@ include file="/footer.jsp"%>
 	<script></script>
 </body>
 <script

@@ -69,8 +69,6 @@ public  class TeamDAOimpl implements TeamDAO {
 //	}
 	@Override
 	public void delete(Integer teamID) {
-		RunnerDAOimpl runnerDAO = new RunnerDAOimpl();
-		List<RunnerVO>list =runnerDAO.getTeamGroup(teamID);
 		Session session = getSession();
 		try {
 			TeamVO teamVO = (TeamVO) session.get(TeamVO.class, teamID);

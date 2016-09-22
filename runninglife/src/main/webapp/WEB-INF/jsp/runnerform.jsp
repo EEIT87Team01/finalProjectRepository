@@ -78,69 +78,76 @@
 
 		<%-- 		</form:form> --%>
 
-
-		<form name="runnerForm" method="post" action="/runninglife/runner/update">
-			<table name="runnerForm" id="test"
-				class="table table-striped table-bordered" width="100%">
-				<thead>
-					<tr class="success">
-						<th>編號</th>
-						<th>會員姓名</th>
-						<th>賽事名稱</th>
-						<th class="hidden">(隱藏)memberID</th>
-						<th class="hidden">(隱藏)contestID</th>
-						<th class="hidden">(隱藏)teamID</th>
-						<th class="hidden">(隱藏)eventID</th>
-						<th>競賽項目</th>
-						<th>紀念衣尺寸</th>
-						<th>成績</th>
-					</tr>
-				</thead>
-				<tbody>
-					<c:forEach items="${runnerForm.runners}" var="runner"
-						varStatus="status">
-						<tr>
-							<td align="center">${status.count}</td>
-							<td align="center">${runner.pk.memberID}</td>
-							<td align="center">${runner.contest.contestName}</td>
-							<td class="hidden" align="center"><input
-								name="runners[${status.index}].pk.memberID"
-								value="${runner.pk.memberID}" /></td>
-							<td class="hidden" align="center"><input
-								name="runners[${status.index}].pk.contestID"
-								value="${runner.pk.contestID}" /></td>
-							<td class="hidden" align="center"><input
-								name="runners[${status.index}].teamID" value="${runner.teamID}" /></td>
-							<%-- 					<td align="center"><input name="runners[${status.index}].eventID" value="${runner.eventID}"/></td> --%>
-							<td class="hidden" align="center">${runner.eventID}</td>
-
-							<td><select name="runners[${status.index}].eventID">
-									<option value="${runner.eventID}">${runner.event.eventName}</option>
-									<option value="">==========</option>
-									<c:forEach var='event' items="${events}">
-										<option value="${event.eventID}">${event.eventName}</option>
-									</c:forEach>
-							</select></td>
-							<td><select name="runners[${status.index}].clothesSize">
-									<option value="${runner.clothesSize}">${runner.clothesSize}</option>
-									<option value="">=======</option>
-									<c:forEach var='clothes' items="${clothes}">
-										<option value="${clothes.clothesSize}">${clothes.clothesSize}</option>
-									</c:forEach>
-							</select></td>
-							<td><input name="runners[${status.index}].runTime"
-								value="${runner.runTime}" /></td>
+		<h2></h2>
+		<div class="row">
+			<form name="runnerForm" method="post"
+				action="/runninglife/runner/update">
+				<table name="runnerForm" id="test"
+					class="table table-striped table-bordered" width="100%">
+					<thead>
+						<tr class="success">
+							<th>編號</th>
+							<th>會員姓名</th>
+							<th>賽事名稱</th>
+							<th class="hidden">(隱藏)memberID</th>
+							<th class="hidden">(隱藏)contestID</th>
+							<th class="hidden">(隱藏)teamID</th>
+							<th class="hidden">(隱藏)eventID</th>
+							<th>報名狀態</th>
+							<th>競賽項目</th>
+							<th>紀念衣尺寸</th>
+							<th>成績</th>
 						</tr>
-					</c:forEach>
-				</tbody>
+					</thead>
+					<tbody>
+						<c:forEach items="${runnerForm.runners}" var="runner"
+							varStatus="status">
+							<tr>
+								<td align="center">${status.count}</td>
+								<td align="center">${runner.pk.memberID}</td>
+								<td align="center">${runner.contest.contestName}</td>
+								<td class="hidden" align="center"><input
+									name="runners[${status.index}].pk.memberID"
+									value="${runner.pk.memberID}" /></td>
+								<td class="hidden" align="center"><input
+									name="runners[${status.index}].pk.contestID"
+									value="${runner.pk.contestID}" /></td>
+								<td class="hidden" align="center"><input
+									name="runners[${status.index}].teamID" value="${runner.teamID}" /></td>
+								<%-- 					<td align="center"><input name="runners[${status.index}].eventID" value="${runner.eventID}"/></td> --%>
+								<td class="hidden" align="center">${runner.eventID}</td>
 
+								<td><select name="runners[${status.index}].status">
+										<option value="${runner.status}">${runner.status}</option>
+										<option value="">==========</option>
+										<option value="已繳費">已繳費</option>
+										<option value="尚未繳費">尚未繳費</option>
+										<option value="退費">取消報名</option>
+								</select></td>
+								<td><select name="runners[${status.index}].eventID">
+										<option value="${runner.eventID}">${runner.event.eventName}</option>
+										<option value="">==========</option>
+										<c:forEach var='event' items="${events}">
+											<option value="${event.eventID}">${event.eventName}</option>
+										</c:forEach>
+								</select></td>
+								<td><select name="runners[${status.index}].clothesSize">
+										<option value="${runner.clothesSize}">${runner.clothesSize}</option>
+										<option value="">=======</option>
+										<c:forEach var='clothes' items="${clothes}">
+											<option value="${clothes.clothesSize}">${clothes.clothesSize}</option>
+										</c:forEach>
+								</select></td>
+								<td><input name="runners[${status.index}].runTime"
+									value="${runner.runTime}" /></td>
+							</tr>
+						</c:forEach>
+					</tbody>
+				</table>
+				<form />
+				<input id="test" type="submit" value="查詢" />
+		</div>
 
-
-
-
-			</table>
-			<form />
-			<input id="test" type="submit" value="查詢" />
 	</div>
 
 </body>

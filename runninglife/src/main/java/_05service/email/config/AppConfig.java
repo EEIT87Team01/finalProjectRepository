@@ -81,7 +81,6 @@ public class AppConfig extends WebMvcConfigurerAdapter{
 	      .setCachePeriod(0)
 	      .resourceChain(true)
 	      .addResolver(new PathResourceResolver());
-	    
 	}
 	
 	@Bean

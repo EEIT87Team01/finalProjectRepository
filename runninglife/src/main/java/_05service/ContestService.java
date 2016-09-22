@@ -151,6 +151,19 @@ public class ContestService {
 					e.printStackTrace();
 				}
 			}
+			
+			if (fileUpload[2].getSize() > 0) {
+				System.out.println("Saving file: " + path + contest.getContestID() + "route" + fileUpload[2]
+						.getOriginalFilename().substring(fileUpload[2].getOriginalFilename().indexOf(".")));
+				try {
+					fileUpload[2].transferTo(new File(path + contest.getContestID() + "route" + fileUpload[2]
+							.getOriginalFilename().substring(fileUpload[2].getOriginalFilename().indexOf("."))));
+				} catch (IllegalStateException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 
 		return null;

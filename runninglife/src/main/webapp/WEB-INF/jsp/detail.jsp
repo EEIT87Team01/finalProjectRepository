@@ -198,9 +198,10 @@ h2.no-span {
 
 
 <body class="smoothscroll enable-animation">
+	<%@ include file="/header.jsp"%>
 
-
-	<div id="msg">message:${status}</div>
+	
+	<div>身分${not empty adminsVO ? "admin" : "guest" }</div>
 	<div id="contestID" class="hidden">${contest.contestID}</div>
 	<div id="timer" class="hidden">${timer}</div>
 	<section id="slider">
@@ -226,6 +227,8 @@ h2.no-span {
 				<li role="presentation"><a href="#map" data-toggle="tab">競賽路線</a></li>
 				<li role="presentation"><a href="#runnerList" data-toggle="tab">參賽名單</a></li>
 				<li role="presentation"><a href="#scoreList" data-toggle="tab">成績查詢</a></li>
+				${not empty member ? '<li role="presentation"><a href="#myContest" data-toggle="tab">我的賽事</a></li>' : '' }
+
 			</ul>
 
 			<div class="tab-content size-16">
@@ -245,7 +248,7 @@ h2.no-span {
 								</tr>
 								<tr>
 									<td>報名時間</td>
-									<td class="text-left">${contest.registrationBegin}起至~${contest.registrationEnd}止額滿為止</td>
+									<td class="text-left">${contest.begin}起至~${contest.end}止額滿為止</td>
 									<!-- <td class="text-left">2016 年 6 月 17 日 11:00 起 至 2016 年 7 月 17 日 23:59止 額滿為止</td> -->
 								</tr>
 								<tr>
@@ -312,35 +315,35 @@ h2.no-span {
 										<td>${event.quota}</td>
 										<td>${event.whenToRun}</td>
 										<td>${event.limitTime }</td> ${member.memberID == 'admin' ? '<td><a id="/runninglife/event/${event.eventID}/delete"    
-											class="btn btn-danger  eventDelete" role="button"
+											class="btn btn-danger btn-xs  eventDelete" role="button"
 											data-text="真的要刪除此項目嗎?" data-confirm-button="是的"
-											data-cancel-button="不了"data-confirm-button-class: "btn-danger">刪除</a></td>
-										<td><a class="btn btn-warning  edit" role="button">修改</a></td>':''}
+											data-cancel-button="不了"data-confirm-button-class: "btn-danger ">刪除</a></td>
+										<td><a class="btn btn-warning btn-xs edit" role="button">修改</a></td>':''}
 										<!-- 隱藏 -->
 									</tr>
 								</c:forEach>
 								<!-- 隱藏 -->
-								
+
 								<tr class="${member.memberID == 'admin' ? '':'hidden' }">
 									<form id="eventForm"
 										action="/runninglife/${contest.contestID}/event/add">
-									<td><input
-										type="text" class="form-group form-control readonly"
-										id="eventID" name="eventID" placeholder="" readonly /></td>
-									<td><input type="text" class="form-group form-control"
-										id="eventName" name="eventName" placeholder="項目名稱" /></td>
-									<td><input type="number" class="form-control"
-										id="distance" name="distance" placeholder="距離" /></td>
-									<td><input type="number" class="form-control" id="fee"
-										name="fee" placeholder="報名費用" /></td>
-									<td><input type="number" class="form-control" id="quota"
-										name="quota" placeholder="開放名額" /></td>
-									<td><input type="datetime" class="form-control"
-										id="whenToRun" name="whenToRun" placeholder="06:50:00" /></td>
-									<td><input type="number" class="form-control"
-										id="limitTime" name="limitTime" placeholder="90" /></td>
-									<td colspan="2"><input type="submit"
-										class="form-control  btn-success" name="submit" value="更新" /></td>
+										<td><input type="text"
+											class="form-group form-control readonly" id="eventID"
+											name="eventID" placeholder="" readonly /></td>
+										<td><input type="text" class="form-group form-control"
+											id="eventName" name="eventName" placeholder="項目名稱" /></td>
+										<td><input type="number" class="form-control"
+											id="distance" name="distance" placeholder="距離" /></td>
+										<td><input type="number" class="form-control" id="fee"
+											name="fee" placeholder="報名費用" /></td>
+										<td><input type="number" class="form-control" id="quota"
+											name="quota" placeholder="開放名額" /></td>
+										<td><input type="datetime" class="form-control"
+											id="whenToRun" name="whenToRun" placeholder="06:50:00" /></td>
+										<td><input type="number" class="form-control"
+											id="limitTime" name="limitTime" placeholder="90" /></td>
+										<td colspan="2"><input type="submit"
+											class="form-control  btn-success" name="submit" value="更新" /></td>
 									</form>
 									<!-- 隱藏 -->
 								</tr>
@@ -374,10 +377,10 @@ h2.no-span {
 											class="teamID ${member.memberID == 'admin' ? '':'hidden' }">${team.teamID}</td>
 										<td>${team.teamName}</td>
 										<td>${team.ageRange}~${team.ageRange + 9}</td>
-										${member.memberID == 'admin' ? '<td><a class="btn btn-danger  teamDelete" role="button"
+										${member.memberID == 'admin' ? '<td><a class="btn btn-danger btn-xs teamDelete" role="button"
 											data-text="真的要刪除此項目嗎?" data-confirm-button="是的"
 											data-cancel-button="不了"data-confirm-button-class: "btn-danger">刪除</a></td>
-										<td><a class="btn btn-warning  edit" role="button">修改</a></td>':'' }
+										<td><a class="btn btn-warning btn-xs edit" role="button">修改</a></td>':'' }
 									</tr>
 								</c:forEach>
 								<tr class="${member.memberID == 'admin' ? '':'hidden' }">
@@ -386,9 +389,9 @@ h2.no-span {
 											class="form-control ${member.memberID == 'admin' ? '':'hidden' }"
 											name="teamID" id="teamID" placeholder="" readonly /></td>
 										<td><input type="text" class="form-control"
-											name="teamName" id="teamName" placeholder="男甲組" /></td>
+											name="teamName" id="teamName" placeholder="甲組" /></td>
 										<td><input type="number" class="form-control"
-											name="ageRange" id="ageRange" placeholder="19" /></td>
+											name="ageRange" id="ageRange" placeholder="年齡下限，輸入19範圍19-28" /></td>
 										<td colspan="2"><input type="submit"
 											class="form-control  btn-success" name="submit" value="更新" /></td>
 									</form>
@@ -551,7 +554,6 @@ h2.no-span {
 									<th>項目</th>
 									<th>分組</th>
 									<th>衣服</th>
-									<th>個人成績</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -561,7 +563,6 @@ h2.no-span {
 										<td>${runner.event.eventName}</td>
 										<td>${runner.team.teamName}</td>
 										<td>${runner.clothesSize}</td>
-										<td></td>
 									</tr>
 								</c:forEach>
 							</tbody>
@@ -636,12 +637,48 @@ h2.no-span {
 
 
 				</div>
+				<!-- tab我的賽事-->
+				<div id="myContest" class="tab-pane fade">
+					<div class="bs-callout bs-callout-info">
+						<h4 class="">
+							<span style="color: #5bc0de">參賽名單</span>
+						</h4>
+					</div>
+					<!-- 我的賽事  -->
+					<div class="row">
+						<table id="myContestTable"
+							class="table table-striped table-bordered" width="100%">
+							<thead>
+								<tr role="row" class="success">
+									<th>賽式名稱</th>
+									<th>比賽日期</th>
+									<th>項目</th>
+									<th>分組</th>
+									<th>衣服</th>
+									<th>繳費狀態</th>
+								</tr>
+							</thead>
+							<tbody>
+								<c:forEach var='runner' items="${mycontest}">
+									<tr>
+										<td>${runner.contest.contestName}</td>
+										<td>${runner.contest.startDate}</td>
+										<td>${runner.event.eventName}</td>
+										<td>${runner.team.teamName}</td>
+										<td>${runner.clothesSize}</td>
+										<td>${runner.status}</td>
+									</tr>
+								</c:forEach>
+							</tbody>
+						</table>
+					</div>
+				</div>
 			</div>
 
 
 			<!-- 11 -->
 		</div>
-		<div class="col-lg-3 col-md-3 col-sm-3" id="activity-sidebar">
+		<div class="col-lg-3 col-md-3 col-sm-3 " id="activity-sidebar">
 			<div id="countdown" class="countdownHolder breadcrumb size-10"></div>
 			<div id="note"></div>
 			<!-- 籃圈 -->
@@ -715,14 +752,14 @@ h2.no-span {
 					</select>
 				</div>
 				<div>
-					<input class="btn btn-info" type="submit" />
+					<input class="btn btn-info" type="submit" value="確認" />
 				</div>
 
 			</form>
 		</div>
 		<!-- Popup Div Ends Here -->
 	</div>
-
+	<%@ include file="/footer.jsp"%>
 	<!-- 	<div id="eventPopForm"> -->
 	<!-- 		<!-- 彈出報名 -->
 	<!-- 		<div id="popupEvent" class="form-group"> -->
@@ -950,64 +987,213 @@ h2.no-span {
 			}
 
 		});
+		$('#myContestTable').DataTable({
+
+			"lengthMenu" : [ [ 5, 10, 15, -1 ], [ 5, 10, 15, "全部" ] ],
+			"language" : {
+				"info" : "",
+				"infoEmpty" : "沒有資料",
+				"infoFiltered" : "",
+				"zeroRecords" : "沒有符合的結果",
+				"lengthMenu" : "顯示 _MENU_ 筆資料",
+				"search" : "搜尋",
+				"paginate" : {
+					"first" : "首頁",
+					"previous" : "上一頁",
+					"next" : "下一頁",
+					"last" : "尾頁"
+				}
+			}
+
+		});
 		//成績查詢
-		$('#querySubmit').on(
-				"click",
-				function() {
+		// 		$('#querySubmit').on(
+		// 				"click",
+		// 				function() {
 
-					var contestID = $("#contestID").text();
-					var eventItem = $('#select_eventItem').val();
-					var teamItem = $('#select_teamItem').val();
+		// 					var contestID = $("#contestID").text();
+		// 					var eventItem = $('#select_eventItem').val();
+		// 					var teamItem = $('#select_teamItem').val();
 
-					if (eventItem != 0 && teamItem != 0) {
-						console.log(eventItem);
-						console.log(teamItem);
+		// 					if (eventItem != 0 && teamItem != 0) {
+		// 						console.log(eventItem);
+		// 						console.log(teamItem);
 
-						$('#testTable').dataTable().fnDestroy();
-						$('#testTable').DataTable(
-								{
-									"ajax" : {
-										url : "/runninglife/api/score/"
-												+ contestID + "/" + eventItem
-												+ "/" + teamItem,
-										// 									url : "/runninglife/resources/abc.txt",
-										dataSrc : ''
-									},
-									// 				rowId: 'pk.memberID',
-									"processing" : true,
-									// 								"serverSide" : true,
-									"columns" : [ {
-										data : 'pk.memberID'
-									}, {
-										data : 'event.eventName'
-									}, {
-										data : 'team.teamName'
-									}, {
-										data : 'runTime'
-									}, {
-										data : 'runTime'
-									} ],
-									"order" : [ [ 4, "asc" ] ],
-									"lengthMenu" : [ [ 5, 10, 15, -1 ],
-											[ 5, 10, 15, "全部" ] ],
-									"language" : {
-										"info" : "",
-										"infoEmpty" : "沒有資料",
-										"infoFiltered" : "",
-										"zeroRecords" : "沒有符合的結果",
-										"lengthMenu" : "顯示 _MENU_ 筆資料",
-										"search" : "搜尋",
-										"paginate" : {
-											"first" : "首頁",
-											"previous" : "上一頁",
-											"next" : "下一頁",
-											"last" : "尾頁"
-										}
-									}
+// 								$('#testTable').dataTable().fnDestroy();
+// 								$('#testTable').DataTable(
+// 										{
+// 											"ajax" : {
+// 												url : "/runninglife/api/score/"
+// 														+ contestID + "/" + eventItem
+// 														+ "/" + teamItem,
+// 												// 									url : "/runninglife/resources/abc.txt",
+// 												dataSrc : ''
+// 											},
+// 											// 				rowId: 'pk.memberID',
+// 											"processing" : false,
+// 											// 								"serverSide" : true,
+// 											"columns" : [ {
+// 												data : 'pk.memberID'
+// 											}, {
+// 												data : 'event.eventName'
+// 											}, {
+// 												data : 'team.teamName'
+// 											}, {
+// 												data : 'runTime'
+// 											}, {
+// 												data : 'runTime'
+// 											} ],
+// 											"order" : [ [ 4, "asc" ] ],
+// 											"lengthMenu" : [ [ 5, 10, 15, -1 ],
+// 													[ 5, 10, 15, "全部" ] ],
+// 											"language" : {
+// 												"info" : "",
+// 												"infoEmpty" : "沒有資料",
+// 												"infoFiltered" : "",
+// 												"zeroRecords" : "沒有符合的結果",
+// 												"lengthMenu" : "顯示 _MENU_ 筆資料",
+// 												"search" : "搜尋",
+// 												"paginate" : {
+// 													"first" : "首頁",
+// 													"previous" : "上一頁",
+// 													"next" : "下一頁",
+// 													"last" : "尾頁"
+// 												}
+// 											}
 
-								});
-					}
-				})
+// 										});
+// 							}
+		// 				})
+		var contestID = $("#contestID").text();
+		var eventItem = $('#select_eventItem').val();
+		var teamItem = $('#select_teamItem').val();
+		$('#select_eventItem').change(function() {
+			eventItem = $('#select_eventItem').val();
+			teamItem = $('#select_teamItem').val();
+			if(eventItem!=0&&teamItem!=0){
+				$('#testTable').dataTable().fnDestroy();
+				$('#testTable').DataTable(
+						{
+							"ajax" : {
+								url : "/runninglife/api/score/"
+										+ contestID + "/" + eventItem
+										+ "/" + teamItem,
+								// 									url : "/runninglife/resources/abc.txt",
+								dataSrc : ''
+							},
+							// 				rowId: 'pk.memberID',
+							"processing" : false,
+							// 								"serverSide" : true,
+							"columns" : [ {
+								data : 'pk.memberID'
+							}, {
+								data : 'event.eventName'
+							}, {
+								data : 'team.teamName'
+							}, {
+								data : 'runTime'
+							}, {
+								data : 'runTime'
+							} ],
+							"order" : [ [ 4, "asc" ] ],
+							"lengthMenu" : [ [ 5, 10, 15, -1 ],
+									[ 5, 10, 15, "全部" ] ],
+							"language" : {
+								"info" : "",
+								"infoEmpty" : "沒有資料",
+								"infoFiltered" : "",
+								"zeroRecords" : "沒有符合的結果",
+								"lengthMenu" : "顯示 _MENU_ 筆資料",
+								"search" : "搜尋",
+								"paginate" : {
+									"first" : "首頁",
+									"previous" : "上一頁",
+									"next" : "下一頁",
+									"last" : "尾頁"
+								}
+							}
+
+						});
+			}
+		});
+
+		$('#select_teamItem').change(function() {
+			eventItem = $('#select_eventItem').val();
+			teamItem = $('#select_teamItem').val();
+			
+			if(eventItem!=0&&teamItem!=0){
+
+				$('#testTable').dataTable().fnDestroy();
+				$('#testTable').DataTable(
+						{
+							"ajax" : {
+								url : "/runninglife/api/score/"
+										+ contestID + "/" + eventItem
+										+ "/" + teamItem,
+								// 									url : "/runninglife/resources/abc.txt",
+								dataSrc : ''
+							},
+							// 				rowId: 'pk.memberID',
+							"processing" : false,
+							// 								"serverSide" : true,
+							"columns" : [ {
+								data : 'pk.memberID'
+							}, {
+								data : 'event.eventName'
+							}, {
+								data : 'team.teamName'
+							}, {
+								data : 'runTime'
+							}, {
+								data : 'runTime'
+							} ],
+							"order" : [ [ 4, "asc" ] ],
+							"lengthMenu" : [ [ 5, 10, 15, -1 ],
+									[ 5, 10, 15, "全部" ] ],
+							"language" : {
+								"info" : "",
+								"infoEmpty" : "沒有資料",
+								"infoFiltered" : "",
+								"zeroRecords" : "沒有符合的結果",
+								"lengthMenu" : "顯示 _MENU_ 筆資料",
+								"search" : "搜尋",
+								"paginate" : {
+									"first" : "首頁",
+									"previous" : "上一頁",
+									"next" : "下一頁",
+									"last" : "尾頁"
+								}
+							}
+
+						});
+			}
+		});
+
+		//報名驗證	
+		$('#runnerForm')
+				.submit(
+						function(e) {
+							if ($('#runnerForm > div:nth-child(6) > select')
+									.val() == 0) {
+								alert('請選擇比賽項目!');
+								e.preventDefault();
+							} else if ($(
+									'#runnerForm > div:nth-child(7) > select')
+									.val() == 0) {
+								alert('請選擇紀念衣尺寸!');
+								e.preventDefault();
+							}
+						})
+
+		var status = getParameterByName("status");
+		if (status == "fail") {
+			alert("報名失敗");
+			window.location.href = "/runninglife/contest/${contest.contestID}";
+			return;
+		} else if (status == "success") {
+			alert("報名成功，請到信箱查看繳費資訊。");
+			window.location.href = "/runninglife/contest/${contest.contestID}";
+		}
 
 	});
 
@@ -1087,7 +1273,7 @@ h2.no-span {
 		teamMark.parent().parent().children('td:nth-child(2)').text(
 				team.teamName);
 		teamMark.parent().parent().children('td:nth-child(3)').text(
-				team.ageRange);
+				team.ageRange + "~" + (team.ageRange));
 		teamMark.parent().parent().removeClass("warning");
 
 		$('#teamID').val("");
@@ -1227,5 +1413,17 @@ h2.no-span {
 	// 		        // nothing to do
 	// 		    }
 	// 	});
+	function getParameterByName(name, url) {
+		if (!url)
+			url = window.location.href;
+		name = name.replace(/[\[\]]/g, "\\$&");
+		var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"), results = regex
+				.exec(url);
+		if (!results)
+			return null;
+		if (!results[2])
+			return '';
+		return decodeURIComponent(results[2].replace(/\+/g, " "));
+	}
 </script>
 </html>

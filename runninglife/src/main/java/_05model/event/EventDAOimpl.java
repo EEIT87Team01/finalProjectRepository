@@ -72,8 +72,6 @@ public class EventDAOimpl implements EventDAO {
 
 	@Override
 	public void delete(Integer eventID) {
-		RunnerDAOimpl runnerDAO = new RunnerDAOimpl();
-		List<RunnerVO> list = runnerDAO.getEventGroup(eventID);
 		Session session = getSession();
 		try {
 			EventVO eventVO = (EventVO) session.get(EventVO.class, eventID);

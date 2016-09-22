@@ -163,6 +163,11 @@
 						<input class="form-control" type="file" id="fileUpload"
 							name=fileUpload />
 					</div>
+					<label class="col-sm-2 control-label">路徑圖</label>
+					<div class="col-sm-10">
+						<input class="form-control" type="file" id="fileUpload"
+							name=fileUpload />
+					</div>
 				</div>
 
 				<div class="form-group">
@@ -190,17 +195,5 @@
 	</div>
 </body>
 <script type="text/javascript">
-	var formData = new FormData();
-	formData.append('file', $('#file')[0].files[0]);
-	$.ajax({
-		url : '/upload',
-		type : 'POST',
-		cache : false,
-		data : formData,
-		processData : false,
-		contentType : false
-	}).done(function(res) {
-	}).fail(function(res) {
-	});
 </script>
 </html>

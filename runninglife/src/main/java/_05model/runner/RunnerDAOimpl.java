@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import _05hibernate.util.HibernateUtil;
-
 @Repository
 @Transactional
 public class RunnerDAOimpl implements RunnerDAO {

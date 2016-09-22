@@ -92,12 +92,9 @@ public class ContestDAOimpl  implements ContestDAO  {
 	public void delete(Integer contestID) {
 		Session session = sessionFactory.getCurrentSession();
 		try {
-			session.beginTransaction();
 			ContestVO contestVO = (ContestVO) session.get(ContestVO.class, contestID);
 			session.delete(contestVO);
-			session.getTransaction().commit();
 		} catch (RuntimeException ex) {
-			session.getTransaction().rollback();
 			// throw ex;
 		}
 	}
@@ -120,11 +117,8 @@ public class ContestDAOimpl  implements ContestDAO  {
 		ContestVO contestVO = null;
 		Session session = sessionFactory.getCurrentSession();
 		try {
-			session.beginTransaction();
 			contestVO = (ContestVO) session.get(ContestVO.class, contestID);
-			session.getTransaction().commit();
 		} catch (RuntimeException ex) {
-			session.getTransaction().rollback();
 			throw ex;
 		}
 		return contestVO;

@@ -34,6 +34,8 @@ public class RunnerVO implements Serializable {
 	private Time runTime;
 //	@JoinColumn(name = "contestID", referencedColumnName = "contestID", updatable = false, insertable = false)
 //	private int contestID;
+	@Column
+	private String status;
 	@ManyToOne
 	@JsonBackReference(value="runner-contest")
 	@JoinColumn(name = "contestID", referencedColumnName = "contestID",insertable = false, updatable = false)
@@ -47,18 +49,6 @@ public class RunnerVO implements Serializable {
 	
 	public RunnerVO() {
 		super();
-	}
-	public RunnerVO(RunnerPK pk, int eventID, int teamID, String clothesSize, Time runTime, ContestVO contest,
-			EventVO event, TeamVO team) {
-		super();
-		this.pk = pk;
-		this.eventID = eventID;
-		this.teamID = teamID;
-		this.clothesSize = clothesSize;
-		this.runTime = runTime;
-		this.contest = contest;
-		this.event = event;
-		this.team = team;
 	}
 	public TeamVO getTeam() {
 		return team;
@@ -117,5 +107,12 @@ public class RunnerVO implements Serializable {
 	public void setRunTime(Time runTime) {
 		this.runTime = runTime;
 	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	
 
 }

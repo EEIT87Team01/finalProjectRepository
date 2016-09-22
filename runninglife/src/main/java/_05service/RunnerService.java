@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import _05model.runner.RunnerDAO;
 import _05model.runner.RunnerDAOimpl;
+import _05model.runner.RunnerForm;
 import _05model.runner.RunnerVO;
 @Service
 public class RunnerService {
@@ -35,5 +36,14 @@ public class RunnerService {
 			}
 		}
 		return runner;
+	}
+	public void updateAllRunner(RunnerForm runnerForm,Integer pageSize){
+		int lengh = runnerForm.getRunners().size();
+		int index = lengh - pageSize;
+		System.out.println(index);
+		for (int i = 0; i < index; i++) {
+			runnerForm.getRunners().remove(0);
+		}
+		runnerDAO.updateAll(runnerForm);
 	}
 }
