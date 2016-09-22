@@ -18,19 +18,15 @@
 
 </head>
 <body>
-<%-- 	<jsp:include page="${request.contextPath}/contest/1"/> --%>
-	<%@ include file="/header.jsp"%>
+	<%-- 	<jsp:include page="${request.contextPath}/contest/1"/> --%>
 	<div id="countPage" class="hidden">${countPage}</div>
-	<div>共有${countPage}頁</div>
-	<div>memberID:${member.memberID}</div>
 	<div id="auth" class="">admin</div>
-
 	<!-- 	載入列表	 -->
 	<section>
 	<div class="container">
 
 		<form class="text-center form-control" id="queryContest" method="get"
-			action="/runninglife/contest/">
+			action="${pageContext.request.contextPath}/admin/contest/">
 			<div>
 				<label>搜尋 <select class="selectpicker" id="year" name="year">
 						<option value="0">年</option>
@@ -60,16 +56,18 @@
 			<br>
 			<div class="col-lg-9 col-md-9 col-sm-9">
 				<div class="col-lg-2 col-md-2 col-sm-3 col-xs-3 nopadding-right">
-					<a href="/runninglife/contest/${contest.contestID}" target="_blank"><img
-						class="img-responsive thumbnail"
-						src="/runninglife/resources/${contest.contestPhotoPath}"></a>
+					<a
+						href="${pageContext.request.contextPath}/contest/${contest.contestID}"
+						target="_blank"><img class="img-responsive thumbnail"
+						src="${pageContext.request.contextPath}/resources/${contest.contestPhotoPath}"></a>
 				</div>
 				<div class="col-lg-10 col-md-10 col-sm-9 col-xs-9 margin-bottom-0">
 					<div class="size-17 contest${contest.contestID} ">
 						<span
 							class="label ${contest.start ? 'label-success size-15' : 'label label-default'}">${contest.start ? '開放報名' : '結束報名'}</span>
 						<a class="text-muted"
-							href="/runninglife/contest/${contest.contestID}" target="_blank">${contest.contestName}</a>
+							href="${pageContext.request.contextPath}/contest/${contest.contestID}"
+							target="_blank">${contest.contestName}</a>
 					</div>
 				</div>
 				<div
@@ -80,8 +78,9 @@
 				<div
 					class="col-lg-10 col-md-10 col-sm-9 col-xs-9 size-16 margin-bottom-0">
 					<i class="fa fa-map-marker"></i> <a class="text-warning"
-						href="https://www.google.com.tw/maps/place/${contest.place}" data-toggle="tooltip"
-						title="" target="_blank" data-original-title="活動地點">${contest.place}</a>
+						href="https://www.google.com.tw/maps/place/${contest.place}"
+						data-toggle="tooltip" title="" target="_blank"
+						data-original-title="活動地點">${contest.place}</a>
 				</div>
 				<div
 					class="col-lg-10 col-md-10 col-sm-9 col-xs-9 margin-bottom-10 hidden-sm hidden-xs">${contest.goal}</div>
@@ -96,11 +95,13 @@
 				</div>
 			</div>
 			<div class="col-lg-3 col-md-3 col-sm-3">
-				<a href="/runninglife/contest/edit?id=${contest.contestID}"
+				<a
+					href="${pageContext.request.contextPath}/contest/edit?id=${contest.contestID}"
 					class="btn btn-info edit" role="button"">編輯</a>
 			</div>
 			<div class="col-lg-3 col-md-3 col-sm-3">
-				<a href="/runninglife/contest/${contest.contestID}/delete"
+				<a
+					href="${pageContext.request.contextPath}/contest/${contest.contestID}/delete"
 					class="btn btn-danger  delete" role="button" data-text="真的要刪除此賽事嗎?"
 					data-confirm-button="是的" data-cancel-button="不了"data-confirm-button-class: "btn-danger">刪除</a>
 			</div>
@@ -117,7 +118,6 @@
 	</div>
 
 	</section>
-	<%@ include file="/footer.jsp"%>
 	<script></script>
 </body>
 
@@ -133,6 +133,7 @@
 			$("#auth").addClass("hidden");
 		}
 	}
+	$('#queryContest').attr('action', window.location.href);
 	//隱藏刪除編輯按鈕分頁	
 	$(function() {
 		if ($('#auth').text() != "admin") {
@@ -148,16 +149,21 @@
 			$('#pagination-query').addClass("hidden");
 		}
 
-		$('#year').change(function() {
-			
-			if ($('#year').val() == 2000) {
-				window.location.href = "/runninglife/contest";
-				return;
-			} else if ($('#year').val() != 0 && $('#month').val() != 0) {
-				$('#queryContest').submit();
-			}
-			$('#month').removeClass('hidden');
-		});
+		$('#year')
+				.change(
+						function() {
+
+							if ($('#year').val() == 2000) {
+								window.location.href = window.location.href
+										.substring(0, window.location.href
+												.indexOf('?'));
+								return;
+							} else if ($('#year').val() != 0
+									&& $('#month').val() != 0) {
+								$('#queryContest').submit();
+							}
+							$('#month').removeClass('hidden');
+						});
 
 		$('#month').change(function() {
 			console.log(year);

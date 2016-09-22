@@ -36,7 +36,7 @@ public class TeamVO implements Serializable{
 	@JsonBackReference(value="team-contest")
 	@JoinColumn(name = "contestID", referencedColumnName = "contestID",insertable = false, updatable = false)
 	private ContestVO contest;
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "team",orphanRemoval = true,cascade=CascadeType.REMOVE)
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "team",orphanRemoval = true,cascade=CascadeType.REMOVE)
 	@JsonBackReference(value="team-runners")
 	private Set<RunnerVO> runners ;
 	

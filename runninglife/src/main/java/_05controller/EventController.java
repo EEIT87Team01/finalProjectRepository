@@ -107,7 +107,39 @@ public class EventController {
 		model.addAttribute("current", countPage);
 		model.addAttribute("countPage", countPage);
 		model.addAttribute("contests", contests);
-		return "contest";
+		return "/contest/contest";
+	}
+	// 管理者全賽事編輯外
+	@RequestMapping(value = "/admin/contest", method = RequestMethod.GET)
+	public String adminShowAllContests() {
+		return "/admin/contest-admin";
+	}
+	// 管理者全賽事編輯內
+	@RequestMapping(value = "/admin/contest/data", method = RequestMethod.GET)
+	public String adminShowAllContests2(Model model, HttpServletRequest req,
+			@RequestParam(required = false, value = "page") Integer page) {
+		// Integer pageSize = 5;
+		// 2016-08-08
+		int countPage = 1;
+		if (page == null) {
+			page = 1;
+		}
+		List<ContestVO> contests = new ArrayList<>();
+		if (req.getParameter("year") != null && req.getParameter("month") != null
+				&& Integer.valueOf(req.getParameter("year")) != 0 && Integer.valueOf(req.getParameter("month")) != 0) {
+			Integer year = Integer.valueOf(req.getParameter("year"));
+			Integer month = Integer.valueOf(req.getParameter("month"));
+			Date date = Date.valueOf(year + "-" + month + "-01");
+			contests = contestService.QueryContest2(year, month, page);
+			countPage = contestDAO.countPageBetweenDate(year, month);
+		} else {
+			contests = contestDAO.page(page);
+			countPage = contestDAO.countPage();
+		}
+		model.addAttribute("current", countPage);
+		model.addAttribute("countPage", countPage);
+		model.addAttribute("contests", contests);
+		return "/contest/contestforadmin";
 	}
 	// show 1contest
 	@RequestMapping(value = "/contest/{contestID}", method = RequestMethod.GET)
@@ -135,7 +167,39 @@ public class EventController {
 		model.addAttribute("clothes", clothes);
 		model.addAttribute("runners", runners);
 		model.addAttribute("mycontest", mycontest);
-		return "detail";
+		return "/contest/detail";
+	}
+	//管理者賽事詳細編輯外
+	@RequestMapping(value = "/admin/contest/{contestID}", method = RequestMethod.GET)
+	public String AdminShowContest(@PathVariable int contestID, Model model) {
+		List<ContestVO> contests = contestDAO.findByPrimaryKey2(contestID);
+		ContestVO contest = contests.get(0);
+		model.addAttribute("contest", contest);
+		return "/admin/detail-admin";
+	}
+	//管理者賽事詳細編輯內
+	@RequestMapping(value = "/admin/contest/{contestID}/data", method = RequestMethod.GET)
+	public String AdminShowContest2(@PathVariable int contestID, Model model) {
+		List<TeamVO> teams = teamDAO.getTeamById(contestID);
+		List<EventVO> events = eventDAO.getEventById(contestID);
+		List<ContestVO> contests = contestDAO.findByPrimaryKey2(contestID);
+		ContestVO contest = contests.get(0);
+		// ContestVO contest=contestDAO.findByPrimaryKey(contestID);
+		List<ClothesVO> clothes = clothesDAO.getAll();
+		List<RunnerVO> runners = runnerDAO.getList(contestID);
+		// 修正時間
+		SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy年MM月dd日 (E)");
+		String start = sdf2.format(contest.getStartDate());
+		long timer = contest.getStartDate().getTime();
+		model.addAttribute("adminsVO", "adminss");
+		model.addAttribute("timer", timer);
+		model.addAttribute("start", start);
+		model.addAttribute("events", events);
+		model.addAttribute("teams", teams);
+		model.addAttribute("contest", contest);
+		model.addAttribute("clothes", clothes);
+		model.addAttribute("runners", runners);
+		return "/contest/detailforadmin";
 	}
 
 	// show contest form
@@ -151,7 +215,7 @@ public class EventController {
 			System.out.println("新增賽事");
 		}
 		model.addAttribute("contest", contest);
-		return "contestform";
+		return "/contest/newcontest";
 	}
 
 	// 錯誤訊息
@@ -169,12 +233,12 @@ public class EventController {
 	public String SaveUser(@ModelAttribute("contest") @Validated ContestVO contest, BindingResult result, Model model,
 			final RedirectAttributes redirectAttributes, @RequestParam @Validated CommonsMultipartFile[] fileUpload) {
 		if (result.hasErrors()) {
-			return "contestform";
+			return "/contest/newcontest";
 		} else {
 			// 新增表單
 			contestService.createContest(contest);
 			contestService.photo(fileUpload, contest);
-			return "redirect:/contest/" + contest.getContestID();
+			return "redirect:/admin/contest/" + contest.getContestID();
 		}
 	}
 
@@ -183,7 +247,7 @@ public class EventController {
 	public String deleteUser(@PathVariable("id") int id, final RedirectAttributes redirectAttributes,
 			HttpServletRequest request) {
 		contestDAO.delete(id);
-		return "redirect:/contest";
+		return "redirect:"+request.getHeader("Referer");
 	}
 
 	@InitBinder("eventVO")
@@ -200,11 +264,8 @@ public class EventController {
 		System.out.println("ajxa------------------------------------");
 		return eventVO;
 	}
-
 	// delete event
 	@RequestMapping(value = "/event/delete", method = RequestMethod.POST, produces = "text/html; charset=UTF-8") // produces
-																													// =
-																													// "text/html;
 																													// charset=UTF-8"
 	public @ResponseBody String deleteEvent(HttpServletResponse response, @RequestParam Integer id) {
 		eventDAO.delete(id);
@@ -212,7 +273,6 @@ public class EventController {
 		// response.setCharacterEncoding("UTF-8");
 		return "刪除成功";
 	}
-
 	// add team
 	@RequestMapping(value = "{id}/team/add", method = RequestMethod.POST, consumes = "application/json", produces = "application/json; charset=UTF-8")
 	public @ResponseBody TeamVO addTeam(@PathVariable("id") Integer id, @RequestBody TeamVO teamVO,
@@ -223,7 +283,6 @@ public class EventController {
 		System.out.println("ajxa------------------------------------");
 		return teamVO;
 	}
-
 	// delete team
 	@RequestMapping(value = "/team/delete", method = RequestMethod.POST, produces = "text/html; charset=UTF-8") // produces
 																												// =
@@ -274,7 +333,7 @@ public class EventController {
 	             request.getServerPort() +       // "8080"
 	             request.getContextPath()+
 	             "/contest/"+id;      // "/people"
-		int age = 26;// 從member取出年齡
+		int age = runnerService.countAge(member.getBirthday());
 		// age =member.getAge();
 		List<TeamVO> list = teamDAO.getTeamById(id);
 		TeamVO yourTeam = list.get(list.size() - 1);// 預設最年輕組
@@ -304,7 +363,7 @@ public class EventController {
 	}
 
 	// show update runner form
-	@RequestMapping(value = "/runner/{contestID}", method = RequestMethod.GET)
+	@RequestMapping(value = "/admin/runner/{contestID}", method = RequestMethod.GET)
 	public String showScore(@PathVariable Integer contestID,Model model) {
 
 		List<RunnerVO> list = runnerDAO.getList(contestID);
@@ -317,7 +376,7 @@ public class EventController {
 		model.addAttribute("events", events);
 		model.addAttribute("runnerForm", runnerForm);
 
-		return "runnerform";
+		return "/contest/runnerform";
 	}
 
 	// updateAll

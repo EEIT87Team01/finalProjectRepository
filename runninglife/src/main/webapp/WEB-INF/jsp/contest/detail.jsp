@@ -306,7 +306,7 @@ h2.no-span {
 								</tr>
 							</thead>
 							<tbody id="eventBody">
-								<c:forEach var="event" items="${contest.events}">
+								<c:forEach var="event" items="${events}">
 									<tr>
 										<td
 											class="eventID ${not empty adminsVO ? '':'hidden' }">${event.eventID}</td>
@@ -316,7 +316,7 @@ h2.no-span {
 										<td>${event.fee}</td>
 										<td>${event.quota}</td>
 										<td>${event.whenToRun}</td>
-										<td>${event.limitTime }</td> ${not empty adminsVO ? '<td><a id="/runninglife/event/${event.eventID}/delete"    
+										<td>${event.limitTime }</td> ${not empty adminsVO ? '<td><a id="${pageContext.request.contextPath}/event/${event.eventID}/delete"    
 											class="btn btn-danger btn-xs  eventDelete" role="button"
 											data-text="真的要刪除此項目嗎?" data-confirm-button="是的"
 											data-cancel-button="不了"data-confirm-button-class: "btn-danger ">刪除</a></td>
@@ -373,7 +373,7 @@ h2.no-span {
 								</tr>
 							</thead>
 							<tbody id="teamBody">
-								<c:forEach var='team' items='${contest.teams}'>
+								<c:forEach var='team' items='${teams}'>
 									<tr>
 										<td
 											class="teamID ${not empty adminsVO ? '':'hidden' }">${team.teamID}</td>

@@ -18,17 +18,6 @@
 			<div class="text-center">
 				<h2>編輯賽事</h2>
 			</div>
-			${action}
-
-<%-- 			<c:choose> --%>
-<%-- 				<c:when test="${action == 1 }"> --%>
-<!--       						 Salary is very low to survive. -->
-<%--   				</c:when> --%>
-<%-- 				<c:otherwise> --%>
-<!--       					  No comment sir... -->
-<%--    			 	</c:otherwise> --%>
-<%-- 			</c:choose> --%>
-
 
 			<spring:url value="/contest/${contest.contestID}" var="updateContest" />
 			<spring:url value="/contest/edit" var="addContest" />

@@ -46,4 +46,9 @@ public class RunnerService {
 		}
 		runnerDAO.updateAll(runnerForm);
 	}
+	public int countAge(String birth){
+		Long duration=System.currentTimeMillis()-Date.valueOf(birth).getTime();
+		int age=(int) (duration/1000/60/60/24/365);
+		return age;
+	}
 }
