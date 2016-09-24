@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="_05model.contest.ContestVO" table="contest">
+
+		<id name="contestID" column="contestID">
+			<generator class="identity"/>
+		</id>
+
+		<property name="contestName" column="contestName" />
+		<property name="place" column="place" />
+		<property name="startDate" column="startDate" />
+		<property name="registrationBegin" column="registrationBegin" />
+		<property name="registrationEnd" column="registrationEnd" />
+		<property name="goal" column="goal" />
+		<property name="organizer" column="organizer" />
+		<property name="coorganizer" column="coorganizer" />
+		<property name="contestPhotoPath" column="contestPhotoPath" />
+
+		<set name="events" table="event" lazy="false" cascade="save-update"  inverse="true"  order-by="eventID asc">			
+			<key foreign-key="contestID">
+				<column name="contestID" />
+			</key>
+			<one-to-many class="_05model.event.EventVO" />
+		</set>
+
+	</class>
+</hibernate-mapping>
+

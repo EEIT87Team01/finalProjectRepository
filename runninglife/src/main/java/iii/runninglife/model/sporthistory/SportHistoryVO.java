@@ -4,16 +4,15 @@ import java.sql.Timestamp;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
-import iii.runninglife.model.members.MembersVO;
 import iii.runninglife.model.sporthistorypath.SportHistoryPathVO;
 
 @Entity
@@ -22,10 +21,7 @@ public class SportHistoryVO implements java.io.Serializable {
 
 	@Id
 	private String recordID;
-	
-	@ManyToOne
-	@JoinColumn(name = "memberID", referencedColumnName = "memberID")
-	private MembersVO memberID;
+	private String memberID;
 	private Timestamp startDateTime;
 	private Timestamp endDateTime;
 	private String duration;
@@ -49,11 +45,11 @@ public class SportHistoryVO implements java.io.Serializable {
 		this.recordID = recordID;
 	}
 
-	public MembersVO getMemberID() {
+	public String getMemberID() {
 		return memberID;
 	}
 
-	public void setMemberID(MembersVO memberID) {
+	public void setMemberID(String memberID) {
 		this.memberID = memberID;
 	}
 

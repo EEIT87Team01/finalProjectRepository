@@ -15,9 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import iii.runninglife.globalservice.CalulateTwoLatLng;
 import iii.runninglife.globalservice.ConvertMilliseconds2Hours;
 import iii.runninglife.globalservice.StoredProcedure;
-import iii.runninglife.model.members.MembersInterface;
 import iii.runninglife.model.sporthistorypath.SportHistoryPathVO;
-
 
 @Service
 @Transactional
@@ -25,8 +23,6 @@ public class SportHistoryService {
 	
 	@Autowired
 	private SportHistoryDAO_interface dao;
-	@Autowired
-	private MembersInterface mdao;
 	
 	@Autowired
 	StoredProcedure storedProcedure;
@@ -37,7 +33,7 @@ public class SportHistoryService {
 			
 			SportHistoryVO sportHistoryVO = new SportHistoryVO();
 			sportHistoryVO.setRecordID(storedProcedure.getRecordID());
-			sportHistoryVO.setMemberID(mdao.selectOne(memberID));
+			sportHistoryVO.setMemberID(memberID);
 			sportHistoryVO.setStartDateTime(new Timestamp(System.currentTimeMillis()));
 			sportHistoryVO.setEndDateTime(null);
 			sportHistoryVO.setDuration(null);
