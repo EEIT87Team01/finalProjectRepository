@@ -17,7 +17,7 @@
 </style>
 </head>
 <body>
-	<form action="/runninglife/Login/ChangePassword.do" method="post">
+	<form action="ChangePassword.do" method="post">
 		<table>
 			<thead>
 				<tr>

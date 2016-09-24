@@ -12,7 +12,7 @@ table, th, td {
 </style>
 </head>
 <body>
-<form action="/testlife/Login/Logout.do" method="get">
+<form action="Logout.do" method="get">
 <table border='1'>
 <tr>
   <td>

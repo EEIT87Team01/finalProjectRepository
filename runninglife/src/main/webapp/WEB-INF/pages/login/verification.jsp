@@ -12,7 +12,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<form action="/runninglife/Login/CheckVerification.do" method="post">
+	<form action="CheckVerification.do" method="post">
 		<table>
 			<thead>
 				<tr>

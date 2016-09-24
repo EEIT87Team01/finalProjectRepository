@@ -15,7 +15,7 @@
 
 </head>
 <body>
-<form:form modelAttribute="memberForm" action="/testlife/Login/UpdateAccount.do" method="post" acceptCharset="UTF-8">
+<form:form modelAttribute="memberForm" action="UpdateAccount.do" method="post" acceptCharset="UTF-8">
 <table>
 		<thead>
 			<tr>

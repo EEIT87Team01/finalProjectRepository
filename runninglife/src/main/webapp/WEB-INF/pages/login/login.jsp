@@ -24,7 +24,7 @@
 <body>
 <!-- 	get || post -->
 <!-- /Login/DBCheck -->
-	<form action="/testlife/Login/DBCheck.do"method="post">
+	<form action="DBCheck.do"method="post">
 	<table>
 		<thead>
 			<tr>
