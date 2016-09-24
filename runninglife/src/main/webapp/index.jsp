@@ -86,6 +86,12 @@
 <script type="text/javascript">
 $(function(){
 	console.log('${membersVO.memberID}');
+	$('#myModal').keypress(function(event){
+	    if (event.keyCode === 10 || event.keyCode === 13){
+	        event.preventDefault();
+		    $("#loginBtn").click();
+		    }
+	});
 	$('#myModal').on('shown.bs.modal', function () {
 		  $('#account').focus()
 	})
