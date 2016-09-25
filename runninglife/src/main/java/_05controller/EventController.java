@@ -56,7 +56,7 @@ import _05validator.FileValidator;
 import iii.runninglife.model.members.MembersVO;
 
 @Controller
-//@SessionAttributes("member")
+@SessionAttributes("member")
 public class EventController {
 
 	@Autowired
@@ -109,21 +109,6 @@ public class EventController {
 		model.addAttribute("contests", contests);
 		return "contest";
 	}
-
-	// show some contests
-	// @RequestMapping(value = "/contest/search", method = RequestMethod.GET)
-	// public String showQueryContests(Model model, HttpServletRequest req) {
-	//
-	// System.out.println(req.getParameter("month"));
-	// System.out.println(req.getParameter("year"));
-	// List<ContestVO> contests = contestDAO.getAll();
-	// Date begin = Date.valueOf("2016-08-01");
-	// Date end = Date.valueOf("2016-12-02");
-	// List<ContestVO> queryContests = contestService.QueryContest(begin, end);
-	// model.addAttribute("contests", queryContests);
-	// return "contest";
-	// }
-
 	// show 1contest
 	@RequestMapping(value = "/contest/{contestID}", method = RequestMethod.GET)
 	public String showContest(@PathVariable int contestID, Model model) {
@@ -179,9 +164,6 @@ public class EventController {
 	protected void initBinderFile(WebDataBinder binder) {
 		binder.setValidator(fileValidator);
 	}
-
-	private String path = "c:/run/";
-
 	/// add.update contest
 	@RequestMapping(value = "/contest/edit", method = RequestMethod.POST)
 	public String SaveUser(@ModelAttribute("contest") @Validated ContestVO contest, BindingResult result, Model model,
@@ -192,10 +174,6 @@ public class EventController {
 			// 新增表單
 			contestService.createContest(contest);
 			contestService.photo(fileUpload, contest);
-
-			// Add message to flash scope
-			redirectAttributes.addFlashAttribute("css", "success");
-			// POST/REDIRECT/GET
 			return "redirect:/contest/" + contest.getContestID();
 		}
 	}
@@ -204,12 +182,7 @@ public class EventController {
 	@RequestMapping(value = "contest/{id}/delete", method = RequestMethod.POST)
 	public String deleteUser(@PathVariable("id") int id, final RedirectAttributes redirectAttributes,
 			HttpServletRequest request) {
-		MemberVO memeber = (MemberVO) request.getSession().getAttribute("member");
-		// if(memeber!=null){
 		contestDAO.delete(id);
-		redirectAttributes.addFlashAttribute("msg", "User is deleted!");
-		// }
-
 		return "redirect:/contest";
 	}
 
@@ -221,7 +194,6 @@ public class EventController {
 	// add event
 	@RequestMapping(value = "/{id}/event/add", method = RequestMethod.POST, consumes = "application/json", produces = "application/json; charset=UTF-8")
 	public @ResponseBody EventVO addEvent(@PathVariable("id") Integer id, @RequestBody @Validated EventVO eventVO) {
-
 		ContestVO contest = (ContestVO) contestDAO.findByPrimaryKey2(id).get(0);
 		eventVO.setContest(contest);
 		eventDAO.insert(eventVO);
@@ -293,11 +265,16 @@ public class EventController {
 
 	// apply
 	@RequestMapping(value = "/apply", method = RequestMethod.POST)
-	public String ContestApply(@ModelAttribute RunnerVO runner, @SessionAttribute MemberVO member, Model model,
-			HttpServletRequest req,HttpServletResponse resp) {
+	public String ContestApply(@ModelAttribute RunnerVO runner, @SessionAttribute MembersVO member, Model model,
+			HttpServletRequest request,HttpServletResponse resp) {
 		Integer id = runner.getPk().getContestID();
-
-		int age = 20;// 從member取出年齡
+		String URL = request.getScheme() + "://" +   // "http" + "://
+	             request.getServerName() +       // "myhost"
+	             ":" +                           // ":"
+	             request.getServerPort() +       // "8080"
+	             request.getContextPath()+
+	             "/contest/"+id;      // "/people"
+		int age = 26;// 從member取出年齡
 		// age =member.getAge();
 		List<TeamVO> list = teamDAO.getTeamById(id);
 		TeamVO yourTeam = list.get(list.size() - 1);// 預設最年輕組
@@ -314,8 +291,10 @@ public class EventController {
 		runner.setStatus("未繳費");
 		try {
 			String status = runnerDAO.insert(runner);
+			runner =runnerDAO.findByPrimaryKey(runner.getPk());
 			ContestVO contest = contestDAO.findByPrimaryKey(runner.getPk().getContestID());
-			mailService.sendApplyEmail(member, contest);
+			
+			mailService.sendApplyEmail(member,contest,runner,URL);
 			System.out.println(status);
 		} catch (Exception ex) {
 			System.out.println("-----------------------------------------------");
@@ -345,14 +324,12 @@ public class EventController {
 	@RequestMapping(value = "/runner/update", method = RequestMethod.POST)
 	public String updateRunner(@ModelAttribute RunnerForm runnerForm,@RequestParam(name="test_length") Integer pageSize, HttpServletRequest req) {
 		runnerService.updateAllRunner(runnerForm, pageSize);
-		System.out.println(req.getHeader("Referer"));
-		
 		return "redirect:"+req.getHeader("Referer");
 	}
 
 	@RequestMapping("email")
 	public String emailtest(Model model, @ModelAttribute("member") MembersVO member) {
-		mailService.sendEmail(member);
+//		mailService.sendEmail(member);
 		return "/../../index";
 	}
 

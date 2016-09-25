@@ -488,7 +488,7 @@ span[class=ios-color-hack3] a {
 
 
 
-					<!-- 註冊資訊 -->
+					<!-- 密碼資訊 -->
 					<!-- MODULE ROW // -->
 					<tr>
 						<td align="center" valign="top">
@@ -521,14 +521,10 @@ span[class=ios-color-hack3] a {
 																				style="color: #5F5F5F; line-height: 125%; font-family: Helvetica, Arial, sans-serif; font-size: 20px; font-weight: normal; margin-top: 0; margin-bottom: 3px; text-align: left;">個人聯絡資訊</h3>
 																			<div mc:edit="body"
 																				style="text-align: left; font-family: Helvetica, Arial, sans-serif; font-size: 15px; margin-bottom: 0; color: #5F5F5F; line-height: 135%;">
-																				請點擊下列網址完成會員認證
+																				以下是您的新密碼
 																				<ul>
-																					<li>姓名:${member.lastName}${member.firstName}</li>
 																					<li>會員帳號:${member.memberID}</li>
-																					<li>地址:${member.address}</li>
-																					<li>電話:${member.phone}</li>
-																					<li>生日:${member.birthday}</li>
-																					<li>身分證:${member.identityID}</li>
+																					<li>會員帳號:${password}</li>
 																				</ul>
 																			</div>
 																		</td>
@@ -547,59 +543,7 @@ span[class=ios-color-hack3] a {
 						</td>
 					</tr>
 					<!-- // MODULE ROW -->
-					
-					
-					<!--  完成認證網址-->
-					<!-- MODULE ROW // -->
-					<tr>
-						<td align="center" valign="top">
-							<!-- CENTERING TABLE // -->
-							<table border="0" cellpadding="0" cellspacing="0" width="100%">
-								<tr style="padding-top: 0;">
-									<td align="center" valign="top">
-										<!-- FLEXIBLE CONTAINER // -->
-										<table border="0" cellpadding="30" cellspacing="0" width="500"
-											class="flexibleContainer">
-											<tr>
-												<td style="padding-top: 0;" align="center" valign="top"
-													width="500" class="flexibleContainerCell">
-													<!-- CONTENT TABLE // -->
-													<table border="0" cellpadding="0" cellspacing="0"
-														width="50%" class="emailButton"
-														style="background-color: #3498DB;">
-														<tr>
-															<td align="center" valign="middle" class="buttonContent"
-																style="padding-top: 15px; padding-bottom: 15px; padding-right: 15px; padding-left: 15px;">
-																<a
-																style="color: #FFFFFF; text-decoration: none; font-family: Helvetica, Arial, sans-serif; font-size: 20px; line-height: 135%;"
-																href="${URL}" target="_blank">點擊認證</a>
-															</td>
-														</tr>
-													</table> <!-- // CONTENT TABLE -->
-
-												</td>
-											</tr>
-										</table> <!-- // FLEXIBLE CONTAINER -->
-									</td>
-								</tr>
-							</table> <!-- // CENTERING TABLE -->
-						</td>
-					</tr>
-					<!-- // MODULE ROW -->
-
-
-					
-
-
-
-
-
-		
 					<!-- // END -->
-
-
-
-
 
 					<!-- MODULE DIVIDER // -->
 

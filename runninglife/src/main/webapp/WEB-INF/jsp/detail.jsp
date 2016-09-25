@@ -292,14 +292,14 @@ h2.no-span {
 							<thead>
 								<tr class="info">
 									<th
-										class="col-xs-1 ${member.memberID == 'admin' ? '':'hidden' }">編號</th>
+										class="col-xs-1 ${not empty adminsVO ? '':'hidden' }">編號</th>
 									<!-- 隱藏 -->
 									<th class="col-xs-2">項目名稱</th>
 									<th class="col-xs-2">距離</th>
 									<th class="col-xs-2">報名費用</th>
 									<th class="col-xs-2">開放名額</th>
 									<th class="col-xs-2">起跑時間</th>
-									<th class="col-xs-2">限制時間(分)</th> ${member.memberID =='admin'?'<th colspan="2" class="col-xs-2"></th>':'' }
+									<th class="col-xs-2">限制時間(分)</th> ${not empty adminsVO ?'<th colspan="2" class="col-xs-2"></th>':'' }
 									<!-- 隱藏 -->
 
 									<!-- 								<th class="col-xs-2"></th> -->
@@ -309,14 +309,14 @@ h2.no-span {
 								<c:forEach var="event" items="${contest.events}">
 									<tr>
 										<td
-											class="eventID ${member.memberID == 'admin' ? '':'hidden' }">${event.eventID}</td>
+											class="eventID ${not empty adminsVO ? '':'hidden' }">${event.eventID}</td>
 										<!-- 隱藏 -->
 										<td>${event.eventName}</td>
 										<td>${event.distance}</td>
 										<td>${event.fee}</td>
 										<td>${event.quota}</td>
 										<td>${event.whenToRun}</td>
-										<td>${event.limitTime }</td> ${member.memberID == 'admin' ? '<td><a id="/runninglife/event/${event.eventID}/delete"    
+										<td>${event.limitTime }</td> ${not empty adminsVO ? '<td><a id="/runninglife/event/${event.eventID}/delete"    
 											class="btn btn-danger btn-xs  eventDelete" role="button"
 											data-text="真的要刪除此項目嗎?" data-confirm-button="是的"
 											data-cancel-button="不了"data-confirm-button-class: "btn-danger ">刪除</a></td>
@@ -365,21 +365,21 @@ h2.no-span {
 							<thead>
 								<tr class="info">
 									<th
-										class="col-xs-1 ${member.memberID == 'admin' ? '':'hidden' }">組別編號</th>
+										class="col-xs-1 ${not empty adminsVO ? '':'hidden' }">組別編號</th>
 									<th class="col-xs-5 text-center">組別</th>
 									<th class="col-xs-5 text-center">年齡範圍</th>
 									<th colspan="2"
-										class="col-xs-1 ${member.memberID == 'admin' ? '':'hidden' }"></th>
+										class="col-xs-1 ${not empty adminsVO ? '':'hidden' }"></th>
 								</tr>
 							</thead>
 							<tbody id="teamBody">
 								<c:forEach var='team' items='${contest.teams}'>
 									<tr>
 										<td
-											class="teamID ${member.memberID == 'admin' ? '':'hidden' }">${team.teamID}</td>
+											class="teamID ${not empty adminsVO ? '':'hidden' }">${team.teamID}</td>
 										<td>${team.teamName}</td>
 										<td>${team.ageRange}~${team.ageRange + 9}</td>
-										${member.memberID == 'admin' ? '<td><a class="btn btn-danger btn-xs teamDelete" role="button"
+										${not empty adminsVO ? '<td><a class="btn btn-danger btn-xs teamDelete" role="button"
 											data-text="真的要刪除此項目嗎?" data-confirm-button="是的"
 											data-cancel-button="不了"data-confirm-button-class: "btn-danger">刪除</a></td>
 										<td><a class="btn btn-warning btn-xs edit" role="button">修改</a></td>':'' }
@@ -604,19 +604,19 @@ h2.no-span {
 										</select></label></label>
 								</div>
 							</div>
-							<div class="col-md-7 col-sm-12">
-								<div>2. 或請單獨輸入您的參賽資料查詢</div>
-								<div class="col-md-10">
-									<label for="show_text"> <input type="text"
-										class="form-control" id="show_name"
-										placeholder="請輸入「姓名」或「號碼布」或「團隊名稱」查詢">
-									</label>
-								</div>
-								<div class="col-md-2 pull-right">
-									<input type="button" class="btn btn-info btn-md"
-										id="querySubmit" value="送出">
-								</div>
-							</div>
+<!-- 							<div class="col-md-7 col-sm-12"> -->
+<!-- 								<div>2. 或請單獨輸入您的參賽資料查詢</div> -->
+<!-- 								<div class="col-md-10"> -->
+<!-- 									<label for="show_text"> <input type="text" -->
+<!-- 										class="form-control" id="show_name" -->
+<!-- 										placeholder="請輸入「姓名」或「號碼布」或「團隊名稱」查詢"> -->
+<!-- 									</label> -->
+<!-- 								</div> -->
+<!-- 								<div class="col-md-2 pull-right"> -->
+<!-- 									<input type="button" class="btn btn-info btn-md" -->
+<!-- 										id="querySubmit" value="送出"> -->
+<!-- 								</div> -->
+<!-- 							</div> -->
 						</div>
 					</div>
 					<!-- 成績結果 -->
@@ -695,7 +695,7 @@ h2.no-span {
 						<p class="size-18">
 							賽事問題請洽<br>${contest.organizer}
 						</p>
-						<p class="size-18">報名問題請洽樂活資訊</p>
+						<p class="size-18">報名問題請洽RunningLife</p>
 						<p class="size-14">
 							<i class="fa fa-phone margin-right-10"></i>05-5336010 <br>聯絡時間：週一至週五
 							<br>(08:30~12:00、13:30~17:00)
@@ -734,7 +734,7 @@ h2.no-span {
 						class="form-control" name="pk.contestID"
 						value="${contest.contestID}">
 				</div>
-
+				
 				<div>
 					<label for="disabledTextInput">項目</label> <select
 						class="form-control" name="eventID">
