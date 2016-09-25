@@ -18,17 +18,20 @@ public class ChallDataVO implements Serializable{
 	private double processLength;
 	private String duration;
 	private String status;
+	private String isFounder;
 	
 
     public ChallDataVO(){
 		
 	}
 	
-	public ChallDataVO(ChallDataPK challDataPK,Timestamp finishTime,double processLength,String duration){
+	public ChallDataVO(ChallDataPK challDataPK,Timestamp finishTime,double processLength,String duration,String status,String isFounder){
 		this.challDataPK=challDataPK;
 		this.finishTime=finishTime;
 		this.processLength=processLength;
 		this.duration=duration;
+		this.status=status;
+		this.isFounder=isFounder;
 	}
 	
 	
@@ -67,6 +70,14 @@ public class ChallDataVO implements Serializable{
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public String getIsFounder() {
+		return isFounder;
+	}
+
+	public void setIsFounder(String isFounder) {
+		this.isFounder = isFounder;
 	}
 	
 		

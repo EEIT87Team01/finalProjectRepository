@@ -15,7 +15,7 @@ import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 
 import freemarker.template.Configuration;
 import iii.runninglife.model.contest.ContestVO;
-import iii.runninglife.model.member.MemberVO;
+import iii.runninglife.model.members.MembersVO;
 
 @Service
 public class MailService {
@@ -24,7 +24,7 @@ public class MailService {
 	@Autowired
 	Configuration freemarkerConfiguration;
 
-	public void sendEmail(MemberVO member) {
+	public void sendEmail(MembersVO member) {
 
 		Map<String,Object> model = new HashMap<String,Object>();
 		model.put("member", member);
@@ -39,7 +39,7 @@ public class MailService {
 	}
 	
 	
-	public void sendApplyEmail(MemberVO member,ContestVO contest ) {
+	public void sendApplyEmail(MembersVO member,ContestVO contest ) {
 		
 		
 		Map<String,Object> model = new HashMap<String,Object>();
@@ -64,7 +64,7 @@ public class MailService {
 				
 				helper.setSubject("RunningLife送信測試");
 				helper.setFrom("mizunarei520@gmail.com");
-				helper.setTo(((MemberVO) model.get("member")).getEmail());
+				helper.setTo(((MembersVO) model.get("member")).getEmail());
 
 ///			Map<String, Object> model = new HashMap<String, Object>();
 //				model.put("member", member);

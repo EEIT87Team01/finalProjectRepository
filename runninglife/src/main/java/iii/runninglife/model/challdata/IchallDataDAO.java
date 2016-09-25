@@ -11,6 +11,7 @@ import iii.runninglife.model.members.MembersVO;
 @Transactional
 public interface IchallDataDAO {
 	public void insert(ChallDataVO challDataVO);
+	public void insertByFounder(ChallDataVO challDataVO);
 	public void update(ChallDataVO challDataVO);
 	public void delete(ChallDataPK two_ID);
 	public ChallDataVO findByPrimaryKey(ChallDataPK two_ID);
@@ -20,4 +21,6 @@ public interface IchallDataDAO {
 	public List<ChallDataVO> findByMemberAndTime(String memberID, Date startTime, Date endTime);
 	public List<ChallDataVO> findByMemberProcessing(MembersVO memberID);
 	public List<ChallDataVO> findByMemberFinish(MembersVO memberID);
+	public List<ChallDataVO> findByMemberReserved(MembersVO memberID);
+	public List<ChallDataVO> findByMemberReceivedRequest(MembersVO memberID);
 } // end of class IEmpDAO

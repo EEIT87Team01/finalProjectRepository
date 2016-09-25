@@ -69,7 +69,7 @@ $(function(){
 	$('#select1').empty();
 	//country
 	$.ajax({
-		url: '/testlife/Login/Country.do',	type: 'get', dataType: 'json', success:function(response){
+		url: 'Country.do',	type: 'get', dataType: 'json', success:function(response){
 			$('#select1').empty();
 			for (var i in response)
 			{
@@ -81,7 +81,7 @@ $(function(){
 			
 			$('#select2').empty();
 			$.ajax({
-				url: '/testlife/Login/City.do', type: 'post', dataType: 'json', data: {"countryID" : $('#select1').val()},
+				url: 'City.do', type: 'post', dataType: 'json', data: {"countryID" : $('#select1').val()},
 				success:function(response){
 					for (var i in response)
 					{
@@ -92,7 +92,7 @@ $(function(){
 					}
 					$('#select3').empty();
 					$.ajax({
-						url: '/testlife/Login/Location.do', type: 'post', dataType: 'json', data: {"cityID" : $('#select2').val()},
+						url: 'Location.do', type: 'post', dataType: 'json', data: {"cityID" : $('#select2').val()},
 						success:function(response){
 							for (var i in response)
 							{
@@ -111,7 +111,7 @@ $(function(){
 	$('#select1').change(function(){
 		$('#select2').empty();
 		$.ajax({
-			url: '/testlife/Login/City.do', type: 'post', dataType: 'json', data: {"countryID" : $('#select1').val()},
+			url: 'City.do', type: 'post', dataType: 'json', data: {"countryID" : $('#select1').val()},
 			success:function(response){
 				for (var i in response)
 				{
@@ -126,7 +126,7 @@ $(function(){
 	$('#select2').change(function(){
 		$('#select3').empty();
 		$.ajax({
-			url: '/testlife/Login/Location.do', type: 'post', dataType: 'json', data: {"cityID" : $('#select2').val()},
+			url: 'Location.do', type: 'post', dataType: 'json', data: {"cityID" : $('#select2').val()},
 			success:function(response){
 				for (var i in response)
 				{

@@ -2,9 +2,13 @@ package iii.runninglife.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -36,6 +40,19 @@ public class FriendController {
 	
 	@Autowired
 	FriendRelationshipService_interface friendRelationshipService;
+
+	@ModelAttribute("membersVO")
+	public MembersVO getMemberToModel(HttpServletRequest req){
+		System.out.println(((MembersVO) req.getSession().getAttribute("membersVO")).getMemberID() + "Model Attr");
+		return (MembersVO) req.getSession().getAttribute("membersVO");
+	}
+	
+	@RequestMapping("/page")
+	public String challengePage(@ModelAttribute MembersVO membersVO){ 
+		System.out.println(membersVO.getMemberID());
+		return "friend/Friend";
+	}
+	
 	
 	//用 memberID 顯示所有收到的邀請 by JSON
 	@RequestMapping(value = {"/listrequestjson"}, produces = "application/json")
@@ -45,19 +62,19 @@ public class FriendController {
 	
 	@RequestMapping(value = {"/sendRequest"})
 	public String toSendRequest(){
-		return "SendRequest";
+		return "friend/SendRequest";
 	}
 	
 	//用 memberID 顯示所有的朋友
 	@RequestMapping(value = {"/listFriend"})
 	public ModelAndView listFriend(@ModelAttribute("membersVO")MembersVO member){
-		return new ModelAndView("/FriendList", "friends", friendRelationshipService.findByMemberID(member));
+		return new ModelAndView("friend/FriendList", "friends", friendRelationshipService.findByMemberID(member));
 	}
 	
 	//用 memberID 顯示所有收到的邀請
 	@RequestMapping(value = {"/listFriendRequest"})
 	public ModelAndView listFriendRequest(@ModelAttribute("membersVO")MembersVO member){
-		return new ModelAndView("/FriendRequest", "receivedRequest", friendRequestService.findByReceiverID(member));
+		return new ModelAndView("friend/FriendRequest", "receivedRequest", friendRequestService.findByReceiverID(member));
 	}
 	
 	//接受邀請
@@ -87,12 +104,13 @@ public class FriendController {
 	
 	//尋找會員(加入朋友)
 	@RequestMapping(value = {"/searchmembersforrequestfriend"}, produces = "application/json", method = RequestMethod.POST)
-	public @ResponseBody List<MembersVO> searchMembers(@RequestParam String name, @ModelAttribute("membersVO") MembersVO member){
+	public @ResponseBody List<MembersVO> searchMembers(@RequestParam String memberID, @RequestParam String name){
+		MembersVO membersVO = memberService.selectOne(memberID);
 		List<MembersVO> mvos = memberService.findByFirstNameOrLastName(name);
-		List<MembersVO> compare = friendRelationshipService.findByMemberIDALLFriendID(member);
-		compare.addAll(friendRequestService.findByReceiverIDALLRequester(member));
-		compare.addAll(friendRequestService.findByRequesterIDALLReceiver(member));
-		compare.add(member);
+		List<MembersVO> compare = friendRelationshipService.findByMemberIDALLFriendID(membersVO);
+		compare.addAll(friendRequestService.findByReceiverIDALLRequester(membersVO));
+		compare.addAll(friendRequestService.findByRequesterIDALLReceiver(membersVO));
+		compare.add(membersVO);
 		mvos.removeAll(compare);
 		return mvos;
 	}

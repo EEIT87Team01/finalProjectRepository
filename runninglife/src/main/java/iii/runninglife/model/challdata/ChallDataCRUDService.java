@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import iii.runninglife.model.challs.IchallDAO;
 import iii.runninglife.model.members.MembersInterface;
+import iii.runninglife.model.members.MembersVO;
 
 @Service
 @Transactional
@@ -21,16 +22,50 @@ public class ChallDataCRUDService {
 	@Autowired
 	MembersInterface memberDAO;
 
-	public void insertService(ChallDataPK two_ID,Timestamp finishTime,double processLength,String duration){
-			ChallDataVO addchallData=new ChallDataVO(two_ID, finishTime, processLength, duration);
+	public void insertService(ChallDataPK two_ID,Timestamp finishTime,double processLength,String duration,String status,String isFounder){
+			ChallDataVO addchallData=new ChallDataVO(two_ID, finishTime, processLength, duration, status, isFounder);
 			dao.insert(addchallData);
 	}
-	public void updateService(ChallDataPK two_ID,Timestamp finishTime,double processLength,String duration){
-		ChallDataVO challdata=searchOneService(two_ID);
-		double updateProcessLength=processLength+challdata.getProcessLength();
-		String updateDuration =addDuration(challdata.getDuration(),duration);
-			ChallDataVO updatechallData=new ChallDataVO(two_ID, finishTime, updateProcessLength, updateDuration);
-			dao.update(updatechallData);
+	public void updateService(ChallDataPK two_ID,Timestamp finishTime,double processLength,String duration,String isFounder){
+		
+//		IchallDataDAO dao=new ChallDataDAO(); 
+//		List<ChallDataVO> challdata=dao.findByMemberInTime(memberID); 
+//		IchallDAO challdao=new ChallsDAO(); 
+//		List<ChallDataVO> updateChallData = null ; 
+//		for(int i=0;i<=challdata.size();i++){ 
+//		if(challdao.findByChallenIDAndDate(challdata.get(i).getChallenID().getChallenID())==1){ 
+//		updateChallData.add(challdata.get(i)); 
+//		} 
+//		} 
+//		for(int i=0;i<=updateChallData.size();i++){ 
+//		String ChallDataStatus="1"; 
+//		double updateProcessLength=processLength+updateChallData.get(i).getProcessLength(); 
+//		if(updateChallData.get(i).getChallenID().getChallenDistance()<=updateProcessLength){ 
+//		ChallDataStatus="2"; 
+//		} 
+//		String updateDuration =addDuration(updateChallData.get(i).getDuration(),duration); 
+//		ChallData_PK challData_PK=new ChallData_PK(updateChallData.get(i).getChallenID().getChallenID(),memberID) ; 
+//		ChallDataVO updatechallData=new ChallDataVO(challData_PK, finishTime, updateProcessLength, updateDuration,ChallDataStatus); 
+//		dao.update(updatechallData); 
+//		}
+		List<ChallDataVO> challdataProcessing = dao.findByMemberProcessing(two_ID.getMemberID());
+		List<ChallDataVO> updateChallDatas = null ;
+		for(ChallDataVO challDataVO : challdataProcessing){ 
+			if(challDataVO.getStatus().equals("1")){ 
+				updateChallDatas.add(challDataVO); 
+			} 
+		} 
+		for(ChallDataVO updateChallData : updateChallDatas){ 
+			String ChallDataStatus="1"; 
+			double updateProcessLength = processLength + updateChallData.getProcessLength(); 
+			String updateDuration = addDuration(updateChallData.getDuration(),duration);
+			if(updateChallData.getChallDataPK().getChallenID().getChallenDistance()<=updateProcessLength){ 
+				ChallDataStatus="2"; 
+			} 
+		}
+		
+		for(ChallDataVO updateChallData : updateChallDatas) dao.update(updateChallData);
+		
 	}
 	public void deleteService(ChallDataPK two_ID){
 			dao.delete(two_ID);
@@ -67,15 +102,21 @@ public class ChallDataCRUDService {
 		return challDataList;
 	}
 	
-	public List<ChallDataVO> memberProcessingChallService(String memberID){
+	public List<ChallDataVO> memberProcessingChallService(MembersVO membersVO){
 		List<ChallDataVO> challDataList = null;
-		challDataList=dao.findByMemberProcessing(memberDAO.selectOne(memberID));
+		challDataList=dao.findByMemberProcessing(membersVO);
 		return challDataList;
 	}
-	public List<ChallDataVO> memberFinishChallService(String memberID){
+	public List<ChallDataVO> memberFinishChallService(MembersVO membersVO){
 		List<ChallDataVO> challDataList = null;
-		challDataList=dao.findByMemberFinish(memberDAO.selectOne(memberID));
+		challDataList=dao.findByMemberFinish(membersVO);
 		return challDataList;
+	}
+	public List<ChallDataVO> memberReservedChallService(MembersVO membersVO){
+		return dao.findByMemberReserved(membersVO);
+	}
+	public List<ChallDataVO> findByMemberReceivedRequestService(MembersVO membersVO){
+		return dao.findByMemberReceivedRequest(membersVO);
 	}
 	
 	

@@ -198,7 +198,7 @@
 	
 	<script type="text/javascript">
 	$(function(){
-		var member = "${sessionScope.member.memberID}";
+		var member = "${sessionScope.membersVO.memberID}";
 		$('#name').keypress(function(event){
 		    if (event.keyCode === 10 || event.keyCode === 13){
 		        event.preventDefault();
@@ -206,9 +206,10 @@
 			    }
 		  });
 		$("#search").on("click", function(event) {
-			$.post("/runninglife/friend/searchmembersforrequestfriend.do",
+			$.post("searchmembersforrequestfriend.do",
 					{ "name" : $("#name").val(), "memberID" : member},
 					function(data){
+						console.log(data);
 				$("#searchResult").empty();
 				for (var x in data){
 					var tr = $("<tr></tr>"),

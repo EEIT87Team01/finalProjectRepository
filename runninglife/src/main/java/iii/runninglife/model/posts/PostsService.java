@@ -23,6 +23,8 @@ public class PostsService {
 	@Autowired
 	ReportListService reportListService;
 	@Autowired
+	MembersInterface membersDAO;
+	@Autowired
 	private PostsDAO_interface postsDAO;
 	@Autowired
 	private MembersInterface mdao;
@@ -39,7 +41,7 @@ public class PostsService {
 		System.out.println(postMemberID + "," + content + "," + imgPath);
 		String postID = glovbalService.findMaxSeq("postID", new PostsVO());
 		postsVO.setPostID(postID);
-		postsVO.setPostMemberID(postMemberID);
+		postsVO.setPostMemberID(membersDAO.selectOne(postMemberID));
 		postsVO.setTime(new Timestamp(System.currentTimeMillis()));
 		postsVO.setContent(content);
 		postsVO.setGood(0);
@@ -56,7 +58,7 @@ public class PostsService {
 		System.out.println(postMemberID + "," + postID);
 		postsVO = postsDAO.findByPrimaryKey(postID);
 		postsVO.setPostID(postID);
-		postsVO.setPostMemberID(postMemberID);
+		postsVO.setPostMemberID(membersDAO.selectOne(postMemberID));
 		postsVO.setTime(postsVO.getTime());
 		postsVO.setContent(postsVO.getContent());
 		postsVO.setGood(postsVO.getGood());
@@ -104,7 +106,7 @@ public class PostsService {
 		System.out.println(parentPostID + "," + postMemberID + "," + content);
 		String postID = glovbalService.findMaxSeq("postID", "posts");
 		postsVO.setPostID(postID);
-		postsVO.setPostMemberID(postMemberID);
+		postsVO.setPostMemberID(membersDAO.selectOne(postMemberID));
 		postsVO.setTime(new Timestamp(System.currentTimeMillis()));
 		postsVO.setContent(content);
 		postsVO.setGood(0);

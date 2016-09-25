@@ -23,9 +23,13 @@ public class ChallDataDAO implements IchallDataDAO {
 	private static final String GET_MEMBER_TIME_STMT = 
 		"from ChallDataVO where memberID = :member AND challenStartTime BETWEEN :startTime AND :endTime";
 	private static final String GET_MEMBER_PROCESSING_STMT = 
-		"from ChallDataVO where challDataPK.memberID = :member AND challDataPK.challenID.challenEndTime > :nowTime";
+		"from ChallDataVO where challDataPK.memberID = :member AND challDataPK.challenID.challenEndTime > :nowTime AND status = '1'";
 	private static final String GET_MEMBER_FINISH_STMT = 
-			"from ChallDataVO where challDataPK.memberID = :member AND challDataPK.challenID.challenEndTime < :nowTime";
+		"from ChallDataVO where challDataPK.memberID = :member AND challDataPK.challenID.challenEndTime < :nowTime AND status = '2'";
+	private static final String GET_MEMBER_RESERVED_STMT = 
+		"from ChallDataVO where challDataPK.memberID = :member AND challDataPK.challenID.challenStartTime > :nowTime AND status = '1'";
+	private static final String GET_MEMBER_RECEIVED_REQUEST_STMT = 
+		"from ChallDataVO where challDataPK.memberID = :member AND isFounder = '0' AND status = '0'";
 	
 	@Autowired
 	SessionFactory sessionFactory;
@@ -39,6 +43,12 @@ public class ChallDataDAO implements IchallDataDAO {
 
 	@Override
 	public void insert(ChallDataVO challDataVO) {
+		sessionFactory.getCurrentSession().saveOrUpdate(challDataVO);
+	}
+	
+	@Override
+	public void insertByFounder(ChallDataVO challDataVO) {
+		challDataVO.setStatus("3");
 		sessionFactory.getCurrentSession().saveOrUpdate(challDataVO);
 	}
 
@@ -91,9 +101,21 @@ public class ChallDataDAO implements IchallDataDAO {
 	
 	@SuppressWarnings("unchecked")
 	@Override
+	public List<ChallDataVO> findByMemberReserved(MembersVO memberID) {
+		return sessionFactory.getCurrentSession().createQuery(GET_MEMBER_RESERVED_STMT)
+				.setParameter("member", memberID).setParameter("nowTime", new java.sql.Timestamp(System.currentTimeMillis())).list();
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
 	public List<ChallDataVO> findByMemberAndTime(String memberID,java.sql.Date startTime,java.sql.Date endTime) {
 		return sessionFactory.getCurrentSession().createQuery(GET_MEMBER_TIME_STMT)
 				.setParameter("member", memberID).setParameter("startTime", startTime).setParameter("endTime", endTime).list();
+	}
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<ChallDataVO> findByMemberReceivedRequest(MembersVO memberID) {
+		return sessionFactory.getCurrentSession().createQuery(GET_MEMBER_RECEIVED_REQUEST_STMT).setParameter("member", memberID).list();
 	}
 
 }

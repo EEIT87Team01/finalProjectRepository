@@ -7,45 +7,51 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import iii.runninglife.model.challdata.IchallDataDAO;
 import iii.runninglife.model.members.MembersVO;
 
 @Service
 public class ChallsCRUDService {
 	
 	@Autowired
-	IchallDAO dao;
+	IchallDAO challengeDAO;
+	@Autowired
+	IchallDataDAO challengeDataDAO;
 
 	public int insertService(String challenName,String locationID,double challenDistance,java.sql.Date challenStartTime,java.sql.Date challenEndTime,String comment,String image,MembersVO founderID){
 		Date d=new Date(System.currentTimeMillis());
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 		String dateString = sdf.format(d);
-		String dayChalls=dao.countDateChallenge(dateString);
+		String dayChalls=challengeDAO.countDateChallenge(dateString);
 		ChallsVO addchall=new ChallsVO(dateString+dayChalls,challenName,locationID,challenDistance,challenStartTime,challenEndTime,comment,image,founderID);
-		System.out.println(addchall.getFounderID().getMemberID());
-		dao.insert(addchall);
+		challengeDAO.insert(addchall);
+		
 		return 0;
 	}
 	public void deleteService(String challenID){
-		dao.delete(challenID);
+		challengeDAO.delete(challenID);
 	}
 	public ChallsVO searchOneService(String challenID){
-		ChallsVO findChall=dao.findByPrimaryKey(challenID);
+		ChallsVO findChall=challengeDAO.findByPrimaryKey(challenID);
 		return findChall;
 	}
 	public List<ChallsVO> searchByDateService(){
-		List<ChallsVO> findChall=dao.findByDate();
+		List<ChallsVO> findChall=challengeDAO.findByDate();
 		return findChall;
 	}
 	public List<ChallsVO> searchByEndDateService(){
-		List<ChallsVO> findChall=dao.findByEndDate();
+		List<ChallsVO> findChall=challengeDAO.findByEndDate();
 		return findChall;
 	}
 	public List<ChallsVO> searchByStartDateService(){
-		List<ChallsVO> findChall=dao.findByStartDate();
+		List<ChallsVO> findChall=challengeDAO.findByStartDate();
 		return findChall;
 	}
 	public List<ChallsVO> searchAllService(){
-		List<ChallsVO> challList=dao.getAll();
+		List<ChallsVO> challList=challengeDAO.getAll();
 		return challList;
+	}
+	public List<ChallsVO> findByFounderID(MembersVO founderID){
+		return challengeDAO.findByFounderID(founderID);
 	}
 }

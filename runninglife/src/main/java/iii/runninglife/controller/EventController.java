@@ -44,7 +44,7 @@ import iii.runninglife.model.contest.ContestVO;
 import iii.runninglife.model.event.EventDAO;
 import iii.runninglife.model.event.EventDAOimpl;
 import iii.runninglife.model.event.EventVO;
-import iii.runninglife.model.member.MemberVO;
+import iii.runninglife.model.members.MembersVO;
 import iii.runninglife.model.runner.RunnerDAO;
 import iii.runninglife.model.runner.RunnerDAOimpl;
 import iii.runninglife.model.runner.RunnerForm;
@@ -201,7 +201,7 @@ public class EventController {
 	@RequestMapping(value = "contest/{id}/delete", method = RequestMethod.POST)
 	public String deleteUser(@PathVariable("id") int id, final RedirectAttributes redirectAttributes,
 			HttpServletRequest request) {
-		MemberVO memeber = (MemberVO) request.getSession().getAttribute("member");
+		MembersVO memeber = (MembersVO) request.getSession().getAttribute("member");
 		// if(memeber!=null){
 		contestDAO.delete(id);
 		redirectAttributes.addFlashAttribute("msg", "User is deleted!");
@@ -290,7 +290,7 @@ public class EventController {
 
 	// apply
 	@RequestMapping(value = "/apply", method = RequestMethod.POST)
-	public String ContestApply(@ModelAttribute RunnerVO runner, @SessionAttribute MemberVO member, Model model,
+	public String ContestApply(@ModelAttribute RunnerVO runner, @SessionAttribute MembersVO member, Model model,
 			HttpServletRequest req,HttpServletResponse resp) {
 		Integer id = runner.getPk().getContestID();
 
@@ -348,7 +348,7 @@ public class EventController {
 	}
 
 	@RequestMapping("email")
-	public String emailtest(Model model, @SessionAttribute("member") MemberVO member) {
+	public String emailtest(Model model, @SessionAttribute("member") MembersVO member) {
 		return "/../../index";
 	}
 
@@ -364,8 +364,8 @@ public class EventController {
 	}
 
 	@ModelAttribute("member")
-	public MemberVO login() {
-		MemberVO member = new MemberVO();
+	public MembersVO login() {
+		MembersVO member = new MembersVO();
 		member.setEmail("artashur@gmail.com");
 		member.setLastName("Arthur");
 		member.setMemberID("admin");

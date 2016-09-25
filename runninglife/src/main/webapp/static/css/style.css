@@ -864,10 +864,11 @@ h1, h2, h3, h4, h5, h6, figure {
 }
 
 #fh5co-footer {
-  padding-top: 7em;
   float: left;
   width: 100%;
   height: 10%;
+  bottom: 0;
+  position: relative;
   background: #262626;
 }
 @media screen and (max-width: 768px) {
@@ -1220,18 +1221,6 @@ h1, h2, h3, h4, h5, h6, figure {
 
 .js .animate-box {
   opacity: 0;
-}
-
-#bannermenu {
-	background-color: #577271;
-	height: 50px;
-	text-align: center;
-}
-
-#bannermenu ul {
-	line-height: 45px;
-	font-size: 18px;
-	text-align: center;
 }
 
 /*# sourceMappingURL=style.css.map */

@@ -5,7 +5,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.context.support.AbstractApplicationContext;
 
 import iii.runninglife.controller.email.config.AppConfig;
-import iii.runninglife.model.member.MemberVO;
+import iii.runninglife.model.members.MembersVO;
 
 public class Test {
 	
@@ -14,7 +14,7 @@ public class Test {
 	
 	public static void main(String args[]){
 	AbstractApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
-	MemberVO member = new MemberVO();
+	MembersVO member = new MembersVO();
 	member.setEmail("artashur@gmail.com");
 	member.setLastName("Max");
 	member.setMemberID("Maxcool#3433");

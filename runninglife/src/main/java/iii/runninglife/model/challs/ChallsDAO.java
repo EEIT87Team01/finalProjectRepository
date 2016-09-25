@@ -6,8 +6,11 @@ import java.util.List;
 
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import iii.runninglife.model.members.MembersVO;
 
 @Repository
 public class ChallsDAO implements IchallDAO {
@@ -22,6 +25,8 @@ public class ChallsDAO implements IchallDAO {
 		"from ChallsVO where :day > challenEndTime";
 	private static final String GET_ALL_STMT_BY_STARTDATE = 
 		"from ChallsVO where :day < challenStartTime";
+	private static final String GET_BY_FOUNDER_STMT = 
+		"from ChallsVO where founderID = :founderID";
 	
 	
 	@Autowired
@@ -75,6 +80,13 @@ public class ChallsDAO implements IchallDAO {
 	@Override
 	public List<ChallsVO> getAll() {
 		return sessionFactory.getCurrentSession().createQuery(GET_ALL_STMT).list();
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<ChallsVO> findByFounderID(MembersVO founderID){
+		return sessionFactory.getCurrentSession().createCriteria(ChallsVO.class).add(Restrictions.eq("founderID", founderID)).list();
+		
 	}
 	
 	@Override

@@ -124,9 +124,9 @@
 	<div class="col-md-12 label" id="bannermenu">
 	<ul class="list-inline">
 		<li>塗鴉牆</li>
-		<li><a href="/runninglife/friend/listFriend.do">朋友名單</a></li>
-		<li><a href="/runninglife/friend/listFriendRequest.do">接受邀請</a></li>
-		<li><a href="/runninglife/friend/sendRequest.do">邀請好友</a></li>
+		<li><a href="listFriend.do">朋友名單</a></li>
+		<li><a href="listFriendRequest.do">接受邀請</a></li>
+		<li><a href="sendRequest.do">邀請好友</a></li>
 	</ul>
 	</div>
 	

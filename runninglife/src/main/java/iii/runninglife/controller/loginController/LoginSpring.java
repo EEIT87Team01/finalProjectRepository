@@ -46,6 +46,8 @@ public class LoginSpring {
 		Map<String ,String> errorMessage = new HashMap<String ,String>();
 		Map<String ,Object> InfoMsg = new HashMap<String ,Object>();
 		
+		System.out.println("logincheck");
+		
 		/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
 		if (memberAccount == null || memberAccount.trim().length() == 0){ errorMessage.put("errorMessage","NoAccount"); }
 		if (password == null || password.trim().length() == 0){ errorMessage.put("errorMessage","NoPassword"); }

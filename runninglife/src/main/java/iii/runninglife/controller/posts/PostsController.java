@@ -51,11 +51,9 @@ public class PostsController {
 	
 	@RequestMapping(value = "/posts.do", method = RequestMethod.GET)
 	public ModelAndView posts(HttpServletRequest req, @ModelAttribute("membersVO") MembersVO membersVO) {
-		List<PostsVO> postsVO = postsDAO.getMemberPostAll(membersVO.getMemberID());
-		List<PostsVO> postsVO2= postsDAO.getResponseAll();
 		Map<String, Object> map = new HashMap<>();
-		map.put("postsVO", postsVO);
-		map.put("responseVO", postsVO2);
+		map.put("postsVO", postsDAO.getMemberPostAll(membersVO.getMemberID()));
+		map.put("responseVO", postsDAO.getResponseAll());
 		return new ModelAndView("posts",map);
 	}
 //	@Bean(name = "multipartResolver")
@@ -134,20 +132,6 @@ public class PostsController {
 		return new ModelAndView("redirect:/postsController/posts.do",map);
 	}
 
-//	
-//	if("updatePosts".equals(action)){
-//		String postID = req.getParameter("postID");
-//		postsSvc = new PostsService();
-//		postsSvc.deletePosts(member,postID);
-//		postsVO = PostsDAO.getMemberPostAll(member);
-//		postsVO2= PostsDAO.getResponseAll();
-//		req.setAttribute("postsVO", postsVO);
-//		req.setAttribute("responseVO", postsVO2);
-//		System.out.println("deletePosts");
-//		RequestDispatcher view = req.getRequestDispatcher("/forword/posts.jsp");
-//		view.forward(req,res);
-//	}
-	
 	@RequestMapping(value = "/goodOperation.do", method = RequestMethod.POST)
 	public @ResponseBody String goodOperation(HttpServletRequest req) {
 		String postID = req.getParameter("postID");

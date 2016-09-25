@@ -134,11 +134,11 @@
 					</a>
 				</div>
 				<div class="col-md-4 animate-box">
-					<a href="ingChall.do" class="item-grid text-center">
+					<a href="myChallenges.do" class="item-grid text-center">
 						<div class="image" style="background-image: url(../images/ingchall.jpg)"></div>
 						<div class="v-align">
 							<div class="v-align-middle">
-								<h3 class="title">進行中的挑戰</h3>
+								<h3 class="title">我的挑戰</h3>
 								<h5 class="category">查看挑戰進度</h5>
 							</div>
 						</div>

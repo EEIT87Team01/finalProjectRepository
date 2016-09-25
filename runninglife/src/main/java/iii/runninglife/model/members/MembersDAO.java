@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class MembersDAO implements MembersInterface{
 	
 	private static final String GET_ALL_STMT = "from MembersVO";
+	private static final String GET_BY_NAME_STMT = "from MembersVO where firstName=:firstName OR lastName=:lastName";
 	
 	@Autowired
 	SessionFactory sessionFactory;
@@ -59,8 +60,9 @@ public class MembersDAO implements MembersInterface{
 	@Override
 	public List<MembersVO> findByFirstNameOrLastName(String name) {
 		Criteria cri = sessionFactory.getCurrentSession().createCriteria(MembersVO.class)
-				.add(Restrictions.disjunction(Restrictions.eq("firstName", "%" + name + "%"),
-											  Restrictions.eq("lastName", "%" + name + "%")));
+				.add(Restrictions.disjunction(Restrictions.like("firstName", "%" + name + "%"),
+											  Restrictions.like("lastName", "%" + name + "%")));
+		System.out.println(cri.list().size());
 		return cri.list();
 	}
 

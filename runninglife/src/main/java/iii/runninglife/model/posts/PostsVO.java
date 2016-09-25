@@ -19,7 +19,7 @@ public class PostsVO  implements java.io.Serializable{
 	private String postID;
 //	@ManyToOne
 //	@JoinColumn(name = "memberID",insertable = false, updatable = false)
-	private String postMemberID;
+	private MembersVO postMemberID;
 	private String content;
 	private	Timestamp time;
 	private Integer good;
@@ -38,10 +38,10 @@ public class PostsVO  implements java.io.Serializable{
 	public void setPostID(String postID) {
 		this.postID = postID;
 	}
-	public String getPostMemberID() {
+	public MembersVO getPostMemberID() {
 		return postMemberID;
 	}
-	public void setPostMemberID(String postMemberID) {
+	public void setPostMemberID(MembersVO postMemberID) {
 		this.postMemberID = postMemberID;
 	}
 	public String getContent() {

@@ -2,21 +2,14 @@ package iii.runninglife.model.challs;
 
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import iii.runninglife.model.challdata.ChallDataVO;
 import iii.runninglife.model.members.MembersVO;
 
 @Entity

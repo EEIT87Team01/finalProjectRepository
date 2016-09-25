@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="r" uri="http://iii.runningLife.com/util" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,7 +23,7 @@
 	<!-- Modernizr JS -->
 	<script type="text/javascript" src="<c:url value="/static/js/modernizr-2.6.2.min.js" />"></script>
 	
-<title>Insert title here</title>
+<title>RunningLife</title>
 </head>
 
 
@@ -37,7 +38,7 @@
       
       <!-- 	get || post -->
 	  <!-- /Login/DBCheck -->
-      <form action="/runninglife/Login/DBCheck.do" method="post">
+      <form action="Login/DBCheck.do" method="post">
       	<div style="padding-left:50px;">
 			<table >
 				<thead>
@@ -62,12 +63,12 @@
 
 					<tr>
 						<td>
-							<a href="/runninglife/Login/ChangeForgetPage.do">忘記密碼?</a>
+							<a href="Login/ChangeForgetPage.do">忘記密碼?</a>
 						</td>
 					</tr>
 					<tr>
 						<td>
-							<a href="/runninglife/Login/CreateAccountPage.do">新增用戶</a>
+							<a href="Login/CreateAccountPage.do">新增用戶</a>
 						</td>
 					</tr>
 				</tbody>
@@ -102,7 +103,7 @@ $(function(){
 		$('#loginBtn').click(function(){
 			var account = $('#account').val();
 			var password = $('#password').val();
-			var myUrl = '/runninglife/Login/LoginCheck.do';
+			var myUrl = 'Login/LoginCheck.do';
 			var type = 'post';
 			var dataType = 'json';
 			var data = { "memberAccount" : account , "password" : password };
@@ -159,14 +160,15 @@ $(function(){
 				<h1><a href="index.html">RunningLife</a></h1>
 				<nav role="navigation">
 					<ul>
-						<li><a href="pages/work.jsp">塗鴉牆</a></li>
-						<li><a href="challenge/.do">挑戰</a></li>
+						<li><a href="friend/page.do">塗鴉牆</a></li>
+						<li><a href="challenge/page.do">挑戰</a></li>
 						<li><a href="pricing.html">Pricing</a></li>
 						<li><a href="about.html">About</a></li>
 						<li><a href="contact.html">Contact</a></li>
 						<!-- 判斷是否已登入 -->
 						<c:choose>
 						<c:when test="${!empty membersVO}">
+						<img src="data:image/png;base64,${r:byteToBase64(membersVO.photo)}" />
 							<li>Hello, ${membersVO.firstName}</li>
 							<li class="cta"><a href="Login/Logout.do">Logout</a></li>
 						</c:when>
