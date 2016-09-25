@@ -16,6 +16,7 @@ import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 import _05model.contest.ContestVO;
 import _05model.member.MemberVO;
 import freemarker.template.Configuration;
+import iii.runninglife.model.members.MembersVO;
 
 @Service
 public class MailService {
@@ -24,15 +25,17 @@ public class MailService {
 	@Autowired
 	Configuration freemarkerConfiguration;
 
-	public void sendEmail(MemberVO member) {
+	public void sendEmail(MembersVO member) {
 
 		Map<String,Object> model = new HashMap<String,Object>();
 		model.put("member", member);
+		model.put("title", "RunningLife註冊信");
+		model.put("headURL", "http://i.imgur.com/UQF9DKA.png");
+		model.put("checkURL", "#");
 		MimeMessagePreparator preparator = getMessagePreparator(model, "register");
-
 		try {
 			mailSender.send(preparator);
-			System.out.println("Message has been sent.............................");
+			System.out.println("送出驗證信.............................");
 		} catch (MailException ex) {
 			System.err.println(ex.getMessage());
 		}
@@ -41,14 +44,16 @@ public class MailService {
 	
 	public void sendApplyEmail(MemberVO member,ContestVO contest ) {
 		
-		
 		Map<String,Object> model = new HashMap<String,Object>();
 		model.put("member", member);
 		model.put("contest", contest);
+		model.put("title", "RunningLife賽事報名");
+		model.put("headURL", "http://i.imgur.com/UQF9DKA.png");
+
 		MimeMessagePreparator preparator = getMessagePreparator(model, "apply");
 		try {
 			mailSender.send(preparator);
-			System.out.println("Message has been sent.............................");
+			System.out.println("送出報名信.............................");
 		} catch (MailException ex) {
 			System.err.println(ex.getMessage());
 		}
@@ -62,9 +67,9 @@ public class MailService {
 				MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
 				
 				
-				helper.setSubject("RunningLife送信測試");
+				helper.setSubject((String) model.get("title"));
 				helper.setFrom("mizunarei520@gmail.com");
-				helper.setTo(((MemberVO) model.get("member")).getEmail());
+				helper.setTo(((MembersVO) model.get("member")).getEmail());
 
 ///			Map<String, Object> model = new HashMap<String, Object>();
 //				model.put("member", member);

@@ -19,6 +19,6 @@ public class Test {
 	member.setLastName("Max");
 	member.setMemberID("Maxcool#3433");
 	MailService mailService = (MailService) context.getBean("mailService");
-	mailService.sendEmail(member);
+//	mailService.sendEmail(member);
 	}
 }

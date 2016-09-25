@@ -14,7 +14,7 @@
 <link rel="stylesheet"
 	href="https://fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet"
-	href="/runninglife/resources/css/bootstrap.min.css">
+	href="<c:url value="/resources/css/bootstrap.min.css"/>">
 
 </head>
 <body>
@@ -80,7 +80,7 @@
 				<div
 					class="col-lg-10 col-md-10 col-sm-9 col-xs-9 size-16 margin-bottom-0">
 					<i class="fa fa-map-marker"></i> <a class="text-warning"
-						href="https://goo.gl/maps/NFJZ7s6pG5p" data-toggle="tooltip"
+						href="https://www.google.com.tw/maps/place/${contest.place}" data-toggle="tooltip"
 						title="" target="_blank" data-original-title="活動地點">${contest.place}</a>
 				</div>
 				<div
@@ -120,11 +120,12 @@
 	<%@ include file="/footer.jsp"%>
 	<script></script>
 </body>
+
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-<script src="/runninglife/resources/js/jquery.confirm.min.js"></script>
-<script src="/runninglife/resources/js/bootstrap.min.js"></script>
-<script src="/runninglife/resources/js/jquery.twbsPagination.js"></script>
+<script src="<c:url value="/resources/js/jquery.confirm.min.js"/>"></script>
+<script src="<c:url value="/resources/js/bootstrap.min.js"/>"></script>
+<script src="<c:url value="/resources/js/jquery.twbsPagination.js"/>"></script>
 <script>
 	$(document).ready(auth());
 	function auth() {

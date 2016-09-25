@@ -9,9 +9,9 @@
 <title>Insert title here</title>
 </head>
 <link rel="stylesheet"
-	href="/runninglife/resources/css/bootstrap.min.css" type="text/css">
+	href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" type="text/css">
 <link rel="stylesheet"
-	href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css"
+	href="${pageContext.request.contextPath}/resources/css/jquery.dataTables.min.css"
 	type="text/css">
 <body>
 
@@ -24,7 +24,7 @@
 		<!-- 				<thead> -->
 		<!-- 					<tr> -->
 		<!-- 						<th>編號</th> -->
-		<!-- 						<th>會員姓名</th> -->
+		<!-- 					<th>會員姓名</th> -->
 		<!-- 						<th>賽事名稱</th> -->
 		<!-- 						<th class="hidden">(隱藏)memberID</th> -->
 		<!-- 						<th class="hidden">(隱藏)contestID</th> -->
@@ -145,17 +145,17 @@
 					</tbody>
 				</table>
 				<form />
-				<input id="test" type="submit" value="查詢" />
+				<input id="test" type="submit" value="更新" />
 		</div>
 
 	</div>
 
 </body>
 <script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-<script src="/runninglife/resources/js/bootstrap.min.js"></script>
+	src="${pageContext.request.contextPath}/resources/js/jquery.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
 <script
-	src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+	src="${pageContext.request.contextPath}/resources/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript">
 	$(function() {
 		$('#runnerForm').DataTable({

@@ -6,7 +6,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Home</title>
-<link rel="stylesheet" href="resources/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="<c:url value="/resources/css/bootstrap.min.css"/>">
 <link
 	href="https://fonts.googleapis.com/css?family=Raleway:200,300,400,700"
 	rel="stylesheet">

@@ -53,9 +53,10 @@ import _05service.RunnerService;
 import _05service.email.MailService;
 import _05validator.EventValidator;
 import _05validator.FileValidator;
+import iii.runninglife.model.members.MembersVO;
 
 @Controller
-@SessionAttributes("member")
+//@SessionAttributes("member")
 public class EventController {
 
 	@Autowired
@@ -350,7 +351,8 @@ public class EventController {
 	}
 
 	@RequestMapping("email")
-	public String emailtest(Model model, @SessionAttribute("member") MemberVO member) {
+	public String emailtest(Model model, @ModelAttribute("member") MembersVO member) {
+		mailService.sendEmail(member);
 		return "/../../index";
 	}
 
@@ -366,11 +368,16 @@ public class EventController {
 	}
 
 	@ModelAttribute("member")
-	public MemberVO login() {
-		MemberVO member = new MemberVO();
+	public MembersVO login() {
+		MembersVO member = new MembersVO();
 		member.setEmail("artashur@gmail.com");
-		member.setLastName("Arthur");
+		member.setLastName("張");
+		member.setFirstName("三");
 		member.setMemberID("admin");
+		member.setPhone("0912345678");
+		member.setBirthday("1991/03/13");
+		member.setAddress("迪士尼");
+		member.setIdentityID("F123456789");
 		return member;
 	}
 	// @ModelAttribute("contests")

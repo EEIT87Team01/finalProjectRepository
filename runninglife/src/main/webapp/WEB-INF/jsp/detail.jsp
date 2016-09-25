@@ -11,13 +11,13 @@
 	href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css"
 	type="text/css">
 <link rel="stylesheet"
-	href="/runninglife/resources/css/bootstrap.min.css" type="text/css">
+	href="<c:url value="/resources/css/bootstrap.min.css"/>" type="text/css">
 <link rel="stylesheet"
-	href="/runninglife/resources/css/jquery.countdown.css" type="text/css">
-<link rel="stylesheet" href="/runninglife/resources/css/apply.css"
+	href="<c:url value="/resources/css/jquery.countdown.css"/>" type="text/css">
+<link rel="stylesheet" href="<c:url value="/resources/css/apply.css"/>"
 	type="text/css">
 <link rel="stylesheet"
-	href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css"
+	href="<c:url value="/resources/css/jquery.dataTables.min.css"/>"
 	type="text/css">
 <style>
 .bs-callout {
@@ -199,15 +199,17 @@ h2.no-span {
 
 <body class="smoothscroll enable-animation">
 	<%@ include file="/header.jsp"%>
-
 	
-	<div>身分${not empty adminsVO ? "admin" : "guest" }</div>
-	<div id="contestID" class="hidden">${contest.contestID}</div>
+		<div>context:${pageContext.request.contextPath}</div>
+	
+	<div>身分:${not empty adminsVO ? "admin" : "guest" }</div>
+
+	<div id="contestID" class="hidden">${contest.contestID} </div>
 	<div id="timer" class="hidden">${timer}</div>
 	<section id="slider">
 	<div>
 		<img class="img-responsive "
-			src="/runninglife/resources/${contest.contestID}banner.jpg"
+			src="${pageContext.request.contextPath}/resources/${contest.contestID}banner.jpg"
 			alt="banner">
 	</div>
 
@@ -529,9 +531,9 @@ h2.no-span {
 						<div class="col-md-9 col-md-offset-1">
 							<div class="item-box">
 								<figure> <a
-									href="/runninglife/resources/${contest.contestID}route.jpg"
+									href="${pageContext.request.contextPath}/resources/${contest.contestID}route.jpg"
 									target="blank"> <img class="img-responsive"
-									src="/runninglife/resources/${contest.contestID}route.jpg">
+									src="${pageContext.request.contextPath}/resources/${contest.contestID}route.jpg">
 								</a> </figure>
 							</div>
 						</div>
@@ -719,7 +721,7 @@ h2.no-span {
 			<!-- 報名表單 -->
 			<form action="/runninglife/apply" id="runnerForm" method="post"
 				name="runner">
-				<img id="close" src="/runninglife/resources/images/Close-2-icon.png"
+				<img id="close" src="${pageContext.request.contextPath}/resources/images/Close-2-icon.png"
 					onclick="div_hide()">
 				<h3>報名賽事</h3>
 				<hr>
@@ -810,17 +812,17 @@ h2.no-span {
 	<!-- 	</div> -->
 
 
-
+<c:url value="/resources/js/jquery.dataTables.min.js"/>
 </body>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-<script src="/runninglife/resources/js/jquery.countdown.min.js"></script>
-<script src="/runninglife/resources/js/bootstrap.min.js"></script>
-<script src="/runninglife/resources/js/jquery.confirm.min.js"></script>
-<script src="/runninglife/resources/js/time.js"></script>
-<script src="/runninglife/resources/js/jquery.countdown.js"></script>
+<script src="<c:url value="/resources/js/jquery.countdown.min.js"/>"></script>
+<script src="<c:url value="/resources/js/bootstrap.min.js"/>"></script>
+<script src="<c:url value="/resources/js/jquery.confirm.min.js"/>"></script>
+<script src="<c:url value="/resources/js/time.js"/>"></script>
+<script src="<c:url value="/resources/js/jquery.countdown.js"/>"></script>
 <script
-	src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+	src="<c:url value="/resources/js/jquery.dataTables.min.js"/>"></script>
 <script type="text/javascript">
 	// 	$('#eventForm').ajaxForm({
 	// 		type : 'post',
@@ -859,7 +861,7 @@ h2.no-span {
 										.ajax({
 											mimeType : "text/html; charset=UTF-8", //alert可以show出物件內容
 											type : "POST",
-											url : "/runninglife/event/delete",
+											url : "${pageContext.request.contextPath}/event/delete",
 											data : {
 												id : eventID
 											},
@@ -928,7 +930,7 @@ h2.no-span {
 				$.ajax({
 					mimeType : "text/html; charset=UTF-8", //alert可以show出物件內容
 					type : "POST",
-					url : "/runninglife/team/delete",
+					url : "${pageContext.request.contextPath}/team/delete",
 					data : {
 						id : teamID
 					},
@@ -1064,6 +1066,8 @@ h2.no-span {
 // 										});
 // 							}
 		// 				})
+		
+		//自動搜尋
 		var contestID = $("#contestID").text();
 		var eventItem = $('#select_eventItem').val();
 		var teamItem = $('#select_teamItem').val();
@@ -1075,7 +1079,7 @@ h2.no-span {
 				$('#testTable').DataTable(
 						{
 							"ajax" : {
-								url : "/runninglife/api/score/"
+								url : "${pageContext.request.contextPath}/api/score/"
 										+ contestID + "/" + eventItem
 										+ "/" + teamItem,
 								// 									url : "/runninglife/resources/abc.txt",
@@ -1127,7 +1131,7 @@ h2.no-span {
 				$('#testTable').DataTable(
 						{
 							"ajax" : {
-								url : "/runninglife/api/score/"
+								url : "${pageContext.request.contextPath}/api/score/"
 										+ contestID + "/" + eventItem
 										+ "/" + teamItem,
 								// 									url : "/runninglife/resources/abc.txt",
@@ -1188,11 +1192,11 @@ h2.no-span {
 		var status = getParameterByName("status");
 		if (status == "fail") {
 			alert("報名失敗");
-			window.location.href = "/runninglife/contest/${contest.contestID}";
+			window.location.href = "${pageContext.request.contextPath}/contest/${contest.contestID}";
 			return;
 		} else if (status == "success") {
 			alert("報名成功，請到信箱查看繳費資訊。");
-			window.location.href = "/runninglife/contest/${contest.contestID}";
+			window.location.href = "${pageContext.request.contextPath}/contest/${contest.contestID}";
 		}
 
 	});
@@ -1230,7 +1234,7 @@ h2.no-span {
 			// 			alert('新增');
 			$.ajax({
 				type : "POST",
-				url : "/runninglife/" + contestID + "/team/add",
+				url : "${pageContext.request.contextPath}/" + contestID + "/team/add",
 				contentType : "application/json",
 				data : JsonStr,
 				mimeType : "application/json; charset=UTF-8",
@@ -1240,7 +1244,7 @@ h2.no-span {
 			// 			alert("更新");
 			$.ajax({
 				type : "POST",
-				url : "/runninglife/" + contestID + "/team/add",
+				url : "${pageContext.request.contextPath}/" + contestID + "/team/add",
 				contentType : "application/json",
 				data : JsonStr,
 				mimeType : "application/json; charset=UTF-8",
@@ -1311,7 +1315,7 @@ h2.no-span {
 			alert("新增");
 			$.ajax({
 				type : "POST",
-				url : "/runninglife/${contest.contestID}/event/add",
+				url : "${pageContext.request.contextPath}/${contest.contestID}/event/add",
 				contentType : "application/json",
 				data : data2,
 				mimeType : "application/json; charset=UTF-8",
@@ -1321,7 +1325,7 @@ h2.no-span {
 			alert("更新");
 			$.ajax({
 				type : "POST",
-				url : "/runninglife/${contest.contestID}/event/add",
+				url : "${pageContext.request.contextPath}/${contest.contestID}/event/add",
 				contentType : "application/json",
 				data : data2,
 				mimeType : "application/json; charset=UTF-8",
@@ -1388,9 +1392,15 @@ h2.no-span {
 		$('#limitTime').val("");
 		$('#whenToRun').val("");
 	}
-
+	
 	$("#applyLink").on("click", function() {
-		document.getElementById('applyForm').style.display = "block";
+
+		if($('#runnerForm > div:nth-child(4) > input').val()==""){
+			window.location.replace("<c:url value="/index.jsp"/>");
+		}else{
+			document.getElementById('applyForm').style.display = "block";
+		}
+
 	})
 
 	//Function To Display Popup
