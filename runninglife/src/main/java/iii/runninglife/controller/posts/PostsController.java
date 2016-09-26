@@ -144,6 +144,7 @@ public class PostsController {
 		System.out.println("deleteResponsePostsFinish");
 		return new ModelAndView("redirect:/postsController/posts.do");
 	}
+	
 	@RequestMapping(value = "/onePost.do", method = RequestMethod.POST,produces="application/json")
 	public @ResponseBody String onePost(@RequestParam String postID) {
 		PostsVO onePosts = postsSvc.getOnePost(postID);
