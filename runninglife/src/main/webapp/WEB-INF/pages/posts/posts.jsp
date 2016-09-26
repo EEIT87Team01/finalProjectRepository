@@ -31,12 +31,8 @@
 		<link rel="stylesheet" href="/runninglife/static/css/bootstrap.min.css" />
 		<link rel="stylesheet" href="/runninglife/static/css/bootstrap-theme.min.css"></link>
 		<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/static/css/fileinput.min.css">
-		
-		
+
 	</head>
-
-	
-
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog">
 	  <div class="modal-dialog" role="document">
 	    <div class="modal-content">
@@ -60,8 +56,6 @@
 							</select>
 						</div>
 				<textarea id="textarea" name="reportComment" class="form-control col-xs-12" rows="3"></textarea>	
-				
-				
 					</div>	
 				</div>
 		      </div>
@@ -100,9 +94,7 @@
 			</div>
 		</div>
 	</header>
-		<div class="container">
-	
-	</div>
+		<div class="container"></div>
 <aside>
 ${onePosts.postID}
 <div id = "sss" ></div>
@@ -116,33 +108,29 @@ ${onePosts.postID}
 					<button id="no">取消</button>
 				</div>
 				<input type="hidden" id="memberID" name="memberID" value="${membersVO.memberID}">
-				<input type="hidden" name="action" value="newPosts">
+<!-- 				<input type="hidden" name="action" value="newPosts"> -->
 			</div>		
 	       </form>
 		</div> 
 	<div class="col-md-2"></div> 	
 	<div class="col-md-8">	
-	
-		
-		
 		<form:form method="post" action="newPosts.do" enctype="multipart/form-data">
 			<div class="col-md-12" style="border-style:solid;border-color:#EDEDED;padding:20px">
 				<textarea id="textarea" name="postsContent" class="form-control col-xs-12" rows="5"></textarea>
 				<div class="col-md-10"><input id="input-2" name="file1" type="file" class="file" multiple="" data-show-upload="false" data-show-caption="true"></div>
 				<div class="col-md-2"><button id="btn_posts" type="submit" class="btn btn-success">發文</button></div>
 				<input type="hidden" id="memberID" name="memberID" value="${membersVO.memberID}">
-				<input type="hidden" name="action" value="newPosts">
+<!-- 				<input type="hidden" name="action" value="newPosts"> -->
 			</div>					
 		</form:form>
-		<br><br><br><br><br><br><br><br><br>
 		<c:forEach var="posts" items="${postsVO}"> 
 			<div class="col-md-12">
-			<c:if test="${posts.postMemberID.memberID==membersVO.memberID}">		
+<%-- 			<c:if test="${posts.postMemberID.memberID==membersVO.memberID}">		 --%>
 				<c:if test="${posts.parent==null&&posts.status==1}">	
 					<div>
 						<div  class="col-md-12" style="border-style:solid;border-color:#EDEDED">							
 							<div class="col-md-1"><img style="width:99%" src="data:image/png;base64,${r:byteToBase64(posts.postMemberID.photo)}"></div>
-							<div class="col-md-10"><h4>${membersVO.lastName}</h4>${posts.postID} ${posts.postMemberID.memberID} ${posts.time}</div>	
+							<div class="col-md-10"><h4>${membersVO.lastName}</h4>${posts.time}</div>	
 							<div class="col-md-1">
 								<div class="btn-group ">
 								  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
@@ -197,7 +185,7 @@ ${onePosts.postID}
 							</div>		
 						</c:if>
 					</c:forEach>
-				</c:if>
+<%-- 				</c:if> --%>
 			</div>
 				<div class="col-md-12"><br></div>
 		</c:forEach>			
@@ -223,12 +211,6 @@ $(function(){
 				function (goodCount){ location.reload();
 		});
 	});
-// 	$('.reportPosts').click(function(){
-// 		$.post("onePost.do",{"postID":$(this).attr('postID')},
-// 				function (goodCount){
-// 			console.log(goodCount)
-// 		});
-// 	});
  	$('.btn_good').click(function(){
  		var sef=$(this);
 		$.ajax({
@@ -248,8 +230,6 @@ $(function(){
 			  }
 			});
 	});
- 	
-
 	$('.reportPosts').click(function(){
  		var sef=$(this);
 		$.ajax({
@@ -263,7 +243,6 @@ $(function(){
 				 },
 			  error:function() {
 				  console.log("error");
-
 				  console.log(sef.attr('postID'));
 			  }
 			});
