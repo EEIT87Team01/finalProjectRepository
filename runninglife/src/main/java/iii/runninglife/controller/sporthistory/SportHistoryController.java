@@ -22,12 +22,6 @@ public class SportHistoryController {
 	private SportHistoryPathService sportHistoryPathService;
 	@Autowired
 	private ChallDataCRUDService challDataCRUDService;
-	
-	//測試用
-	@RequestMapping("")
-	public ModelAndView sportHistory(){
-		return new ModelAndView("sport_history","message","hello bowei");
-	}
 
 	@RequestMapping(value="/start",method=RequestMethod.POST)
 	public void startRunning(@RequestParam String memberID){

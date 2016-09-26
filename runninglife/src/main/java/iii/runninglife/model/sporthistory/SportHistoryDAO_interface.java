@@ -20,7 +20,7 @@ public interface SportHistoryDAO_interface {
           public List<SportHistoryVO> getDataByMember(String memberID);
           public List<SportHistoryVO> getDataByMemberDate(String memberID,Date date);
           public List<SportHistoryVO> getDataByMemberDurationDate(String memberID,Date startDate,Date endDate);
-	      public Set<SportHistoryPathVO> getPathsByRecordID(String recordID);
+//	      public Set<SportHistoryPathVO> getPathsByRecordID(String recordID);
 //	      public int getPathNextSeqByRecordID(String recordID);
 	      public String getMemberCurrentRecordID(String memberID);
 }

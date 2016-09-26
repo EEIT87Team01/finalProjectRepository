@@ -71,6 +71,10 @@ public class SportHistoryPathService{
 	public List<SportHistoryPathVO> getSportHistoryPaths(String recordID) {
 		return dao.getPathsByRecordID(recordID);
 	}
+	
+	public List<SportHistoryPathVO> getPathsByRecordID(String recordID){
+		return dao.getPathsByRecordID(recordID);
+	}
 
 	public List<SportHistoryPathVO> getAll() {
 		return dao.getAll();
