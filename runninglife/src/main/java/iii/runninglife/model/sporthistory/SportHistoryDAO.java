@@ -123,10 +123,10 @@ public class SportHistoryDAO implements SportHistoryDAO_interface {
 		return list;
 	}
 
-	@Override
-	public Set<SportHistoryPathVO> getPathsByRecordID(String recordID) {	
-		return findByPrimaryKey(recordID).getSportHistoryPaths();
-	}
+//	@Override
+//	public Set<SportHistoryPathVO> getPathsByRecordID(String recordID) {	
+//		return findByPrimaryKey(recordID).getSportHistoryPaths();
+//	}
 	
 	@Override
 	public String getMemberCurrentRecordID(String memberID) {

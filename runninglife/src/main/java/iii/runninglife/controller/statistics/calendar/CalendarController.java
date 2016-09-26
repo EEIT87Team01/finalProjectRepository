@@ -37,6 +37,7 @@ import iii.runninglife.model.runner.RunnerService;
 import iii.runninglife.model.runner.RunnerVO;
 import iii.runninglife.model.sporthistory.SportHistoryService;
 import iii.runninglife.model.sporthistory.SportHistoryVO;
+import iii.runninglife.model.sporthistorypath.SportHistoryPathService;
 import iii.runninglife.model.sporthistorypath.SportHistoryPathVO;
 
 @RestController
@@ -45,6 +46,8 @@ import iii.runninglife.model.sporthistorypath.SportHistoryPathVO;
 public class CalendarController{
 	@Autowired
 	SportHistoryService sportHistoryService;
+	@Autowired
+	SportHistoryPathService sportHistoryPathService;
 	@Autowired
 	ChallDataCRUDService challDataCRUDService;
 	@Autowired
@@ -141,6 +144,7 @@ public class CalendarController{
 	public ModelAndView getSportHistoryDetailView(@RequestParam String recordID){
 		 
 		SportHistoryVO sportHistoryVO = sportHistoryService.getOneSportHistory(recordID);
+		List<SportHistoryPathVO> pathList = sportHistoryPathService.getPathsByRecordID(recordID);
 		Map<String,String> map = new HashMap<>();
 		String[] jsonArray;
 		
@@ -149,7 +153,7 @@ public class CalendarController{
 		map.put("duration", formatDurationTime(sportHistoryVO.getDuration()));
 		map.put("length", sportHistoryVO.getLength().toString() + "km");
 		map.put("avgSpeed", sportHistoryVO.getAvgSpeed().toString() + "km/h");
-		jsonArray = convert2Json(sportHistoryVO.getSportHistoryPaths()).split("/");
+		jsonArray = convert2Json(pathList).split("/");
 		map.put("paths", jsonArray[0]);
 		map.put("center", jsonArray[1]);
 		
@@ -183,7 +187,7 @@ public class CalendarController{
 				":" + durationTime.substring(5);
 	}
 	
-	private String convert2Json(Set<SportHistoryPathVO> pathVOs){
+	private String convert2Json(List<SportHistoryPathVO> pathVOs){
 		StringBuilder points = new StringBuilder();
 		Double centerLat = 0.0;
 		Double centerLng = 0.0;
@@ -196,7 +200,6 @@ public class CalendarController{
 			if(points.length()>1)
 				points.append(",");
 			points.append(pathVO.toJson());
-			
 			
 			//加總經緯度
 			pathPoints = pathVO.toString().split("-");

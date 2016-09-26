@@ -29,10 +29,10 @@ public class SportHistoryVO implements java.io.Serializable {
 	private Double length;
 	private String locationID;
 	
-	@OneToMany(fetch = FetchType.EAGER)
-	@JoinColumn(name = "recordID")
-	@OrderBy(value="recordID,seq")
-	private Set<SportHistoryPathVO> sportHistoryPaths = new LinkedHashSet<SportHistoryPathVO>();
+//	@OneToMany(fetch = FetchType.LAZY)
+//	@JoinColumn(name = "recordID")
+//	@OrderBy(value="recordID,seq")
+//	private Set<SportHistoryPathVO> sportHistoryPaths = new LinkedHashSet<SportHistoryPathVO>();
 	
 	public SportHistoryVO() {
 	}
@@ -101,11 +101,11 @@ public class SportHistoryVO implements java.io.Serializable {
 		this.locationID = locationID;
 	}
 
-	public Set<SportHistoryPathVO> getSportHistoryPaths() {
-		return sportHistoryPaths;
-	}
-
-	public void setSportHistoryPaths(Set<SportHistoryPathVO> sportHistoryPaths) {
-		this.sportHistoryPaths = sportHistoryPaths;
-	}
+//	public Set<SportHistoryPathVO> getSportHistoryPaths() {
+//		return sportHistoryPaths;
+//	}
+//
+//	public void setSportHistoryPaths(Set<SportHistoryPathVO> sportHistoryPaths) {
+//		this.sportHistoryPaths = sportHistoryPaths;
+//	}
 }
