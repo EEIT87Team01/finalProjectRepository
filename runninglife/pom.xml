@@ -190,7 +190,6 @@
 		    <version>2.8.2</version>
 		</dependency>
 	    
-		
     </dependencies>
     <build>
         <finalName>${project.artifactId}-${project.version}</finalName>
