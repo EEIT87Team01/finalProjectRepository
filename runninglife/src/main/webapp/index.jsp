@@ -24,6 +24,8 @@
 	<script type="text/javascript" src="<c:url value="/static/js/modernizr-2.6.2.min.js" />"></script>
 	
 <title>RunningLife</title>
+<!-- ico	 -->
+	<link rel="icon" type="image/png" href="/runninglife/static/images/icon.png">
 </head>
 
 

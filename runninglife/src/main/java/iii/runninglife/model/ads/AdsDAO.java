@@ -23,6 +23,7 @@ public class AdsDAO implements IadDAO {
 	public void setSessionFactory(SessionFactory sessionFactory) {this.sessionFactory = sessionFactory;}
 
 	private static final String GET_ALL_STMT = "from AdsVO order by adID";
+	private static final String GET_DISPLAY_STMT = "from AdsVO  where :now > adStartTime AND :now < adEndTime";
 	private static final String GET_DATE_STMT = "SELECT max(adID) FROM AdsVO where adID like :day";
 
 	@Override
@@ -51,6 +52,16 @@ public class AdsDAO implements IadDAO {
 	@Override
 	public List<AdsVO> getAll() {
 		return sessionFactory.getCurrentSession().createQuery(GET_ALL_STMT).list();
+	}
+	
+	@Override
+	public List<AdsVO> getDisplay() {
+		System.out.println("00000000000000000000");
+		Query query= sessionFactory.getCurrentSession().createQuery(GET_DISPLAY_STMT).setParameter("now", new java.sql.Timestamp(System.currentTimeMillis()));
+//		query.setFirstResult(0);
+//		query.setMaxResults(5); 
+		List<AdsVO> result = query.list();
+		return result;
 	}
 
 	@Override

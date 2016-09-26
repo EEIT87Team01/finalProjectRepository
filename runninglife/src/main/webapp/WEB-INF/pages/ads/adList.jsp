@@ -5,7 +5,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>廣告列表</title>
+<title>Running Life</title>
+<!-- ico	 -->
+	<link rel="icon" type="image/png" href="/runninglife/static/images/icon.png">
 <style >
 table{
     color:white;
@@ -38,7 +40,7 @@ table{
 		searchAdList();
 	});
 	function searchAdList() {
-		var adList = ajax('GET', null, 'searchAds.do', 'json', false);
+		var adList = ajax('GET', null, '../ads/searchAds.do', 'json', false);
 		console.log(adList);
 		for ( var i in adList) {
 			var adColumn = $($('.list').find('.adColumn').clone()).clone();
@@ -49,7 +51,7 @@ table{
 			$(adColumn).find('.adStartTime').text(adList[i].adStartTime);
 			$(adColumn).find('.adEndTime').text(adList[i].adEndTime);
 			$(adColumn).find('.priority').text(adList[i].priority);
-			$(adColumn).find('.image').text(adList[i].image);
+			$(adColumn).find('.image').attr('src','../photoController/getPhoto.do?photoID='+adList[i].image);
 			$(adColumn).find('.modify').attr('adID', adList[i].adID);
 			$(adColumn).find('.delete').attr('adID', adList[i].adID);
 			$(adColumn).removeClass().addClass('adShow');
@@ -291,7 +293,7 @@ table{
 						<td><span class='adStartTime'></span></td>
 						<td><span class='adEndTime'></span></td>
 						<td><span class='priority'></span></td>
-						<td><span class='image'></span></td>
+						<td><img class='image' style='width:50px;'></td>
 						<td><button class='btn btn-primary modify'>修改</button>
 							<button class='btn btn-danger delete'>刪除</button></td>
 					</tr>

@@ -26,23 +26,17 @@ public class ArticlesDAO implements IarticleDAO {
 	private static final String CHANGE_STATUS_STMT = "update articles set status= :newStatus where ArticleID = :articleID";
 
 	@Override
-	public void insert(String writerAccount,String content,String title,String photoPath,String status,int good) {
+	public void insert(String writerAccount,String content,String title) {
 		Timestamp d=new Timestamp(System.currentTimeMillis());
-		Clob content1=null;
-		try {
-			content1 = new javax.sql.rowset.serial.SerialClob(content.toCharArray());
-			Query query = sessionFactory.getCurrentSession().createSQLQuery(INSERT_STMT)
-					             .setParameter(0, writerAccount)
-					             .setParameter(1, content1)
-					             .setParameter(2, title)
-					             .setParameter(3, photoPath)
-					             .setParameter(4, d)
-					             .setParameter(5, status)
-					             .setParameter(6, good);
-			query.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		Query query = sessionFactory.getCurrentSession().createSQLQuery(INSERT_STMT)
+				             .setParameter(0, writerAccount)
+				             .setParameter(1, content)
+				             .setParameter(2, title)
+				             .setParameter(3, "")
+				             .setParameter(4, d)
+				             .setParameter(5, "1")
+				             .setParameter(6, 0);
+		query.executeUpdate();
 	}
 
 	@Override

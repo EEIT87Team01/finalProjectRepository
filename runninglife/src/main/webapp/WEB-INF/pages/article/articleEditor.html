@@ -9,8 +9,9 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin - Bootstrap Admin Template</title>
-
+    <title>Running Life</title>
+<!-- ico	 -->
+	<link rel="icon" type="image/png" href="/runninglife/static/images/icon.png">
 <!-- jQuery -->
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
@@ -195,18 +196,13 @@
             </nav>
             <h1>新增文章</h1>
             <div id="page-wrapper">
-
                 <div class="container-fluid">
-
-                    <!-- Page Heading -->
                     <div class='row'>
-                        <form name = 'form' action = '#' method='post'>
-                            <label for='articletitle'>標題：</label><input type='text' class='form-control' id='articletitle'></input>
-                            <textarea name="content" id="content" rows="10" cols="8"></textarea>
-                            <div style='text-align:right;'>
-                            <input type = 'button' value = '送出' onclick = 'processData()' >
-                            </div>
-                        </form>
+						<div class="container">
+                    	標題：<input type="text" class='title'>
+                    	<div id="summernote"></div>
+                    	<button class='articlesubmit'>送出</button>
+                    </div>
                     </div>
                     <!-- /.row -->
 
@@ -220,8 +216,32 @@
         <!-- /#wrapper -->
 
 <script>
-CKEDITOR.replace( 'content', {height: 400});
-CKEDITOR.config.removePlugins='elementspath';
+$(document).ready(function() {
+        $('#summernote').summernote();
+});
+$(document).on('click',".articlesubmit",function(){
+
+    if(confirm("確認送出?")){
+
+    	ajax('POST',{'writerAccount':'Billwriter','content':$('#summernote').summernote('code'),'title':$('.title').val(),'photoPath':'c:/'},'../createArticle.do',"json",false);
+    }
+});  
+
+function ajax(Method, Data, Url, Datetype, Async) {
+	var result;
+	$.ajax({
+		type : Method,
+		data : Data,
+		url : Url,
+		dataType : Datetype,
+		async : Async,
+		success : function(response) {
+
+			result = response;
+		}
+	});
+	return result;
+}
 </script>
         
 

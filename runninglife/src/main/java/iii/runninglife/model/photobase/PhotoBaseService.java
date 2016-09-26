@@ -36,9 +36,7 @@ public class PhotoBaseService {
 		photoBaseVO.setPhotoID(photoID);
 		photoBaseVO.setImgPath(imgPath);
 		photoBaseDAO.insert(photoBaseVO);
-
 		return photoID;
-
 	}
 
 	public byte[] getPhoto(String photoID, OutputStream out) throws IOException {
