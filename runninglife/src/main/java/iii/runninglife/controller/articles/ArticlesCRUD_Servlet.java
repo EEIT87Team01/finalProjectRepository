@@ -45,13 +45,9 @@ public class ArticlesCRUD_Servlet{
 		return articlesjson;
 	}
 	
-	@RequestMapping(value = "/createArticle.do", method = RequestMethod.GET)
-	public void createArticle(@RequestParam String writerAccount,@RequestParam String content,@RequestParam String title,@RequestParam String photoPath,@RequestParam String createTime,@RequestParam String status,@RequestParam String good) throws ParseException {
-		SimpleDateFormat datetimeFormatter1 = new SimpleDateFormat("yyyy-MM-dd");
-        Date lFromDate1 = (Date) datetimeFormatter1.parse(createTime);
-        java.sql.Timestamp createTimeT = new java.sql.Timestamp(lFromDate1.getTime());
-		int goodInt=Integer.valueOf(good);
-		articlesCRUDService.insertService(writerAccount,content,title,photoPath,createTimeT,status,goodInt);
+	@RequestMapping(value = "/createArticle.do", method = RequestMethod.POST)
+	public void createArticle(@RequestParam String writerAccount,@RequestParam String content,@RequestParam String title) throws ParseException {
+		articlesCRUDService.insertService(writerAccount,content,title); 
 	}
 	
 	@RequestMapping(value = "/updateArticle.do", method = RequestMethod.GET)

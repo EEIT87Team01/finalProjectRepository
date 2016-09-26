@@ -4,7 +4,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>Running Life</title>
+<!-- ico	 -->
+	<link rel="icon" type="image/png" href="/runninglife/static/images/icon.png">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 <!-- Bootstrap -->
@@ -24,6 +26,24 @@
 <script src="../js/server/plugins/morris/raphael.min.js"></script>
 <script src="../js/server/plugins/morris/morris.min.js"></script>
 <script src="../js/server/plugins/morris/morris-data.js"></script>
+<style type="text/css">
+.fileUpload {
+    position: relative;
+    overflow: hidden;
+    margin: 10px;
+}
+.fileUpload input.upload {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0;
+    filter: alpha(opacity=0);
+}
+</style>
 <script>
 $(document).ready(function(){
 	adDetail();
@@ -33,8 +53,8 @@ function adDetail(){
 
     $(document).on('click',".create",function(){
         
-    	ajax('POST', {'adName':$('.adName').val(),'division':$('.division').val(),'adStartTime':$('.adStartTime').val(),'adEndTime':$('.adEndTime').val(),'site':$('.site').val(),'priority':$('.priority').val()}, '../createAd.do', 'json', false);
-        window.location.href = "adList.jsp";
+    	ajax('POST', {'adName':$('.adName').val(),'division':$('.division').val(),'adStartTime':$('.adStartTime').val(),'adEndTime':$('.adEndTime').val(),'site':$('.site').val(),'priority':$('.priority').val(),'file':$('.upload').val()}, '../ads/createAd.do', 'json', false);
+//         window.location.href = "adList.jsp";
 	});
 }
 
@@ -219,60 +239,31 @@ $(document).on("click",".cancel",function(){
                 <!-- /.navbar-collapse -->
             </nav>
             <h1>新增廣告</h1>
-           <div id="page-wrapper">
-
+           <div id="page-wrapper" >
                 <div class="container-fluid">
-
-                    <img style="width:500px;height:400px;"/>
-                    <button class="btn btn-info chooseimg" style="margin-top:300px;">選擇圖片</button>
-                    <!-- Page Heading -->
-                    <table class = "table" id="adslist" rules="all" >
-                        <tr>
-                            <th>廣告標題</th>
-                            <td><input type="text" class='adName'/></td>
-                        </tr>
-                        <tr>
-                            <th>刊登位置</th>
-                            <td>
-                                <select class='division'>
+					<form action="../ads/createAd.do" method="post" enctype="multipart/form-data">
+						<div class="fileUpload btn btn-info"> 
+						    <span>選擇圖片</span>
+						    <input type="file" name='file1' class="upload"  multiple="" data-show-upload="false" data-show-caption="true" />
+						</div><br>
+						廣告標題：<input type="text" name='adName' class='adName'/><br>
+						刊登位置：<select name='division' class='division'>
                                     <option value="首頁">首頁</option>
-                                    <option value="專區">專區</option>
-                                    <option value="廣告區">廣告區</option>
-                                </select>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>起始時間</th>
-                            <td><input type="text" class='adStartTime'/></td>
-                        </tr>
-                        <tr>
-                            <th>結束時間</th>
-                            <td><input type="text" class='adEndTime'/></td>
-                        </tr>
-                        <tr>
-                            <th>廣告網址</th>
-                            <td><input type="text" class='site' style="width:300px;"/></td>
-                        </tr>
-                        <tr>
-                            <th>優先性</th>
-                            <td>
-                                <select class='priority'>
-                                    <option value='1'>底</option>
-                                    <option value='2'>低</option>
-                                    <option value='3'>中</option>
-                                    <option value='4'>高</option>
-                                    <option value='5'>頂</option>
-                                </select>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">
-                                <button class="btn btn-primary create" >新增</button>
-                                <a href="adsList.jsp" class="btn btn-danger cancel">取消</a>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                                </select><br>
+                       	起始時間：<input type="text" name='adStartTime' class='adStartTime'/><br>
+                  	   	結束時間：<input type="text" name='adEndTime' class='adEndTime'/><br>
+                  	   	廣告網址：<input type="text" name='site' class='site' style="width:300px;"/><br>
+                  	   	優先性：<select name='priority' class='priority'> 
+                                   <option value='1'>底</option>
+                                   <option value='2'>低</option>
+                                   <option value='3'>中</option>
+                                   <option value='4'>高</option>
+                                   <option value='5'>頂</option>
+                               </select><br>
+                        <button class="btn btn-primary create" >新增</button> 
+                        <a href="adsList.jsp" class="btn btn-danger cancel">取消</a>
+					</form>
+				</div>
                 <!-- /.row -->
 
                 
@@ -281,5 +272,6 @@ $(document).on("click",".cancel",function(){
 
         </div>
         <!-- /#page-wrapper -->
+        
 </body>
 </html>

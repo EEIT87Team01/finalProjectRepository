@@ -26,13 +26,14 @@ public class PhotoBaseService {
 	@Autowired
 	private PhotoBaseDAO_interface photoBaseDAO;
 
-	public PhotoBaseVO newPhoto(String imgPath) {
+	public String newPhoto(String imgPath) {
 		String photoID = glovbalService.findMaxSeq("photoID", new PhotoBaseVO());
 		photoBaseVO.setPhotoID(photoID);
 		photoBaseVO.setImgPath(imgPath);
 		photoBaseDAO.insert(photoBaseVO);
+		
+		return photoID;
 
-		return photoBaseVO;
 	}
 
 	public String getPhoto(String photoID) throws IOException {

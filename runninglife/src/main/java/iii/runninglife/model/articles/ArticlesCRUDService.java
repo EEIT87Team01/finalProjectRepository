@@ -2,6 +2,8 @@ package iii.runninglife.model.articles;
 
 import java.io.Reader;
 import java.sql.Clob;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +19,8 @@ public class ArticlesCRUDService {
 	@Autowired
 	WriterInterface wdao;
 	
-	public void insertService(String writerAccount,String content,String title,String photoPath,java.sql.Timestamp createTime,String status,int good){
-		dao.insert(writerAccount,content,title,photoPath,status,good);
+	public void insertService(String writerAccount,String content,String title){
+		dao.insert(writerAccount,content,title);
 	}
 	public void updateService(int ArticleID,String writerAccount,Clob content,String title,String photoPath,java.sql.Timestamp createTime,String status,int good){
 		ArticlesVO updateArticle=new ArticlesVO(ArticleID,wdao.selectOne(writerAccount),content,title,photoPath,createTime,status,good);
