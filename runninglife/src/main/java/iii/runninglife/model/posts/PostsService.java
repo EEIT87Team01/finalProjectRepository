@@ -13,7 +13,7 @@ import iii.runninglife.model.goodstatus.GoodStatusDAO;
 import iii.runninglife.model.goodstatus.GoodStatusPK;
 import iii.runninglife.model.goodstatus.GoodStatusService;
 import iii.runninglife.model.goodstatus.GoodStatusVO;
-import iii.runninglife.model.member.MemberVO;
+import iii.runninglife.model.members.MembersVO;
 import iii.runninglife.model.members.MembersInterface;
 import iii.runninglife.model.members.MembersVO;
 import iii.runninglife.model.reportlist.ReportListService;
