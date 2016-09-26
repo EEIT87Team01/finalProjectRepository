@@ -126,13 +126,16 @@
     <script>
 		var map;
 		function initMap() {
+			var linePath = ${paths};
+			var zoom = ${Zoom};
+			var center = ${center};
 			var map = new google.maps.Map(document.getElementById('map'),{
-		    	zoom:${Zoom},
-		    	center: ${center}
+		    	zoom:zoom,
+		    	center: center
 			});
 		  	
 			var flightPath = new google.maps.Polyline({
-				path:${paths},
+				path:linePath,
 				geodesic:true,
 				strokeColor:"#FF0000",
 				strokeOpacity:1.0,
