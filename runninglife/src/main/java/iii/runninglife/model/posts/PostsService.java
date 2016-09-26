@@ -13,7 +13,6 @@ import iii.runninglife.model.goodstatus.GoodStatusDAO;
 import iii.runninglife.model.goodstatus.GoodStatusPK;
 import iii.runninglife.model.goodstatus.GoodStatusService;
 import iii.runninglife.model.goodstatus.GoodStatusVO;
-import iii.runninglife.model.member.MemberVO;
 import iii.runninglife.model.members.MembersInterface;
 import iii.runninglife.model.members.MembersVO;
 import iii.runninglife.model.reportlist.ReportListService;
@@ -42,7 +41,6 @@ public class PostsService {
 	public PostsVO newPosts(String postMemberID, String content, String imgPath) {
 		String postID = glovbalService.findMaxSeq("postID", new PostsVO());
 		membersVO = mdao.selectOne(postMemberID);
-		System.out.println(membersVO.getMemberID()+"=============================================================");
 		postsVO.setPostID(postID);
 		postsVO.setPostMemberID(membersVO);
 		postsVO.setTime(new Timestamp(System.currentTimeMillis()));

@@ -27,12 +27,10 @@
 			<style type="text/css">@import url("<c:url value="/static/css/flexslider.css" />");</style>
 			<!-- Theme style  -->
 			<style type="text/css">@import url("<c:url value="/static/css/style.css" />");</style>
-			<!-- Modernizr JS -->
-<%-- 			<script type="text/javascript" src="<c:url value="/static/js/modernizr-2.6.2.min.js" />"></script> --%>
 		<link rel="stylesheet" href="/runninglife/static/css/mainStyle.css"></link>
 		<link rel="stylesheet" href="/runninglife/static/css/bootstrap.min.css" />
 		<link rel="stylesheet" href="/runninglife/static/css/bootstrap-theme.min.css"></link>
-		<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/server/fileinput.min.css">
+		<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/static/css/fileinput.min.css">
 		
 		
 	</head>
@@ -171,7 +169,7 @@ ${onePosts.postID}
 						</div>	
 						<form method="post" action="responsePosts.do">
 							<div class="col-md-12" style="border-style:solid;border-color:#EDEDED"><br>
-								<div class="col-md-1"><img  style="width:80%" src="${membersVO.photo}"></div>
+								<div class="col-md-1"><img  style="width:80%" src="data:image/png;base64,${r:byteToBase64(membersVO.photo)}"></div>
 								<div class="col-md-9"><textarea id="textarea" name="responsePosts_content" class="form-control col-xs-12" rows="1"></textarea></div>
 								<div class="col-md-2"><button type="submit" class="btn btn btn-primary">回覆</button></div>	
 								<input type="hidden" name="memberID" value="${membersVO.memberID}">
