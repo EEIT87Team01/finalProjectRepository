@@ -32,16 +32,25 @@ public class GlobalService {
 	
 	public String findMaxSeq(String clumeName , Object tableName) {
 		int seqLen = 8;
+		String MaxSeq = null;
 		String queryResult = (String) sessionFactory.getCurrentSession().createCriteria(tableName.getClass())
 				.setProjection(Projections.max(clumeName)).uniqueResult();
-		
 		Date date  =new Date(System.currentTimeMillis());
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 		String dateString = sdf.format(date);
-		String MaxValue = String.valueOf(Long.parseLong(queryResult)+1);
-		String MaxSeq = dateString + MaxValue.substring(seqLen);
-		System.out.println(MaxSeq);
-		
+		try{
+			String MaxValue = String.valueOf(Long.parseLong(queryResult)+1);
+			if(MaxValue.substring(0, 8).equals(dateString))
+				MaxSeq = dateString + MaxValue.substring(seqLen);
+			else{
+				MaxSeq = dateString +"000001";
+			}
+		}catch (Exception e) {
+			date = new Date(System.currentTimeMillis());
+			 sdf = new SimpleDateFormat("yyyyMMdd");
+			dateString = sdf.format(date);
+			MaxSeq = dateString+ "000001";
+		}
 		return MaxSeq;
 	}
 	

@@ -45,13 +45,14 @@ public class SportHistoryService {
 		}
 	}
 
-	public void endSportHistory(String memberID) {
+	public SportHistoryVO endSportHistory(String memberID) {
 		
 		String currentRecordID = null;
+		SportHistoryVO sportHistoryVO = null;
 		
 		if((currentRecordID = dao.getMemberCurrentRecordID(memberID))!=null){
 			
-			SportHistoryVO sportHistoryVO = dao.findByPrimaryKey(currentRecordID);
+			sportHistoryVO = dao.findByPrimaryKey(currentRecordID);
 			sportHistoryVO.setEndDateTime(new Timestamp(System.currentTimeMillis()));
 			
 			Long durationMTime = sportHistoryVO.getEndDateTime().getTime() - sportHistoryVO.getStartDateTime().getTime();
@@ -62,6 +63,8 @@ public class SportHistoryService {
 			
 			dao.update(sportHistoryVO);
 		}
+		
+		return sportHistoryVO;
 	}
 
 	public void deleteSportHistory(String recordID) {

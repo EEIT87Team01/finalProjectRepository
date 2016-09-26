@@ -19,7 +19,6 @@ public class ChallDataVO implements Serializable{
 	private String duration;
 	private String status;
 	private String isFounder;
-	
 
     public ChallDataVO(){
 		

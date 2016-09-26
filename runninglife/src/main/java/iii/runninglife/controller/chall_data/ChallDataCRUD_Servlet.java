@@ -70,11 +70,10 @@ public class ChallDataCRUD_Servlet{
 								@RequestParam Timestamp finishTime, @RequestParam double processLength,
 								@RequestParam String duration,		@RequestParam String status, 
 								@RequestParam String isFounder) {
-		ChallDataPK challDataPK=challDataCRUDService.setTwoIDService(challenID, memberID);
 //		if(new ChallDataCRUDService().checkService(challDataPK)==0){
 //			new ChallDataCRUDService().insertService(challDataPK, finishTime, processLength, duration);
 //		}else{
-			new ChallDataCRUDService().updateService(challDataPK, finishTime, processLength, duration, isFounder);
+			new ChallDataCRUDService().updateService(memberID, finishTime, processLength, duration);
 //		}
 	}
 	

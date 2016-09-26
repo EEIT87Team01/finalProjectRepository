@@ -21,52 +21,34 @@ public class ChallDataCRUDService {
 	IchallDAO challDAO;
 	@Autowired
 	MembersInterface memberDAO;
+	
+	private static final String CHALL_DATA_STATUS_JOIN = "1";
+	private static final String CHALL_DATA_STATUS_COMPLETE= "2";
 
 	public void insertService(ChallDataPK two_ID,Timestamp finishTime,double processLength,String duration,String status,String isFounder){
 			ChallDataVO addchallData=new ChallDataVO(two_ID, finishTime, processLength, duration, status, isFounder);
 			dao.insert(addchallData);
 	}
-	public void updateService(ChallDataPK two_ID,Timestamp finishTime,double processLength,String duration,String isFounder){
+	
+	public void updateService(String memberID,Timestamp finishTime,double processLength,String duration){
 		
-//		IchallDataDAO dao=new ChallDataDAO(); 
-//		List<ChallDataVO> challdata=dao.findByMemberInTime(memberID); 
-//		IchallDAO challdao=new ChallsDAO(); 
-//		List<ChallDataVO> updateChallData = null ; 
-//		for(int i=0;i<=challdata.size();i++){ 
-//		if(challdao.findByChallenIDAndDate(challdata.get(i).getChallenID().getChallenID())==1){ 
-//		updateChallData.add(challdata.get(i)); 
-//		} 
-//		} 
-//		for(int i=0;i<=updateChallData.size();i++){ 
-//		String ChallDataStatus="1"; 
-//		double updateProcessLength=processLength+updateChallData.get(i).getProcessLength(); 
-//		if(updateChallData.get(i).getChallenID().getChallenDistance()<=updateProcessLength){ 
-//		ChallDataStatus="2"; 
-//		} 
-//		String updateDuration =addDuration(updateChallData.get(i).getDuration(),duration); 
-//		ChallData_PK challData_PK=new ChallData_PK(updateChallData.get(i).getChallenID().getChallenID(),memberID) ; 
-//		ChallDataVO updatechallData=new ChallDataVO(challData_PK, finishTime, updateProcessLength, updateDuration,ChallDataStatus); 
-//		dao.update(updatechallData); 
-//		}
-		List<ChallDataVO> challdataProcessing = dao.findByMemberProcessing(two_ID.getMemberID());
-		List<ChallDataVO> updateChallDatas = null ;
-		for(ChallDataVO challDataVO : challdataProcessing){ 
-			if(challDataVO.getStatus().equals("1")){ 
-				updateChallDatas.add(challDataVO); 
-			} 
+		MembersVO membersVO = new MembersVO();
+		membersVO.setMemberID(memberID);
+		List<ChallDataVO> challdataProcessing = dao.findByMemberProcessing(membersVO);
+		
+		for(ChallDataVO challDataVO : challdataProcessing){  
+				double updateProcessLength = processLength + challDataVO.getProcessLength(); 
+				String updateDuration = addDuration(challDataVO.getDuration(),duration);
+				
+				challDataVO.setProcessLength(updateProcessLength);
+				challDataVO.setDuration(updateDuration);;
+				if(challDataVO.getChallDataPK().getChallenID().getChallenDistance()<=updateProcessLength){ 
+					challDataVO.setStatus(CHALL_DATA_STATUS_COMPLETE);
+				} 
+				dao.update(challDataVO);
 		} 
-		for(ChallDataVO updateChallData : updateChallDatas){ 
-			String ChallDataStatus="1"; 
-			double updateProcessLength = processLength + updateChallData.getProcessLength(); 
-			String updateDuration = addDuration(updateChallData.getDuration(),duration);
-			if(updateChallData.getChallDataPK().getChallenID().getChallenDistance()<=updateProcessLength){ 
-				ChallDataStatus="2"; 
-			} 
-		}
-		
-		for(ChallDataVO updateChallData : updateChallDatas) dao.update(updateChallData);
-		
 	}
+
 	public void deleteService(ChallDataPK two_ID){
 			dao.delete(two_ID);
 	}

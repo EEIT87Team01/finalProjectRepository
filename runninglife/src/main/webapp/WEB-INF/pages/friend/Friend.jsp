@@ -70,8 +70,8 @@
 	      </div>
 	      <form action="../member/login.do" method="post">
 	      <div class="modal-body" style="text-align: center;">
-	      <label for="account">帳號</label>
-		        <input type="text" name="account" id="account" placeholder="account"><br>
+	      <span style="line-height: 1.5;"><label for="account">帳號</label>
+		        <input type="text" name="account" id="account" placeholder="account"></span><br>
 		  <label for="password">密碼</label>
 		        <input type="password" name="password" id="password" placeholder="password">
 	      </div>
