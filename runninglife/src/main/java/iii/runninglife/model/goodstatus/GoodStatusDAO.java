@@ -53,4 +53,3 @@ public class GoodStatusDAO implements GoodStatusDAO_interface {
 		return (Long)query.uniqueResult();
 	}
 }
-//test all ok save20160904

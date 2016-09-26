@@ -14,5 +14,3 @@ public interface ReportListDAO_interface {
           public List<ReportListVO> getFinishReportList();
           public List<ReportListVO> getUntreatedReportList();
 }
-
-//20160908 test all ok
