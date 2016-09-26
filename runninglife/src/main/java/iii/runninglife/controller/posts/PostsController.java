@@ -54,6 +54,17 @@ public class PostsController {
 	
 	@RequestMapping(value = "/posts.do", method = RequestMethod.GET)
 	public ModelAndView posts(HttpServletRequest req, @ModelAttribute("membersVO") MembersVO membersVO) {
+//		List<PostsVO> postsVO = postsDAO.getMemberPostAll(membersVO.getMemberID());
+		List<PostsVO> postsVO = postsDAO.getAll();
+		List<PostsVO> postsVO2= postsDAO.getResponseAll();
+		Map<String, Object> map = new HashMap<>();
+		map.put("postsVO", postsVO);
+		map.put("responseVO", postsVO2);
+		return new ModelAndView("posts/posts",map);
+	}
+	
+	@RequestMapping(value = "/profilePosts.do", method = RequestMethod.GET)
+	public ModelAndView profilePosts(HttpServletRequest req, @ModelAttribute("membersVO") MembersVO membersVO) {
 		List<PostsVO> postsVO = postsDAO.getMemberPostAll(membersVO.getMemberID());
 		List<PostsVO> postsVO2= postsDAO.getResponseAll();
 		Map<String, Object> map = new HashMap<>();
@@ -61,6 +72,7 @@ public class PostsController {
 		map.put("responseVO", postsVO2);
 		return new ModelAndView("posts/posts",map);
 	}
+	
 	
 	@RequestMapping(value = "/newPosts.do", method = RequestMethod.POST)
 	public ModelAndView newPosts(HttpServletRequest req,@ModelAttribute("membersVO") MembersVO membersVO) throws IOException, ServletException {

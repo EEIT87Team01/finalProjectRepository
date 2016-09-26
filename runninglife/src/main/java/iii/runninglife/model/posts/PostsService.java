@@ -1,6 +1,8 @@
 package iii.runninglife.model.posts;
 
+import java.sql.Date;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +40,11 @@ public class PostsService {
 	static GoodStatusPK goodStatusPK = new GoodStatusPK();
 	static GoodStatusVO goodStatusVO = new GoodStatusVO();
 	static GoodStatusDAO goodStatusDAO = new GoodStatusDAO();
-
+	Date date  =new Date(System.currentTimeMillis());
+	SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+	String dateString = sdf.format(date);
+	
+	
 	public PostsVO newPosts(String postMemberID, String content, String imgPath) {
 		String postID = glovbalService.findMaxSeq("postID", new PostsVO());
 		membersVO = mdao.selectOne(postMemberID);
