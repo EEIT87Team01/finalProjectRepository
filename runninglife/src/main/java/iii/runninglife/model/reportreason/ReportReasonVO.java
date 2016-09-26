@@ -16,6 +16,7 @@ import iii.runninglife.model.reportlist.ReportListVO;
 	@Entity
 	@Table(name = "reportreason")
 public class ReportReasonVO implements java.io.Serializable{
+		private static final long serialVersionUID = 1L;
 	@Id
 	@Column(name = "typeID")
 	private String typeID;
@@ -24,7 +25,6 @@ public class ReportReasonVO implements java.io.Serializable{
 	@OneToMany(cascade=CascadeType.ALL,fetch=FetchType.EAGER,mappedBy="reportReasonVO")
 	@OrderBy("typeID asc")
 	private Set<ReportListVO> reportlists=new HashSet<ReportListVO>();
-	
 	
 	public String getTypeID() {
 		return typeID;
@@ -44,6 +44,4 @@ public class ReportReasonVO implements java.io.Serializable{
 	public void setReportlists(Set<ReportListVO> reportlists) {
 		this.reportlists = reportlists;
 	}
-
 }
-	//test all ok save20160904

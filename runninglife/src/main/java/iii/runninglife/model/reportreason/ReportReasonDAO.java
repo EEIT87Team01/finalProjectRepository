@@ -47,7 +47,3 @@ public class ReportReasonDAO implements ReportReasonDAO_interface {
 	}
 	
 }
-//test delete notok save20160903
-
-
-

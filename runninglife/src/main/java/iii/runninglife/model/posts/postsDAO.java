@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class postsDAO implements PostsDAO_interface {
+public class PostsDAO implements PostsDAO_interface {
 	private static final String GET_ALL_STMT = "from PostsVO order by postID";
 	private static final String GET_ONE_MEMBER_POST_ALL = "from PostsVO where postMemberID=:postMemberID and status = 1 order by postID desc";
 	private static final String GET_RESPONSEAll = "from PostsVO where parent is not NULL and status = 1 order by time";
@@ -17,8 +17,8 @@ public class postsDAO implements PostsDAO_interface {
 	@Autowired
 	SessionFactory sessionFactory;
 	
-	public postsDAO(){super();}
-	public postsDAO(SessionFactory sessionFactory) {this.sessionFactory = sessionFactory;}
+	public PostsDAO(){super();}
+	public PostsDAO(SessionFactory sessionFactory) {this.sessionFactory = sessionFactory;}
 	public SessionFactory getSessionFactory() {return sessionFactory;}
 	public void setSessionFactory(SessionFactory sessionFactory) {this.sessionFactory = sessionFactory;}
 	
@@ -66,5 +66,5 @@ public class postsDAO implements PostsDAO_interface {
 		query.setString("postID", postsVO.getPostID());
 		query.setString("parent", postsVO.getPostID());
 		query.executeUpdate();
-	}
+	}	
 }

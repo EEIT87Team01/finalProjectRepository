@@ -60,4 +60,3 @@ public class ReportListDAO implements ReportListDAO_interface {
 	}
 
 }
-// 20160908 test all ok

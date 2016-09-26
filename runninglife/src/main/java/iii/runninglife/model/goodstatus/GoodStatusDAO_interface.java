@@ -11,6 +11,5 @@ public interface GoodStatusDAO_interface {
     public void delete(GoodStatusVO goodStatusVO);
     public GoodStatusVO findByPrimaryKey(GoodStatusPK goodStatusPK);
     public List<GoodStatusVO> getAll();
-
+    public Long goodCount(String postID);
 }
-//test all ok save20160904

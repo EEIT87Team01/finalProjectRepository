@@ -5,20 +5,24 @@ import java.sql.Timestamp;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import iii.runninglife.model.members.MembersVO;
+
 @Entity
 @Table(name = "posts")
 public class PostsVO  implements java.io.Serializable{
 
-//	@SequenceGenerator(name="xxx", allocationSize=1) 
+	private static final long serialVersionUID = 1L;
+	//	@SequenceGenerator(name="xxx", allocationSize=1) 
 //	@GeneratedValue(strategy = GenerationType.IDENTITY, generator="xxx")  
 	@Id
 	@Column(name = "postID")
 	private String postID;
-//	@ManyToOne
-//	@JoinColumn(name = "memberID",insertable = false, updatable = false)
+	@ManyToOne
+	@JoinColumn(name = "postMemberID", referencedColumnName = "memberID")
 	private MembersVO postMemberID;
 	private String content;
 	private	Timestamp time;
@@ -88,6 +92,5 @@ public class PostsVO  implements java.io.Serializable{
 	public void setImgPath(String imgPath) {
 		this.imgPath = imgPath;
 	}
-
 
 }

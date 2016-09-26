@@ -9,11 +9,12 @@ import javax.persistence.ManyToOne;
 import iii.runninglife.model.members.MembersVO;
 import iii.runninglife.model.posts.PostsVO;
 
-
 @Embeddable
-public class GoodStatusPK implements Serializable {
-	
-	@ManyToOne
+public class GoodStatusPK implements Serializable {	
+
+	private static final long serialVersionUID = 1L;
+
+@ManyToOne
 	@JoinColumn(name = "memberID", referencedColumnName = "memberID")
 	private  MembersVO memberID;
 	
@@ -63,4 +64,3 @@ public class GoodStatusPK implements Serializable {
 		return true;
 	}	
 }
-//test all ok save20160904

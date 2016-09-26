@@ -1,6 +1,7 @@
 package iii.runninglife.model.posts;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,38 +11,40 @@ import com.google.gson.Gson;
 import iii.runninglife.globalservice.GlobalService;
 import iii.runninglife.model.goodstatus.GoodStatusDAO;
 import iii.runninglife.model.goodstatus.GoodStatusPK;
+import iii.runninglife.model.goodstatus.GoodStatusService;
 import iii.runninglife.model.goodstatus.GoodStatusVO;
+import iii.runninglife.model.member.MemberVO;
 import iii.runninglife.model.members.MembersInterface;
 import iii.runninglife.model.members.MembersVO;
 import iii.runninglife.model.reportlist.ReportListService;
 
 @Service
 public class PostsService {
-	
+
 	@Autowired
 	GlobalService glovbalService;
 	@Autowired
 	ReportListService reportListService;
 	@Autowired
-	MembersInterface membersDAO;
-	@Autowired
 	private PostsDAO_interface postsDAO;
+	@Autowired
+	GoodStatusService goodStatusService;
 	@Autowired
 	private MembersInterface mdao;
 	
-	static MembersVO memberVO = new MembersVO();
+	static MembersVO membersVO = new MembersVO();
 	static PostsVO postsVO = new PostsVO();
 	static PostsVO postsVO2 = new PostsVO();
 	static GoodStatusPK goodStatusPK = new GoodStatusPK();
 	static GoodStatusVO goodStatusVO = new GoodStatusVO();
 	static GoodStatusDAO goodStatusDAO = new GoodStatusDAO();
 
-
 	public PostsVO newPosts(String postMemberID, String content, String imgPath) {
-		System.out.println(postMemberID + "," + content + "," + imgPath);
 		String postID = glovbalService.findMaxSeq("postID", new PostsVO());
+		membersVO = mdao.selectOne(postMemberID);
+		System.out.println(membersVO.getMemberID()+"=============================================================");
 		postsVO.setPostID(postID);
-		postsVO.setPostMemberID(membersDAO.selectOne(postMemberID));
+		postsVO.setPostMemberID(membersVO);
 		postsVO.setTime(new Timestamp(System.currentTimeMillis()));
 		postsVO.setContent(content);
 		postsVO.setGood(0);
@@ -50,15 +53,64 @@ public class PostsService {
 		postsVO.setParent(null);
 		postsVO.setImgPath(imgPath);
 		postsDAO.insert(postsVO);
+		return postsVO;
+	}
 
+	public PostsVO newPostsWithImages(String postMemberID, String content, String imgPath, ArrayList<String> list,String contextPath) {
+		String postID = glovbalService.findMaxSeq("postID", new PostsVO());
+		String contentTemplate = null;
+		switch (list.size()) {
+		case 1:
+			contentTemplate = "<div class='col-md-12'>" + content + "</div>"
+					+ "<div class='col-md-12' style=';text-align:center'><img src="+contextPath+"/photoController/getPhoto.do?photoID="
+					+ list.get(0) + " " + "style='width:40%' /></div>";
+			break;
+		case 2:
+			contentTemplate = "<div class='col-md-12'>" + content + "</div>"
+					+ "<div class='col-md-6' style='padding:0px;text-align:right'><img src="+contextPath+"/photoController/getPhoto.do?photoID="
+					+ list.get(0) + " style='width:65%' /></div>"
+					+ "<div class='col-md-6' style='padding:0px;'><img src="+contextPath+"/photoController/getPhoto.do?photoID="
+					+ list.get(1) + " " + "style='width:65%' /></div>";
+			break;
+		case 3:
+			contentTemplate = "<div class='col-md-12'>" + content + "</div>" + "<div class='col-md-12'>"
+					+ "<div class='col-md-6' style='padding:0px;text-align:right'><img src="+contextPath+"/photoController/getPhoto.do?photoID="
+					+ list.get(0) + " " + "style='width:70%' /></div>"
+					+ "<div class='col-md-6' style='padding:0px;'><img src="+contextPath+"/photoController/getPhoto.do?photoID="
+					+ list.get(1) + " "
+					+ "style='width:51%' /><img src="+contextPath+"/photoController/getPhoto.do?photoID=" + list.get(2)
+					+ " " + "style='width:51%' /></div>" + "</div>";
+			break;
+		case 4:
+			contentTemplate = "<div class='col-md-12'>" + content + "</div>" + "<div class='col-md-12'>"
+					+ "<div class='col-md-6' style='padding:0px;text-align:right'><img src="+contextPath+"/photoController/getPhoto.do?photoID="
+					+ list.get(0) + " "
+					+ "style='width:51%' /><img src="+contextPath+"/photoController/getPhoto.do?photoID=" + list.get(1)
+					+ " " + "style='width:51%' /></div>"
+					+ "<div class='col-md-6' style='padding:0px;'><img src="+contextPath+"/photoController/getPhoto.do?photoID="
+					+ list.get(2) + " "
+					+ "style='width:51%' /><img src="+contextPath+"/photoController/getPhoto.do?photoID=" + list.get(3)
+					+ " " + "style='width:51%' /></div>" + "</div>";
+			break;
+		}
+		membersVO = mdao.selectOne(postMemberID);
+		postsVO.setPostID(postID);
+		postsVO.setPostMemberID(membersVO);
+		postsVO.setTime(new Timestamp(System.currentTimeMillis()));
+		postsVO.setContent(contentTemplate);
+		postsVO.setGood(0);
+		postsVO.setStatus("1");
+		postsVO.setResponsed("0");
+		postsVO.setParent(null);
+		postsVO.setImgPath(imgPath);
+		postsDAO.insert(postsVO);
 		return postsVO;
 	}
 
 	public PostsVO deletePosts(String postMemberID, String postID) {
-		System.out.println(postMemberID + "," + postID);
 		postsVO = postsDAO.findByPrimaryKey(postID);
 		postsVO.setPostID(postID);
-		postsVO.setPostMemberID(membersDAO.selectOne(postMemberID));
+		postsVO.setPostMemberID(postsVO.getPostMemberID());
 		postsVO.setTime(postsVO.getTime());
 		postsVO.setContent(postsVO.getContent());
 		postsVO.setGood(postsVO.getGood());
@@ -71,8 +123,7 @@ public class PostsService {
 	}
 
 	public PostsVO updatePosts(String postID, String content) {
-		System.out.println(postID + "," + content);
-		PostsVO postsVO = postsDAO.findByPrimaryKey(postID);
+		postsVO = postsDAO.findByPrimaryKey(postID);
 		postsVO.setPostID(postID);
 		postsVO.setPostMemberID(postsVO.getPostMemberID());
 		postsVO.setTime(new Timestamp(System.currentTimeMillis()));
@@ -85,28 +136,35 @@ public class PostsService {
 		postsDAO.update(postsVO);
 		return postsVO;
 	}
-	public PostsVO goodOperation(String postMemberID, String postID) {
-		System.out.println(postMemberID + "," + postID);
-		goodStatusPK.setMemberID(mdao.selectOne(postMemberID));
+
+	public void goodOperation(String postMemberID, String postID) {
+		membersVO = mdao.selectOne(postMemberID);
+		goodStatusPK.setMemberID(membersVO);
 		goodStatusPK.setPostID(postsDAO.findByPrimaryKey(postID));
-		goodStatusVO.setGoodStatusPK(goodStatusPK);
-		goodStatusDAO.insert(goodStatusVO);
+		if ((goodStatusVO = goodStatusService.findByPrimaryKey(goodStatusPK)) == null) {
+			goodStatusVO = goodStatusService.findByPrimaryKey(goodStatusPK);
+			goodStatusVO = new GoodStatusVO();
+			goodStatusVO.setGoodStatusPK(goodStatusPK);
+			goodStatusService.insert(goodStatusVO);	
+		} else {
+			goodStatusService.delete(goodStatusVO);
+		}
 		postsVO = postsDAO.findByPrimaryKey(postID);
 		postsVO.setPostID(postID);
-		postsVO.setGood(goodStatusDAO.goodCount(postID).intValue());
+		postsVO.setGood(goodStatusService.goodCount(postID).intValue());
 		postsDAO.update(postsVO);
-		return postsVO;
 	}
+
 	public PostsVO reportPosts(String postID, String reporterID, String typeID, String comment) {
-		System.out.println(postID + "," + reporterID + "," + typeID + "," + comment);
 		reportListService.newReport(postID, reporterID, typeID, comment);
 		return postsVO;
 	}
+
 	public PostsVO responsePosts(String parentPostID, String postMemberID, String content) {
-		System.out.println(parentPostID + "," + postMemberID + "," + content);
-		String postID = glovbalService.findMaxSeq("postID", "posts");
+		String postID = glovbalService.findMaxSeq("postID", new PostsVO());
+		membersVO = mdao.selectOne(postMemberID);
 		postsVO.setPostID(postID);
-		postsVO.setPostMemberID(membersDAO.selectOne(postMemberID));
+		postsVO.setPostMemberID(membersVO);
 		postsVO.setTime(new Timestamp(System.currentTimeMillis()));
 		postsVO.setContent(content);
 		postsVO.setGood(0);
@@ -126,8 +184,8 @@ public class PostsService {
 		postsDAO.update(postsVO2);
 		return postsVO;
 	}
+
 	public PostsVO deleteResponsePosts(String postID, String postMemberID) {
-		System.out.println(postMemberID + "," + postID);
 		postsVO = postsDAO.findByPrimaryKey(postID);
 		postsVO.setPostID(postID);
 		postsVO.setPostMemberID(postsVO.getPostMemberID());
@@ -140,14 +198,16 @@ public class PostsService {
 		postsDAO.update(postsVO);
 		return postsVO;
 	}
+
 	public String goodCount(String postID) {
-		System.out.println(postID);
 		postsVO = postsDAO.findByPrimaryKey(postID);
 		postsVO.getGood();
-		System.out.println(postsVO.getGood());
 		String gson = new Gson().toJson(postsVO.getGood());
-		System.out.println(gson);
-		return gson;	
+		return gson;
 	}
 	
+	public PostsVO getOnePost(String postID){
+		postsVO=postsDAO.findByPrimaryKey(postID);
+		return postsVO;
+	}
 }
