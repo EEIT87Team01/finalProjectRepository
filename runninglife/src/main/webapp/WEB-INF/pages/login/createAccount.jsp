@@ -14,7 +14,7 @@
 
 </head>
 <body>
-<form action="CreateAccount.do" method="post">
+<form action="CreateAccount.do" method="post" enctype="multipart/form-data">
 <table>
 		<thead>
 			<tr>
@@ -30,6 +30,7 @@
 			<tr><td>email:<input type="text" name="email" class="form-control"></td></tr>
 			<tr><td>性別:<input type="radio" name="gender" value="1">男 <input type="radio" name="gender" value="0"> 女</td></tr>
 			<tr><td>生日:<input type="text" name="birthday" class="form-control"></td></tr>
+			<tr><td>大頭貼:<input id="input-2" name="file1" type="file" class="file" multiple="" data-show-upload="false" data-show-caption="true"/></td></tr>
 			
 <!-- 			<tr> -->
 <!-- 				<td>居住地:<select id="location" name="location" class="form-control"> -->

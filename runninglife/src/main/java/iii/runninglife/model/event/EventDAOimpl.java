@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import iii.runninglife.model.contest.ContestVO;
 import iii.runninglife.model.runner.RunnerDAOimpl;
 import iii.runninglife.model.runner.RunnerVO;
 @Repository
@@ -149,17 +150,11 @@ public class EventDAOimpl implements EventDAO {
 //		return list;
 //	}
 	@Override
-	public List<EventVO> getEventById(Integer contestID) {
-		List<EventVO> list = null;
+	public List<EventVO> getEventById(ContestVO contestID) {
 		Session session = getSession();
-		try {
-			Query query = session.createQuery(GET_EVENT_BY_ID);
-			query.setParameter("contestID", contestID);
-			list = query.list();
-		} catch (RuntimeException ex) {
-			throw ex;
-		}
-		return list;
+		Query query = session.createQuery(GET_EVENT_BY_ID);
+		query.setParameter("contestID", contestID);
+		return query.list();
 	}
 //	@Override
 //	public List<EventVO> getEventById(Integer contestID) {

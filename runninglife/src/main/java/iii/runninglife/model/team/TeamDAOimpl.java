@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import iii.runninglife.model.contest.ContestVO;
 import iii.runninglife.model.runner.RunnerDAOimpl;
 import iii.runninglife.model.runner.RunnerVO;
 @Repository
@@ -146,7 +147,7 @@ public  class TeamDAOimpl implements TeamDAO {
 //		return list;
 //	}
 	@Override
-	public List<TeamVO> getTeamById(Integer contestID) {
+	public List<TeamVO> getTeamById(ContestVO contestID) {
 		List<TeamVO> list = null;
 		Session session = getSession();
 		try {
@@ -174,18 +175,5 @@ public  class TeamDAOimpl implements TeamDAO {
 //		}
 //		return list;
 //	}
-
-	public static void main(String[] args) {
-		TeamVO teamvo = new TeamVO()	;
-		teamvo.setTeamName("男子組");
-		teamvo.setContestID(1);
-		teamvo.setAgeRange(25);
-		TeamDAOimpl dao = new TeamDAOimpl();
-		dao.insert(teamvo);
-		List<TeamVO> list =dao.getTeamById(1);
-		for(TeamVO aList:list){
-			System.out.println(aList.getTeamID());
-		}
-	}
 
 }

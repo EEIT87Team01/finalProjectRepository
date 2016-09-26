@@ -27,45 +27,38 @@ public class TeamVO implements Serializable{
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int teamID;
 	@Column
-	private int contestID;
-	@Column
 	private String teamName;
 	@Column
 	private int ageRange;
 	@ManyToOne
 	@JsonBackReference(value="team-contest")
 	@JoinColumn(name = "contestID", referencedColumnName = "contestID",insertable = false, updatable = false)
-	private ContestVO contest;
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "team",orphanRemoval = true,cascade=CascadeType.REMOVE)
+	private ContestVO contestID;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "teamID",orphanRemoval = true,cascade=CascadeType.REMOVE)
 	@JsonBackReference(value="team-runners")
 	private Set<RunnerVO> runners ;
 	
 	
 	
-	public ContestVO getContest() {
-		return contest;
+	public ContestVO getContestID() {
+		return contestID;
 	}
-	public void setContest(ContestVO contest) {
-		this.contest = contest;
+	public void setContestID(ContestVO contest) {
+		this.contestID = contest;
 	}
-	public Set<RunnerVO> getRunners() {
-		return runners;
-	}
-	public void setRunners(Set<RunnerVO> runners) {
-		this.runners = runners;
-	}
+//	public Set<RunnerVO> getRunners() {
+//		return runners;
+//	}
+//	public void setRunners(Set<RunnerVO> runners) {
+//		this.runners = runners;
+//	}
 	public int getTeamID() {
 		return teamID;
 	}
 	public void setTeamID(int teamID) {
 		this.teamID = teamID;
 	}
-	public int getContestID() {
-		return contestID;
-	}
-	public void setContestID(int contestID) {
-		this.contestID = contestID;
-	}
+
 	public String getTeamName() {
 		return teamName;
 	}

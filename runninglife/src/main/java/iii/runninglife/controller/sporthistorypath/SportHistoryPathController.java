@@ -16,9 +16,7 @@ public class SportHistoryPathController {
 	private SportHistoryPathService sportHistoryPathService;
 	
 	@RequestMapping(value="/batch_update",method=RequestMethod.POST)
-	public ModelAndView BatchUpdate(@RequestParam String memberID,@RequestParam String path){
+	public void BatchUpdate(@RequestParam String memberID,@RequestParam String path){
 		sportHistoryPathService.batchUpdateSportHistoryPath(memberID, path);
-		
-		return null;
 	}
 }

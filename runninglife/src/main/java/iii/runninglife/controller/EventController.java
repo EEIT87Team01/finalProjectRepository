@@ -11,6 +11,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -55,7 +56,8 @@ import iii.runninglife.model.team.TeamDAOimpl;
 import iii.runninglife.model.team.TeamVO;
 
 @Controller
-@SessionAttributes("member")
+@SessionAttributes("membersVO")
+@RequestMapping("/contest")
 public class EventController {
 
 	@Autowired
@@ -124,16 +126,15 @@ public class EventController {
 	// }
 
 	// show 1contest
-	@RequestMapping(value = "/contest/{contestID}", method = RequestMethod.GET)
-	public String showContest(@PathVariable int contestID, Model model) {
-		List<TeamVO> teams = teamDAO.getTeamById(contestID);
-		List<EventVO> events = eventDAO.getEventById(contestID);
-		List<ContestVO> contests = contestDAO.findByPrimaryKey2(contestID);
-		ContestVO contest = contests.get(0);
+	@RequestMapping(value = "/contestID={contestID}", method = RequestMethod.GET)
+	public String showContest(@PathVariable int contestID, Model model,HttpSession session) {
+		ContestVO contest = contestDAO.findByPrimaryKey(contestID);
+		List<TeamVO> teams = teamDAO.getTeamById(contest);
+		List<EventVO> events = eventDAO.getEventById(contest);
 		// ContestVO contest=contestDAO.findByPrimaryKey(contestID);
 		List<ClothesVO> clothes = clothesDAO.getAll();
-		List<RunnerVO> runners = runnerDAO.getList(contestID);
-		List<RunnerVO> mycontest =runnerDAO.getMyContest("arthur");
+		List<RunnerVO> runners = runnerDAO.getList(contest);
+		List<RunnerVO> mycontest =runnerDAO.getMyContest((MembersVO) session.getAttribute("membersVO"));
 		// 修正時間
 		SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy年MM月dd日 (E)");
 		String start = sdf2.format(contest.getStartDate());
@@ -147,7 +148,7 @@ public class EventController {
 		model.addAttribute("clothes", clothes);
 		model.addAttribute("runners", runners);
 		model.addAttribute("mycontest", mycontest);
-		return "detail";
+		return "contest/detail";
 	}
 
 	// show contest form
@@ -219,7 +220,7 @@ public class EventController {
 	@RequestMapping(value = "/{id}/event/add", method = RequestMethod.POST, consumes = "application/json", produces = "application/json; charset=UTF-8")
 	public @ResponseBody EventVO addEvent(@PathVariable("id") Integer id, @RequestBody @Validated EventVO eventVO) {
 
-		ContestVO contest = (ContestVO) contestDAO.findByPrimaryKey2(id).get(0);
+		ContestVO contest = (ContestVO) contestDAO.findByPrimaryKey(id);
 		eventVO.setContest(contest);
 		eventDAO.insert(eventVO);
 		System.out.println("ajxa------------------------------------");
@@ -242,8 +243,7 @@ public class EventController {
 	@RequestMapping(value = "{id}/team/add", method = RequestMethod.POST, consumes = "application/json", produces = "application/json; charset=UTF-8")
 	public @ResponseBody TeamVO addTeam(@PathVariable("id") Integer id, @RequestBody TeamVO teamVO,
 			HttpServletResponse res) {
-
-		teamVO.setContestID(id);
+		teamVO.setContestID(contestDAO.findByPrimaryKey(id));
 		teamDAO.insert(teamVO);
 		System.out.println("ajxa------------------------------------");
 		return teamVO;
@@ -292,11 +292,11 @@ public class EventController {
 	@RequestMapping(value = "/apply", method = RequestMethod.POST)
 	public String ContestApply(@ModelAttribute RunnerVO runner, @SessionAttribute MembersVO member, Model model,
 			HttpServletRequest req,HttpServletResponse resp) {
-		Integer id = runner.getPk().getContestID();
+		Integer id = runner.getRunnerPK().getContestID().getContestID();
 
 		int age = 20;// 從member取出年齡
 		// age =member.getAge();
-		List<TeamVO> list = teamDAO.getTeamById(id);
+		List<TeamVO> list = teamDAO.getTeamById(runner.getRunnerPK().getContestID());
 		TeamVO yourTeam = list.get(list.size() - 1);// 預設最年輕組
 		for (TeamVO team : list) {
 			System.out.println(team);
@@ -307,11 +307,11 @@ public class EventController {
 				System.out.println("組別範圍:" + team.getAgeRange() + "~" + (team.getAgeRange() + 9));
 			}
 		}
-		runner.setTeamID(yourTeam.getTeamID());
+		runner.setTeamID(yourTeam);
 		runner.setStatus("未繳費");
 		try {
 			String status = runnerDAO.insert(runner);
-			ContestVO contest = contestDAO.findByPrimaryKey(runner.getPk().getContestID());
+			ContestVO contest = runner.getRunnerPK().getContestID();
 			mailService.sendApplyEmail(member, contest);
 			System.out.println(status);
 		} catch (Exception ex) {
@@ -324,12 +324,12 @@ public class EventController {
 	// show update runner form
 	@RequestMapping(value = "/runner/{contestID}", method = RequestMethod.GET)
 	public String showScore(@PathVariable Integer contestID,Model model) {
-
-		List<RunnerVO> list = runnerDAO.getList(contestID);
+		ContestVO contest = contestDAO.findByPrimaryKey(contestID);
+		List<RunnerVO> list = runnerDAO.getList(contest);
 		RunnerForm runnerForm = new RunnerForm();
 		runnerForm.setRunners(list);
 		
-		List<EventVO> events = eventDAO.getEventById(contestID);
+		List<EventVO> events = eventDAO.getEventById(contest);
 		List<ClothesVO> clothes = clothesDAO.getAll();
 		model.addAttribute("clothes", clothes);
 		model.addAttribute("events", events);

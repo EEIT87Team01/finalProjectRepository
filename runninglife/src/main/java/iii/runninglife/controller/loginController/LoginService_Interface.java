@@ -14,8 +14,6 @@ public interface LoginService_Interface {
 	public String ForgetPaswd(String memberAccount,String memberEmail);
 	public Map<String ,Object> CheckVerification(String memberAccount,String loginSataus);
 	public MembersVO ChangePaswd(String memberAccount,String password);
-	public MembersVO CreateMember(String memberAccount,String password,String firstName,String lastName,String phone,
-			String email ,String gender,String birthday);
 	public MembersVO UpdateMember(String firstName,String lastName,String nickname,
 			String email ,String gender,String birthday ,String address
 			, Double height, Double weight, String phone,int competenceID, String identityID, String emergencyContact
@@ -23,4 +21,6 @@ public interface LoginService_Interface {
 	public List<CountryVO> Country();
 	public List<CityVO> city(String countryID);
 	public List<LocationVO> location(String cityID);
+	public MembersVO CreateMember(String memberAccount, String password, String firstName, String lastName, String phone,
+			String email, String gender, String birthday, byte[] photo);
 }

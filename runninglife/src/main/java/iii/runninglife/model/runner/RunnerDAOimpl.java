@@ -6,18 +6,22 @@ import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import iii.runninglife.model.contest.ContestVO;
+import iii.runninglife.model.members.MembersVO;
+
 @Repository
-@Transactional
+
 public class RunnerDAOimpl implements RunnerDAO {
-	private static final String GET_ALL_STMT = "from RunnerVO order by memberID ";
-	private static final String GET_ALL_LIST_BY_CONTESTID = "from RunnerVO where contestID = :contestID order by memberID";
-	private static final String GET_MY_CONTEST = "from RunnerVO where memberID = :memberID order by contestID";
-	private static final String GET_SCORE_GROUP = "from RunnerVO where contestID = :contestID and eventID = :eventID and teamID=:teamID";
+	private static final String GET_ALL_STMT = "from RunnerVO order by runnerPK.memberID ";
+	private static final String GET_ALL_LIST_BY_CONTESTID = "from RunnerVO where runnerPK.contestID = :contestID order by runnerPK.memberID";
+	private static final String GET_MY_CONTEST = "from RunnerVO where runnerPK.memberID = :memberID order by runnerPK.contestID.contestID";
+	private static final String GET_SCORE_GROUP = "from RunnerVO where runnerPK.contestID = :contestID and eventID = :eventID and teamID=:teamID";
 	private static final String GET_EVENT_GROUP = "from RunnerVO where eventID = :eventID";
 	private static final String GET_TEAM_GROUP = "from RunnerVO where teamID =:teamID";
 
@@ -28,6 +32,11 @@ public class RunnerDAOimpl implements RunnerDAO {
     protected Session getSession(){
         return sessionFactory.getCurrentSession();
     }
+    
+    public RunnerDAOimpl(){super();}
+	public RunnerDAOimpl(SessionFactory sessionFactory) {this.sessionFactory = sessionFactory;}
+	public SessionFactory getSessionFactory() {return sessionFactory;}
+	public void setSessionFactory(SessionFactory sessionFactory) {this.sessionFactory = sessionFactory;}
     
 	@Override
 	public String insert(RunnerVO runnerVO) {
@@ -181,17 +190,11 @@ public class RunnerDAOimpl implements RunnerDAO {
 	// return list;
 	// }
 	@Override
-	public List<RunnerVO> getList(Integer contestID) {
-		List<RunnerVO> list = null;
+	public List<RunnerVO> getList(ContestVO contestID) {
 		Session session = getSession();
-		try {
-			Query query = session.createQuery(GET_ALL_LIST_BY_CONTESTID);
-			query.setParameter("contestID", contestID);
-			list = query.list();
-		} catch (RuntimeException ex) {
-			throw ex;
-		}
-		return list;
+		Query query = session.createQuery(GET_ALL_LIST_BY_CONTESTID);
+		query.setParameter("contestID", contestID);
+		return query.list();
 	}
 
 	// @Override
@@ -211,17 +214,11 @@ public class RunnerDAOimpl implements RunnerDAO {
 	// return list;
 	// }
 	@Override
-	public List<RunnerVO> getMyContest(String memberID) {
-		List<RunnerVO> list = null;
-		Session session = getSession();
-		try {
-			Query query = session.createQuery(GET_MY_CONTEST);
-			query.setParameter("memberID", memberID);
-			list = query.list();
-		} catch (RuntimeException ex) {
-			throw ex;
-		}
-		return list;
+	public List<RunnerVO> getMyContest(MembersVO memberID) {
+		Query query = sessionFactory.getCurrentSession().createQuery(GET_MY_CONTEST);
+		query.setParameter("memberID", memberID);
+//		return sessionFactory.getCurrentSession().createCriteria(RunnerVO.class).add(Restrictions.eq("runnerPK.memberID", memberID)).list();
+		return query.list();
 	}
 
 	// @Override

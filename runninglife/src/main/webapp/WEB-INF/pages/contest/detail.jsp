@@ -11,10 +11,10 @@
 	href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css"
 	type="text/css">
 <link rel="stylesheet"
-	href="/runninglife/resources/css/bootstrap.min.css" type="text/css">
+	href="/runninglife/static/css/bootstrap.min.css" type="text/css">
 <link rel="stylesheet"
-	href="/runninglife/resources/css/jquery.countdown.css" type="text/css">
-<link rel="stylesheet" href="/runninglife/resources/css/apply.css"
+	href="/runninglife/static/css/jquery.countdown.css" type="text/css">
+<link rel="stylesheet" href="/runninglife/static/css/apply.css"
 	type="text/css">
 <link rel="stylesheet"
 	href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css"
@@ -213,7 +213,7 @@ h2.no-span {
 	</section>
 	<section class="page-header page-header-md">
 	<div class="container">
-		<h1>${contest.contestName }</h1>
+		<h1>${contest.contestName}</h1>
 	</div>
 	</section>
 
@@ -298,7 +298,7 @@ h2.no-span {
 								</tr>
 							</thead>
 							<tbody id="eventBody">
-								<c:forEach var="event" items="${contest.events}">
+								<c:forEach var="event" items="${events}">
 									<tr>
 										<td>${event.eventID}</td>
 										<td>${event.eventName}</td>
@@ -307,7 +307,7 @@ h2.no-span {
 										<td>${event.quota}</td>
 										<td>${event.whenToRun}</td>
 										<td>${event.limitTime }</td>
-										<td><a id="/runninglife/event/${event.eventID}/delete"
+										<td><a id="event/${event.eventID}/delete"
 											class="btn btn-danger  eventDelete" role="button"
 											data-text="真的要刪除此項目嗎?" data-confirm-button="是的"
 											data-cancel-button="不了"data-confirm-button-class: "btn-danger">刪除</a></td>
@@ -316,7 +316,7 @@ h2.no-span {
 								</c:forEach>
 								<tr>
 									<form id="eventForm"
-										action="/runninglife/${contest.contestID}/event/add">
+										action="${contest.contestID}/event/add">
 										<td><input type="text"
 											class="form-group form-control readonly" id="eventID"
 											name="eventID" placeholder="標號" readonly /></td>
@@ -359,7 +359,7 @@ h2.no-span {
 								</tr>
 							</thead>
 							<tbody id="teamBody">
-								<c:forEach var='team' items='${contest.teams}'>
+								<c:forEach var='team' items='${teams}'>
 									<tr>
 										<td class="teamID">${team.teamID}</td>
 										<td>${team.teamName}</td>
@@ -545,14 +545,14 @@ h2.no-span {
 									<label id="gameitem"> <label for="select_gameitem">&nbsp;&nbsp;比賽項目：<select
 											id="select_gameitem" name="se1">
 												<option value="">請選擇</option>
-												<c:forEach var="event" items="${contest.events}">
+												<c:forEach var="event" items="${events}">
 													<option value="${event.eventID}">${event.eventName}</option>
 												</c:forEach>
 										</select>
 									</label></label> <label id="gameitem1"><label for="select_gg"
 										id="hide_select">&nbsp;&nbsp;參加組別：<select
 											id="select_gg"><option value="">請選擇</option>
-												<c:forEach var="team" items="${contest.teams}">
+												<c:forEach var="team" items="${teams}">
 													<option value="${team.teamID}">${team.teamName}</option>
 												</c:forEach>
 										</select></label></label>
@@ -588,11 +588,11 @@ h2.no-span {
 								</tr>
 							</thead>
 							<tbody>
-								<c:forEach var='runner' items="${contest.runners}">
+								<c:forEach var='runner' items="${runners}">
 									<tr>
-										<td>${runner.pk.memberID}</td>
-										<td>${runner.event.eventName}</td>
-										<td>${runner.team.teamName}</td>
+										<td>${runner.runnerPK.memberID.memberID}</td>
+										<td>${runner.eventID.eventName}</td>
+										<td>${runner.teamID.teamName}</td>
 										<td>${runner.clothesSize}</td>
 										<td></td>
 									</tr>
@@ -740,11 +740,11 @@ h2.no-span {
 </body>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-<script src="/runninglife/resources/js/jquery.countdown.min.js"></script>
-<script src="/runninglife/resources/js/bootstrap.min.js"></script>
-<script src="/runninglife/resources/js/jquery.confirm.min.js"></script>
-<script src="/runninglife/resources/js/time.js"></script>
-<script src="/runninglife/resources/js/jquery.countdown.js"></script>
+<script src="/runninglife/static/js/jquery.countdown.min.js"></script>
+<script src="/runninglife/static/js/bootstrap.min.js"></script>
+<script src="/runninglife/static/js/jquery.confirm.min.js"></script>
+<script src="/runninglife/static/js/time.js"></script>
+<script src="/runninglife/static/js/jquery.countdown.js"></script>
 <script
 	src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript">

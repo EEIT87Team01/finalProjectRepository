@@ -162,13 +162,13 @@ $(function(){
 					<ul>
 						<li><a href="friend/page.do">塗鴉牆</a></li>
 						<li><a href="challenge/page.do">挑戰</a></li>
-						<li><a href="pricing.html">Pricing</a></li>
+						<li><a href="calendar.do">Pricing</a></li>
 						<li><a href="about.html">About</a></li>
 						<li><a href="contact.html">Contact</a></li>
 						<!-- 判斷是否已登入 -->
 						<c:choose>
 						<c:when test="${!empty membersVO}">
-						<img src="data:image/png;base64,${r:byteToBase64(membersVO.photo)}" />
+						<img src="data:image/png;base64,${r:byteToBase64(membersVO.photo)}" style="width: 32px;height: 32px;" />
 							<li>Hello, ${membersVO.firstName}</li>
 							<li class="cta"><a href="Login/Logout.do">Logout</a></li>
 						</c:when>

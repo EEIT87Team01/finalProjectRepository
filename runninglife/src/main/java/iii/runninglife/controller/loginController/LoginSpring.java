@@ -1,14 +1,19 @@
 package iii.runninglife.controller.loginController;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.Part;
 
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -144,15 +149,23 @@ public class LoginSpring {
 	@RequestMapping(value="/CreateAccount" ,method=RequestMethod.POST, produces="text/plain;charset=UTF-8")
 	public ModelAndView CreateAccount(@RequestParam String memberAccount,@RequestParam String password,
 			@RequestParam String firstName,@RequestParam String lastName,@RequestParam String email,
-			@RequestParam String gender,@RequestParam String phone,@RequestParam String birthday) 
-	throws IOException{
+			@RequestParam String gender,@RequestParam String phone,@RequestParam String birthday,HttpServletRequest req) 
+	throws IOException, ServletException{
 		System.out.println(new String(firstName.getBytes("ISO-8859-1"),"UTF-8"));
 		firstName = globalservice.encodeStr(firstName);
 		lastName = globalservice.encodeStr(lastName);
+		byte[] photo = null;
+		
+		List<Part> fileParts = req.getParts().stream().filter(part -> "file1".equals(part.getName())).collect(Collectors.toList()); 
+		for (Part filePart : fileParts) { 
+		InputStream is = filePart.getInputStream(); 
+		photo = IOUtils.toByteArray(is); 
+		} 
 		
 		return new ModelAndView("redirect:/","membersVO"
-				,loginService.CreateMember(memberAccount,password,firstName,lastName,phone,email,gender,birthday));
+				,loginService.CreateMember(memberAccount,password,firstName,lastName,phone,email,gender,birthday,photo));
 	}
+	
 	
 	
 	//修改會員資料換頁(Spring)

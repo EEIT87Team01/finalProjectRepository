@@ -45,8 +45,8 @@ public class EventVO implements Serializable {
 	@ManyToOne
 	@JsonBackReference(value="event-contest")
 	@JoinColumn(name = "contestID", referencedColumnName = "contestID",insertable = true, updatable = false)
-	private ContestVO contest;
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "event",orphanRemoval = true,cascade=CascadeType.REMOVE)
+	private ContestVO contestID;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "eventID",orphanRemoval = true,cascade=CascadeType.REMOVE)
 	@JsonBackReference(value="event-runners")
 	private Set<RunnerVO> runners ;
 	
@@ -63,10 +63,10 @@ public class EventVO implements Serializable {
 	}
 	
 	public ContestVO getContest() {
-		return contest;
+		return contestID;
 	}
-	public void setContest(ContestVO contest) {
-		this.contest = contest;
+	public void setContest(ContestVO contestID) {
+		this.contestID = contestID;
 	}
 	//偷吃
 //	public int getContestID() {

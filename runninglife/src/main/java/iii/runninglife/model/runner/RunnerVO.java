@@ -23,11 +23,13 @@ public class RunnerVO implements Serializable {
 	// @OneToOne(cascade=CascadeType.ALL,fetch=FetchType.EAGER)
 	// @JoinColumn(name="memberID")
 	@EmbeddedId
-	private RunnerPK pk;
-	@Column
-	private int eventID;
-	@Column
-	private int teamID;
+	private RunnerPK runnerPK;
+	@ManyToOne
+	@JoinColumn(name = "eventID", referencedColumnName = "eventID",insertable = false, updatable = false)
+	private EventVO eventID;
+	@ManyToOne
+	@JoinColumn(name = "teamID", referencedColumnName = "teamID",insertable = false, updatable = false)
+	private TeamVO teamID;
 	@Column
 	private String clothesSize;
 	@Column
@@ -36,60 +38,28 @@ public class RunnerVO implements Serializable {
 //	private int contestID;
 	@Column
 	private String status;
-	@ManyToOne
-	@JsonBackReference(value="runner-contest")
-	@JoinColumn(name = "contestID", referencedColumnName = "contestID",insertable = false, updatable = false)
-	private ContestVO contest;
-	@ManyToOne
-	@JoinColumn(name = "eventID", referencedColumnName = "eventID",insertable = false, updatable = false)
-	private EventVO event;
-	@ManyToOne
-	@JoinColumn(name = "teamID", referencedColumnName = "teamID",insertable = false, updatable = false)
-	private TeamVO team;
 	
 	public RunnerVO() {
 		super();
 	}
-	public TeamVO getTeam() {
-		return team;
-	}
-	public void setTeam(TeamVO team) {
-		this.team = team;
-	}
-	public EventVO getEvent() {
-		return event;
-	}
-	public void setEvent(EventVO event) {
-		this.event = event;
-	}
-	public ContestVO getContest() {
-		return contest;
-	}
-	public void setContest(ContestVO contest) {
-		this.contest = contest;
-	}
-	public RunnerPK getPk() {
-		return pk;
-	}
-
-	public void setPk(RunnerPK pk) {
-		this.pk = pk;
-	}
-
-	public int getEventID() {
-		return eventID;
-	}
-
-	public void setEventID(int eventID) {
-		this.eventID = eventID;
-	}
-
-	public int getTeamID() {
+	public TeamVO getTeamID() {
 		return teamID;
 	}
-
-	public void setTeamID(int teamID) {
+	public void setTeamID(TeamVO teamID) {
 		this.teamID = teamID;
+	}
+	public EventVO getEventID() {
+		return eventID;
+	}
+	public void setEventID(EventVO eventID) {
+		this.eventID = eventID;
+	}
+	public RunnerPK getRunnerPK() {
+		return runnerPK;
+	}
+
+	public void setRunnerPK(RunnerPK runnerPK) {
+		this.runnerPK = runnerPK;
 	}
 
 	public String getClothesSize() {

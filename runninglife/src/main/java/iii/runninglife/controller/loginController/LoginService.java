@@ -48,6 +48,14 @@ public class LoginService implements LoginService_Interface{
 	@Autowired
 	GlobalService globalservice;
 	
+
+	MembersVO memberVO = new MembersVO();
+	public void getPhotoFromByte(String memberID , byte[] bytes) {
+		memberVO = membersDAO.selectOne(memberID);
+		memberVO.setPhoto(bytes);
+		membersDAO.update(memberVO);
+	}
+	
 	@Override
 	public Map<String ,Object> CheckPassword(String memberAccount,String password){
 		LoginInformationVO loginInfo = new LoginInformationVO();
@@ -191,7 +199,7 @@ public class LoginService implements LoginService_Interface{
 	//新增會員
 	@Override
 	public MembersVO CreateMember(String memberAccount,String password,String firstName,String lastName,String phone,
-			String email ,String gender,String birthday){
+			String email ,String gender,String birthday, byte[] photo){
 		MembersVO membersVO = new MembersVO();
 		LoginInformationVO loginInfo = new LoginInformationVO();
 		LoginInformationPK loginInfoPK = new LoginInformationPK();
@@ -209,6 +217,7 @@ public class LoginService implements LoginService_Interface{
 		membersVO.setGender(gender);
 		membersVO.setBirthday(birthday);
 		membersVO.setPhone(phone);
+		membersVO.setPhoto(photo);
 		
 		Calendar cl=Calendar.getInstance();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -248,28 +257,12 @@ public class LoginService implements LoginService_Interface{
 		MembersVO membersVO = new MembersVO();
 		CompetenceVO competenceVO = new CompetenceVO();
 		EmergencyRelationVO emergencyRelationVO = new EmergencyRelationVO();
-		CountryVO countryVO = new CountryVO();
-		CityVO cityVO = new CityVO();
-		CityPK cityPK = new CityPK();
-		LocationPK locationPK = new LocationPK();
-		LocationVO locationVO = new LocationVO();
 		membersVO.setFirstName(firstName);
 		membersVO.setLastName(lastName);
 		membersVO.setNickname(nickname);
 		membersVO.setEmail(email);
 		membersVO.setGender(gender);
 		membersVO.setBirthday(birthday);
-		
-		
-//		cityPK.setCountryID(countryDAO.selectOne(country));
-//		cityPK.setCityID(city);
-//		cityVO.setCityID(cityPK);
-//		locationPK.setCityID(cityDAO.selectOne(cityPK));
-//		locationPK.setLocationID(location);
-//		locationVO.setLocationID(locationPK);
-////		locationVO.setLocationName("東京市");
-//		membersVO.setLocationID(locationVO);
-		
 		membersVO.setAddress(address);
 		membersVO.setHeight(height);
 		membersVO.setWeight(weight);

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -54,10 +55,11 @@
 	<script src="../js/web/main.js"></script>	
 <script>
 $(document).ready(function(){
-	var dataId = location.search ;
-    var getSearch = dataId.split("?challid=");
-    var challenID = getSearch[1];
-	searchAdDetail(challenID);
+// 	var dataId = location.search ;
+//     var getSearch = dataId.split("?challid=");
+//     var challenID = getSearch[1];
+// 	searchAdDetail(challenID);
+console.log('${challDataVO}');
 	
 });
 
@@ -118,35 +120,36 @@ $(document).on("click",".back",function(){
 
 		<div class="container">
 			<div class="row">
+			<c:set var="challenge" value="${challDataVO.challDataPK.challenID}"/>
 				<h1>挑戰資訊</h1>
 				<table class="table">
 					<tr>
 						<td>挑戰名稱：</td>
-						<td><span class="challenName"></span></td>
+						<td><span class="challenName">${challenge.challenName}</span></td>
 					</tr>               
 					<tr>
 						<td>挑戰地區：</td>
-						<td><span class="locationID"></span></td>
+						<td><span class="locationID">${challenge.locationID}</span></td>
 					</tr>                
 					<tr>
 						<td>挑戰距離：</td>
-						<td><span class="challenDistance"></span></td>
+						<td><span class="challenDistance">${challenge.challenDistance}</span></td>
 					</tr>                
 					<tr>
 						<td>起始時間：</td>
-						<td><span class="challenStartTime"></span></td>
+						<td><span class="challenStartTime">${challenge.challenStartTime}</span></td>
 					</tr>                
 					<tr>
 						<td>結束時間：</td>
-						<td><span class="challenEndTime"></span></td>
+						<td><span class="challenEndTime">${challenge.challenEndTime}</span></td>
 					</tr>                
 					<tr>
 						<td>挑戰目的：</td>
-						<td><span class="comment"></span></td>
+						<td><span class="comment">${challenge.comment}</span></td>
 					</tr>    
 					<tr>
 						<td>挑戰發起人：</td>
-						<td><span class="founderID"></span></td>
+						<td><span class="founderID">${challenge.founderID.firstName}, ${challenge.founderID.lastName}</span></td>
 					</tr>               
 					<tr>
 						<td>參加人員：</td>

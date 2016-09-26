@@ -21,7 +21,7 @@ public class ChallDataDAO implements IchallDataDAO {
 	private static final String GET_MEMBER_STMT = 
 		"from ChallDataVO where memberID = :member";
 	private static final String GET_MEMBER_TIME_STMT = 
-		"from ChallDataVO where memberID = :member AND challenStartTime BETWEEN :startTime AND :endTime";
+		"from ChallDataVO where challDataPK.memberID.memberID = :member AND challDataPK.challenID.challenStartTime BETWEEN :startTime AND :endTime";
 	private static final String GET_MEMBER_PROCESSING_STMT = 
 		"from ChallDataVO where challDataPK.memberID = :member AND challDataPK.challenID.challenEndTime > :nowTime AND status = '1'";
 	private static final String GET_MEMBER_FINISH_STMT = 
