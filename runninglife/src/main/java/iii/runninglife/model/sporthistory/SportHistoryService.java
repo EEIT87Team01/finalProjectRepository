@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import iii.runninglife.globalservice.CalulateTwoLatLng;
 import iii.runninglife.globalservice.ConvertMilliseconds2Hours;
 import iii.runninglife.globalservice.StoredProcedure;
+import iii.runninglife.model.sporthistorypath.SportHistoryPathDAO_interface;
 import iii.runninglife.model.sporthistorypath.SportHistoryPathVO;
 
 @Service
@@ -23,6 +24,8 @@ public class SportHistoryService {
 	
 	@Autowired
 	private SportHistoryDAO_interface dao;
+	@Autowired
+	private SportHistoryPathDAO_interface pathDao;
 	
 	@Autowired
 	StoredProcedure storedProcedure;
@@ -58,7 +61,7 @@ public class SportHistoryService {
 			Long durationMTime = sportHistoryVO.getEndDateTime().getTime() - sportHistoryVO.getStartDateTime().getTime();
 			durationMTime = (durationMTime+500)/1000*1000;//四捨五入ms
 			sportHistoryVO.setDuration(formatDurationMillisTime(durationMTime));
-			sportHistoryVO.setLength(computeTotalLength(sportHistoryVO.getSportHistoryPaths()));
+			sportHistoryVO.setLength(computeTotalLength(pathDao.getPathsByRecordID(sportHistoryVO.getRecordID())));
 			sportHistoryVO.setAvgSpeed(computeAvgSpeed(sportHistoryVO.getLength(),durationMTime));
 			
 			dao.update(sportHistoryVO);
@@ -93,10 +96,6 @@ public class SportHistoryService {
 																Date endDate) {
 		return dao.getDataByMemberDurationDate(memberID, startDate, endDate);
 	}
-
-	public Set<SportHistoryPathVO> getPathsByRecordID(String recordID) {
-		return dao.getPathsByRecordID(recordID);
-	}
 	
 	public String getMemberCurrentRecordID(String memberID){
 		return dao.getMemberCurrentRecordID(memberID);
@@ -109,7 +108,7 @@ public class SportHistoryService {
 				TimeUnit.MILLISECONDS.toSeconds(durationMTime) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(durationMTime)));		
 	}
 	
-	private Double computeTotalLength(Set<SportHistoryPathVO> sportHistoryPathVOs){
+	private Double computeTotalLength(List<SportHistoryPathVO> sportHistoryPathVOs){
 		Double currentLat = null;
 		Double currentLng = null;
 		Double nextLat = null;

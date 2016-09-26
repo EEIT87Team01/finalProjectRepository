@@ -6,6 +6,8 @@ import javax.persistence.Embeddable;
 
 @Embeddable
 public class ReportListPK  implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
 	private  String postID;
 	private  String reporterID;
 	public String getReporterID() {

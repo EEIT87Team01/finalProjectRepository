@@ -16,6 +16,8 @@ import iii.runninglife.model.reportreason.ReportReasonVO;
 @Entity
 @Table(name = "ReportList")
 public class ReportListVO  implements java.io.Serializable{
+
+	private static final long serialVersionUID = 1L;
 	@EmbeddedId
 	private ReportListPK reportListPK;
 	@ManyToOne
@@ -92,6 +94,4 @@ public class ReportListVO  implements java.io.Serializable{
 	public void setReportReasonVO(ReportReasonVO reportReasonVO) {
 		this.reportReasonVO = reportReasonVO;
 	}
-
-	
 }

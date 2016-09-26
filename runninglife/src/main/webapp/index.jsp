@@ -168,6 +168,8 @@ $(function(){
 						<li><a href="calendar.do">行事曆</a></li>
 						<li><a href="about.html">賽事活動</a></li>
 						<li><a href="contact.html">Contact</a></li>
+						<li><a href="postsController/posts.do">貼文</a></li>
+						<li><a href="reportController/reportList.do">檢舉</a></li>
 						<!-- 判斷是否已登入 -->
 						<c:choose>
 						<c:when test="${!empty membersVO}">

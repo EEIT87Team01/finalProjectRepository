@@ -6,7 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.google.gson.Gson;
+import iii.runninglife.model.posts.PostsDAO_interface;
 
 @Service
 public class ReportListService {
@@ -16,6 +16,8 @@ public class ReportListService {
 	
 	@Autowired
 	ReportListDAO_interface reportListDAO;
+	@Autowired
+	private PostsDAO_interface postsDAO;
 	
 	public ReportListVO newReport(String postID,String reporterID,String typeID , String comment ){
 		reportListPK.setPostID(postID);
@@ -39,16 +41,24 @@ public class ReportListService {
 		reportListDAO.insert(reportListVO);
 		return reportListVO;
 	}
-	public ReportListVO ProcessReport(String postID , String status){
+	public ReportListVO checkReportList(String postID, String reporterID, String status) {
+	
+		reportListPK.setPostID(postID);
+		reportListPK.setReporterID(reporterID);
+		ReportListVO reportListVO =reportListDAO.findByPrimaryKey(reportListPK);
+		reportListVO.setReportListPK(reportListPK);
+		reportListVO.setTypeID(reportListVO.getTypeID());
+		reportListVO.setComment(reportListVO.getComment());
+		reportListVO.setTime(reportListVO.getTime());
+		reportListVO.setStatus(status);
+		reportListDAO.update(reportListVO);
 		
-//		reportListPK.setPostID(postID);
-//		reportListPK.setReporterID(reporterID);
-//		reportListVO.setReportListPK(reportListPK);
-//		reportListVO.setTypeID(typeID);
-//		reportListVO.setComment(comment);
-//		reportListVO.setTime(new Timestamp(System.currentTimeMillis()));
-//		reportListVO.setStatus("0");
-		reportListDAO.insert(reportListVO);
+		 postsDAO.findByPrimaryKey(postID).getPostMemberID();
+		 /*
+		 call memberSevice to change memberVO's competence
+		  */
+		
+		
 		return reportListVO;
 	}
 	
@@ -64,9 +74,9 @@ public class ReportListService {
 		List<ReportListVO> reportListVO =reportListDAO.getAll();
 		return reportListVO;
 	}
-	public List<ReportListVO> getUntreatedReportList(){
-		List<ReportListVO> reportListVO =reportListDAO.getUntreatedReportList();
-			return reportListVO;	
+	public List<ReportListVO> getUntreatedReportList() {
+		List<ReportListVO> reportListVO = reportListDAO.getUntreatedReportList();
+		return reportListVO;	
 	}
 	public List<ReportListVO> getFinishReportList(){
 		List<ReportListVO> reportListVO =reportListDAO.getFinishReportList();

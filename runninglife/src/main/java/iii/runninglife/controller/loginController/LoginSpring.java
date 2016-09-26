@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
@@ -35,7 +36,7 @@ import iii.runninglife.model.loginInformation.LoginInformationInterface;
 import iii.runninglife.model.loginInformation.LoginInformationPK;
 import iii.runninglife.model.members.MembersVO;
 
-@Controller
+@RestController
 @RequestMapping("/Login")
 @SessionAttributes("membersVO")
 public class LoginSpring {
@@ -74,6 +75,14 @@ public class LoginSpring {
 	@RequestMapping(value="/DBCheck" ,method=RequestMethod.POST)
 	public ModelAndView LoginDBCheck(@RequestParam String memberAccount, @RequestParam String password){
 		return new ModelAndView("redirect:/","membersVO",loginService.findByPrimaryKey(new LoginInformationPK(memberAccount, "1")).getMemberID());
+	}
+	
+	//登入驗證帳號密碼
+	@RequestMapping(value="/DBCheckForApp" ,method=RequestMethod.POST, produces="application/json")
+	public Map<String,String> LoginDBCheckForApp(@RequestParam String memberAccount, @RequestParam String password){
+		Map<String,String> map = new HashMap<>();
+		map.put("memberID", loginService.findByPrimaryKey(new LoginInformationPK(memberAccount, "1")).getMemberID().getMemberID());
+		return map;
 	}
 	
 	//登入
