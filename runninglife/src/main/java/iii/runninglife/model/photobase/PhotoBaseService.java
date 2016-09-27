@@ -33,6 +33,8 @@ public class PhotoBaseService {
 
 	public String newPhoto(String imgPath) {
 		String photoID = glovbalService.findMaxSeq("photoID", new PhotoBaseVO());
+		System.out.println(photoID+"11111111111111111111111111111111111111111111111");
+		photoBaseVO = new PhotoBaseVO();
 		photoBaseVO.setPhotoID(photoID);
 		photoBaseVO.setImgPath(imgPath);
 		photoBaseDAO.insert(photoBaseVO);

@@ -112,7 +112,7 @@ ol, ul {
 						<!-- 判斷是否已登入 -->
 						<c:choose>
 						<c:when test="${!empty membersVO}">
-						<li><a href="friend/page.do">塗鴉牆</a></li>
+						<li><a href="postsController/posts.do">塗鴉牆</a></li>
 						<li><a href="challenge/page.do">挑戰</a></li>
 						<li><a href="">賽事活動</a></li>
 						<li><a href="calendar.do">行事曆</a></li>
