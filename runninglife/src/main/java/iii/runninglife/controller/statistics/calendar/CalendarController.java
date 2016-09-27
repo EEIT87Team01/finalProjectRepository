@@ -138,11 +138,12 @@ public class CalendarController{
 		 
 		SportHistoryVO sportHistoryVO = sportHistoryService.getOneSportHistory(recordID);
 		List<SportHistoryPathVO> pathList = sportHistoryPathService.getPathsByRecordID(recordID);
-		Map<String,String> map = new HashMap<>();
+		Map<String,Object> map = new HashMap<>();
 		String[] jsonArray;
 		
 		MembersVO membersVO = memberDAO.selectOne(sportHistoryVO.getMemberID());
 		map.put("memberFirstName", membersVO.getFirstName());
+		map.put("memberPhoto", membersVO.getPhoto());
 		map.put("startDateTime", formatDateTime(sportHistoryVO.getStartDateTime()));
 		map.put("endDateTime", formatDateTime(sportHistoryVO.getEndDateTime()));
 		map.put("duration", formatDurationTime(sportHistoryVO.getDuration()));
