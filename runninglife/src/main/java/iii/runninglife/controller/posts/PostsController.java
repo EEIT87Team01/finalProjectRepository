@@ -52,9 +52,21 @@ public class PostsController {
 	@Autowired
 	PostsDAO_interface postsDAO;
 	
+	
+	@RequestMapping(value = "/personalPosts.do", method = RequestMethod.GET)
+	public ModelAndView personalPosts(HttpServletRequest req,@RequestParam String membersID) {
+		MembersVO memberVO = new MembersVO();
+		memberVO.setMemberID(membersID);
+		List<PostsVO> postsVO = postsSvc.getMemberPostAll(memberVO.getMemberID());
+		List<PostsVO> postsVO2= postsSvc.getResponseAll();
+		Map<String, Object> map = new HashMap<>();
+		map.put("postsVO", postsVO);
+		map.put("responseVO", postsVO2);
+		return new ModelAndView("posts/personalPosts",map);
+	}
+	
 	@RequestMapping(value = "/posts.do", method = RequestMethod.GET)
 	public ModelAndView posts(HttpServletRequest req, @ModelAttribute("membersVO") MembersVO membersVO) {
-//		List<PostsVO> postsVO = postsDAO.getMemberPostAll(membersVO.getMemberID());
 		List<PostsVO> postsVO = postsSvc.getAll();
 		List<PostsVO> postsVO2= postsSvc.getResponseAll();
 		Map<String, Object> map = new HashMap<>();
@@ -100,7 +112,6 @@ public class PostsController {
 						imgPath = storePath + fileName;
 						imgPathtotal += ",,," + imgPath;
 						String photoID = photoSvc.newPhoto(imgPath);						
-						
 						list.add(photoID);
 						try {
 							byte[] buffer = new byte[1024];

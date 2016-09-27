@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="r" uri="http://iii.runningLife.com/util" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -24,34 +25,34 @@
 
 <link href="https://fonts.googleapis.com/css?family=Raleway:200,300,400,700" rel="stylesheet">
 <!-- Animate.css -->
-	<link rel="stylesheet" href="../css/web/animate.css">
+	<link rel="stylesheet" href="../static/css/web/animate.css">
 <!-- Icomoon Icon Fonts-->
-	<link rel="stylesheet" href="../css/web/icomoon.css">
+	<link rel="stylesheet" href="../static/css/web/icomoon.css">
 <!-- Bootstrap  -->
-	<link rel="stylesheet" href="../css/web/bootstrap.css">
+	<link rel="stylesheet" href="../static/css/web/bootstrap.css">
 <!-- Flexslider  -->
-	<link rel="stylesheet" href="../css/web/flexslider.css">
+	<link rel="stylesheet" href="../static/css/web/flexslider.css">
 <!-- Owl Carousel  -->
-	<link rel="stylesheet" href="../css/web/owl.carousel.min.css">
-	<link rel="stylesheet" href="../css/web/owl.theme.default.min.css">
+	<link rel="stylesheet" href="../static/css/web/owl.carousel.min.css">
+	<link rel="stylesheet" href="../static/css/web/owl.theme.default.min.css">
 <!-- Theme style  -->
-	<link rel="stylesheet" href="../css/web/style.css">
+	<link rel="stylesheet" href="../static/css/web/style.css">
 <!-- Modernizr JS -->
-	<script src="../js/web/modernizr-2.6.2.min.js"></script>
+	<script src="../static/js/web/modernizr-2.6.2.min.js"></script>
 <!-- jQuery -->
-	<script src="../js/web/jquery.min.js"></script>
+	<script src="../static/js/web/jquery.min.js"></script>
 <!-- jQuery Easing -->
-	<script src="../js/web/jquery.easing.1.3.js"></script>
+	<script src="../static/js/web/jquery.easing.1.3.js"></script>
 <!-- Bootstrap -->
-	<script src="../js/web/bootstrap.min.js"></script>
+	<script src="../static/js/web/bootstrap.min.js"></script>
 <!-- Waypoints -->
-	<script src="../js/web/jquery.waypoints.min.js"></script>
+	<script src="../static/js/web/jquery.waypoints.min.js"></script>
 <!-- Owl Carousel -->
-	<script src="../js/web/owl.carousel.min.js"></script>
+	<script src="../static/js/web/owl.carousel.min.js"></script>
 <!-- Flexslider -->
-	<script src="../js/web/jquery.flexslider-min.js"></script>
+	<script src="../static/js/web/jquery.flexslider-min.js"></script>
 <!-- MAIN JS -->
-	<script src="../js/web/main.js"></script>	
+	<script src="../static/js/web/main.js"></script>	
 </head>
 <body>
 <div id="fh5co-page">
@@ -61,12 +62,14 @@
 				<h1><a href="index.html">RunningLife</a></h1>
 				<nav role="navigation">
 					<ul>
-						<li><a href="work.html">Work</a></li>
-						<li><a href="services.html">Services</a></li>
-						<li><a href="pricing.html">Pricing</a></li>
-						<li><a href="about.html">About</a></li>
-						<li><a href="contact.html">Contact</a></li>
-						<li class="cta"><a href="#">登入</a></li>
+						<li><a href="friend/page.do">塗鴉牆</a></li>
+						<li><a href="challenge/page.do">挑戰</a></li>
+						<li><a href="">賽事活動</a></li>
+						<li><a href="calendar.do">行事曆</a></li>
+						<li><a href="contact.html">運動文章</a></li>
+						<li><img src="data:image/png;base64,${r:byteToBase64(membersVO.photo)}" style='width:50px;height:50px;'></li>
+						<li>你好, ${membersVO.lastName}</li>
+						<li class="cta"><a href="Login/Logout.do">登出</a></li>
 					</ul>
 				</nav>
 			</div>

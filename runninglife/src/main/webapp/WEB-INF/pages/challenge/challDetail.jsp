@@ -83,16 +83,20 @@ $(document).on("click",".back",function(){
        <table class="table">
 			<c:if test="${challengeDataList != null}">
 				<c:forEach var="challengeData" items="${challengeDataList}">
-				<c:if test="${challengeData.isFounder eq '0'}">
 				<c:set var="membersVO" value="${challengeData.challDataPK.memberID}" />
 					<tr><td><img src="data:image/png;base64,${r:byteToBase64(membersVO.photo)}" style='width:50px;height:50px;'></td>
 						<td>${membersVO.firstName}</td>
 						<td>${membersVO.lastName}</td>
-						<td><c:if test="${challengeData.status eq '0'}">未接受邀請</c:if>
-							<c:if test="${challengeData.status eq '1'}">參加者</c:if>
+						<td>
+						<c:choose>
+							<c:when test="${challengeData.isFounder eq '1'}">發起者</c:when>
+							<c:otherwise>
+								<c:if test="${challengeData.status eq '0'}">未接受邀請</c:if>
+								<c:if test="${challengeData.status eq '1' || challengeData.status eq '2'}">參加者</c:if>
+							</c:otherwise>
+						</c:choose>
 						</td>
 					</tr>
-				</c:if>
 				</c:forEach>
 			</c:if>
 		</table>
@@ -111,12 +115,14 @@ $(document).on("click",".back",function(){
 					<h1><a href="index.html">Flew</a></h1>
 					<nav role="navigation">
 						<ul>
-							<li><a href="work.html">Work</a></li>
-							<li><a href="services.html">Services</a></li>
-							<li><a href="pricing.html">Pricing</a></li>
-							<li><a href="about.html">About</a></li>
-							<li><a href="contact.html">Contact</a></li>
-							<li class="cta"><a href="#">Get started</a></li>
+							<li><a href="friend/page.do">塗鴉牆</a></li>
+							<li><a href="challenge/page.do">挑戰</a></li>
+							<li><a href="">賽事活動</a></li>
+							<li><a href="calendar.do">行事曆</a></li>
+							<li><a href="contact.html">運動文章</a></li>
+							<li><img src="data:image/png;base64,${r:byteToBase64(membersVO.photo)}" style='width:50px;height:50px;'></li>
+							<li>你好, ${membersVO.lastName}</li>
+							<li class="cta"><a href="Login/Logout.do">登出</a></li>
 						</ul>
 					</nav>
 				</div>
@@ -163,9 +169,6 @@ $(document).on("click",".back",function(){
 						<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
 						  參加者名單
 						</button>
-						</td>
-						<td>
-						
 						</td>
 					</tr>
 					<tr><td colspan="2"><p align="right"><button class="btn btn-success back">返回</button></p></td></tr>

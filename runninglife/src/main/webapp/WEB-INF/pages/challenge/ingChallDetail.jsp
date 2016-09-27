@@ -37,7 +37,7 @@
 	<link rel="stylesheet" href="/runninglife/static/css/style.css">
 
 	<!-- Modernizr JS -->
-	<script src="js/modernizr-2.6.2.min.js"></script>
+	<script src="/runninglife/static/js/modernizr-2.6.2.min.js"></script>
 	<!-- jQuery -->
 	<script src="/runninglife/static/js/jquery-3.1.0.min.js"></script>
 	<!-- jQuery Easing -->
@@ -50,24 +50,16 @@
 	<script src="/runninglife/static/js/jquery.flexslider-min.js"></script>
 	<!-- Stellar -->
 	<script src="/runninglife/static/js/jquery.stellar.min.js"></script>
+	<!-- LIST JS -->
+	<script src="/runninglife/static/js/list.min.js"></script>
 	<!-- MAIN JS -->
 	<script src="/runninglife/static/js/main.js"></script>
-<!-- Owl Carousel  -->
-	<link rel="stylesheet" href="../css/web/owl.carousel.min.css">
-	<link rel="stylesheet" href="../css/web/owl.theme.default.min.css">
-<!-- Owl Carousel -->
-	<script src="../js/web/owl.carousel.min.js"></script>
-<script>
-$(document).ready(function(){
+	<!-- Owl Carousel  -->
+	<link rel="stylesheet" href="/runninglife/static/css/web/owl.carousel.min.css">
+	<link rel="stylesheet" href="/runninglife/static/css/web/owl.theme.default.min.css">
+	<!-- Owl Carousel -->
+	<script src="/runninglife/static/js/web/owl.carousel.min.js"></script>
 
-});
-
-$(document).on("click",".back",function(){
-
-    history.back();
-})
-
-</script>	
 </head>
 
 
@@ -107,6 +99,38 @@ $(document).on("click",".back",function(){
     </div>
   </div>
 </div>
+
+<!-- Modal requestFriend-->
+<c:if test="${myChallengeData.isFounder == '1'}">
+<div class="modal fade" id="requestFriend" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">邀請好友</h4>
+      </div>
+      <div class="modal-body">
+       <table class="table">
+			<c:if test="${friends != null}">
+				<c:forEach var="membersVO" items="${friends}">
+					<tr><td><img src="data:image/png;base64,${r:byteToBase64(membersVO.photo)}" style='width:50px;height:50px;'></td>
+						<td class="firstName">${membersVO.firstName}</td>
+						<td class="lastName">${membersVO.lastName}</td>
+						<td><button class="btn btn-accept sendRquest" id="${membersVO.memberID}" >邀請挑戰</button></td>
+					</tr>
+				</c:forEach>
+			</c:if>
+		</table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+</c:if>
+<!-- friendRequest Modal END -->
+
 <body>
 <div id="fh5co-page">
 		<header id="fh5co-header" role="banner">
@@ -115,12 +139,14 @@ $(document).on("click",".back",function(){
 					<h1><a href="index.html">Flew</a></h1>
 					<nav role="navigation">
 						<ul>
-							<li><a href="work.html">Work</a></li>
-							<li><a href="services.html">Services</a></li>
-							<li><a href="pricing.html">Pricing</a></li>
-							<li><a href="about.html">About</a></li>
-							<li><a href="contact.html">Contact</a></li>
-							<li class="cta"><a href="#">Get started</a></li>
+							<li><a href="friend/page.do">塗鴉牆</a></li>
+							<li><a href="challenge/page.do">挑戰</a></li>
+							<li><a href="">賽事活動</a></li>
+							<li><a href="calendar.do">行事曆</a></li>
+							<li><a href="contact.html">運動文章</a></li>
+							<li><img src="data:image/png;base64,${r:byteToBase64(membersVO.photo)}" style='width:50px;height:50px;'></li>
+							<li>你好, ${membersVO.lastName}</li>
+							<li class="cta"><a href="Login/Logout.do">登出</a></li>
 						</ul>
 					</nav>
 				</div>
@@ -129,7 +155,7 @@ $(document).on("click",".back",function(){
 
 		<div class="container">
 			<div class="row">
-				<h1>挑戰資訊<span style="float:right;">${r:day(challenge.challenStartTime)} 天後結束</span></h1>
+				<h1>挑戰資訊<span style="float:right;">${r:day(challenge.challenEndTime)} 天後結束</span></h1>
 				<table class="table">
 					<tr>
 						<td>挑戰名稱：</td>
@@ -164,13 +190,15 @@ $(document).on("click",".back",function(){
 					</tr>               
 					<tr>
 						<td><!-- Button trigger modal -->
-						<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
-						  參加者名單
+						<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">
+						參加者名單
 						</button>
 						</td>
-						<td>
-						
-						</td>
+						<c:if test="${myChallengeData.isFounder == '1'}">
+						<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#requestFriend">
+						邀請好友加入挑戰
+						</button>
+						</c:if>
 					</tr>
 					<tr><td colspan="2"><p align="right">
 					<c:if test="${myChallengeData.isFounder == '1'}"><button class="btn btn-danger" onclick="location.href='../deleteChall/${challenge.challenID}.do'">刪除</button></c:if>
@@ -235,4 +263,29 @@ $(document).on("click",".back",function(){
 		</footer>
 	</div>
 </body>
+<script>
+$(document).ready(function(){
+	var options = {valueNames: [ 'firstName', 'lastName' ]};
+	var userList = new List('friends', options);
+	$(".sendRquest").click(function(){
+		var btn = $(this);
+		var friend = $(this).attr("id");
+		$.ajax({
+			type: "post", 
+			datatype: "json",
+			data : { "memberID" : friend, "challenID" : '${challenge.challenID}'},
+			url: '../challenRequestFriend.do',
+			success: function(){
+				btn.text("已邀請").attr("class","btn btn-primary");
+				btn.off();
+			}
+		});
+	});
+});
+
+$(document).on("click",".back",function(){
+    history.back();
+})
+
+</script>	
 </html>

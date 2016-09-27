@@ -24,7 +24,7 @@ public class ChallDataDAO implements IchallDataDAO {
 	private static final String GET_MEMBER_TIME_STMT = 
 		"from ChallDataVO where challDataPK.memberID.memberID = :member AND challDataPK.challenID.challenStartTime BETWEEN :startTime AND :endTime";
 	private static final String GET_MEMBER_PROCESSING_STMT = 
-		"from ChallDataVO where challDataPK.memberID = :member AND challDataPK.challenID.challenEndTime > :nowTime AND (status = '2' or status = '1')";
+		"from ChallDataVO where challDataPK.memberID = :member AND challDataPK.challenID.challenEndTime > :nowTime1 AND challDataPK.challenID.challenStartTime < :nowTime2 AND(status = '2' or status = '1')";
 	private static final String GET_MEMBER_FINISH_STMT = 
 		"from ChallDataVO where challDataPK.memberID = :member AND challDataPK.challenID.challenEndTime < :nowTime AND (status = '2' or status = '1')";
 	private static final String GET_MEMBER_RESERVED_STMT = 
@@ -94,7 +94,8 @@ public class ChallDataDAO implements IchallDataDAO {
 	@Override
 	public List<ChallDataVO> findByMemberProcessing(MembersVO memberID) {
 		return sessionFactory.getCurrentSession().createQuery(GET_MEMBER_PROCESSING_STMT)
-				.setParameter("member", memberID).setParameter("nowTime", new java.sql.Timestamp(System.currentTimeMillis())).list();
+				.setParameter("member", memberID).setParameter("nowTime1", new java.sql.Timestamp(System.currentTimeMillis()))
+				.setParameter("nowTime2", new java.sql.Timestamp(System.currentTimeMillis())).list();
 	}
 	
 	@SuppressWarnings("unchecked")

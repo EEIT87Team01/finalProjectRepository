@@ -86,7 +86,6 @@ public class ChallsDAO implements IchallDAO {
 	@Override
 	public List<ChallsVO> findByFounderID(MembersVO founderID){
 		return sessionFactory.getCurrentSession().createCriteria(ChallsVO.class).add(Restrictions.eq("founderID", founderID)).list();
-		
 	}
 	
 	@Override

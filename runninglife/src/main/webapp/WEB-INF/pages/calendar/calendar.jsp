@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
+<%@ taglib prefix="r" uri="http://iii.runningLife.com/util" %>
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
@@ -39,13 +39,22 @@
 		<meta name="twitter:image" content="" />
 		<meta name="twitter:url" content="" />
 		<meta name="twitter:card" content="" />
+		
+		<style>
+		
+		.background-image {
+			background-image: url('<%=request.getContextPath()%>/static/images/calendarBG.jpg');
+			background-repeat: no-repeat;
+			background-attachment: fixed;
+        	background-position: center;
+        	background-size: cover;
+		}
+
+		</style>
 	
 		<link rel="shortcut icon" href="favicon.ico">
 		
 		<link href="https://fonts.googleapis.com/css?family=Raleway:200,300,400,700" rel="stylesheet">
-		
-<!-- 		<link rel="Stylesheet" type="text/css" href="/Content/fullcalendar/fullcalendar.css" /> -->
-<!-- 		<link rel="Stylesheet" type="text/css" href="/Content/fullcalendar/fullcalendar.print.css" /> -->
 
 		<!-- Animate.css -->
 		<link rel="stylesheet" href="<%=request.getContextPath()%>/static/css/animate.css">
@@ -92,15 +101,17 @@
 			<header id="fh5co-header" role="banner">
 				<div class="container">
 					<div class="header-inner">
-						<h1><a href="index.html">RunningLife</a></h1>
+						<h1><a href="index.jsp">RunningLife</a></h1>
 						<nav role="navigation">
 							<ul>
-								<li><a href="work.html">Work</a></li>
-								<li><a href="services.html">Services</a></li>
-								<li><a href="pricing.html">Pricing</a></li>
-								<li class="active"><a href="about.html">行事曆</a></li>
-								<li><a href="contact.html">Contact</a></li>
-								<li class="cta"><a href="#">登入</a></li>
+								<li><a href="postsController/posts.do">塗鴉牆</a></li>
+								<li><a href="challenge/page.do">挑戰</a></li>
+								<li><a href="">賽事活動</a></li>
+								<li class="active">><a href="calendar.do">行事曆</a></li>
+								<li><a href="contact.html">運動文章</a></li>
+								<li><img src="data:image/png;base64,${r:byteToBase64(memberVO.photo)}" style='width:50px;height:50px;'></li>
+								<li>Hello, ${memberVO.firstName}</li>
+								<li class="cta"><a href="Login/Logout.do">Logout</a></li>
 							</ul>
 						</nav>
 					</div>
@@ -110,7 +121,7 @@
 			<div style="height:20px"></div>
 			<div class="container">
 <!-- 				<div class="col-md-1"></div> -->
-				<div class="col-md-12" id='calendar'></div>
+				<div class="col-md-12 background-image" id='calendar'></div>
 <!-- 				<div class="col-md-1"></div> -->
 			</div>
 			<div style="height:20px"></div>
@@ -158,25 +169,26 @@
 				</div>
 			</footer>
 		</div>
-	</body>
+		
+		<script>
+			$(document).ready(function() {
+				$('#calendar').fullCalendar({ 
+					header: {//設定Header
+			            left: 'title', 
+			            center: '', 
+			            right: 'today agendaWeek,month prev,next' 
+			        }, 
+			        height: '1000px',
+			        theme: false,
+			        firstDay:0,//第一天為星期日 
+			        editable: false,//是否可拖動 
+			        defaultView: 'month',
+	 		        eventSources: '<%=request.getContextPath()%>/calendar/get_calendar_json_data.do?memberID=${memberVO.memberID}'    //事件数据	         
+			    }) 
+			});	  
+		</script> 
 	
-	<script>
-		$(document).ready(function() {
-			$('#calendar').fullCalendar({ 
-				header: {//設定Header
-		            left: 'title', 
-		            center: '', 
-		            right: 'today agendaWeek,month prev,next' 
-		        }, 
-		        height: '1000px',
-		        theme: false,
-		        firstDay:0,//第一天為星期日 
-		        editable: false,//是否可拖動 
-		        defaultView: 'month',
- 		        eventSources: '<%=request.getContextPath()%>/calendar/get_calendar_json_data.do?memberID=${memberID}'    //事件数据	         
-		    }) 
-		});	  
-	</script> 
+	</body>
 
 </html>
 
