@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class PostsDAO implements PostsDAO_interface {
-	private static final String GET_ALL_STMT = "from PostsVO order by postID";
+	private static final String GET_ALL_STMT = "from PostsVO order by postID desc";
 	private static final String GET_ONE_MEMBER_POST_ALL = "from PostsVO where postMemberID=:postMemberID and status = 1 order by postID desc";
 	private static final String GET_RESPONSEAll = "from PostsVO where parent is not NULL and status = 1 order by time";
 	private static final String CHANGE_STATUS = "UPDATE PostsVO SET status=:status where postID=:postID or parent =:parent";

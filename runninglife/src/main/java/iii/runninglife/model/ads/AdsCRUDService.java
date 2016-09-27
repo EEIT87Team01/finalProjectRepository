@@ -35,9 +35,10 @@ public class AdsCRUDService {
 	}
 	public List<AdsVO> searchAllService(){
 		List<AdsVO> adList=dao.getAll();
-		for(AdsVO model : adList) {
-            System.out.println(model.getAdStartTime());
-		}
+		return adList;
+	}
+	public List<AdsVO> searchDisplayService(){
+		List<AdsVO> adList=dao.getDisplay();
 		return adList;
 	}
 }

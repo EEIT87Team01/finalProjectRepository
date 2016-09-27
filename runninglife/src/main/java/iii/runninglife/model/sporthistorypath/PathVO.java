@@ -3,23 +3,23 @@ package iii.runninglife.model.sporthistorypath;
 //import java.sql.Timestamp;
 
 public class PathVO {
-	private String lat;
-	private String lng;
+	private Double lat;
+	private Double lng;
 //	private Timestamp dateTime;
 	
-	public String getLng() {
+	public Double getLng() {
 		return lng;
 	}
 
-	public void setLng(String lng) {
+	public void setLng(Double lng) {
 		this.lng = lng;
 	}
 
-	public String getLat() {
+	public Double getLat() {
 		return lat;
 	}
 
-	public void setLat(String lat) {
+	public void setLat(Double lat) {
 		this.lat = lat;
 	}
 

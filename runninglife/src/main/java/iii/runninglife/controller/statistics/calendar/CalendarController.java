@@ -24,7 +24,9 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import iii.runninglife.globalservice.CalulateTwoLatLng;
 import iii.runninglife.model.calendar.CalendarVO;
 import iii.runninglife.model.challdata.ChallDataCRUDService;
 import iii.runninglife.model.challdata.ChallDataPK;
@@ -37,6 +39,8 @@ import iii.runninglife.model.runner.RunnerService;
 import iii.runninglife.model.runner.RunnerVO;
 import iii.runninglife.model.sporthistory.SportHistoryService;
 import iii.runninglife.model.sporthistory.SportHistoryVO;
+import iii.runninglife.model.sporthistorypath.PathVO;
+import iii.runninglife.model.sporthistorypath.SportHistoryPathService;
 import iii.runninglife.model.sporthistorypath.SportHistoryPathVO;
 
 @RestController
@@ -45,6 +49,8 @@ import iii.runninglife.model.sporthistorypath.SportHistoryPathVO;
 public class CalendarController{
 	@Autowired
 	SportHistoryService sportHistoryService;
+	@Autowired
+	SportHistoryPathService sportHistoryPathService;
 	@Autowired
 	ChallDataCRUDService challDataCRUDService;
 	@Autowired
@@ -141,6 +147,7 @@ public class CalendarController{
 	public ModelAndView getSportHistoryDetailView(@RequestParam String recordID){
 		 
 		SportHistoryVO sportHistoryVO = sportHistoryService.getOneSportHistory(recordID);
+		List<SportHistoryPathVO> pathList = sportHistoryPathService.getPathsByRecordID(recordID);
 		Map<String,String> map = new HashMap<>();
 		String[] jsonArray;
 		
@@ -149,9 +156,11 @@ public class CalendarController{
 		map.put("duration", formatDurationTime(sportHistoryVO.getDuration()));
 		map.put("length", sportHistoryVO.getLength().toString() + "km");
 		map.put("avgSpeed", sportHistoryVO.getAvgSpeed().toString() + "km/h");
-		jsonArray = convert2Json(sportHistoryVO.getSportHistoryPaths()).split("/");
+		jsonArray = convert2Json(pathList).split("/");
 		map.put("paths", jsonArray[0]);
 		map.put("center", jsonArray[1]);
+		map.put("Zoom", getMapZoom(pathList).toString());
+		System.out.println(getMapZoom(pathList).toString());
 		
 		return new ModelAndView("calendar/sport_history_detail",map);
 	}
@@ -183,7 +192,7 @@ public class CalendarController{
 				":" + durationTime.substring(5);
 	}
 	
-	private String convert2Json(Set<SportHistoryPathVO> pathVOs){
+	private String convert2Json(List<SportHistoryPathVO> pathVOs){
 		StringBuilder points = new StringBuilder();
 		Double centerLat = 0.0;
 		Double centerLng = 0.0;
@@ -196,7 +205,6 @@ public class CalendarController{
 			if(points.length()>1)
 				points.append(",");
 			points.append(pathVO.toJson());
-			
 			
 			//加總經緯度
 			pathPoints = pathVO.toString().split("-");
@@ -216,5 +224,45 @@ public class CalendarController{
 		points.append("{lat:" + centerLat + ",lng:" + centerLng + "}");
 		
 		return points.toString();
+	}
+	
+	private Integer getMapZoom(List<SportHistoryPathVO> pathList){
+		
+		Double maxLength = getLatLngMaxLength(pathList);
+		int mapZoom = 20;
+		
+		if(maxLength<=0.5){
+			mapZoom=18;
+		}else if(maxLength<=2){
+			mapZoom=16;
+		}else{
+			mapZoom=14; 
+		}
+		
+		return mapZoom;
+	}
+	
+	private Double getLatLngMaxLength(List<SportHistoryPathVO> pathList){
+		Double maxLength = 0.0;
+		Double tempLength = 0.0;
+		List<PathVO> pathVOList = new ArrayList<>();
+		
+		for(SportHistoryPathVO sportHistoryPathVO:pathList){
+			pathVOList.addAll(new Gson().fromJson(sportHistoryPathVO.getPath(), new TypeToken<List<PathVO>>(){}.getType()));	
+		}
+		
+		for(int i=0;i<pathVOList.size();i++){
+			for(int j=i+1;j<pathVOList.size();j++){
+				tempLength = CalulateTwoLatLng.getDistance(
+									pathVOList.get(i).getLat(), 
+									pathVOList.get(i).getLng(),
+									pathVOList.get(j).getLat(), 
+									pathVOList.get(j).getLng());
+				if(tempLength > maxLength){
+					maxLength = tempLength;
+				}
+			}
+		}
+		return maxLength;
 	}
 }

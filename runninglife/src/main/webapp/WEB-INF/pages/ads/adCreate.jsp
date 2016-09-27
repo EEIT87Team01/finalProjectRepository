@@ -1,43 +1,176 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-<!-- Bootstrap -->
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
-<!-- Custom CSS -->
-<link href="../css/server/sb-admin.css" rel="stylesheet">
-<!-- Morris Charts CSS -->
-<link href="../css/server/plugins/morris.css" rel="stylesheet">
-<!-- Custom Fonts -->
-<link href="../font-awesome/server/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-<!-- Morris Charts JavaScript -->
-<script src="../js/server/plugins/morris/raphael.min.js"></script>
-<script src="../js/server/plugins/morris/morris.min.js"></script>
-<script src="../js/server/plugins/morris/morris-data.js"></script>
-<script>
-$(document).ready(function(){
-	adDetail();
-});
 
-function adDetail(){
+<link rel="stylesheet" href="/runninglife/static/css/bootstrap.min.css" />
+<link rel="stylesheet" href="/runninglife/static/css/bootstrap-theme.min.css"></link>
+<link rel="stylesheet" href="/runninglife/static/css/mainStyle.css"></link>
+<script src="/runninglife/static/js/jquery-3.1.0.min.js"></script>
+<script src="/runninglife/static/js/bootstrap.min.js"></script>
 
-    $(document).on('click',".create",function(){
-        
-    	ajax('POST', {'adName':$('.adName').val(),'division':$('.division').val(),'adStartTime':$('.adStartTime').val(),'adEndTime':$('.adEndTime').val(),'site':$('.site').val(),'priority':$('.priority').val()}, '../createAd.do', 'json', false);
-        window.location.href = "adList.jsp";
-	});
+
+	
+	<!-- Animate.css -->
+	<style type="text/css">@import url("<c:url value="/static/css/animate.css" />");</style>
+	<!-- Icomoon Icon Fonts-->
+	<style type="text/css">@import url("<c:url value="/static/css/icomoon.css" />");</style>
+	<!-- Flexslider  -->
+	<style type="text/css">@import url("<c:url value="/static/css/flexslider.css" />");</style>
+	<!-- Theme style  -->
+	<style type="text/css">@import url("<c:url value="/static/css/style.css" />");</style>
+	<!-- Modernizr JS -->
+	<script type="text/javascript" src="<c:url value="/static/js/modernizr-2.6.2.min.js" />"></script>
+	
+<title>Running Life</title>
+<!-- ico	 -->
+	<link rel="icon" type="image/png" href="/runninglife/images/icon.png">
+	
+<style type="text/css">
+ol, ul {
+    margin-top: 0;
+    margin-bottom: 10px;
 }
+</style>
+</head>
 
+
+<!-- 彈出式窗 -->
+<div class="modal fade bs-example-modal-sm" tabindex="-1" id="myModal" role="dialog" aria-labelledby="mySmallModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">登入</h4>
+      </div>
+      
+      <!-- 	get || post -->
+	  <!-- /Login/DBCheck -->
+      <form action="/runninglife/Login/DBCheck.do" method="post">
+      	<div style="padding-left:50px;">
+			<table >
+				<thead>
+					<tr>
+						<th>
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td class="cols-sm-6">
+						<label class="control-label">帳號:</label>
+						<input type="text" id="account" class="form-control" name="memberAccount" value="${param.memberAccount}">
+						</td>
+					</tr>
+					<tr>
+						<td>
+						<label class="control-label">密碼:</label>
+						<input type="text" class="form-control" id="password" name="password" value="${param.password}">
+						</td>
+					</tr>
+
+					<tr>
+						<td>
+							<a href="/runninglife/Login/ChangeForgetPage.do">忘記密碼?</a>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="/runninglife/Login/CreateAccountPage.do">新增用戶</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="modal-footer">
+			<button type="button" id="loginBtn" class="btn btn-primary">登入</button>
+			<button type="submit" id="loginBtn1" class="btn btn-primary hidden"></button>
+		    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+		</div>
+      </form>
+    </div>
+  </div>
+</div>
+	
+<script type="text/javascript">
+$(function(){
+	console.log('${membersVO.memberID}');
+	$('#myModal').on('shown.bs.modal', function () {
+		  $('#account').focus();
+	})
+	searchads();
+	$(function() {
+		// ---------------------------------------------------------------------------
+		// login.jsp
+		// ---------------------------------------------------------------------------
+		$('#loginBtn').click(function(){
+			var account = $('#account').val();
+			var password = $('#password').val();
+			var myUrl = '/runninglife/Login/LoginCheck.do';
+			var type = 'post';
+			var dataType = 'json';
+			var data = { "memberAccount" : account , "password" : password };
+			var response = ajaxFunction(myUrl,type,data,dataType);
+			console.log(response);
+			for ( var i in response) {
+				switch(response[i]){
+					case "WrongPassword":
+						$('#gridSystemModalLabel').text('密碼錯誤');
+						break;
+					case "NotExistAccount":
+						$('#gridSystemModalLabel').text('查無此帳號');
+						break;
+					case "LoginFail":
+						$('#gridSystemModalLabel').text('登入失敗');
+						break;
+					case "LoginOK":
+						$('#loginBtn1').click();
+						break;
+				}
+			}
+		});
+	});
+	//ajax
+	function ajaxFunction(url,type,data,dataType){
+		var result;
+		$.ajax({
+			url : url,
+			type : type,
+			dataType : dataType,
+			data : data,
+			async : false,
+			success : function(response){
+				result = response;
+			},
+			error : function(response) {
+				console.log("error");
+			}
+		});
+			return result;
+	}
+})
+
+function searchads() {
+	var adsData = ajax('GET', null, 'ads/searchDisplayAds.do', 'json', false);
+	console.log(adsData);
+	for ( var i in adsData) {
+		if(i==0){
+			$('.slides').find('.adName').text(adsData[i].adName);
+			$('.slides').find('a').attr('href',adsData[i].link);
+			$('.slides').find('.adli').attr('style',"background-image: url(<c:url value='photoController/getPhoto.do?photoID="+adsData[i].image+"'/>);");
+		}else{
+			var adsli=$($('.slides').find('.adli').clone()).clone();
+			$(adsli).find('.adName').text(adsData[i].adName);
+			$(adsli).find('a').attr('href',adsData[i].link);
+			$(adsli).attr('style',"background-image: url(<c:url value='photoController/getPhoto.do?photoID="+adsData[i].image+"'/>);");
+			$(adsli).removeClass().addClass('adShow');
+			$('.slides').append(adsli);
+		}
+	}
+}
 function ajax(Method, Data, Url, Datetype, Async) {
 	var result;
 	$.ajax({
@@ -53,233 +186,182 @@ function ajax(Method, Data, Url, Datetype, Async) {
 	});
 	return result;
 }
-
-$(document).on("click",".cancel",function(){
-
-    history.back();
-})
 </script>
-</head>
+<!-- Modal end-->
+
+
 <body>
-<div id="wrapper">
+	
+	
+	<div id="fh5co-page">
+	<header id="fh5co-header" role="banner">
+		<div class="container">
+			<div class="header-inner">
+				<h1><a href="index.html">RunningLife</a></h1>
+				<nav role="navigation">
+					<ul>
+						<li><a href="friend/page.do">塗鴉牆</a></li>
+						<li><a href="challenge/.do">挑戰</a></li>
+						<li><a href="">賽事活動</a></li>
+						<li><a href="about.html">行事曆</a></li>
+						<li><a href="contact.html">運動文章</a></li>
+						<!-- 判斷是否已登入 -->
+						<c:choose>
+						<c:when test="${!empty membersVO}">
+							<li>Hello, ${membersVO.firstName}</li>
+							<li class="cta"><a href="Login/Logout.do">Logout</a></li>
+						</c:when>
+						<c:otherwise>
+							<li class="cta" data-toggle="modal" data-target="#myModal"><a href="#">Login</a></li> <!-- 登入視窗按鈕 -->
+						</c:otherwise>	
+						</c:choose>
+					</ul>
+				</nav>
+			</div>
+		</div>
+	</header>
+	
+	<div class="container">
+	
+	</div>
+	<aside id="fh5co-hero" class="js-fullheight">
+		<div class="flexslider js-fullheight">
+			<ul class="slides">
+		   	<li style="background-image: url(<c:url value="/static/images/slide_1.jpg"/>);" class='adli'>
+		   		<div class="overlay-gradient"></div>
+		   		<div class="container">
+		   			<div class="col-md-10 col-md-offset-1 text-center js-fullheight slider-text">
+		   				<div class="slider-text-inner">
+		   					<h2 class='adName'>Start Your Startup With This Template</h2>
+		   					<p><a href="#" class="btn btn-primary btn-lg">馬上購買！！</a></p>
+		   				</div>
+		   			</div>
+		   		</div>
+		   	</li>
+		  	</ul>
+	  	</div>
+	</aside>
+	<div id="fh5co-services-section">
+		<div class="container">
 
-            <!-- Navigation -->
-            <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-                <!-- Brand and toggle get grouped for better mobile display -->
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="index.html">SB Admin</a>
-                </div>
-                <!-- Top Menu Items -->
-                <ul class="nav navbar-right top-nav">
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-envelope"></i> <b class="caret"></b></a>
-                        <ul class="dropdown-menu message-dropdown">
-                            <li class="message-preview">
-                                <a href="#">
-                                    <div class="media">
-                                        <span class="pull-left">
-                                            <img class="media-object" src="http://placehold.it/50x50" alt="">
-                                        </span>
-                                        <div class="media-body">
-                                            <h5 class="media-heading"><strong>John Smith</strong>
-                                            </h5>
-                                            <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
-                                            <p>Lorem ipsum dolor sit amet, consectetur...</p>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="message-preview">
-                                <a href="#">
-                                    <div class="media">
-                                        <span class="pull-left">
-                                            <img class="media-object" src="http://placehold.it/50x50" alt="">
-                                        </span>
-                                        <div class="media-body">
-                                            <h5 class="media-heading"><strong>John Smith</strong>
-                                            </h5>
-                                            <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
-                                            <p>Lorem ipsum dolor sit amet, consectetur...</p>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="message-preview">
-                                <a href="#">
-                                    <div class="media">
-                                        <span class="pull-left">
-                                            <img class="media-object" src="http://placehold.it/50x50" alt="">
-                                        </span>
-                                        <div class="media-body">
-                                            <h5 class="media-heading"><strong>John Smith</strong>
-                                            </h5>
-                                            <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
-                                            <p>Lorem ipsum dolor sit amet, consectetur...</p>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="message-footer">
-                                <a href="#">Read All New Messages</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bell"></i> <b class="caret"></b></a>
-                        <ul class="dropdown-menu alert-dropdown">
-                            <li>
-                                <a href="#">Alert Name <span class="label label-default">Alert Badge</span></a>
-                            </li>
-                            <li>
-                                <a href="#">Alert Name <span class="label label-primary">Alert Badge</span></a>
-                            </li>
-                            <li>
-                                <a href="#">Alert Name <span class="label label-success">Alert Badge</span></a>
-                            </li>
-                            <li>
-                                <a href="#">Alert Name <span class="label label-info">Alert Badge</span></a>
-                            </li>
-                            <li>
-                                <a href="#">Alert Name <span class="label label-warning">Alert Badge</span></a>
-                            </li>
-                            <li>
-                                <a href="#">Alert Name <span class="label label-danger">Alert Badge</span></a>
-                            </li>
-                            <li class="divider"></li>
-                            <li>
-                                <a href="#">View All</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> John Smith <b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a href="#"><i class="fa fa-fw fa-user"></i> Profile</a>
-                            </li>
-                            <li>
-                                <a href="#"><i class="fa fa-fw fa-envelope"></i> Inbox</a>
-                            </li>
-                            <li>
-                                <a href="#"><i class="fa fa-fw fa-gear"></i> Settings</a>
-                            </li>
-                            <li class="divider"></li>
-                            <li>
-                                <a href="#"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-                <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
-                <div class="collapse navbar-collapse navbar-ex1-collapse">
-                    <ul class="nav navbar-nav side-nav">
-                        <li class="active">
-                            <a href="index.html"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
-                        </li>
-                        <li>
-                            <a href="charts.html"><i class="fa fa-fw fa-bar-chart-o"></i> Charts</a>
-                        </li>
-                        <li>
-                            <a href="tables.html"><i class="fa fa-fw fa-table"></i> Tables</a>
-                        </li>
-                        <li>
-                            <a href="forms.html"><i class="fa fa-fw fa-edit"></i> Forms</a>
-                        </li>
-                        <li>
-                            <a href="bootstrap-elements.html"><i class="fa fa-fw fa-desktop"></i> Bootstrap Elements</a>
-                        </li>
-                        <li>
-                            <a href="bootstrap-grid.html"><i class="fa fa-fw fa-wrench"></i> Bootstrap Grid</a>
-                        </li>
-                        <li>
-                            <a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-arrows-v"></i> Dropdown <i class="fa fa-fw fa-caret-down"></i></a>
-                            <ul id="demo" class="collapse">
-                                <li>
-                                    <a href="#">Dropdown Item</a>
-                                </li>
-                                <li>
-                                    <a href="#">Dropdown Item</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="blank-page.html"><i class="fa fa-fw fa-file"></i> Blank Page</a>
-                        </li>
-                        <li>
-                            <a href="index-rtl.html"><i class="fa fa-fw fa-dashboard"></i> RTL Dashboard</a>
-                        </li>
-                    </ul>
-                </div>
-                <!-- /.navbar-collapse -->
-            </nav>
-            <h1>新增廣告</h1>
-           <div id="page-wrapper">
+			<div class="row">
+				<div class="col-md-4 animate-box">
+					<div class="services">
+						<i class="icon-map-marker"></i>
+						<div class="desc">
+							<h3>紀錄</h3>
+							<p>提供會員觀看自己的運動情況，藉以調整自身的運動頻率、運動時間及運動強度。</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4 animate-box">
+					<div class="services">
+						<i class="icon-comments"></i>
+						<div class="desc">
+							<h3>與好友互動</h3>
+							<p>提供會員擁有自己的塗鴉牆，可以在塗鴉牆上聊天、分享運動紀錄及運動資訊。</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4 animate-box">
+					<div class="services">
+						<i class="icon-trophy"></i>
+						<div class="desc">
+							<h3>挑戰</h3>
+							<p>可以藉此為自身設立目標，亦可做為好友間的小型競賽，與互相激勵以維持良好的運動習慣。</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-offset-2 col-md-4 animate-box">
+					<div class="services">
+						<i class="icon-flag-checkered"></i>
+						<div class="desc">
+							<h3>賽事參與</h3>
+							<p>由廠商與相關機構所不定期舉辦的大型賽事活動，可以評測自己過去努力是否有所成長，是會員間互相認識、互相交流最好活動。</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4 animate-box">
+					<div class="services">
+						<i class="icon-calendar"></i>
+						<div class="desc">
+							<h3>日曆</h3>
+							<p>可以記錄會員過去的運動時間、也可記錄會員所參加或將參加的挑戰及賽事活動。</p>
+						</div>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+	</div>
 
-                <div class="container-fluid">
 
-                    <img style="width:500px;height:400px;"/>
-                    <button class="btn btn-info chooseimg" style="margin-top:300px;">選擇圖片</button>
-                    <!-- Page Heading -->
-                    <table class = "table" id="adslist" rules="all" >
-                        <tr>
-                            <th>廣告標題</th>
-                            <td><input type="text" class='adName'/></td>
-                        </tr>
-                        <tr>
-                            <th>刊登位置</th>
-                            <td>
-                                <select class='division'>
-                                    <option value="首頁">首頁</option>
-                                    <option value="專區">專區</option>
-                                    <option value="廣告區">廣告區</option>
-                                </select>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>起始時間</th>
-                            <td><input type="text" class='adStartTime'/></td>
-                        </tr>
-                        <tr>
-                            <th>結束時間</th>
-                            <td><input type="text" class='adEndTime'/></td>
-                        </tr>
-                        <tr>
-                            <th>廣告網址</th>
-                            <td><input type="text" class='site' style="width:300px;"/></td>
-                        </tr>
-                        <tr>
-                            <th>優先性</th>
-                            <td>
-                                <select class='priority'>
-                                    <option value='1'>底</option>
-                                    <option value='2'>低</option>
-                                    <option value='3'>中</option>
-                                    <option value='4'>高</option>
-                                    <option value='5'>頂</option>
-                                </select>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">
-                                <button class="btn btn-primary create" >新增</button>
-                                <a href="adsList.jsp" class="btn btn-danger cancel">取消</a>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <!-- /.row -->
+	<div class="fh5co-cta" style="background-image: url(images/slide_2.jpg);">
+		<div class="overlay"></div>
+		<div class="container">
+			<div class="col-md-12 text-center animate-box">
+				<h3>We Try To Update The Site Everyday</h3>
+				<p><a href="#" class="btn btn-primary btn-outline with-arrow">回到頂端<i class="icon-arrow-up"></i></a></p>
+			</div>
+		</div>
+	</div>
 
-                
-            </div>
-            <!-- /.container-fluid -->
+	
+	<footer id="fh5co-footer" role="contentinfo">
+	
+		<div class="container">
+			<div class="col-md-3 col-sm-12 col-sm-push-0 col-xs-12 col-xs-push-0">
+				<h3>關於我們</h3>
+				<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. </p>
+				<p><a href="#" class="btn btn-primary btn-outline with-arrow btn-sm">Join Us <i class="icon-arrow-right"></i></a></p>
+			</div>
+			<div class="col-md-6 col-md-push-1 col-sm-12 col-sm-push-0 col-xs-12 col-xs-push-0">
+				<h3>聯絡我們</h3>
+				<ul class="float">
+					<li><a href="#">Web Design</a></li>
+					<li><a href="#">Branding &amp; Identity</a></li>
+					<li><a href="#">Free HTML5</a></li>
+					<li><a href="#">HandCrafted Templates</a></li>
+				</ul>
+				<ul class="float">
+					<li><a href="#">Free Bootstrap Template</a></li>
+					<li><a href="#">Free HTML5 Template</a></li>
+					<li><a href="#">Free HTML5 &amp; CSS3 Template</a></li>
+					<li><a href="#">HandCrafted Templates</a></li>
+				</ul>
 
-        </div>
-        <!-- /#page-wrapper -->
-</body>
+			</div>
+
+			<div class="col-md-2 col-md-push-1 col-sm-12 col-sm-push-0 col-xs-12 col-xs-push-0">
+				<h3>Follow Us</h3>
+				<ul class="fh5co-social">
+					<li><a href="#"><i class="icon-twitter"></i></a></li>
+					<li><a href="#"><i class="icon-facebook"></i></a></li>
+					<li><a href="#"><i class="icon-google-plus"></i></a></li>
+					<li><a href="#"><i class="icon-instagram"></i></a></li>
+				</ul>
+			</div>
+			
+			
+			<div class="col-md-12 fh5co-copyright text-center">
+				<p>&copy; 2016 Free HTML5 template. All Rights Reserved. <span>Designed with <i class="icon-heart"></i> by <a href="http://freehtml5.co/" target="_blank">FreeHTML5.co</a> Demo Images by <a href="http://unsplash.com/" target="_blank">Unsplash</a></span></p>	
+			</div>
+			
+		</div>
+	</footer>
+	</div>
+	
+	
+	<!-- jQuery Easing -->
+	<script type="text/javascript" src="<c:url value="/static/js/jquery.easing.1.3.js" />"></script>
+	<!-- Waypoints -->
+	<script type="text/javascript" src="<c:url value="/static/js/jquery.waypoints.min.js" />"></script>
+	<!-- Owl Carousel -->
+	<script type="text/javascript" src="<c:url value="/static/js/owl.carousel.min.js" />"></script>
+	<!-- Flexslider -->
+	<script type="text/javascript" src="<c:url value="/static/js/jquery.flexslider-min.js" />"></script>
+	<!-- MAIN JS -->
+	<script type="text/javascript" src="<c:url value="/static/js/main.js" />"></script>
+	
+	</body>
 </html>

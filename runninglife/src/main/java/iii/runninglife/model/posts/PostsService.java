@@ -1,6 +1,8 @@
 package iii.runninglife.model.posts;
 
+import java.sql.Date;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +15,6 @@ import iii.runninglife.model.goodstatus.GoodStatusDAO;
 import iii.runninglife.model.goodstatus.GoodStatusPK;
 import iii.runninglife.model.goodstatus.GoodStatusService;
 import iii.runninglife.model.goodstatus.GoodStatusVO;
-
 import iii.runninglife.model.members.MembersInterface;
 import iii.runninglife.model.members.MembersVO;
 import iii.runninglife.model.reportlist.ReportListService;
@@ -39,6 +40,8 @@ public class PostsService {
 	static GoodStatusVO goodStatusVO = new GoodStatusVO();
 	static GoodStatusDAO goodStatusDAO = new GoodStatusDAO();
 
+	
+	
 	public PostsVO newPosts(String postMemberID, String content, String imgPath) {
 		String postID = glovbalService.findMaxSeq("postID", new PostsVO());
 		membersVO = mdao.selectOne(postMemberID);
