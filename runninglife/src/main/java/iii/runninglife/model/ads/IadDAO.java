@@ -12,4 +12,5 @@ public interface IadDAO {
 	public AdsVO findByPrimaryKey(String adID);
 	public List<AdsVO> getAll();
 	public String countDateAd(String adTime);
+	public List<AdsVO> getDisplay();
 } // end of class IEmpDAO
