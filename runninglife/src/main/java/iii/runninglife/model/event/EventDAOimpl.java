@@ -1,19 +1,13 @@
 package iii.runninglife.model.event;
 
 import java.util.List;
-import java.util.Set;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import iii.runninglife.model.contest.ContestVO;
-import iii.runninglife.model.runner.RunnerDAOimpl;
-import iii.runninglife.model.runner.RunnerVO;
 @Repository
 @Transactional
 public class EventDAOimpl implements EventDAO {
@@ -150,11 +144,17 @@ public class EventDAOimpl implements EventDAO {
 //		return list;
 //	}
 	@Override
-	public List<EventVO> getEventById(ContestVO contestID) {
+	public List<EventVO> getEventById(Integer contestID) {
+		List<EventVO> list = null;
 		Session session = getSession();
-		Query query = session.createQuery(GET_EVENT_BY_ID);
-		query.setParameter("contestID", contestID);
-		return query.list();
+		try {
+			Query query = session.createQuery(GET_EVENT_BY_ID);
+			query.setParameter("contestID", contestID);
+			list = query.list();
+		} catch (RuntimeException ex) {
+			throw ex;
+		}
+		return list;
 	}
 //	@Override
 //	public List<EventVO> getEventById(Integer contestID) {

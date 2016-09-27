@@ -16,6 +16,7 @@ import com.google.gson.Gson;
 
 import iii.runninglife.model.challdata.ChallDataCRUDService;
 import iii.runninglife.model.challdata.ChallDataVO;
+import iii.runninglife.model.challs.ChallsCRUDService;
 import iii.runninglife.model.challdata.ChallDataPK;
 import iii.runninglife.model.members.MembersInterface;
 import iii.runninglife.model.members.MembersVO;
@@ -27,6 +28,8 @@ public class ChallDataCRUD_Servlet{
 	
 	@Autowired
 	ChallDataCRUDService challDataCRUDService;
+	@Autowired
+	ChallsCRUDService challsCRUDService;
 	@Autowired
 	MembersInterface mdao;
 	
@@ -40,7 +43,7 @@ public class ChallDataCRUD_Servlet{
 	
 	@RequestMapping(value = "/searchChallDataFromChallenID.do", method = RequestMethod.GET)
 	public @ResponseBody String searchChallDataFromChallenID(@RequestParam String challenID) {
-		List<ChallDataVO> allChallData = challDataCRUDService.challProgressService(challenID);
+		List<ChallDataVO> allChallData = challDataCRUDService.challProgressService(challsCRUDService.searchOneService(challenID));
 		String challDatajson = new Gson().toJson(allChallData);
 		return challDatajson;
 	}

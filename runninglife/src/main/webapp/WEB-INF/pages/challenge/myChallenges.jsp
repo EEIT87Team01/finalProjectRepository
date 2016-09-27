@@ -106,7 +106,7 @@ $(document).on("click",".back",function(){
 						<h4>${challenge.comment}</h4>
 						<h4>${challenge.locationID}</h4>
 						<h4>${challenge.challenStartTime} - ${challenge.challenEndTime}</h4>
-						<h4>${challenge.challenDistance}公里<p align="right"><a href="finishChallDetail/${challenge.challenID}.do" class="btn btn-success" >挑戰結果</a></p></h4>
+						<h4>${challenge.challenDistance}公里<p align="right"><a href="detail/${challenge.challenID}.do" class="btn btn-success" >詳細</a></p></h4>
 					</div>
 				</div>
 			</div>
@@ -128,7 +128,7 @@ $(document).on("click",".back",function(){
 			<h4>${challenge.founderID.firstName}, ${challenge.founderID.lastName}</h4>
 			<h4>${challenge.comment}</h4>
 			<h4><${challenge.challenStartTime} - ${challenge.challenEndTime}</h4>
-			<h4>${challenge.challenDistance}公里 <a href="ingChallDetail/${challenge.challenID}.do" class="btn btn-info" style="float:right;">挑戰進度</a></h4>
+			<h4>${challenge.challenDistance}公里 <a href="detail/${challenge.challenID}.do" class="btn btn-info" style="float:right;">詳細</a></h4>
 		</div>
 		</div>
 		</div>
@@ -152,7 +152,7 @@ $(document).on("click",".back",function(){
 						<h4>${challenge.comment}</h4>
 						<h4>${challenge.locationID}</h4>
 						<h4>${challenge.challenStartTime} - ${challenge.challenEndTime}</h4>
-						<h4>${challenge.challenDistance}公里<a href="finishChallDetail/${challenge.challenID}.do" class="btn btn-success"  style="float:right;">挑戰結果</a></h4>
+						<h4>${challenge.challenDistance}公里<a href="detail/${challenge.challenID}.do" class="btn btn-success"  style="float:right;">詳細</a></h4>
 					</div>
 				</div>
 			</div>
@@ -170,13 +170,13 @@ $(document).on("click",".back",function(){
 			<div class="row">
 				<div class="list">
 			    	<div class="challColumn">	
-						<h2>${challenge.challenName}</h2>
+						<h2>${challenge.challenName}<span style="float:right;"><span></span>天後開始</span></h2>
 						<hr style="border:1px solid blue;">
 						<h4>${challenge.founderID.firstName}, ${challenge.founderID.lastName}</h4>
 						<h4>${challenge.comment}</h4>
 						<h4>${challenge.locationID}</h4>
 						<h4>${challenge.challenStartTime} - ${challenge.challenEndTime}</h4>
-						<h4>${challenge.challenDistance}公里<a href="finishChallDetail/${challenge.challenID}.do" class="btn btn-success"  style="float:right;">挑戰結果</a></h4>
+						<h4>${challenge.challenDistance}公里<a href="detail/${challenge.challenID}.do" class="btn btn-success"  style="float:right;">詳細</a></h4>
 					</div>
 				</div>
 			</div>
@@ -200,7 +200,7 @@ $(document).on("click",".back",function(){
 						<h4>${challenge.comment}</h4>
 						<h4>${challenge.locationID}</h4>
 						<h4>${challenge.challenStartTime} - ${challenge.challenEndTime}</h4>
-						<h4>${challenge.challenDistance}公里<a href="finishChallDetail/${challenge.challenID}.do" class="btn btn-success"  style="float:right;">挑戰結果</a></h4>
+						<h4>${challenge.challenDistance}公里<a href="detail/${challenge.challenID}.do" class="btn btn-success"  style="float:right;">詳細</a></h4>
 					</div>
 				</div>
 			</div>

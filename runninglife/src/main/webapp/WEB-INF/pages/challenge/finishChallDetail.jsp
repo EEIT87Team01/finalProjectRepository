@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="r" uri="http://iii.runningLife.com/util" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -25,48 +26,118 @@
 
 <link href="https://fonts.googleapis.com/css?family=Raleway:200,300,400,700" rel="stylesheet">
 <!-- Animate.css -->
-	<link rel="stylesheet" href="../../css/web/animate.css">
-<!-- Icomoon Icon Fonts-->
-	<link rel="stylesheet" href="../../css/web/icomoon.css">
-<!-- Bootstrap  -->
-	<link rel="stylesheet" href="../../css/web/bootstrap.css">
-<!-- Flexslider  -->
-	<link rel="stylesheet" href="../../css/web/flexslider.css">
+	<link rel="stylesheet" href="/runninglife/static/css/animate.css">
+	<!-- Icomoon Icon Fonts-->
+	<link rel="stylesheet" href="/runninglife/static/css/icomoon.css">
+	<!-- Bootstrap  -->
+	<link rel="stylesheet" href="/runninglife/static/css/bootstrap.css">
+	<!-- Flexslider  -->
+	<link rel="stylesheet" href="/runninglife/static/css/flexslider.css">
+	<!-- Theme style  -->
+	<link rel="stylesheet" href="/runninglife/static/css/style.css">
+
+	<!-- Modernizr JS -->
+	<script src="js/modernizr-2.6.2.min.js"></script>
+	<!-- jQuery -->
+	<script src="/runninglife/static/js/jquery-3.1.0.min.js"></script>
+	<!-- jQuery Easing -->
+	<script src="/runninglife/static/js/jquery.easing.1.3.js"></script>
+	<!-- Bootstrap -->
+	<script src="/runninglife/static/js/bootstrap.min.js"></script>
+	<!-- Waypoints -->
+	<script src="/runninglife/static/js/jquery.waypoints.min.js"></script>
+	<!-- Flexslider -->
+	<script src="/runninglife/static/js/jquery.flexslider-min.js"></script>
+	<!-- Stellar -->
+	<script src="/runninglife/static/js/jquery.stellar.min.js"></script>
+	<!-- MAIN JS -->
+	<script src="/runninglife/static/js/main.js"></script>
 <!-- Owl Carousel  -->
-	<link rel="stylesheet" href="../../css/web/owl.carousel.min.css">
-	<link rel="stylesheet" href="../../css/web/owl.theme.default.min.css">
-<!-- Theme style  -->
-	<link rel="stylesheet" href="../../css/web/style.css">
-<!-- Modernizr JS -->
-	<script src="../../js/web/modernizr-2.6.2.min.js"></script>
-<!-- jQuery -->
-	<script src="../../js/web/jquery.min.js"></script>
-<!-- jQuery Easing -->
-	<script src="../../js/web/jquery.easing.1.3.js"></script>
-<!-- Bootstrap -->
-	<script src="../../js/web/bootstrap.min.js"></script>
-<!-- Waypoints -->
-	<script src="../../js/web/jquery.waypoints.min.js"></script>
+	<link rel="stylesheet" href="../css/web/owl.carousel.min.css">
+	<link rel="stylesheet" href="../css/web/owl.theme.default.min.css">
 <!-- Owl Carousel -->
-	<script src="../../js/web/owl.carousel.min.js"></script>
-<!-- Flexslider -->
-	<script src="../../js/web/jquery.flexslider-min.js"></script>
-<!-- MAIN JS -->
-	<script src="../../js/web/main.js"></script>	
+	<script src="../js/web/owl.carousel.min.js"></script>
 <script>
 $(document).ready(function(){
-	var h ="${challengeData.duration}".substring(0,3);
-	var m ="${challengeData.duration}".substring(3,5);
-	var s ="${challengeData.duration}".substring(5);
-	$('.durationH').text(h);
-	$('.durationM').text(m);
-	$('.durationS').text(s);
+
 });
+
 $(document).on("click",".back",function(){
+
     history.back();
 })
-</script>
+
+</script>	
 </head>
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">參加者名單</h4>
+      </div>
+      <div class="modal-body">
+       <table class="table">
+			<c:if test="${challengeDataList != null}">
+				<c:forEach var="challengeData" items="${challengeDataList}">
+				<c:set var="membersVO" value="${challengeData.challDataPK.memberID}" />
+					<tr><td><img src="data:image/png;base64,${r:byteToBase64(membersVO.photo)}" style='width:50px;height:50px;'></td>
+						<td>${membersVO.firstName}</td>
+						<td>${membersVO.lastName}</td>
+						<td>
+						<c:choose>
+							<c:when test="${challengeData.isFounder eq '1'}">發起者</c:when>
+							<c:otherwise>
+								<c:if test="${challengeData.status eq '0'}">未接受邀請</c:if>
+								<c:if test="${challengeData.status eq '1' || challengeData.status eq '2'}">參加者</c:if>
+							</c:otherwise>
+						</c:choose>
+						</td>
+					</tr>
+				</c:forEach>
+			</c:if>
+		</table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="ranking" tabindex="-1" role="dialog" aria-labelledby="rankingLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">排行榜</h4>
+      </div>
+      <div class="modal-body">
+       <table class="table">
+			<c:if test="${challengeDataList != null}">
+				<c:forEach begin="0" end="9" var="challengeData" items="${challengeDataList}">
+				<c:set var="membersVO" value="${challengeData.challDataPK.memberID}" />
+					<c:if test="${!(empty challengeData.finishTime)}">
+					<tr><td><span class="glyphicon glyphicon-star" aria-hidden="true"></span></td>
+						<td><img src="data:image/png;base64,${r:byteToBase64(membersVO.photo)}" style='width:50px;height:50px;'></td>
+						<td>${membersVO.firstName}</td>
+						<td>${membersVO.lastName}</td>
+						<td>完成時間：${challengeData.finishTime}
+						</td>
+					</tr>
+					</c:if>
+				</c:forEach>
+			</c:if>
+		</table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
 <body>
 <div id="fh5co-page">
 		<header id="fh5co-header" role="banner">
@@ -88,29 +159,56 @@ $(document).on("click",".back",function(){
 		</header>
 
 		<div class="container">
-			<h1>挑戰結果</h1>
-		</div>
-		<div class="container">
-		<c:set var="challenge" value="${challengeData.challDataPK.challenID}"/>
 			<div class="row">
+				<h1>挑戰資訊<span style="float:right;">${r:day(challenge.challenStartTime)} 天後結束</span></h1>
 				<table class="table">
-					<tr><td colspan="2"><h2>${challenge.challenName}</h2></td></tr>
 					<tr>
-						<td>${challenge.challenStartTime} - ${challenge.challenEndTime}</td>
-						<td>${challenge.challenDistance}公里</td>
-					</tr>
-					<tr><td>${challenge.comment}</td></tr>
-					<tr><td></td></tr>
+						<td>挑戰名稱：</td>
+						<td><span class="challenName">${challenge.challenName}</span></td>
+					</tr>               
 					<tr>
-						<td><img src="images/member1.jpg"/>${challenge.founderID.firstName}, ${challenge.founderID.lastName}</td>
-						<td>${challengeData.finishTime}</td>
-						<td><span class="durationH"></span>時<span class="durationM"></span>分<span class="durationS"></span>秒</td>
+						<td>挑戰地區：</td>
+						<td><span class="locationID">${challenge.locationID}</span></td>
+					</tr>                
+					<tr>
+						<td>挑戰距離：</td>
+						<td><span class="challenDistance">${challenge.challenDistance}</span></td>
+					</tr>                
+					<tr>
+						<td>起始時間：</td>
+						<td><span class="challenStartTime">${challenge.challenStartTime}</span></td>
+					</tr>                
+					<tr>
+						<td>結束時間：</td>
+						<td><span class="challenEndTime">${challenge.challenEndTime}</span></td>
+					</tr>                
+					<tr>
+						<td>挑戰目的：</td>
+						<td><span class="comment">${challenge.comment}</span></td>
+					</tr>    
+					<tr>
+						<td>挑戰發起人：</td>
+						<td><img src="data:image/png;base64,${r:byteToBase64(challenge.founderID.photo)}" style='width:50px;height:50px;'>
+							${challenge.founderID.firstName}, ${challenge.founderID.lastName}
+						</td>
+						
+					</tr>               
+					<tr>
+						<td><!-- Button trigger modal -->
+						<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">參加者名單</button>
+						<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#ranking">排行榜</button>
+						</td>
+						<td>
+						
+						</td>
 					</tr>
+					<tr><td colspan="2"><p align="right">
+					<c:if test="${myChallengeData.isFounder == '1'}"><button class="btn btn-danger" onclick="location.href='../deleteChall/${challenge.challenID}.do'">刪除</button></c:if>
+					<button class="btn btn-success back">返回</button></p></td></tr>
 				</table>
-				<p align="right"><button class="btn btn-success back">返回</button></p></td>
 			</div>
-
 		</div>
+
 
 		<div class="fh5co-cta" style="background-image: url(images/slide_2.jpg);">
 			<div class="overlay"></div>
@@ -124,7 +222,7 @@ $(document).on("click",".back",function(){
 
 
 		<footer id="fh5co-footer" role="contentinfo">
-
+			
 			<div class="container">
 				<div class="col-md-3 col-sm-12 col-sm-push-0 col-xs-12 col-xs-push-0">
 					<h3>About Us</h3>

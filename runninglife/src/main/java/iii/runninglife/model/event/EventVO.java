@@ -22,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import iii.runninglife.model.contest.ContestVO;
 import iii.runninglife.model.runner.RunnerVO;
 
+
 @Entity
 @Table(name = "event")
 public class EventVO implements Serializable {
@@ -45,8 +46,8 @@ public class EventVO implements Serializable {
 	@ManyToOne
 	@JsonBackReference(value="event-contest")
 	@JoinColumn(name = "contestID", referencedColumnName = "contestID",insertable = true, updatable = false)
-	private ContestVO contestID;
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "eventID",orphanRemoval = true,cascade=CascadeType.REMOVE)
+	private ContestVO contest;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "event",orphanRemoval = true,cascade=CascadeType.REMOVE)
 	@JsonBackReference(value="event-runners")
 	private Set<RunnerVO> runners ;
 	
@@ -56,17 +57,14 @@ public class EventVO implements Serializable {
 	public void setRunners(Set<RunnerVO> runners) {
 		this.runners = runners;
 	}
-
-
 	public EventVO() {
 		super();
 	}
-	
 	public ContestVO getContest() {
-		return contestID;
+		return contest;
 	}
-	public void setContest(ContestVO contestID) {
-		this.contestID = contestID;
+	public void setContest(ContestVO contest) {
+		this.contest = contest;
 	}
 	//偷吃
 //	public int getContestID() {

@@ -129,13 +129,13 @@ public class CalendarController{
 		while(races.hasNext()){
 			CalendarVO event = new CalendarVO();
 			runnerVO = races.next();
-			event.setId("R" + runnerVO.getRunnerPK().getContestID().getContestID());
-			event.setStart(runnerVO.getRunnerPK().getContestID().getStartDate().toString());
-			event.setEnd(runnerVO.getRunnerPK().getContestID().getStartDate().toString());
-			event.setTitle(runnerVO.getRunnerPK().getContestID().getContestName());
+			event.setId("R" + runnerVO.getPk().getContestID());
+			event.setStart(runnerVO.getContest().getStartDate().toString());
+			event.setEnd(runnerVO.getContest().getStartDate().toString());
+			event.setTitle(runnerVO.getContest().getContestName());
 			event.setColor("IndianRed"); 
 			event.setUrl(contextPath + 
-					"/calendar/race.do?contestID=" + runnerVO.getRunnerPK().getContestID().getContestID());
+					"/calendar/race.do?contestID=" + runnerVO.getPk().getContestID());
 			System.out.println("contest added");
 			eventList.add(event);
 		}

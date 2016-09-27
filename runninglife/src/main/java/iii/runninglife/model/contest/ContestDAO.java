@@ -10,6 +10,7 @@ public interface ContestDAO {
     public void delete(Integer contestID);
     public ContestVO findByPrimaryKey(Integer contestID);
     public List<ContestVO> getAll();
+    public List findByPrimaryKey2(Integer contestID) ;
     public List<ContestVO> page(Integer page);
     public int countPage();
     public List<ContestVO> date(String memberID,Date stDate, Date edDate);

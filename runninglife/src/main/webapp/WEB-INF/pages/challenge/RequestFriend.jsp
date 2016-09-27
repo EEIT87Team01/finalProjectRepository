@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="r" uri="http://iii.runningLife.com/util" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -52,41 +54,6 @@
 	<script src="../js/web/jquery.flexslider-min.js"></script>
 <!-- MAIN JS -->
 	<script src="../js/web/main.js"></script>
-<script>
-$(document).ready(function(){
-// 	challDetail();
-});
-
-function challDetail(){
-
-    $(document).on('click',".create",function(){
-        console.log("a");
-    	ajax('POST',{'challenName':$('.challenName').val(),'locationID':$('.locationID').val(),'challenDistance':$('.challenDistance').val(),'challenStartTime':$('.challenStartTime').val(),'challenEndTime':$('.challenEndTime').val(),'comment':$('.comment').val(),'founderID':'${membersVO.memberID}'}, 'createChall.do', 'json', false);
-//         window.location.href = "adList.jsp";
-	});
-}
-
-function ajax(Method, Data, Url, Datetype, Async) {
-	var result;
-	$.ajax({
-		type : Method,
-		data : Data,
-		url : Url,
-		dataType : Datetype,
-		async : Async,
-		success : function(response) {
-
-			result = response;
-		}
-	});
-	return result;
-}
-
-$(document).on("click",".cancel",function(){
-
-    history.back();
-})
-</script>	
 </head>
 <body>
 <div id="fh5co-page">
@@ -108,48 +75,28 @@ $(document).on("click",".cancel",function(){
 			</div>
 		</header>
 
-		<div class="container">
-			<div class="row">
-				<h1>創設新挑戰</h1>
-				<form action="createChall.do" method="post">
-				<table class="table">
-					<tr>
-						<td>挑戰名稱：</td>
-						<td><input type="text" name="challenName"></td>
-					</tr>               
-					<tr>
-						<td>挑戰距離：</td>
-						<td><input type="text" name="challenDistance"></td>
-					</tr>         
-					<tr>
-						<td>挑戰區域：</td>
-						<td><input type="text" name="locationID"></td>
-					</tr>                 
-					<tr>
-						<td>起始時間：</td>
-						<td><input type="text" name="challenStartTime"></td>
-					</tr>                
-					<tr>
-						<td>結束時間：</td>
-						<td><input type="text" name="challenEndTime"></td>
-					</tr>                
-					<tr>
-						<td>挑戰目的：</td>
-						<td><input type="text" name="comment"></td>
-					</tr>                
-					<tr>
-						<td colspan="2">
-							<p align="right">
-								<input type="hidden" name="founderID" value="${membersVO.memberID}"/>
-								<button type="submit" class="btn btn-success create">創設挑戰</button>
-						        <button class="btn btn-danger cancel">取消</button>
-						    </p>
-						</td>
-						<td></td>
+		<div class='container' style='margin-top:5%;'>
+	
+		<table  class="table" id="receivedList">
+			<tr style="text-align:center;">
+				<th>照片</th>
+				<th>FirstName</th>
+				<th>LastName</th>
+				<th>編輯</th>
+			</tr>
+			<c:if test="${friends != null}">
+				<c:forEach var="friend" items="${friends}">
+					<tr><td><img src="data:image/png;base64,${r:byteToBase64(friend.photo)}" style='width:50px;height:50px;'></td>
+						<td>${friend.firstName}</td>
+						<td>${friend.lastName}</td>
+						<td>
+						<button class="btn btn-accept" id="${friend.memberID}" >邀請挑戰</button>
 					</tr>
-				</table>
-				</form>
-			</div>
+				</c:forEach>
+			</c:if>
+				
+		</table>
+		<p align="right"><button type="button" class="btn btn-success" onclick="location.href='detail/${challenVO.challenID}.do'">完成</button></p>
 		</div>
 
 
@@ -207,5 +154,23 @@ $(document).on("click",".cancel",function(){
 			</div>
 		</footer>
 	</div>
+	<script type="text/javascript">
+	$(function(){
+		$("button").click(function(){
+			var btn = $(this);
+			var friend = $(this).attr("id");
+			$.ajax({
+				type: "post", 
+				datatype: "json",
+				data : { "memberID" : friend, "challenID" : '${challenVO.challenID}'},
+				url: 'challenRequestFriend.do',
+				success: function(){
+					btn.text("已邀請").attr("class","btn btn-primary");
+					btn.off();
+				}
+			});
+		});
+	});
+	</script>
 </body>
 </html>

@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="r" uri="http://iii.runningLife.com/util" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -26,40 +26,87 @@
 
 <link href="https://fonts.googleapis.com/css?family=Raleway:200,300,400,700" rel="stylesheet">
 <!-- Animate.css -->
-	<link rel="stylesheet" href="../../css/web/animate.css">
-<!-- Icomoon Icon Fonts-->
-	<link rel="stylesheet" href="../../css/web/icomoon.css">
-<!-- Bootstrap  -->
-	<link rel="stylesheet" href="../../css/web/bootstrap.css">
-<!-- Flexslider  -->
-	<link rel="stylesheet" href="../../css/web/flexslider.css">
+	<link rel="stylesheet" href="/runninglife/static/css/animate.css">
+	<!-- Icomoon Icon Fonts-->
+	<link rel="stylesheet" href="/runninglife/static/css/icomoon.css">
+	<!-- Bootstrap  -->
+	<link rel="stylesheet" href="/runninglife/static/css/bootstrap.css">
+	<!-- Flexslider  -->
+	<link rel="stylesheet" href="/runninglife/static/css/flexslider.css">
+	<!-- Theme style  -->
+	<link rel="stylesheet" href="/runninglife/static/css/style.css">
+
+	<!-- Modernizr JS -->
+	<script src="js/modernizr-2.6.2.min.js"></script>
+	<!-- jQuery -->
+	<script src="/runninglife/static/js/jquery-3.1.0.min.js"></script>
+	<!-- jQuery Easing -->
+	<script src="/runninglife/static/js/jquery.easing.1.3.js"></script>
+	<!-- Bootstrap -->
+	<script src="/runninglife/static/js/bootstrap.min.js"></script>
+	<!-- Waypoints -->
+	<script src="/runninglife/static/js/jquery.waypoints.min.js"></script>
+	<!-- Flexslider -->
+	<script src="/runninglife/static/js/jquery.flexslider-min.js"></script>
+	<!-- Stellar -->
+	<script src="/runninglife/static/js/jquery.stellar.min.js"></script>
+	<!-- MAIN JS -->
+	<script src="/runninglife/static/js/main.js"></script>
 <!-- Owl Carousel  -->
-	<link rel="stylesheet" href="../../css/web/owl.carousel.min.css">
-	<link rel="stylesheet" href="../../css/web/owl.theme.default.min.css">
-<!-- Theme style  -->
-	<link rel="stylesheet" href="../../css/web/style.css">
-<!-- Modernizr JS -->
-	<script src="../../js/web/modernizr-2.6.2.min.js"></script>
-<!-- jQuery -->
-	<script src="../../js/web/jquery.min.js"></script>
-<!-- jQuery Easing -->
-	<script src="../../js/web/jquery.easing.1.3.js"></script>
-<!-- Bootstrap -->
-	<script src="../../js/web/bootstrap.min.js"></script>
-<!-- Waypoints -->
-	<script src="../../js/web/jquery.waypoints.min.js"></script>
+	<link rel="stylesheet" href="../css/web/owl.carousel.min.css">
+	<link rel="stylesheet" href="../css/web/owl.theme.default.min.css">
 <!-- Owl Carousel -->
-	<script src="../../js/web/owl.carousel.min.js"></script>
-<!-- Flexslider -->
-	<script src="../../js/web/jquery.flexslider-min.js"></script>
-<!-- MAIN JS -->
-	<script src="../../js/web/main.js"></script>	
+	<script src="../js/web/owl.carousel.min.js"></script>
 <script>
+$(document).ready(function(){
+
+});
+
 $(document).on("click",".back",function(){
+
     history.back();
 })
-</script>
+
+</script>	
 </head>
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">參加者名單</h4>
+      </div>
+      <div class="modal-body">
+       <table class="table">
+			<c:if test="${challengeDataList != null}">
+				<c:forEach var="challengeData" items="${challengeDataList}">
+				<c:set var="membersVO" value="${challengeData.challDataPK.memberID}" />
+					<tr><td><img src="data:image/png;base64,${r:byteToBase64(membersVO.photo)}" style='width:50px;height:50px;'></td>
+						<td>${membersVO.firstName}</td>
+						<td>${membersVO.lastName}</td>
+						<td>
+						<c:choose>
+							<c:when test="${challengeData.isFounder eq '1'}">發起者</c:when>
+							<c:otherwise>
+								<c:if test="${challengeData.status eq '0'}">未接受邀請</c:if>
+								<c:if test="${challengeData.status eq '1' || challengeData.status eq '2'}">參加者</c:if>
+							</c:otherwise>
+						</c:choose>
+						</td>
+					</tr>
+				</c:forEach>
+			</c:if>
+		</table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
 <body>
 <div id="fh5co-page">
 		<header id="fh5co-header" role="banner">
@@ -79,77 +126,113 @@ $(document).on("click",".back",function(){
 				</div>
 			</div>
 		</header>
-		<div class="container">
-			<h1>挑戰進度</h1>
-		</div>
 
 		<div class="container">
 			<div class="row">
-				<div>
-				<c:set var="challenge" value="${challengeData.challDataPK.challenID}"/>
-					<div><span class="challenName">${challenge.challenName}</span><p align="right"><span class="founderID">${challenge.founderID.firstName}, ${challenge.founderID.lastName}</span></p>
-						<hr style="border:1px solid blue;">
-						<div><span class="day">${r:day(challenge.challenEndTime)}</span>天後結束  距離：<span class="challenDistance">${challenge.challenDistance}</span>公里</div>
-						<div><span class="comment">${challenge.comment}</span></div>
-						<div>
-							<span class="memberID"></span>
-							<div class="progress">
-								<div class="progress-bar progress-bar-striped active process" role="progressbar" aria-valuenow="${challengeData.processLength}" aria-valuemin="0" aria-valuemax="100" style="width:${challengeData.processLength}%" >
-								${challengeData.processLength}%
-								</div>
-							</div>
-						</div>
-						<p align="right"><button class="btn btn-success back">返回</button></p></td>
-					</div>
+				<h1>挑戰資訊<span style="float:right;">${r:day(challenge.challenStartTime)} 天後結束</span></h1>
+				<table class="table">
+					<tr>
+						<td>挑戰名稱：</td>
+						<td><span class="challenName">${challenge.challenName}</span></td>
+					</tr>               
+					<tr>
+						<td>挑戰地區：</td>
+						<td><span class="locationID">${challenge.locationID}</span></td>
+					</tr>                
+					<tr>
+						<td>挑戰距離：</td>
+						<td><span class="challenDistance">${challenge.challenDistance}</span></td>
+					</tr>                
+					<tr>
+						<td>起始時間：</td>
+						<td><span class="challenStartTime">${challenge.challenStartTime}</span></td>
+					</tr>                
+					<tr>
+						<td>結束時間：</td>
+						<td><span class="challenEndTime">${challenge.challenEndTime}</span></td>
+					</tr>                
+					<tr>
+						<td>挑戰目的：</td>
+						<td><span class="comment">${challenge.comment}</span></td>
+					</tr>    
+					<tr>
+						<td>挑戰發起人：</td>
+						<td><img src="data:image/png;base64,${r:byteToBase64(challenge.founderID.photo)}" style='width:50px;height:50px;'>
+							${challenge.founderID.firstName}, ${challenge.founderID.lastName}
+						</td>
+						
+					</tr>               
+					<tr>
+						<td><!-- Button trigger modal -->
+						<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+						  參加者名單
+						</button>
+						</td>
+						<td>
+						
+						</td>
+					</tr>
+					<tr><td colspan="2"><p align="right">
+					<c:if test="${myChallengeData.isFounder == '1'}"><button class="btn btn-danger" onclick="location.href='../deleteChall/${challenge.challenID}.do'">刪除</button></c:if>
+					<button class="btn btn-success back">返回</button></p></td></tr>
+				</table>
+			</div>
+		</div>
+
+
+		<div class="fh5co-cta" style="background-image: url(images/slide_2.jpg);">
+			<div class="overlay"></div>
+			<div class="container">
+				<div class="col-md-12 text-center animate-box">
+					<h3>We Try To Update The Site Everyday</h3>
+					<p><a href="#" class="btn btn-primary btn-outline with-arrow">Get started now! <i class="icon-arrow-right"></i></a></p>
 				</div>
 			</div>
 		</div>
 
 
-
-			<footer id="fh5co-footer" role="contentinfo">
-
-				<div class="container">
-					<div class="col-md-3 col-sm-12 col-sm-push-0 col-xs-12 col-xs-push-0">
-						<h3>About Us</h3>
-						<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. </p>
-						<p><a href="#" class="btn btn-primary btn-outline with-arrow btn-sm">Join Us <i class="icon-arrow-right"></i></a></p>
-					</div>
-					<div class="col-md-6 col-md-push-1 col-sm-12 col-sm-push-0 col-xs-12 col-xs-push-0">
-						<h3>Our Services</h3>
-						<ul class="float">
-							<li><a href="#">Web Design</a></li>
-							<li><a href="#">Branding &amp; Identity</a></li>
-							<li><a href="#">Free HTML5</a></li>
-							<li><a href="#">HandCrafted Templates</a></li>
-						</ul>
-						<ul class="float">
-							<li><a href="#">Free Bootstrap Template</a></li>
-							<li><a href="#">Free HTML5 Template</a></li>
-							<li><a href="#">Free HTML5 &amp; CSS3 Template</a></li>
-							<li><a href="#">HandCrafted Templates</a></li>
-						</ul>
-
-					</div>
-
-					<div class="col-md-2 col-md-push-1 col-sm-12 col-sm-push-0 col-xs-12 col-xs-push-0">
-						<h3>Follow Us</h3>
-						<ul class="fh5co-social">
-							<li><a href="#"><i class="icon-twitter"></i></a></li>
-							<li><a href="#"><i class="icon-facebook"></i></a></li>
-							<li><a href="#"><i class="icon-google-plus"></i></a></li>
-							<li><a href="#"><i class="icon-instagram"></i></a></li>
-						</ul>
-					</div>
-
-
-					<div class="col-md-12 fh5co-copyright text-center">
-						<p>&copy; 2016 Free HTML5 template. All Rights Reserved. <span>Designed with <i class="icon-heart"></i> by <a href="http://freehtml5.co/" target="_blank">FreeHTML5.co</a> Demo Images by <a href="http://unsplash.com/" target="_blank">Unsplash</a></span></p>	
-					</div>
+		<footer id="fh5co-footer" role="contentinfo">
+			
+			<div class="container">
+				<div class="col-md-3 col-sm-12 col-sm-push-0 col-xs-12 col-xs-push-0">
+					<h3>About Us</h3>
+					<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. </p>
+					<p><a href="#" class="btn btn-primary btn-outline with-arrow btn-sm">Join Us <i class="icon-arrow-right"></i></a></p>
+				</div>
+				<div class="col-md-6 col-md-push-1 col-sm-12 col-sm-push-0 col-xs-12 col-xs-push-0">
+					<h3>Our Services</h3>
+					<ul class="float">
+						<li><a href="#">Web Design</a></li>
+						<li><a href="#">Branding &amp; Identity</a></li>
+						<li><a href="#">Free HTML5</a></li>
+						<li><a href="#">HandCrafted Templates</a></li>
+					</ul>
+					<ul class="float">
+						<li><a href="#">Free Bootstrap Template</a></li>
+						<li><a href="#">Free HTML5 Template</a></li>
+						<li><a href="#">Free HTML5 &amp; CSS3 Template</a></li>
+						<li><a href="#">HandCrafted Templates</a></li>
+					</ul>
 
 				</div>
-			</footer>
-		</div>
 
+				<div class="col-md-2 col-md-push-1 col-sm-12 col-sm-push-0 col-xs-12 col-xs-push-0">
+					<h3>Follow Us</h3>
+					<ul class="fh5co-social">
+						<li><a href="#"><i class="icon-twitter"></i></a></li>
+						<li><a href="#"><i class="icon-facebook"></i></a></li>
+						<li><a href="#"><i class="icon-google-plus"></i></a></li>
+						<li><a href="#"><i class="icon-instagram"></i></a></li>
+					</ul>
+				</div>
+
+
+				<div class="col-md-12 fh5co-copyright text-center">
+					<p>&copy; 2016 Free HTML5 template. All Rights Reserved. <span>Designed with <i class="icon-heart"></i> by <a href="http://freehtml5.co/" target="_blank">FreeHTML5.co</a> Demo Images by <a href="http://unsplash.com/" target="_blank">Unsplash</a></span></p>	
+				</div>
+
+			</div>
+		</footer>
+	</div>
 </body>
 </html>

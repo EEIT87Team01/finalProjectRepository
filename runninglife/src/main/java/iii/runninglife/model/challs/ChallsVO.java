@@ -2,14 +2,21 @@ package iii.runninglife.model.challs;
 
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.engine.spi.CascadeStyle;
+
+import iii.runninglife.model.challdata.ChallDataVO;
 import iii.runninglife.model.members.MembersVO;
 
 @Entity
@@ -26,22 +33,20 @@ public class ChallsVO implements Serializable{
 	private String image;
 	private MembersVO founderID;
 	
-//	@OneToMany
-//	@JoinColumn( name = "challDataPK.challenID")
-//	private Set<ChallDataVO> challDatas = new HashSet<ChallDataVO>();
+//	@OneToMany(cascade = {CascadeType.ALL})
+//	@JoinColumn(referencedColumnName = "challDataPK.challenID")
+//	private Set<ChallDataVO> challDataVOs;
 	
 //	@OneToMany( fetch = FetchType.LAZY, mappedBy = "challDatas.challDataPK.memberID" )
 //	@JoinColumn( name = "memberID" )
 //	private Set<MembersVO> members = new HashSet<MembersVO>();
 	
-//	public Set<ChallDataVO> getChallDatas() {
-//		return challDatas;
+//	public Set<ChallDataVO> getChallDataVOs() {
+//		return challDataVOs;
 //	}
-//
-//	public void setChallDatas(Set<ChallDataVO> challDatas) {
-//		this.challDatas = challDatas;
+//	public void setChallDataVOs(Set<ChallDataVO> challDataVOs) {
+//		this.challDataVOs = challDataVOs;
 //	}
-
 	public ChallsVO(){
 		
 	}

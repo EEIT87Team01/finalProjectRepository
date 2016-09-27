@@ -27,11 +27,11 @@ public class PostsService {
 	@Autowired
 	ReportListService reportListService;
 	@Autowired
-	private PostsDAO_interface postsDAO;
+	PostsDAO_interface postsDAO;
 	@Autowired
 	GoodStatusService goodStatusService;
 	@Autowired
-	private MembersInterface mdao;
+	MembersInterface mdao;
 	
 	static MembersVO membersVO = new MembersVO();
 	static PostsVO postsVO = new PostsVO();

@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="r" uri="http://iii.runningLife.com/util" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -24,70 +26,87 @@
 
 <link href="https://fonts.googleapis.com/css?family=Raleway:200,300,400,700" rel="stylesheet">
 <!-- Animate.css -->
-	<link rel="stylesheet" href="../css/web/animate.css">
-<!-- Icomoon Icon Fonts-->
-	<link rel="stylesheet" href="../css/web/icomoon.css">
-<!-- Bootstrap  -->
-	<link rel="stylesheet" href="../css/web/bootstrap.css">
-<!-- Flexslider  -->
-	<link rel="stylesheet" href="../css/web/flexslider.css">
+	<link rel="stylesheet" href="/runninglife/static/css/animate.css">
+	<!-- Icomoon Icon Fonts-->
+	<link rel="stylesheet" href="/runninglife/static/css/icomoon.css">
+	<!-- Bootstrap  -->
+	<link rel="stylesheet" href="/runninglife/static/css/bootstrap.css">
+	<!-- Flexslider  -->
+	<link rel="stylesheet" href="/runninglife/static/css/flexslider.css">
+	<!-- Theme style  -->
+	<link rel="stylesheet" href="/runninglife/static/css/style.css">
+
+	<!-- Modernizr JS -->
+	<script src="js/modernizr-2.6.2.min.js"></script>
+	<!-- jQuery -->
+	<script src="/runninglife/static/js/jquery-3.1.0.min.js"></script>
+	<!-- jQuery Easing -->
+	<script src="/runninglife/static/js/jquery.easing.1.3.js"></script>
+	<!-- Bootstrap -->
+	<script src="/runninglife/static/js/bootstrap.min.js"></script>
+	<!-- Waypoints -->
+	<script src="/runninglife/static/js/jquery.waypoints.min.js"></script>
+	<!-- Flexslider -->
+	<script src="/runninglife/static/js/jquery.flexslider-min.js"></script>
+	<!-- Stellar -->
+	<script src="/runninglife/static/js/jquery.stellar.min.js"></script>
+	<!-- MAIN JS -->
+	<script src="/runninglife/static/js/main.js"></script>
 <!-- Owl Carousel  -->
 	<link rel="stylesheet" href="../css/web/owl.carousel.min.css">
 	<link rel="stylesheet" href="../css/web/owl.theme.default.min.css">
-<!-- Theme style  -->
-	<link rel="stylesheet" href="../css/web/style.css">
-<!-- Modernizr JS -->
-	<script src="../js/web/modernizr-2.6.2.min.js"></script>
-<!-- jQuery -->
-	<script src="../js/web/jquery.min.js"></script>
-<!-- jQuery Easing -->
-	<script src="../js/web/jquery.easing.1.3.js"></script>
-<!-- Bootstrap -->
-	<script src="../js/web/bootstrap.min.js"></script>
-<!-- Waypoints -->
-	<script src="../js/web/jquery.waypoints.min.js"></script>
 <!-- Owl Carousel -->
 	<script src="../js/web/owl.carousel.min.js"></script>
-<!-- Flexslider -->
-	<script src="../js/web/jquery.flexslider-min.js"></script>
-<!-- MAIN JS -->
-	<script src="../js/web/main.js"></script>
 <script>
 $(document).ready(function(){
-// 	challDetail();
+
 });
 
-function challDetail(){
-
-    $(document).on('click',".create",function(){
-        console.log("a");
-    	ajax('POST',{'challenName':$('.challenName').val(),'locationID':$('.locationID').val(),'challenDistance':$('.challenDistance').val(),'challenStartTime':$('.challenStartTime').val(),'challenEndTime':$('.challenEndTime').val(),'comment':$('.comment').val(),'founderID':'${membersVO.memberID}'}, 'createChall.do', 'json', false);
-//         window.location.href = "adList.jsp";
-	});
-}
-
-function ajax(Method, Data, Url, Datetype, Async) {
-	var result;
-	$.ajax({
-		type : Method,
-		data : Data,
-		url : Url,
-		dataType : Datetype,
-		async : Async,
-		success : function(response) {
-
-			result = response;
-		}
-	});
-	return result;
-}
-
-$(document).on("click",".cancel",function(){
+$(document).on("click",".back",function(){
 
     history.back();
 })
+
 </script>	
 </head>
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">參加者名單</h4>
+      </div>
+      <div class="modal-body">
+       <table class="table">
+			<c:if test="${challengeDataList != null}">
+				<c:forEach var="challengeData" items="${challengeDataList}">
+				<c:set var="membersVO" value="${challengeData.challDataPK.memberID}" />
+					<tr><td><img src="data:image/png;base64,${r:byteToBase64(membersVO.photo)}" style='width:50px;height:50px;'></td>
+						<td>${membersVO.firstName}</td>
+						<td>${membersVO.lastName}</td>
+						<td>
+						<c:choose>
+							<c:when test="${challengeData.isFounder eq '1'}">發起者</c:when>
+							<c:otherwise>
+								<c:if test="${challengeData.status eq '0'}">未接受邀請</c:if>
+								<c:if test="${challengeData.status eq '1' || challengeData.status eq '2'}">參加者</c:if>
+							</c:otherwise>
+						</c:choose>
+						</td>
+					</tr>
+				</c:forEach>
+			</c:if>
+		</table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
 <body>
 <div id="fh5co-page">
 		<header id="fh5co-header" role="banner">
@@ -110,50 +129,58 @@ $(document).on("click",".cancel",function(){
 
 		<div class="container">
 			<div class="row">
-				<h1>創設新挑戰</h1>
-				<form action="createChall.do" method="post">
+				<h1>挑戰資訊<span style="float:right;">${r:day(challenge.challenStartTime)} 天後開始</span></h1>
 				<table class="table">
 					<tr>
 						<td>挑戰名稱：</td>
-						<td><input type="text" name="challenName"></td>
+						<td><span class="challenName">${challenge.challenName}</span></td>
 					</tr>               
 					<tr>
-						<td>挑戰距離：</td>
-						<td><input type="text" name="challenDistance"></td>
-					</tr>         
+						<td>挑戰地區：</td>
+						<td><span class="locationID">${challenge.locationID}</span></td>
+					</tr>                
 					<tr>
-						<td>挑戰區域：</td>
-						<td><input type="text" name="locationID"></td>
-					</tr>                 
+						<td>挑戰距離：</td>
+						<td><span class="challenDistance">${challenge.challenDistance}</span></td>
+					</tr>                
 					<tr>
 						<td>起始時間：</td>
-						<td><input type="text" name="challenStartTime"></td>
+						<td><span class="challenStartTime">${challenge.challenStartTime}</span></td>
 					</tr>                
 					<tr>
 						<td>結束時間：</td>
-						<td><input type="text" name="challenEndTime"></td>
+						<td><span class="challenEndTime">${challenge.challenEndTime}</span></td>
 					</tr>                
 					<tr>
 						<td>挑戰目的：</td>
-						<td><input type="text" name="comment"></td>
-					</tr>                
+						<td><span class="comment">${challenge.comment}</span></td>
+					</tr>    
 					<tr>
-						<td colspan="2">
-							<p align="right">
-								<input type="hidden" name="founderID" value="${membersVO.memberID}"/>
-								<button type="submit" class="btn btn-success create">創設挑戰</button>
-						        <button class="btn btn-danger cancel">取消</button>
-						    </p>
+						<td>挑戰發起人：</td>
+						<td><img src="data:image/png;base64,${r:byteToBase64(challenge.founderID.photo)}" style='width:50px;height:50px;'>
+							${challenge.founderID.firstName}, ${challenge.founderID.lastName}
 						</td>
-						<td></td>
+						
+					</tr>               
+					<tr>
+						<td><!-- Button trigger modal -->
+						<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+						  參加者名單
+						</button>
+						</td>
+						<td>
+						
+						</td>
 					</tr>
+					<tr><td colspan="2"><p align="right">
+					<c:if test="${myChallengeData.isFounder == '1'}"><button class="btn btn-danger" onclick="location.href='../deleteChall/${challenge.challenID}.do'">刪除</button></c:if>
+					<button class="btn btn-success back">返回</button></p></td></tr>
 				</table>
-				</form>
 			</div>
 		</div>
 
 
-		<div class="fh5co-cta" style="background-image: url(../images/slide_2.jpg);">
+		<div class="fh5co-cta" style="background-image: url(images/slide_2.jpg);">
 			<div class="overlay"></div>
 			<div class="container">
 				<div class="col-md-12 text-center animate-box">
