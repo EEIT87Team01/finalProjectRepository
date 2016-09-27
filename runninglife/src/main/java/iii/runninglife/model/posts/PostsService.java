@@ -15,7 +15,6 @@ import iii.runninglife.model.goodstatus.GoodStatusDAO;
 import iii.runninglife.model.goodstatus.GoodStatusPK;
 import iii.runninglife.model.goodstatus.GoodStatusService;
 import iii.runninglife.model.goodstatus.GoodStatusVO;
-
 import iii.runninglife.model.members.MembersInterface;
 import iii.runninglife.model.members.MembersVO;
 import iii.runninglife.model.reportlist.ReportListService;
@@ -40,9 +39,7 @@ public class PostsService {
 	static GoodStatusPK goodStatusPK = new GoodStatusPK();
 	static GoodStatusVO goodStatusVO = new GoodStatusVO();
 	static GoodStatusDAO goodStatusDAO = new GoodStatusDAO();
-	Date date  =new Date(System.currentTimeMillis());
-	SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-	String dateString = sdf.format(date);
+
 	
 	
 	public PostsVO newPosts(String postMemberID, String content, String imgPath) {

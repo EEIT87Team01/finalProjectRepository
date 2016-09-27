@@ -30,16 +30,19 @@ public class ReportController {
 		map.put("finishReportListVO",finishReportListVO);
 		return new ModelAndView("/report/report",map);
 	}
+	
 	@RequestMapping(value = "/oneReportList.do", method = RequestMethod.POST)
 	public ModelAndView oneReportList(@RequestParam String postID,@RequestParam String reporterID) {
 		ReportListVO oneReportList = reportListSvc.getOneReportList(postID, reporterID);
 		return new ModelAndView("report/report", "oneReportList", oneReportList);
 	}
+	
 	@RequestMapping(value = "/reportListCheck.do", method = RequestMethod.POST)
 	public ModelAndView reportListCheck(@RequestParam String postID,@RequestParam String reporterID ,@RequestParam String status ) {
 		reportListSvc.checkReportList(postID, reporterID, status);
 		return null;
 	}
+	
 	@RequestMapping(value = "/newReport.do", method = RequestMethod.POST)
 	public ModelAndView newReport(@RequestParam String reportPostID, @RequestParam String reporterID,@RequestParam String typeID, @RequestParam String reportComment) {
 		reportListSvc.newReport(reportPostID, reporterID, typeID, reportComment);

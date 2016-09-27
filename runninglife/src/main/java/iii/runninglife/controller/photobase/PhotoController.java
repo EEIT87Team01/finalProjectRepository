@@ -34,7 +34,7 @@ public class PhotoController {
 	LoginService loginService;
 
 	@RequestMapping(value = "/getPhoto.do", method = RequestMethod.GET)
-	public @ResponseBody String getPhoto(@RequestParam String photoID, HttpServletResponse res) throws IOException {
+	public @ResponseBody String getPhoto(HttpServletResponse res,@RequestParam String photoID) throws IOException {
 		res.setContentType("image/jpeg");
 		OutputStream out = res.getOutputStream();
 		byte[] photo = PhotoSvc.getPhoto(photoID, out);
@@ -43,13 +43,12 @@ public class PhotoController {
 	}
 
 	@RequestMapping(value = "/getMemberPhoto.do", method = RequestMethod.POST)
-	public void getPhotoByte(HttpServletRequest req) throws IOException, ServletException {
+	public void getPhotoByte(HttpServletRequest req,@RequestParam String memberID) throws IOException, ServletException {
 		List<Part> fileParts = req.getParts().stream().filter(part -> "file1".equals(part.getName()))
 				.collect(Collectors.toList());
 		for (Part filePart : fileParts) {
 			InputStream is = filePart.getInputStream();
 			byte[] bytes = IOUtils.toByteArray(is);
-			String memberID = "F349A8E2-DE67-4F70-838B-C099C687D57F";
 			loginService.getPhotoFromByte(memberID, bytes);
 		}
 	}

@@ -73,7 +73,6 @@ public class PostsController {
 		return new ModelAndView("posts/posts",map);
 	}
 	
-	
 	@RequestMapping(value = "/newPosts.do", method = RequestMethod.POST)
 	public ModelAndView newPosts(HttpServletRequest req,@ModelAttribute("membersVO") MembersVO membersVO) throws IOException, ServletException {
 		String contextPath =req.getContextPath();
@@ -100,8 +99,7 @@ public class PostsController {
 						OutputStream out = new FileOutputStream(file);
 						imgPath = storePath + fileName;
 						imgPathtotal += ",,," + imgPath;
-						String photoID = photoSvc.newPhoto(imgPath);
-						
+						String photoID = photoSvc.newPhoto(imgPath);						
 						
 						list.add(photoID);
 						try {
@@ -125,13 +123,12 @@ public class PostsController {
 				postsSvc.newPosts(membersVO.getMemberID(), postsContent, imgPath);
 			}
 		}
-		System.out.println("newPosts");
 		return new ModelAndView("redirect:/postsController/posts.do");
 	}
+	
 	@RequestMapping(value = "/delete.do", method = RequestMethod.POST)
 	public ModelAndView deletePosts(@RequestParam String postID,@ModelAttribute("membersVO") MembersVO membersVO) {
 		postsSvc.deletePosts(membersVO.getMemberID(), postID);
-		System.out.println("deletePostsFinish");
 		return new ModelAndView("redirect:/postsController/posts.do");
 	}
 	
@@ -139,21 +136,18 @@ public class PostsController {
 	public @ResponseBody String goodOperation(@RequestParam String postID,@RequestParam String goodCount,@RequestParam String memberID) {
 		postsSvc.goodOperation(memberID, postID);
 		goodCount = postsSvc.goodCount(postID);
-		System.out.println("goodOperationFinish");
 		return goodCount;
 	}
 	
 	@RequestMapping(value = "/responsePosts.do", method = RequestMethod.POST)
 	public ModelAndView responsePosts(@RequestParam String postID,@RequestParam String responsePosts_content,@RequestParam String memberID) {
 		postsSvc.responsePosts(postID, memberID, responsePosts_content);
-		System.out.println("responsePostsFinish");
 		return new ModelAndView("redirect:/postsController/posts.do");
 	}
 	
 	@RequestMapping(value = "/deleteResponsePosts.do", method = RequestMethod.POST)
 	public ModelAndView deleteResponsePosts(@RequestParam String postID,@RequestParam String memberID) {
 		postsSvc.deleteResponsePosts(postID, memberID);
-		System.out.println("deleteResponsePostsFinish");
 		return new ModelAndView("redirect:/postsController/posts.do");
 	}
 	

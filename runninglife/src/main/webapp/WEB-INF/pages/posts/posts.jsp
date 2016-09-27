@@ -27,10 +27,12 @@
 			<style type="text/css">@import url("<c:url value="/static/css/flexslider.css" />");</style>
 			<!-- Theme style  -->
 			<style type="text/css">@import url("<c:url value="/static/css/style.css" />");</style>
-		<link rel="stylesheet" href="/runninglife/static/css/mainStyle.css"></link>
-		<link rel="stylesheet" href="/runninglife/static/css/bootstrap.min.css" />
-		<link rel="stylesheet" href="/runninglife/static/css/bootstrap-theme.min.css"></link>
-		<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/static/css/fileinput.min.css">
+			
+			
+		<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/static/css/mainStyle.css"/>
+		<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/static/css/bootstrap.min.css" />
+		<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/static/css/bootstrap-theme.min.css"/>
+		<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/static/css/fileinput.min.css"/>
 
 	</head>
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog">
@@ -81,13 +83,14 @@
 						<li><a href="contact.html">Contact</a></li>
 						<!-- 判斷是否已登入 -->
 						<c:choose>
-						<c:when test="${!empty membersVO}">
-							<li>Hello, ${membersVO.firstName}</li>
-							<li class="cta"><a href="Login/Logout.do">Logout</a></li>
-						</c:when>
-						<c:otherwise>
-							<li class="cta" data-toggle="modal" data-target="#myModal"><a href="#">Login</a></li> <!-- 登入視窗按鈕 -->
-						</c:otherwise>	
+							<c:when test="${!empty membersVO}">
+							<img src="data:image/png;base64,${r:byteToBase64(membersVO.photo)}" style="width: 32px;height: 32px;" />
+								<li>Hello, ${membersVO.firstName}</li>
+								<li class="cta"><a href="Login/Logout.do">Logout</a></li>
+							</c:when>
+							<c:otherwise>
+								<li class="cta" data-toggle="modal" data-target="#myModal"><a href="#">Login</a></li> <!-- 登入視窗按鈕 -->
+							</c:otherwise>	
 						</c:choose>
 					</ul>
 				</nav>
@@ -98,20 +101,18 @@
 <aside>
 ${onePosts.postID}
 <div id = "sss" ></div>
-
-		<div id="question" style="display:none; cursor: default;"> 
-	      <form method="get" action="postsController/posts.do">
-			<div class="col-md-12" style="border-style:solid;border-color:#EDEDED"> 
-				<textarea id="textarea" name="postsContent" class="form-control col-xs-12" rows="15"></textarea>
-				<div class="col-md-12">
-					<button id="btn_update" type="submit" class="btn btn-success">發文</button>
-					<button id="no">取消</button>
-				</div>
-				<input type="hidden" id="memberID" name="memberID" value="${membersVO.memberID}">
-<!-- 				<input type="hidden" name="action" value="newPosts"> -->
-			</div>		
-	       </form>
-		</div> 
+	<div id="question" style="display:none; cursor: default;"> 
+      <form method="get" action="postsController/posts.do">
+		<div class="col-md-12" style="border-style:solid;border-color:#EDEDED"> 
+			<textarea id="textarea" name="postsContent" class="form-control col-xs-12" rows="15"></textarea>
+			<div class="col-md-12">
+				<button id="btn_update" type="submit" class="btn btn-success">發文</button>
+				<button id="no">取消</button>
+			</div>
+			<input type="hidden" id="memberID" name="memberID" value="${membersVO.memberID}">
+		</div>		
+       </form>
+	</div> 
 	<div class="col-md-2"></div> 	
 	<div class="col-md-8">	
 		<form:form method="post" action="newPosts.do" enctype="multipart/form-data">
@@ -120,8 +121,7 @@ ${onePosts.postID}
 				<div class="col-md-10"><input id="input-2" name="file1" type="file" class="file" multiple="" data-show-upload="false" data-show-caption="true"></div>
 				<div class="col-md-2"><button id="btn_posts" type="submit" class="btn btn-success">發文</button></div>
 				<input type="hidden" id="memberID" name="memberID" value="${membersVO.memberID}">
-<!-- 				<input type="hidden" name="action" value="newPosts"> -->
-			</div>					
+	</div>					
 		</form:form>
 		<c:forEach var="posts" items="${postsVO}"> 
 			<div class="col-md-12">
@@ -140,9 +140,9 @@ ${onePosts.postID}
 											<c:if test="${posts.postMemberID.memberID==membersVO.memberID}">
 										  <li class ="deletePosts" postID="${posts.postID}">刪除</li>
 											</c:if>    
-<%-- 											<c:if test="${posts.postMemberID!=memberVO.memberID}"> --%>
+											<c:if test="${posts.postMemberID.memberID!=memberVO.memberID}">
 										  <li class ="reportPosts" postID="${posts.postID}" data-toggle="modal" data-target="#myModal">檢舉</li>
-<%-- 											</c:if> --%>
+											</c:if>
 									 </ul>
 								</div>
 							</div>
@@ -152,11 +152,11 @@ ${onePosts.postID}
 							<div class="col-md-12">
 								<div class="col-md-2"><button type="button" class="btn btn btn-primary btn_good" postID= "${posts.postID}" value="value" >讚${posts.good}</button></div>
 								<div class="col-md-10"></div>
-								<div class="col-md-12"><br></div>
+								<div class="col-md-12"></div>
 							</div>
 						</div>	
 						<form method="post" action="responsePosts.do">
-							<div class="col-md-12" style="border-style:solid;border-color:#EDEDED"><br>
+							<div class="col-md-12" style="border-style:solid;border-color:#EDEDED">
 								<div class="col-md-1"><img  style="width:80%" src="data:image/png;base64,${r:byteToBase64(membersVO.photo)}"></div>
 								<div class="col-md-9"><textarea id="textarea" name="responsePosts_content" class="form-control col-xs-12" rows="1"></textarea></div>
 								<div class="col-md-2"><button type="submit" class="btn btn btn-primary">回覆</button></div>	
@@ -185,9 +185,9 @@ ${onePosts.postID}
 							</div>		
 						</c:if>
 					</c:forEach>
-<%-- 				</c:if> --%>
+<%-- 			</c:if> --%>
 			</div>
-				<div class="col-md-12"><br></div>
+				<div class="col-md-12"></div>
 		</c:forEach>			
 	</div>
 	<div class="col-md-2"></div>	
@@ -198,17 +198,12 @@ ${onePosts.postID}
 $(function(){
 	$('.deletePosts').click(function(){
 		$.post("delete.do",{"postID":$(this).attr('postID'),"memberID":$('#memberID').val()},
-				function (goodCount){ location.reload();
-		});
-	});
-	$('.updatePosts').click(function(){
-		$.post("postsServlet",{"postID":$(this).attr('postID'),"memberID":$('#memberID').val()},
-				function (goodCount){ location.reload();
+				function (deletePosts){ location.reload();
 		});
 	});
 	$('.deleteResponsePosts').click(function(){
 		$.post("deleteResponsePosts.do",{"postID":$(this).attr('postID'),"memberID":$('#memberID').val()},
-				function (goodCount){ location.reload();
+				function (deleteResponsePosts){ location.reload();
 		});
 	});
  	$('.btn_good').click(function(){
@@ -219,10 +214,7 @@ $(function(){
 			  data: {"goodCount":$(this).attr('value'),"postID":$(this).attr('postID'),"memberID":$('#memberID').val()},
 			  dataType: "json",
 			  success: function(goodCount) {
-				  console.log(goodCount);
-		
 				  sef.text("讚"+goodCount);
-				  console.log(sef);
 				  $(this).val("讚"+goodCount);
 			  },
 			  error:function() {
@@ -239,13 +231,12 @@ $(function(){
 			  dataType: "json",
 			  success: function(res) {
 				  $('#reportPostID').attr("value",res.postID);	
-				  console.log($('#reportPostID').val());
 				 },
 			  error:function() {
 				  console.log("error");
 				  console.log(sef.attr('postID'));
 			  }
-			});
+		});
 	});
 });	
 </script>
