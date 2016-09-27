@@ -68,7 +68,7 @@ public class FriendController {
 	//用 memberID 顯示所有的朋友
 	@RequestMapping(value = {"/listFriend"})
 	public ModelAndView listFriend(@ModelAttribute("membersVO")MembersVO member){
-		return new ModelAndView("friend/FriendList", "friends", friendRelationshipService.findByMemberID(member));
+		return new ModelAndView("friend/FriendList", "friends", friendRelationshipService.findByMemberIDALLFriendID(member));
 	}
 	
 	//用 memberID 顯示所有收到的邀請

@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -26,6 +28,8 @@ import iii.runninglife.model.challdata.ChallDataVO;
 import iii.runninglife.model.challdata.ChallDataPK;
 import iii.runninglife.model.challs.ChallsCRUDService;
 import iii.runninglife.model.challs.ChallsVO;
+import iii.runninglife.model.friendRelationship.FriendRelationshipDAO_interface;
+import iii.runninglife.model.friendRelationship.FriendRelationshipService_interface;
 import iii.runninglife.model.members.MembersInterface;
 import iii.runninglife.model.members.MembersVO;
 
@@ -39,13 +43,15 @@ public class ChallsCRUD_Servlet {
 	@Autowired
 	ChallDataCRUDService challDataCRUDService;
 	@Autowired
+	FriendRelationshipService_interface friendRelationshipService;
+	@Autowired
 	MembersInterface mdao;
 	
 	@RequestMapping("/page")
 	public String challengePage(@ModelAttribute MembersVO membersVO){ 
 		return "challenge/challenge";
 	}
-	@RequestMapping("/createChall")
+	@RequestMapping("/createChallPage")
 	public String createChallengePage(){ return "challenge/createChall";}
 	
 	@RequestMapping("/myChallenges")
@@ -57,6 +63,16 @@ public class ChallsCRUD_Servlet {
 		model.put("reservedChallengeList", challDataCRUDService.memberReservedChallService(membersVO));
 		model.put("receivedRequestChallengeList", challDataCRUDService.findByMemberReceivedRequestService(membersVO));
 		return new ModelAndView("challenge/myChallenges", model);
+	}
+	
+	@RequestMapping("/detail/{challenID}")
+	public ModelAndView challengeDetailPage(@PathVariable String challenID){
+		Map<String, Object> model = new HashMap<>();
+		ChallsVO challenge = challsCRUDService.searchOneService(challenID);
+		model.put("challenge", challenge);
+		model.put("challengeDataList", challDataCRUDService.challProgressService(challenge));
+		model.put("founder", challenge.getFounderID());
+		return new ModelAndView("challenge/challDetail", model);
 	}
 	
 	@RequestMapping("/finishChallDetail/{challenID}")
@@ -111,21 +127,44 @@ public class ChallsCRUD_Servlet {
 		return challjson;
 	}
 	
-	@RequestMapping(value = "/createChall", method = RequestMethod.POST, produces = "application/json")    //,@RequestParam String founderID                                                                                                                                                                     
-	public void createChall(@RequestParam String challenName,@RequestParam String locationID,@RequestParam String challenDistance,@RequestParam String challenStartTime,@RequestParam String challenEndTime,@RequestParam String comment,@RequestParam String founderID) throws ParseException {
+	@RequestMapping(value = "/createChall", method = RequestMethod.POST)    //,@RequestParam String founderID                                                                                                                                                                     
+	public ModelAndView createChall(@RequestParam String challenName,@RequestParam String locationID,@RequestParam String challenDistance,@RequestParam String challenStartTime,@RequestParam String challenEndTime,@RequestParam String comment,@RequestParam String founderID) throws ParseException {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		Date parseS = sdf.parse(challenStartTime);
 		Date parseE = sdf.parse(challenEndTime);
         java.sql.Date dateS = new java.sql.Date(parseS.getTime());
         java.sql.Date dateE = new java.sql.Date(parseE.getTime());
 		double challenDistanceD=Double.valueOf(challenDistance);
-		int allChall = challsCRUDService.insertService(challenName,locationID,challenDistanceD,dateS,dateE,comment,"c:/",mdao.selectOne(founderID));
-		System.out.println(allChall);
+		MembersVO membersVO = mdao.selectOne(founderID);
+		ChallsVO challsVO = challsCRUDService.insertService(challenName,locationID,challenDistanceD,dateS,dateE,comment,"c:/",membersVO);
+		challDataCRUDService.insertService(new ChallDataPK(challsVO,membersVO), null, 0, "0000000", "1", "1");
+		
+		Map<String, Object> model = new HashMap<>();
+		model.put("friends", friendRelationshipService.findByMemberIDALLFriendID(membersVO));
+		model.put("challenVO", challsVO);
+		
+		return new ModelAndView("challenge/RequestFriend", model);
+	}
+	
+	@RequestMapping(value = "/challenRequestFriend", method = RequestMethod.POST)
+	@ResponseStatus(value = HttpStatus.OK)
+	public void challenRequestFriend(@RequestParam String memberID, @RequestParam String challenID){
+		java.sql.Timestamp d = new java.sql.Timestamp(System.currentTimeMillis());
+		challDataCRUDService.insertService(
+				new ChallDataPK(challsCRUDService.searchOneService(challenID),mdao.selectOne(memberID)), d, 0, "0000000", "0", "0");
 	}
 	
 	@RequestMapping(value = "/deleteChall", method = RequestMethod.DELETE)
 	public void deleteAd(@RequestParam String challenID) {
 		challsCRUDService.deleteService(challenID);
+	}
+	
+	@RequestMapping(value = "/sendChallengeRequest.do", method = RequestMethod.GET)
+	public void createChallData(@RequestParam String challenID,@RequestParam String memberID) {
+		ChallDataPK challDataPK=challDataCRUDService.setTwoIDService(challenID, memberID);
+		java.sql.Timestamp d=new java.sql.Timestamp(System.currentTimeMillis());
+		challDataCRUDService.insertService(
+				new ChallDataPK(challsCRUDService.searchOneService(challenID),mdao.selectOne(memberID)), d, 0, "0000000", "0", "0");
 	}
 	
 	

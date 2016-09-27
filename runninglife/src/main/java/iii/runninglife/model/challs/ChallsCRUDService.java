@@ -18,7 +18,7 @@ public class ChallsCRUDService {
 	@Autowired
 	IchallDataDAO challengeDataDAO;
 
-	public int insertService(String challenName,String locationID,double challenDistance,java.sql.Date challenStartTime,java.sql.Date challenEndTime,String comment,String image,MembersVO founderID){
+	public ChallsVO insertService(String challenName,String locationID,double challenDistance,java.sql.Date challenStartTime,java.sql.Date challenEndTime,String comment,String image,MembersVO founderID){
 		Date d=new Date(System.currentTimeMillis());
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 		String dateString = sdf.format(d);
@@ -26,7 +26,7 @@ public class ChallsCRUDService {
 		ChallsVO addchall=new ChallsVO(dateString+dayChalls,challenName,locationID,challenDistance,challenStartTime,challenEndTime,comment,image,founderID);
 		challengeDAO.insert(addchall);
 		
-		return 0;
+		return challengeDAO.findByPrimaryKey(dateString+dayChalls);
 	}
 	public void deleteService(String challenID){
 		challengeDAO.delete(challenID);

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="r" uri="http://iii.runningLife.com/util" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -25,34 +26,37 @@
 
 <link href="https://fonts.googleapis.com/css?family=Raleway:200,300,400,700" rel="stylesheet">
 <!-- Animate.css -->
-	<link rel="stylesheet" href="../css/web/animate.css">
-<!-- Icomoon Icon Fonts-->
-	<link rel="stylesheet" href="../css/web/icomoon.css">
-<!-- Bootstrap  -->
-	<link rel="stylesheet" href="../css/web/bootstrap.css">
-<!-- Flexslider  -->
-	<link rel="stylesheet" href="../css/web/flexslider.css">
+	<link rel="stylesheet" href="/runninglife/static/css/animate.css">
+	<!-- Icomoon Icon Fonts-->
+	<link rel="stylesheet" href="/runninglife/static/css/icomoon.css">
+	<!-- Bootstrap  -->
+	<link rel="stylesheet" href="/runninglife/static/css/bootstrap.css">
+	<!-- Flexslider  -->
+	<link rel="stylesheet" href="/runninglife/static/css/flexslider.css">
+	<!-- Theme style  -->
+	<link rel="stylesheet" href="/runninglife/static/css/style.css">
+
+	<!-- Modernizr JS -->
+	<script src="js/modernizr-2.6.2.min.js"></script>
+	<!-- jQuery -->
+	<script src="/runninglife/static/js/jquery-3.1.0.min.js"></script>
+	<!-- jQuery Easing -->
+	<script src="/runninglife/static/js/jquery.easing.1.3.js"></script>
+	<!-- Bootstrap -->
+	<script src="/runninglife/static/js/bootstrap.min.js"></script>
+	<!-- Waypoints -->
+	<script src="/runninglife/static/js/jquery.waypoints.min.js"></script>
+	<!-- Flexslider -->
+	<script src="/runninglife/static/js/jquery.flexslider-min.js"></script>
+	<!-- Stellar -->
+	<script src="/runninglife/static/js/jquery.stellar.min.js"></script>
+	<!-- MAIN JS -->
+	<script src="/runninglife/static/js/main.js"></script>
 <!-- Owl Carousel  -->
 	<link rel="stylesheet" href="../css/web/owl.carousel.min.css">
 	<link rel="stylesheet" href="../css/web/owl.theme.default.min.css">
-<!-- Theme style  -->
-	<link rel="stylesheet" href="../css/web/style.css">
-<!-- Modernizr JS -->
-	<script src="../js/web/modernizr-2.6.2.min.js"></script>
-<!-- jQuery -->
-	<script src="../js/web/jquery.min.js"></script>
-<!-- jQuery Easing -->
-	<script src="../js/web/jquery.easing.1.3.js"></script>
-<!-- Bootstrap -->
-	<script src="../js/web/bootstrap.min.js"></script>
-<!-- Waypoints -->
-	<script src="../js/web/jquery.waypoints.min.js"></script>
 <!-- Owl Carousel -->
 	<script src="../js/web/owl.carousel.min.js"></script>
-<!-- Flexslider -->
-	<script src="../js/web/jquery.flexslider-min.js"></script>
-<!-- MAIN JS -->
-	<script src="../js/web/main.js"></script>	
 <script>
 $(document).ready(function(){
 // 	var dataId = location.search ;
@@ -120,7 +124,6 @@ $(document).on("click",".back",function(){
 
 		<div class="container">
 			<div class="row">
-			<c:set var="challenge" value="${challDataVO.challDataPK.challenID}"/>
 				<h1>挑戰資訊</h1>
 				<table class="table">
 					<tr>
@@ -149,12 +152,30 @@ $(document).on("click",".back",function(){
 					</tr>    
 					<tr>
 						<td>挑戰發起人：</td>
-						<td><span class="founderID">${challenge.founderID.firstName}, ${challenge.founderID.lastName}</span></td>
+						<td><img src="data:image/png;base64,${r:byteToBase64(challenge.founderID.photo)}" style='width:50px;height:50px;'>
+							${challenge.founderID.firstName}, ${challenge.founderID.lastName}
+						</td>
+						
 					</tr>               
 					<tr>
 						<td>參加人員：</td>
 						<td>
-							<span><img /><span class="join"></span></span>
+						<table>
+						<c:if test="${challengeDataList != null}">
+							<c:forEach var="challengeData" items="${challengeDataList}">
+							<c:if test="${challengeData.isFounder eq '0'}">
+							<c:set var="membersVO" value="${challengeData.challDataPK.memberID}" />
+								<tr><td><img src="data:image/png;base64,${r:byteToBase64(membersVO.photo)}" style='width:50px;height:50px;'></td>
+									<td>${membersVO.firstName}</td>
+									<td>${membersVO.lastName}</td>
+									<td><c:if test="${challengeData.status eq '0'}">未接受邀請</c:if>
+										<c:if test="${challengeData.status eq '1'}">參加者</c:if>
+									</td>
+								</tr>
+							</c:if>
+							</c:forEach>
+						</c:if>
+						</table>
 						</td>
 					</tr>
 					<tr><td colspan="2"><p align="right"><button class="btn btn-success back">返回</button></p></td></tr>

@@ -6,6 +6,7 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import iii.runninglife.model.challs.ChallsVO;
 import iii.runninglife.model.members.MembersInterface;
 import iii.runninglife.model.members.MembersVO;
 
@@ -17,7 +18,7 @@ public class ChallDataDAO implements IchallDataDAO {
 	private static final String GET_ALL_STMT = 
 		"from ChallDataVO order by challenID";
 	private static final String GET_CHALL_STMT = 
-		"from ChallDataVO where challenID = :chall";
+		"from ChallDataVO where challDataPK.challenID = :chall";
 	private static final String GET_MEMBER_STMT = 
 		"from ChallDataVO where memberID = :member";
 	private static final String GET_MEMBER_TIME_STMT = 
@@ -75,7 +76,7 @@ public class ChallDataDAO implements IchallDataDAO {
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<ChallDataVO> findByChall(String challenID) {
+	public List<ChallDataVO> findByChall(ChallsVO challenID) {
 		return sessionFactory.getCurrentSession().createQuery(GET_CHALL_STMT).setParameter("chall", challenID).list();
 	}
 	

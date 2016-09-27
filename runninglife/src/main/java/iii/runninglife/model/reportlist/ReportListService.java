@@ -17,7 +17,7 @@ public class ReportListService {
 	@Autowired
 	ReportListDAO_interface reportListDAO;
 	@Autowired
-	private PostsDAO_interface postsDAO;
+	PostsDAO_interface postsDAO;
 	
 	public ReportListVO newReport(String postID,String reporterID,String typeID , String comment ){
 		reportListPK.setPostID(postID);

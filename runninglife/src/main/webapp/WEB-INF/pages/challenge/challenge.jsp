@@ -123,7 +123,7 @@
 			</div>
 			<div class="row">
 				<div class="col-md-4 animate-box">
-					<a href="createChall.do" class="item-grid text-center">
+					<a href="createChallPage.do" class="item-grid text-center">
 						<div class="image" style="background-image: url(../images/addchall.jpg)"></div>
 						<div class="v-align">
 							<div class="v-align-middle">

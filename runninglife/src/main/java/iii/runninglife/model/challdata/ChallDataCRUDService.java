@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import iii.runninglife.model.challs.ChallsVO;
 import iii.runninglife.model.challs.IchallDAO;
 import iii.runninglife.model.members.MembersInterface;
 import iii.runninglife.model.members.MembersVO;
@@ -68,10 +69,8 @@ public class ChallDataCRUDService {
 	public ChallDataPK setTwoIDService(String challenID,String memberID){
 		return new ChallDataPK(challDAO.findByPrimaryKey(challenID),memberDAO.selectOne(memberID));
 	}
-	public List<ChallDataVO> challProgressService(String challenID){
-		List<ChallDataVO> challDataList = null;
-			challDataList=dao.findByChall(challenID);
-		return challDataList;
+	public List<ChallDataVO> challProgressService(ChallsVO challenID){
+		return dao.findByChall(challenID);
 	}
 	public List<ChallDataVO> memberChallProgressService(String memberID){
 		List<ChallDataVO> challDataList = null;

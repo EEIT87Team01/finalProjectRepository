@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="r" uri="http://iii.runningLife.com/util" %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -56,7 +57,14 @@
 	<!-- MAIN JS -->
 	<script src="/runninglife/static/js/main.js"></script>
 
-
+<style type="text/css">
+.nav-pills > li {
+    float:none;
+    display:inline-block;
+    *display:inline; /* ie7 fix */
+     zoom:1; /* hasLayout ie7 trigger */
+}
+</style>
 	</head>
 	<body>
 	
@@ -121,14 +129,21 @@
 			</div>
 		</div>
 	</header>
-	<div class="col-md-12 label" id="bannermenu">
-	<ul class="list-inline">
-		<li>塗鴉牆</li>
-		<li><a href="/runninglife/friend/listFriend.do">朋友名單</a></li>
-		<li><a href="/runninglife/friend/listFriendRequest.do">接受邀請</a></li>
-		<li><a href="/runninglife/friend/sendRequest.do">邀請好友</a></li>
+<!-- 	<div class="col-md-12 label" id="bannermenu"> -->
+<!-- 	<ul class="list-inline"> -->
+<!-- 		<li>塗鴉牆</li> -->
+<!-- 		<li><a href="/runninglife/friend/listFriend.do">朋友名單</a></li> -->
+<!-- 		<li><a href="/runninglife/friend/listFriendRequest.do">接受邀請</a></li> -->
+<!-- 		<li><a href="/runninglife/friend/sendRequest.do">邀請好友</a></li> -->
+<!-- 	</ul> -->
+<!-- 	</div> -->
+
+	<ul class="nav nav-pills" style='text-align:center'>
+	  <li role="presentation"><a href="page.do" class='active'>塗鴉牆</a></li>
+	  <li role="presentation" class="active"><a href="listFriend.do">朋友名單</a></li>
+	  <li role="presentation"><a href="listFriendRequest.do">接受邀請</a></li>
+	  <li role="presentation"><a href="sendRequest.do">邀請好友</a></li>
 	</ul>
-	</div>
 	
 	<div class="col-md-2 col-md-offset-2">
 		<ul class="list-unstyled">
@@ -139,19 +154,27 @@
 		</ul>
 	</div>
 	
-	<div class="col-md-6">
-	<c:if test="${friends != null}">
-		<table  class="table" id="receivedList" style="width: 300px">
-		<tr><th>FirstName</th><th>LastName</th><th></th></tr>
-		<c:forEach var="friend" items="${friends}">
-			<tr><td>${friend.friendRelationshipPK.friendID.firstName}</td>
-				<td>${friend.friendRelationshipPK.friendID.lastName}</td>
-				<td>
-				<button class="btn btn-danger" id="${friend.friendRelationshipPK.friendID.memberID}">刪除</button>
+	<div class='container' style='margin-top:5%;'>
+	
+		<table  class="table" id="receivedList">
+			<tr style="text-align:center;">
+				<th>照片</th>
+				<th>FirstName</th>
+				<th>LastName</th>
+				<th>編輯</th>
 			</tr>
-		</c:forEach>
+			<c:if test="${friends != null}">
+				<c:forEach var="friend" items="${friends}">
+					<tr><td><img src="data:image/png;base64,${r:byteToBase64(friend.photo)}" style='width:50px;height:50px;'></td>
+						<td>${friend.firstName}</td>
+						<td>${friend.lastName}</td>
+						<td>
+						<button class="btn btn-danger" id="${friend.memberID}">刪除</button>
+					</tr>
+				</c:forEach>
+			</c:if>
+				
 		</table>
-	</c:if>
 	</div>
 	
 	<footer id="fh5co-footer" role="contentinfo">
@@ -203,7 +226,7 @@
 			var deletefriend = $(this).attr("id");
 			var btn = $(this);
 			$.ajax({
-				type: "post", 
+				type: "get", 
 				datatype: "json",
 				data : { "friendID" : deletefriend },
 				url: "/runninglife/friend/deletefriend.do",
