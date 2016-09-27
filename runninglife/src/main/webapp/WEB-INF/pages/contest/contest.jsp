@@ -22,9 +22,8 @@
 	<%@ include file="/WEB-INF/pages/header.jsp"%>
 	<div id="countPage" class="hidden">${countPage}</div>
 	<div>共有${countPage}頁</div>
-	<div>memberID:${member.memberID}</div>
+	<div>目前登入的是:${membersVO.memberID}</div>
 	<div id="auth" class="">admin</div>
-	${pageContext.request.contextPath }
 	<!-- 	載入列表	 -->
 	<section>
 	<div class="container">

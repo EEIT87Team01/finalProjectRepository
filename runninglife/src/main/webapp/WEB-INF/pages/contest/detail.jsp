@@ -200,10 +200,12 @@ h2.no-span {
 <body class="smoothscroll enable-animation">
 	<%@ include file="/WEB-INF/pages/header.jsp"%>
 	
-		<div>context:${pageContext.request.contextPath}</div>
+<%-- 		<div>context:${pageContext.request.contextPath}</div> --%>
 	
-	<div>身分:${not empty adminsVO ? "admin" : "guest" }</div>
-
+<%-- 	<div>身分:${not empty adminsVO ? "admin" : "guest" }</div> --%>
+	<div>finish:${contest.finish}</div>
+	<div>start:${contest.start}</div>
+	<div>over:${contest.start && contest.finish}</div>
 	<div id="contestID" class="hidden">${contest.contestID} </div>
 	<div id="timer" class="hidden">${timer}</div>
 	<section id="slider">
@@ -228,7 +230,7 @@ h2.no-span {
 					data-toggle="tab">競賽規程</a></li>
 				<li role="presentation"><a href="#map" data-toggle="tab">競賽路線</a></li>
 				<li role="presentation"><a href="#runnerList" data-toggle="tab">參賽名單</a></li>
-				<li role="presentation"><a href="#scoreList" data-toggle="tab">成績查詢</a></li>
+				${contest.finish ? '<li role="presentation"><a href="#scoreList" data-toggle="tab">成績查詢</a></li>':''}
 				${not empty membersVO ? '<li role="presentation"><a href="#myContest" data-toggle="tab">我的賽事</a></li>' : '' }
 
 			</ul>
@@ -573,7 +575,6 @@ h2.no-span {
 									<th>姓名</th>
 									<th>項目</th>
 									<th>分組</th>
-									<th>名次</th>
 									<th>個人成績</th>
 								</tr>
 							</thead>
@@ -663,7 +664,7 @@ h2.no-span {
 		<!-- 彈出報名 -->
 		<div id="popupApply" class="">
 			<!-- 報名表單 -->
-			<form action="/runninglife/apply" id="runnerForm" method="post"
+			<form action="${pageContext.request.contextPath}/apply" id="runnerForm" method="post"
 				name="runner">
 				<img id="close" src="${pageContext.request.contextPath}/resources/images/Close-2-icon.png"
 					onclick="div_hide()">
@@ -671,7 +672,7 @@ h2.no-span {
 				<hr>
 				<div>
 					<label for="disabledTextInput">會員帳號(測試用)</label> <input type="text"
-						class="form-control" name="pk.memberID" value="${member.memberID}" />
+						class="form-control" name="pk.memberID" value="${membersVO.memberID}" />
 				</div>
 				<div>
 					<label for="disabledTextInput">賽事編號(測試用)</label> <input type="text"
@@ -850,17 +851,15 @@ h2.no-span {
 							"processing" : false,
 							// 								"serverSide" : true,
 							"columns" : [ {
-								data : 'pk.memberID'
+								data : 'member.lastName'
 							}, {
 								data : 'event.eventName'
 							}, {
 								data : 'team.teamName'
 							}, {
 								data : 'runTime'
-							}, {
-								data : 'runTime'
 							} ],
-							"order" : [ [ 4, "asc" ] ],
+							"order" : [ [ 3, "asc" ] ],
 							"lengthMenu" : [ [ 5, 10, 15, -1 ],
 									[ 5, 10, 15, "全部" ] ],
 							"language" : {
@@ -902,17 +901,15 @@ h2.no-span {
 							"processing" : false,
 							// 								"serverSide" : true,
 							"columns" : [ {
-								data : 'member.firstName'
+								data : 'member.lastName'
 							}, {
 								data : 'event.eventName'
 							}, {
 								data : 'team.teamName'
 							}, {
 								data : 'runTime'
-							}, {
-								data : 'runTime'
 							} ],
-							"order" : [ [ 4, "asc" ] ],
+							"order" : [ [ 3, "asc" ] ],
 							"lengthMenu" : [ [ 5, 10, 15, -1 ],
 									[ 5, 10, 15, "全部" ] ],
 							"language" : {
@@ -952,7 +949,7 @@ h2.no-span {
 
 		var status = getParameterByName("status");
 		if (status == "fail") {
-			alert("報名失敗");
+			alert("報名失敗，請聯絡管理員。");
 			window.location.href = "${pageContext.request.contextPath}/contest/${contest.contestID}";
 			return;
 		} else if (status == "success") {

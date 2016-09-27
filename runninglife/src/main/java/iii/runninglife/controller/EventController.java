@@ -23,8 +23,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.SessionAttribute;
-import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -47,8 +45,7 @@ import iii.runninglife.model.team.TeamDAO;
 import iii.runninglife.model.team.TeamVO;
 
 @Controller
-@SessionAttributes("member")
-// @SessionAttributes("membersVO")
+// @SessionAttributes("member")
 public class EventController {
 
 	@Autowired
@@ -74,9 +71,20 @@ public class EventController {
 	@Autowired
 	private RunnerService runnerService;
 
+//	@ModelAttribute("membersVO")
+//	public MembersVO whosLogin(HttpServletRequest req) {
+//		if (((MembersVO) req.getSession().getAttribute("membersVO")) != null) {
+//			System.out.println(("現在登入的是:" + ((MembersVO) req.getSession().getAttribute("membersVO")).getMemberID()));
+//		}else{
+//			System.out.println("訪客，您好");
+//			
+//		}
+//		return (MembersVO) req.getSession().getAttribute("membersVO");
+//	}
+
 	// show all some contests
 	@RequestMapping(value = "/contest", method = RequestMethod.GET)
-	public String showAllContests(Model model, HttpServletRequest req,
+	public String showAllContests( Model model, HttpServletRequest req,
 			@RequestParam(required = false, value = "page") Integer page) {
 		// Integer pageSize = 5;
 		// 2016-08-08
@@ -138,7 +146,9 @@ public class EventController {
 
 	// show 1contest
 	@RequestMapping(value = "/contest/{contestID}", method = RequestMethod.GET)
-	public String showContest(@PathVariable int contestID, Model model) {
+	public String showContest(@PathVariable int contestID,HttpServletRequest req, Model model) {
+		MembersVO membersVO = (MembersVO) req.getSession().getAttribute("membersVO");
+		
 		List<TeamVO> teams = teamDAO.getTeamById(contestID);
 		List<EventVO> events = eventDAO.getEventById(contestID);
 		List<ContestVO> contests = contestDAO.findByPrimaryKey2(contestID);
@@ -146,7 +156,12 @@ public class EventController {
 		// ContestVO contest=contestDAO.findByPrimaryKey(contestID);
 		List<ClothesVO> clothes = clothesDAO.getAll();
 		List<RunnerVO> runners = runnerDAO.getList(contestID);
-		List<RunnerVO> mycontest = runnerDAO.getMyContest("4b55d85b-be8f-dd11-9fd6-001bfc06e612");
+		
+		
+		if(membersVO!=null){
+		List<RunnerVO> mycontest = runnerDAO.getMyContest(membersVO.getMemberID());
+		model.addAttribute("mycontest", mycontest);
+		}
 		// 修正時間
 		SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy年MM月dd日 (E)");
 		String start = sdf2.format(contest.getStartDate());
@@ -165,7 +180,7 @@ public class EventController {
 		model.addAttribute("contest", contest);
 		model.addAttribute("clothes", clothes);
 		model.addAttribute("runners", runners);
-		model.addAttribute("mycontest", mycontest);
+		
 		return "/contest/detail";
 	}
 
@@ -191,9 +206,7 @@ public class EventController {
 		// 修正時間
 		SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy年MM月dd日 (E)");
 		String start = sdf2.format(contest.getStartDate());
-		long timer = contest.getStartDate().getTime();
 		model.addAttribute("adminsVO", "adminss");
-		model.addAttribute("timer", timer);
 		model.addAttribute("start", start);
 		model.addAttribute("events", events);
 		model.addAttribute("teams", teams);
@@ -328,8 +341,12 @@ public class EventController {
 
 	// apply
 	@RequestMapping(value = "/apply", method = RequestMethod.POST)
-	public String ContestApply(@ModelAttribute RunnerVO runner, @SessionAttribute MembersVO member, Model model,
+	public String ContestApply(@ModelAttribute RunnerVO runner,  Model model,
 			HttpServletRequest request, HttpServletResponse resp) {
+		MembersVO membersVO = (MembersVO) request.getSession().getAttribute("membersVO");
+		if(membersVO==null){
+			return "/";
+		}
 		Integer id = runner.getPk().getContestID();
 		String URL = request.getScheme() + "://" + // "http" + "://
 				request.getServerName() + // "myhost"
@@ -337,8 +354,8 @@ public class EventController {
 				request.getServerPort() + // "8080"
 				request.getContextPath() + "/contest/" + id; // "/people"
 		int age = 20;
-		if (member.getBirthday() != null) {
-			age = runnerService.countAge(member.getBirthday());
+		if (membersVO.getBirthday() != null) {
+			age = runnerService.countAge(membersVO.getBirthday());
 		}
 		// age =member.getAge();
 		List<TeamVO> list = teamDAO.getTeamById(id);
@@ -359,7 +376,7 @@ public class EventController {
 			runner = runnerDAO.findByPrimaryKey(runner.getPk());
 			ContestVO contest = contestDAO.findByPrimaryKey(runner.getPk().getContestID());
 
-			mailService.sendApplyEmail(member, contest, runner, URL);
+			mailService.sendApplyEmail(membersVO, contest, runner, URL);
 			System.out.println(status);
 		} catch (Exception ex) {
 			System.out.println("-----------------------------------------------");
@@ -432,36 +449,36 @@ public class EventController {
 	}
 
 	// 測試用測試用測試用測試用測試用測試用測試用測試用測試用測試用測試用測試用測試用測試用測試用測試用測試用
-	@ModelAttribute("membersVO")
-	public MembersVO loginmytest() {
-		MembersVO member = new MembersVO();
-		member.setMemberID("arthur");
-		member.setEmail("artashur@gmail.com");
-		member.setLastName("張");
-		member.setFirstName("三");
-		member.setMemberID("admin");
-		member.setPhone("0912345678");
-		member.setBirthday("1991/03/13");
-		member.setAddress("迪士尼");
-		member.setIdentityID("F123456789");
-		return member;
-	}
+	// @ModelAttribute("membersVO")
+	// public MembersVO loginmytest() {
+	// MembersVO member = new MembersVO();
+	// member.setMemberID("arthur");
+	// member.setEmail("artashur@gmail.com");
+	// member.setLastName("張");
+	// member.setFirstName("三");
+	// member.setMemberID("admin");
+	// member.setPhone("0912345678");
+	// member.setBirthday("1991/03/13");
+	// member.setAddress("迪士尼");
+	// member.setIdentityID("F123456789");
+	// return member;
+	// }
 
 	// 測試用測試用測試用測試用測試用測試用測試用測試用測試用測試用測試用測試用測試用測試用測試用測試用測試用
-	@ModelAttribute("member")
-	public MembersVO login2() {
-		MembersVO member = new MembersVO();
-		member.setMemberID("arthur");
-		member.setEmail("artashur@gmail.com");
-		member.setLastName("張");
-		member.setFirstName("三");
-		member.setMemberID("admin");
-		member.setPhone("0912345678");
-		member.setBirthday("1991/03/13");
-		member.setAddress("迪士尼");
-		member.setIdentityID("F123456789");
-		return member;
-	}
+	// @ModelAttribute("member")
+	// public MembersVO login2() {
+	// MembersVO member = new MembersVO();
+	// member.setMemberID("arthur");
+	// member.setEmail("artashur@gmail.com");
+	// member.setLastName("張");
+	// member.setFirstName("三");
+	// member.setMemberID("admin");
+	// member.setPhone("0912345678");
+	// member.setBirthday("1991/03/13");
+	// member.setAddress("迪士尼");
+	// member.setIdentityID("F123456789");
+	// return member;
+	// }
 	// @ModelAttribute("contests")
 	// public List<ContestVO> getContests(){
 	// List<ContestVO>contests =contestDAO.getAll();

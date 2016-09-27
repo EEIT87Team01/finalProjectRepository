@@ -10,7 +10,7 @@
 	<div>
 		<form name="runnerForm" method="post"
 			action="${pageContext.request.contextPath}/runner/update"
-			style="width: 1600px; height: 10px;border:">
+			style="width: 1600px; height: 10px;border:0px">
 			<table name="runnerForm" id="test"
 				class="table table-striped table-bordered"  width="1000px">
 
@@ -96,7 +96,7 @@
 				"info" : "",
 				"infoEmpty" : "沒有資料",
 				"infoFiltered" : "",
-				"zeroRecords" : "沒有符合的結果",
+				"zeroRecords" : "目前沒有參賽者",
 				"lengthMenu" : "顯示 _MENU_ 筆資料",
 				"search" : "搜尋",
 				"paginate" : {
