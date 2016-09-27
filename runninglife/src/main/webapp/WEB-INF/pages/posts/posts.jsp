@@ -119,7 +119,7 @@ ${onePosts.postID}
 			<div class="col-md-12" style="border-style:solid;border-color:#EDEDED;padding:20px">
 				<textarea id="textarea" name="postsContent" class="form-control col-xs-12" rows="5"></textarea>
 				<div class="col-md-10"><input id="input-2" name="file1" type="file" class="file" multiple="" data-show-upload="false" data-show-caption="true"></div>
-				<div class="col-md-2"><button id="btn_posts" type="submit" class="btn btn-success">發文</button></div>
+				<div class="col-md-2"><button id="btn_posts" type="submit" class="btn btn-primary">發文</button></div>
 				<input type="hidden" id="memberID" name="memberID" value="${membersVO.memberID}">
 	</div>					
 		</form:form>
@@ -129,9 +129,11 @@ ${onePosts.postID}
 				<c:if test="${posts.parent==null&&posts.status==1}">	
 					<div>
 						<div  class="col-md-12" style="border-style:solid;border-color:#EDEDED">							
-							<div class="col-md-1"><img style="width:99%" src="data:image/png;base64,${r:byteToBase64(posts.postMemberID.photo)}"></div>
-							<div class="col-md-10"><h4>${membersVO.lastName}</h4>${posts.time}</div>	
-							<div class="col-md-1">
+							<div  class="col-md-12" style="border-style:solid;border-color:#EDEDED">	
+								<div class="col-md-1"><img style="width:99%" src="data:image/png;base64,${r:byteToBase64(posts.postMemberID.photo)}"></div>
+								<div class="col-md-10"><h4>${membersVO.lastName}</h4>${posts.time}</div>	
+								<div class="col-md-1">
+							</div>	
 								<div class="btn-group ">
 								  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
 								   	 <span class="caret"></span>
@@ -146,11 +148,11 @@ ${onePosts.postID}
 									 </ul>
 								</div>
 							</div>
-							<div class="col-md-12" style="font-size:20px"><%--留言內容 --%>
+							<div class="col-md-12" style="font-size:20px;font-family:Microsoft JhengHei"><%--留言內容 --%>
 								<div class="col-md-12 div_content">${posts.content}</div>
 							</div>
 							<div class="col-md-12">
-								<div class="col-md-2"><button type="button" class="btn btn btn-primary btn_good" postID= "${posts.postID}" value="value" >讚${posts.good}</button></div>
+								<div class="col-md-2"><button type="button" class="btn btn btn-success btn_good" postID= "${posts.postID}" value="value" >讚${posts.good}</button></div>
 								<div class="col-md-10"></div>
 								<div class="col-md-12"></div>
 							</div>

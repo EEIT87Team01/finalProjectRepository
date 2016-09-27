@@ -55,8 +55,8 @@ public class PostsController {
 	@RequestMapping(value = "/posts.do", method = RequestMethod.GET)
 	public ModelAndView posts(HttpServletRequest req, @ModelAttribute("membersVO") MembersVO membersVO) {
 //		List<PostsVO> postsVO = postsDAO.getMemberPostAll(membersVO.getMemberID());
-		List<PostsVO> postsVO = postsDAO.getAll();
-		List<PostsVO> postsVO2= postsDAO.getResponseAll();
+		List<PostsVO> postsVO = postsSvc.getAll();
+		List<PostsVO> postsVO2= postsSvc.getResponseAll();
 		Map<String, Object> map = new HashMap<>();
 		map.put("postsVO", postsVO);
 		map.put("responseVO", postsVO2);
@@ -65,8 +65,8 @@ public class PostsController {
 	
 	@RequestMapping(value = "/profilePosts.do", method = RequestMethod.GET)
 	public ModelAndView profilePosts(HttpServletRequest req, @ModelAttribute("membersVO") MembersVO membersVO) {
-		List<PostsVO> postsVO = postsDAO.getMemberPostAll(membersVO.getMemberID());
-		List<PostsVO> postsVO2= postsDAO.getResponseAll();
+		List<PostsVO> postsVO = postsSvc.getMemberPostAll(membersVO.getMemberID());
+		List<PostsVO> postsVO2= postsSvc.getResponseAll();
 		Map<String, Object> map = new HashMap<>();
 		map.put("postsVO", postsVO);
 		map.put("responseVO", postsVO2);

@@ -1,9 +1,8 @@
 package iii.runninglife.model.posts;
 
-import java.sql.Date;
 import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +17,7 @@ import iii.runninglife.model.goodstatus.GoodStatusVO;
 import iii.runninglife.model.members.MembersInterface;
 import iii.runninglife.model.members.MembersVO;
 import iii.runninglife.model.reportlist.ReportListService;
+import iii.runninglife.model.reportlist.ReportListVO;
 
 @Service
 public class PostsService {
@@ -208,8 +208,20 @@ public class PostsService {
 		return gson;
 	}
 	
-	public PostsVO getOnePost(String postID){
-		postsVO=postsDAO.findByPrimaryKey(postID);
-		return postsVO;
+	public PostsVO getOnePost(String postID){		
+		return postsDAO.findByPrimaryKey(postID);
+	}
+	
+	public List<PostsVO> getResponseAll() {		
+		return postsDAO.getResponseAll();
+	}
+
+	
+	public List<PostsVO> getMemberPostAll(String memberID) {
+		return postsDAO.getMemberPostAll(memberID);
+	}
+
+	public List<PostsVO> getAll() {
+		return postsDAO.getAll();
 	}
 }

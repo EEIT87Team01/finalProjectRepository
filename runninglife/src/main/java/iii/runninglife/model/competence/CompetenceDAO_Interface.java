@@ -14,4 +14,3 @@ public interface CompetenceDAO_Interface {
 	    public List<CompetenceVO> getAll();
 
 }
-//test all ok save20160903

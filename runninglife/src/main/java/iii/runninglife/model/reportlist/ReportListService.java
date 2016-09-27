@@ -6,18 +6,24 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import iii.runninglife.model.competence.CompetenceVO;
+import iii.runninglife.model.members.MembersInterface;
+import iii.runninglife.model.members.MembersVO;
 import iii.runninglife.model.posts.PostsDAO_interface;
 
 @Service
 public class ReportListService {
 	
-	ReportListVO reportListVO = new ReportListVO();
-	ReportListPK reportListPK = new ReportListPK();
-	
+	static ReportListVO reportListVO = new ReportListVO();
+	static ReportListPK reportListPK = new ReportListPK();
+	static CompetenceVO competenceVO =new CompetenceVO();
+	static MembersVO membersVO = new MembersVO();
 	@Autowired
 	ReportListDAO_interface reportListDAO;
 	@Autowired
-	PostsDAO_interface postsDAO;
+	private PostsDAO_interface postsDAO;
+	@Autowired
+	private MembersInterface mdao;
 	
 	public ReportListVO newReport(String postID,String reporterID,String typeID , String comment ){
 		reportListPK.setPostID(postID);
@@ -41,11 +47,11 @@ public class ReportListService {
 		reportListDAO.insert(reportListVO);
 		return reportListVO;
 	}
-	public ReportListVO checkReportList(String postID, String reporterID, String status) {
+	public void checkReportList(String postID, String reporterID, String status) {
 	
 		reportListPK.setPostID(postID);
 		reportListPK.setReporterID(reporterID);
-		ReportListVO reportListVO =reportListDAO.findByPrimaryKey(reportListPK);
+		reportListVO =reportListDAO.findByPrimaryKey(reportListPK);
 		reportListVO.setReportListPK(reportListPK);
 		reportListVO.setTypeID(reportListVO.getTypeID());
 		reportListVO.setComment(reportListVO.getComment());
@@ -53,13 +59,13 @@ public class ReportListService {
 		reportListVO.setStatus(status);
 		reportListDAO.update(reportListVO);
 		
-		 postsDAO.findByPrimaryKey(postID).getPostMemberID();
-		 /*
-		 call memberSevice to change memberVO's competence
-		  */
+		postsDAO.findByPrimaryKey(postID).getPostMemberID();
 		
-		
-		return reportListVO;
+		membersVO = postsDAO.findByPrimaryKey(postID).getPostMemberID();
+		membersVO = mdao.selectOne(membersVO.getMemberID());
+		competenceVO.setCompetenceID(Integer.parseInt(status));
+		membersVO.setCompetenceID(competenceVO);
+		mdao.update(membersVO);		
 	}
 	
 	public ReportListVO getOneReportList(String postID, String reporterID){
