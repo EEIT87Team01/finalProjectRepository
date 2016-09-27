@@ -147,12 +147,14 @@ $(document).on("click",".back",function(){
 					<h1><a href="index.html">Flew</a></h1>
 					<nav role="navigation">
 						<ul>
-							<li><a href="work.html">Work</a></li>
-							<li><a href="services.html">Services</a></li>
-							<li><a href="pricing.html">Pricing</a></li>
-							<li><a href="about.html">About</a></li>
-							<li><a href="contact.html">Contact</a></li>
-							<li class="cta"><a href="#">Get started</a></li>
+							<li><a href="friend/page.do">塗鴉牆</a></li>
+							<li><a href="challenge/page.do">挑戰</a></li>
+							<li><a href="">賽事活動</a></li>
+							<li><a href="calendar.do">行事曆</a></li>
+							<li><a href="contact.html">運動文章</a></li>
+							<li><img src="data:image/png;base64,${r:byteToBase64(membersVO.photo)}" style='width:50px;height:50px;'></li>
+							<li>你好, ${membersVO.lastName}</li>
+							<li class="cta"><a href="Login/Logout.do">登出</a></li>
 						</ul>
 					</nav>
 				</div>

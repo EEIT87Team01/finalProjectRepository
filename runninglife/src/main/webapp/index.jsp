@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="r" uri="http://iii.runningLife.com/util" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -117,6 +118,7 @@ ol, ul {
 						<li><a href="">賽事活動</a></li>
 						<li><a href="calendar.do">行事曆</a></li>
 						<li><a href="contact.html">運動文章</a></li>
+							<li><img src="data:image/png;base64,${r:byteToBase64(membersVO.photo)}" style='width:50px;height:50px;'></li>
 							<li>你好, ${membersVO.lastName}</li>
 							<li class="cta"><a href="Login/Logout.do">登出</a></li>
 						</c:when>
