@@ -97,6 +97,13 @@ ol, ul {
 	
 <script type="text/javascript">
 $(function(){
+	$('nav ul li:lt(5)').click(function(){
+		if('${empty membersVO}'){
+			event.preventDefault();
+			$('#loginModalBtn').click();
+			}
+		});
+	
 	console.log('${membersVO.memberID}');
 	$('#myModal').on('shown.bs.modal', function () {
 		  $('#account').focus();
@@ -212,7 +219,7 @@ function ajax(Method, Data, Url, Datetype, Async) {
 							<li class="cta"><a href="Login/Logout.do">Logout</a></li>
 						</c:when>
 						<c:otherwise>
-							<li class="cta" data-toggle="modal" data-target="#myModal"><a href="#">Login</a></li> <!-- 登入視窗按鈕 -->
+							<li class="cta" data-toggle="modal" data-target="#myModal"><a id="loginModalBtn" href="#">Login</a></li> <!-- 登入視窗按鈕 -->
 						</c:otherwise>	
 						</c:choose>
 					</ul>
