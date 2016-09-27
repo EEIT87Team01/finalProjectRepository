@@ -23,6 +23,18 @@
 		<meta name="twitter:image" content="" />
 		<meta name="twitter:url" content="" />
 		<meta name="twitter:card" content="" />
+		
+		<style>
+		
+			.background-image {
+				background-image: url('<%=request.getContextPath()%>/static/images/calendarDetailBG.jpg');
+				background-repeat: no-repeat;
+				background-attachment: fixed;
+	        	background-position: center;
+	        	background-size: cover;
+			}
+
+		</style>
 	
 		<link rel="shortcut icon" href="favicon.ico">
 		
@@ -71,7 +83,7 @@
 			</div>
 		</div>
 	</header>
-	<div class="container" style="margin-top: 50px;">
+	<div class="container background-image" style="margin-top: 50px;">
 	<h1>運動紀錄</h1>
 		<div class="row">
 			<table class="table">
