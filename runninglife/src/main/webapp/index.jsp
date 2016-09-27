@@ -203,7 +203,7 @@ function ajax(Method, Data, Url, Datetype, Async) {
 						<li><a href="friend/page.do">塗鴉牆</a></li>
 						<li><a href="challenge/.do">挑戰</a></li>
 						<li><a href="">賽事活動</a></li>
-						<li><a href="about.html">行事曆</a></li>
+						<li><a href="calendar.do">行事曆</a></li>
 						<li><a href="contact.html">運動文章</a></li>
 						<!-- 判斷是否已登入 -->
 						<c:choose>

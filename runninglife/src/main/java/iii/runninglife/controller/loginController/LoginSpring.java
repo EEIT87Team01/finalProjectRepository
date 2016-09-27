@@ -55,8 +55,11 @@ public class LoginSpring {
 		System.out.println("logincheck");
 		
 		/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
-		if (memberAccount == null || memberAccount.trim().length() == 0){ errorMessage.put("errorMessage","NoAccount"); }
-		if (password == null || password.trim().length() == 0){ errorMessage.put("errorMessage","NoPassword"); }
+		if (memberAccount == null || memberAccount.trim().length() == 0){ 
+			errorMessage.put("errorMessage","NoAccount"); 
+			}else if (password == null || password.trim().length() == 0){ 
+				errorMessage.put("errorMessage","NoPassword"); 
+				}
 		
 		if (!errorMessage.isEmpty()) { return  errorMessage; }
 
