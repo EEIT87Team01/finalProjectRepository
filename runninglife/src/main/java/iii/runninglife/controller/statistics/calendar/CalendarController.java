@@ -66,7 +66,7 @@ public class CalendarController{
 		MembersVO memberVO = null;
 		
 		if((memberVO = (MembersVO) session.getAttribute("membersVO")) != null){
-			return new ModelAndView("/calendar/calendar","memberID",memberVO.getMemberID());
+			return new ModelAndView("/calendar/calendar","memberVO",memberVO);
 		}else{
 			return new ModelAndView("redirect:/",null);
 		}
@@ -151,6 +151,8 @@ public class CalendarController{
 		Map<String,String> map = new HashMap<>();
 		String[] jsonArray;
 		
+		MembersVO membersVO = memberDAO.selectOne(sportHistoryVO.getMemberID());
+		map.put("memberFirstName", membersVO.getFirstName());
 		map.put("startDateTime", formatDateTime(sportHistoryVO.getStartDateTime()));
 		map.put("endDateTime", formatDateTime(sportHistoryVO.getEndDateTime()));
 		map.put("duration", formatDurationTime(sportHistoryVO.getDuration()));
@@ -160,7 +162,6 @@ public class CalendarController{
 		map.put("paths", jsonArray[0]);
 		map.put("center", jsonArray[1]);
 		map.put("Zoom", getMapZoom(pathList).toString());
-		System.out.println(getMapZoom(pathList).toString());
 		
 		return new ModelAndView("calendar/sport_history_detail",map);
 	}
