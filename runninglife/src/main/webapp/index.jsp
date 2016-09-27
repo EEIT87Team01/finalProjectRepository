@@ -95,105 +95,7 @@ ol, ul {
   </div>
 </div>
 	
-<script type="text/javascript">
-$(function(){
-	$('nav ul li:lt(5)').click(function(){
-		if('${empty membersVO}'){
-			event.preventDefault();
-			$('#loginModalBtn').click();
-			}
-		});
-	
-	console.log('${membersVO.memberID}');
-	$('#myModal').on('shown.bs.modal', function () {
-		  $('#account').focus();
-	})
-	searchads();
-	$(function() {
-		// ---------------------------------------------------------------------------
-		// login.jsp
-		// ---------------------------------------------------------------------------
-		$('#loginBtn').click(function(){
-			var account = $('#account').val();
-			var password = $('#password').val();
-			var myUrl = '/runninglife/Login/LoginCheck.do';
-			var type = 'post';
-			var dataType = 'json';
-			var data = { "memberAccount" : account , "password" : password };
-			var response = ajaxFunction(myUrl,type,data,dataType);
-			console.log(response);
-			for ( var i in response) {
-				switch(response[i]){
-					case "WrongPassword":
-						$('#gridSystemModalLabel').text('密碼錯誤');
-						break;
-					case "NotExistAccount":
-						$('#gridSystemModalLabel').text('查無此帳號');
-						break;
-					case "LoginFail":
-						$('#gridSystemModalLabel').text('登入失敗');
-						break;
-					case "LoginOK":
-						$('#loginBtn1').click();
-						break;
-				}
-			}
-		});
-	});
-	//ajax
-	function ajaxFunction(url,type,data,dataType){
-		var result;
-		$.ajax({
-			url : url,
-			type : type,
-			dataType : dataType,
-			data : data,
-			async : false,
-			success : function(response){
-				result = response;
-			},
-			error : function(response) {
-				console.log("error");
-			}
-		});
-			return result;
-	}
-})
 
-function searchads() {
-	var adsData = ajax('GET', null, 'ads/searchDisplayAds.do', 'json', false);
-	console.log(adsData);
-	for ( var i in adsData) {
-		if(i==0){
-			$('.slides').find('.adName').text(adsData[i].adName);
-			$('.slides').find('a').attr('href',adsData[i].link);
-			$('.slides').find('.adli').attr('style',"background-image: url(<c:url value='photoController/getPhoto.do?photoID="+adsData[i].image+"'/>);");
-		}else{
-			var adsli=$($('.slides').find('.adli').clone()).clone();
-			$(adsli).find('.adName').text(adsData[i].adName);
-			$(adsli).find('a').attr('href',adsData[i].link);
-			$(adsli).attr('style',"background-image: url(<c:url value='photoController/getPhoto.do?photoID="+adsData[i].image+"'/>);");
-			$(adsli).removeClass().addClass('adShow');
-			$('.slides').append(adsli);
-		}
-	}
-}
-function ajax(Method, Data, Url, Datetype, Async) {
-	var result;
-	$.ajax({
-		type : Method,
-		data : Data,
-		url : Url,
-		dataType : Datetype,
-		async : Async,
-		success : function(response) {
-
-			result = response;
-		}
-	});
-	return result;
-}
-</script>
 <!-- Modal end-->
 
 
@@ -207,19 +109,21 @@ function ajax(Method, Data, Url, Datetype, Async) {
 				<h1><a href="index.html">RunningLife</a></h1>
 				<nav role="navigation">
 					<ul>
-						<li><a href="friend/page.do">塗鴉牆</a></li>
-						<li><a href="challenge/.do">挑戰</a></li>
-						<li><a href="">賽事活動</a></li>
-						<li><a href="calendar.do">行事曆</a></li>
-						<li><a href="contact.html">運動文章</a></li>
 						<!-- 判斷是否已登入 -->
 						<c:choose>
 						<c:when test="${!empty membersVO}">
-							<li>Hello, ${membersVO.firstName}</li>
-							<li class="cta"><a href="Login/Logout.do">Logout</a></li>
+						<li><a href="friend/page.do">塗鴉牆</a></li>
+						<li><a href="challenge/page.do">挑戰</a></li>
+						<li><a href="">賽事活動</a></li>
+						<li><a href="calendar.do">行事曆</a></li>
+						<li><a href="contact.html">運動文章</a></li>
+							<li>你好, ${membersVO.firstName}</li>
+							<li class="cta"><a href="Login/Logout.do">登出</a></li>
 						</c:when>
 						<c:otherwise>
-							<li class="cta" data-toggle="modal" data-target="#myModal"><a id="loginModalBtn" href="#">Login</a></li> <!-- 登入視窗按鈕 -->
+							<li><a href="Login/CreateAccountPage.do">新增用戶，開始屬於你的RunningLife</a></li>
+							<li> 或是 </li>
+							<li class="cta" data-toggle="modal" data-target="#myModal"><a id="loginModalBtn" href="#">登入</a></li> <!-- 登入視窗按鈕 -->
 						</c:otherwise>	
 						</c:choose>
 					</ul>
@@ -637,4 +541,97 @@ function ajax(Method, Data, Url, Datetype, Async) {
 	<script type="text/javascript" src="<c:url value="/static/js/main.js" />"></script>
 	
 	</body>
+	<script type="text/javascript">
+$(function(){
+
+	console.log('${membersVO.memberID}');
+	$('#myModal').on('shown.bs.modal', function () {
+		  $('#account').focus();
+	})
+	searchads();
+	$(function() {
+		// ---------------------------------------------------------------------------
+		// login.jsp
+		// ---------------------------------------------------------------------------
+		$('#loginBtn').click(function(){
+			var account = $('#account').val();
+			var password = $('#password').val();
+			var myUrl = '/runninglife/Login/LoginCheck.do';
+			var type = 'post';
+			var dataType = 'json';
+			var data = { "memberAccount" : account , "password" : password };
+			var response = ajaxFunction(myUrl,type,data,dataType);
+			console.log(response);
+			for ( var i in response) {
+				switch(response[i]){
+					case "WrongPassword":
+						$('#gridSystemModalLabel').text('密碼錯誤');
+						break;
+					case "NotExistAccount":
+						$('#gridSystemModalLabel').text('查無此帳號');
+						break;
+					case "LoginFail":
+						$('#gridSystemModalLabel').text('登入失敗');
+						break;
+					case "LoginOK":
+						$('#loginBtn1').click();
+						break;
+				}
+			}
+		});
+	});
+	//ajax
+	function ajaxFunction(url,type,data,dataType){
+		var result;
+		$.ajax({
+			url : url,
+			type : type,
+			dataType : dataType,
+			data : data,
+			async : false,
+			success : function(response){
+				result = response;
+			},
+			error : function(response) {
+				console.log("error");
+			}
+		});
+			return result;
+	}
+})
+
+function searchads() {
+	var adsData = ajax('GET', null, 'ads/searchDisplayAds.do', 'json', false);
+	console.log(adsData);
+	for ( var i in adsData) {
+		if(i==0){
+			$('.slides').find('.adName').text(adsData[i].adName);
+			$('.slides').find('a').attr('href',adsData[i].link);
+			$('.slides').find('.adli').attr('style',"background-image: url(<c:url value='photoController/getPhoto.do?photoID="+adsData[i].image+"'/>);");
+		}else{
+			var adsli=$($('.slides').find('.adli').clone()).clone();
+			$(adsli).find('.adName').text(adsData[i].adName);
+			$(adsli).find('a').attr('href',adsData[i].link);
+			$(adsli).attr('style',"background-image: url(<c:url value='photoController/getPhoto.do?photoID="+adsData[i].image+"'/>);");
+			$(adsli).removeClass().addClass('adShow');
+			$('.slides').append(adsli);
+		}
+	}
+}
+function ajax(Method, Data, Url, Datetype, Async) {
+	var result;
+	$.ajax({
+		type : Method,
+		data : Data,
+		url : Url,
+		dataType : Datetype,
+		async : Async,
+		success : function(response) {
+
+			result = response;
+		}
+	});
+	return result;
+}
+</script>
 </html>

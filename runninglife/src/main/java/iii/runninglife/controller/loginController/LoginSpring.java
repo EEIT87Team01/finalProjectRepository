@@ -163,9 +163,7 @@ public class LoginSpring {
 			@RequestParam String firstName,@RequestParam String lastName,@RequestParam String email,
 			@RequestParam String gender,@RequestParam String phone,@RequestParam String birthday,HttpServletRequest req) 
 	throws IOException, ServletException{
-		System.out.println(new String(firstName.getBytes("ISO-8859-1"),"UTF-8"));
-		firstName = globalservice.encodeStr(firstName);
-		lastName = globalservice.encodeStr(lastName);
+		
 		byte[] photo = null;
 		
 		List<Part> fileParts = req.getParts().stream().filter(part -> "file1".equals(part.getName())).collect(Collectors.toList()); 

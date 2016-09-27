@@ -8,7 +8,9 @@ public class ELfunction {
 	public static int compareDay(Date endDateString){
 		long endDate = endDateString.getTime();
 		long now = new java.util.Date().getTime();
-		return (int) ((endDate - now)/(1000*60*60*24));
+		long result = ((endDate - now)/(1000*60*60*24));
+		if (result > 0)	return (int) result + 1;
+		else return (int) (result *= (-1) + 1);
 	}
 	
 	public static String byteToBase64(byte[] photo){

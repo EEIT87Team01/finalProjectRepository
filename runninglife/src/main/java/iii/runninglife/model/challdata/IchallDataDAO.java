@@ -24,4 +24,5 @@ public interface IchallDataDAO {
 	public List<ChallDataVO> findByMemberFinish(MembersVO memberID);
 	public List<ChallDataVO> findByMemberReserved(MembersVO memberID);
 	public List<ChallDataVO> findByMemberReceivedRequest(MembersVO memberID);
+	public int deleteByChallengeID(ChallsVO challenID);
 } // end of class IEmpDAO

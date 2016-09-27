@@ -129,7 +129,7 @@ $(document).on("click",".back",function(){
 
 		<div class="container">
 			<div class="row">
-				<h1>挑戰資訊<span style="float:right;">${r:day(challenge.challenStartTime)} 天後結束</span></h1>
+				<h1>挑戰資訊<span style="float:right;">${r:day(challenge.challenStartTime)} 天後開始</span></h1>
 				<table class="table">
 					<tr>
 						<td>挑戰名稱：</td>

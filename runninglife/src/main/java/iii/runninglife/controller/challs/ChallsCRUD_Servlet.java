@@ -66,20 +66,45 @@ public class ChallsCRUD_Servlet {
 	}
 	
 	@RequestMapping("/detail/{challenID}")
-	public ModelAndView challengeDetailPage(@PathVariable String challenID){
+	public ModelAndView challengeDetailPage(@PathVariable String challenID, @ModelAttribute MembersVO membersVO){
 		Map<String, Object> model = new HashMap<>();
+		Long nowTime = (new Date()).getTime();
 		ChallsVO challenge = challsCRUDService.searchOneService(challenID);
+		//預定的挑戰
+		if(challenge.getChallenStartTime().getTime() > nowTime){
+			model.put("challenge", challenge);
+			model.put("myChallengeData", challDataCRUDService.searchOneService(new ChallDataPK(challenge, membersVO)));
+			model.put("challengeDataList", challDataCRUDService.challProgressService(challenge)); //"from ChallDataVO where challDataPK.challenID = :chall order by finishTime desc";
+			return new ModelAndView("challenge/reservedChallDetail", model);
+		}
+		//進行中的挑戰
+		if(challenge.getChallenStartTime().getTime() <= nowTime && nowTime <= challenge.getChallenEndTime().getTime()){
+			model.put("challenge", challenge);
+			model.put("myChallengeData", challDataCRUDService.searchOneService(new ChallDataPK(challenge, membersVO)));
+			model.put("challengeDataList", challDataCRUDService.challProgressService(challenge));
+			return new ModelAndView("challenge/ingChallDetail", model);
+		}
+		//結束的挑戰
+		if(challenge.getChallenEndTime().getTime() < nowTime){
+			model.put("challenge", challenge);
+			model.put("myChallengeData", challDataCRUDService.searchOneService(new ChallDataPK(challenge, membersVO)));
+			model.put("challengeDataList", challDataCRUDService.challProgressService(challenge));
+			return new ModelAndView("challenge/finishChallDetail", model);
+		}
 		model.put("challenge", challenge);
+		model.put("myChallengeData", challDataCRUDService.searchOneService(new ChallDataPK(challenge, membersVO)));
 		model.put("challengeDataList", challDataCRUDService.challProgressService(challenge));
-		model.put("founder", challenge.getFounderID());
 		return new ModelAndView("challenge/challDetail", model);
 	}
 	
 	@RequestMapping("/finishChallDetail/{challenID}")
 	public ModelAndView finishChallengeDetailPage(@PathVariable String challenID, @ModelAttribute MembersVO membersVO){
-//		challsCRUDService.searchOneService(challenID).getChallDatas();
-		return new ModelAndView("challenge/finishChallDetail", "challengeData", 
-				challDataCRUDService.searchOneService(new ChallDataPK(challsCRUDService.searchOneService(challenID), membersVO)));
+		Map<String, Object> model = new HashMap<>();
+		ChallsVO challenge = challsCRUDService.searchOneService(challenID);
+		model.put("challenge", challenge);
+		model.put("myChallengrData", challDataCRUDService.searchOneService(new ChallDataPK(challenge, membersVO)));
+		model.put("challengeDataList", challDataCRUDService.challProgressService(challenge));
+		return new ModelAndView("challenge/challDetail", model);
 	}
     
 	@RequestMapping(value = "/searchChalls", method = RequestMethod.GET)
@@ -149,14 +174,15 @@ public class ChallsCRUD_Servlet {
 	@RequestMapping(value = "/challenRequestFriend", method = RequestMethod.POST)
 	@ResponseStatus(value = HttpStatus.OK)
 	public void challenRequestFriend(@RequestParam String memberID, @RequestParam String challenID){
-		java.sql.Timestamp d = new java.sql.Timestamp(System.currentTimeMillis());
 		challDataCRUDService.insertService(
-				new ChallDataPK(challsCRUDService.searchOneService(challenID),mdao.selectOne(memberID)), d, 0, "0000000", "0", "0");
+				new ChallDataPK(challsCRUDService.searchOneService(challenID),mdao.selectOne(memberID)), null , 0, "0000000", "0", "0");
 	}
 	
-	@RequestMapping(value = "/deleteChall", method = RequestMethod.DELETE)
-	public void deleteAd(@RequestParam String challenID) {
+	@RequestMapping(value = "/deleteChall/{challenID}", method = RequestMethod.GET)
+	public String deleteChallenge(@PathVariable String challenID) {
+		challDataCRUDService.deleteByChanllegeID(challsCRUDService.searchOneService(challenID));
 		challsCRUDService.deleteService(challenID);
+		return "redirect:/challenge/myChallenges.do";
 	}
 	
 	@RequestMapping(value = "/sendChallengeRequest.do", method = RequestMethod.GET)

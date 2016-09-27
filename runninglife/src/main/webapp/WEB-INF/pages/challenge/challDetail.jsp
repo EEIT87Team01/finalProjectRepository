@@ -59,41 +59,8 @@
 	<script src="../js/web/owl.carousel.min.js"></script>
 <script>
 $(document).ready(function(){
-// 	var dataId = location.search ;
-//     var getSearch = dataId.split("?challid=");
-//     var challenID = getSearch[1];
-// 	searchAdDetail(challenID);
-console.log('${challDataVO}');
-	
+
 });
-
-function searchAdDetail(adID) {
-	var challDetail = ajax('GET', {'challenID':challenID}, '../searchChall.do', 'json', false);
-	console.log(adDetail);
-	$('.challenName').text(challDetail.challenName);
-	$('.locationID').text(challDetail.locationID);
-	$('.challenDistance').text(challDetail.challenDistance);
-	$('.challenStartTime').text(challDetail.challenStartTime);
-	$('.challenEndTime').text(challDetail.challenEndTime);
-	$('.comment').text(challDetail.comment);
-	$('.founderID').text(challDetail.founderID);
-}
-
-function ajax(Method, Data, Url, Datetype, Async) {
-	var result;
-	$.ajax({
-		type : Method,
-		data : Data,
-		url : Url,
-		dataType : Datetype,
-		async : Async,
-		success : function(response) {
-
-			result = response;
-		}
-	});
-	return result;
-}
 
 $(document).on("click",".back",function(){
 
@@ -102,6 +69,40 @@ $(document).on("click",".back",function(){
 
 </script>	
 </head>
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+      </div>
+      <div class="modal-body">
+       <table class="table">
+			<c:if test="${challengeDataList != null}">
+				<c:forEach var="challengeData" items="${challengeDataList}">
+				<c:if test="${challengeData.isFounder eq '0'}">
+				<c:set var="membersVO" value="${challengeData.challDataPK.memberID}" />
+					<tr><td><img src="data:image/png;base64,${r:byteToBase64(membersVO.photo)}" style='width:50px;height:50px;'></td>
+						<td>${membersVO.firstName}</td>
+						<td>${membersVO.lastName}</td>
+						<td><c:if test="${challengeData.status eq '0'}">未接受邀請</c:if>
+							<c:if test="${challengeData.status eq '1'}">參加者</c:if>
+						</td>
+					</tr>
+				</c:if>
+				</c:forEach>
+			</c:if>
+		</table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
 <body>
 <div id="fh5co-page">
 		<header id="fh5co-header" role="banner">
@@ -158,24 +159,13 @@ $(document).on("click",".back",function(){
 						
 					</tr>               
 					<tr>
-						<td>參加人員：</td>
+						<td><!-- Button trigger modal -->
+						<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+						  參加者名單
+						</button>
+						</td>
 						<td>
-						<table>
-						<c:if test="${challengeDataList != null}">
-							<c:forEach var="challengeData" items="${challengeDataList}">
-							<c:if test="${challengeData.isFounder eq '0'}">
-							<c:set var="membersVO" value="${challengeData.challDataPK.memberID}" />
-								<tr><td><img src="data:image/png;base64,${r:byteToBase64(membersVO.photo)}" style='width:50px;height:50px;'></td>
-									<td>${membersVO.firstName}</td>
-									<td>${membersVO.lastName}</td>
-									<td><c:if test="${challengeData.status eq '0'}">未接受邀請</c:if>
-										<c:if test="${challengeData.status eq '1'}">參加者</c:if>
-									</td>
-								</tr>
-							</c:if>
-							</c:forEach>
-						</c:if>
-						</table>
+						
 						</td>
 					</tr>
 					<tr><td colspan="2"><p align="right"><button class="btn btn-success back">返回</button></p></td></tr>

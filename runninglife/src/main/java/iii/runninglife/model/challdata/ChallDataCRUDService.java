@@ -99,6 +99,10 @@ public class ChallDataCRUDService {
 	public List<ChallDataVO> findByMemberReceivedRequestService(MembersVO membersVO){
 		return dao.findByMemberReceivedRequest(membersVO);
 	}
+	public int deleteByChanllegeID(ChallsVO challenID){
+		return dao.deleteByChallengeID(challenID);
+	}
+	
 	
 	
 	

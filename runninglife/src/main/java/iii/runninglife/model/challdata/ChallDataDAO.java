@@ -18,19 +18,23 @@ public class ChallDataDAO implements IchallDataDAO {
 	private static final String GET_ALL_STMT = 
 		"from ChallDataVO order by challenID";
 	private static final String GET_CHALL_STMT = 
-		"from ChallDataVO where challDataPK.challenID = :chall";
+		"from ChallDataVO where challDataPK.challenID = :chall order by finishTime desc";
 	private static final String GET_MEMBER_STMT = 
 		"from ChallDataVO where memberID = :member";
 	private static final String GET_MEMBER_TIME_STMT = 
 		"from ChallDataVO where challDataPK.memberID.memberID = :member AND challDataPK.challenID.challenStartTime BETWEEN :startTime AND :endTime";
 	private static final String GET_MEMBER_PROCESSING_STMT = 
-		"from ChallDataVO where challDataPK.memberID = :member AND challDataPK.challenID.challenEndTime > :nowTime AND status = '1'";
+		"from ChallDataVO where challDataPK.memberID = :member AND challDataPK.challenID.challenEndTime > :nowTime AND (status = '2' or status = '1')";
 	private static final String GET_MEMBER_FINISH_STMT = 
-		"from ChallDataVO where challDataPK.memberID = :member AND challDataPK.challenID.challenEndTime < :nowTime AND status = '2'";
+		"from ChallDataVO where challDataPK.memberID = :member AND challDataPK.challenID.challenEndTime < :nowTime AND (status = '2' or status = '1')";
 	private static final String GET_MEMBER_RESERVED_STMT = 
 		"from ChallDataVO where challDataPK.memberID = :member AND challDataPK.challenID.challenStartTime > :nowTime AND status = '1'";
 	private static final String GET_MEMBER_RECEIVED_REQUEST_STMT = 
 		"from ChallDataVO where challDataPK.memberID = :member AND isFounder = '0' AND status = '0'";
+	private static final String GET_TOP_10_STMT =
+		"select top 10 ChallDataVO.finishTime from ChallDataVO where challDataPK.challenID = :chall ";
+	private static final String DELETE_BY_CHALLENGEID =
+		"delete from ChallDataVO where challDataPK.challenID = :chall ";
 	
 	@Autowired
 	SessionFactory sessionFactory;
@@ -118,5 +122,11 @@ public class ChallDataDAO implements IchallDataDAO {
 	public List<ChallDataVO> findByMemberReceivedRequest(MembersVO memberID) {
 		return sessionFactory.getCurrentSession().createQuery(GET_MEMBER_RECEIVED_REQUEST_STMT).setParameter("member", memberID).list();
 	}
+	@SuppressWarnings("unchecked")
+	@Override
+	public int deleteByChallengeID(ChallsVO challenID) {
+		return sessionFactory.getCurrentSession().createQuery(DELETE_BY_CHALLENGEID).setParameter("chall", challenID).executeUpdate();
+	}
+	
 
 }
