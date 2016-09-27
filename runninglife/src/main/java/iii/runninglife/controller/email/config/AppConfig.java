@@ -27,15 +27,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import org.springframework.web.servlet.resource.PathResourceResolver;
 
 @Configuration
-//@ComponentScan(basePackages = "_05service")
-//@ComponentScan(basePackages = "_05validator")
-//@ComponentScan(basePackages = "_05controller")
-//@ComponentScan(basePackages = "_05model")
+//@ComponentScan(basePackages = "iii.runninglife.controller.email")
 //@PropertySource(value = "classpath:database.properties")
 @EnableTransactionManagement
 @EnableWebMvc 
 public class AppConfig extends WebMvcConfigurerAdapter{
-	
 	// Put Other Application configuration here.
 
 	@Bean
@@ -81,16 +77,13 @@ public class AppConfig extends WebMvcConfigurerAdapter{
 	      .setCachePeriod(0)
 	      .resourceChain(true)
 	      .addResolver(new PathResourceResolver());
-	    
 	}
-	
 	@Bean
 	public ResourceBundleMessageSource messageSource() {
 		ResourceBundleMessageSource rb = new ResourceBundleMessageSource();
 		rb.setBasenames(new String[] { "/validation"});
 		return rb;
 	}
-	
 	@Bean
 	public CommonsMultipartResolver multipartResolver() {
 	    CommonsMultipartResolver resolver=new CommonsMultipartResolver();
@@ -98,43 +91,41 @@ public class AppConfig extends WebMvcConfigurerAdapter{
 	    return resolver;
 	}
 	
-	   @Autowired
-	    private Environment environment;
 	 
-//	    @Bean
-//	    public LocalSessionFactoryBean sessionFactory() {
-//	        LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
-//	        sessionFactory.setDataSource(dataSource());
-//	        sessionFactory.setPackagesToScan(new String[] { "_05model" });
-//	        sessionFactory.setHibernateProperties(hibernateProperties());
-//	        return sessionFactory;
-//	     }
-//	     
-//	    @Bean
-//	    public DataSource dataSource() {
-//	        DriverManagerDataSource dataSource = new DriverManagerDataSource();
-//	        dataSource.setDriverClassName(environment.getRequiredProperty("jdbc.driverClassName"));
-//	        dataSource.setUrl(environment.getRequiredProperty("jdbc.url"));
-//	        dataSource.setUsername(environment.getRequiredProperty("jdbc.username"));
-//	        dataSource.setPassword(environment.getRequiredProperty("jdbc.password"));
-//	        return dataSource;
-//	    }
-//	     
-//	    private Properties hibernateProperties() {
-//	        Properties properties = new Properties();
-//	        properties.put("hibernate.dialect", environment.getRequiredProperty("hibernate.dialect"));
-//	        properties.put("hibernate.show_sql", environment.getRequiredProperty("hibernate.show_sql"));
-//	        properties.put("hibernate.format_sql","false");
-//	        return properties;        
-//	    }
-//	     
-//	    @Bean
-//	    @Autowired
-//	    public HibernateTransactionManager transactionManager(SessionFactory s) {
-//	       HibernateTransactionManager txManager = new HibernateTransactionManager();
-//	       txManager.setSessionFactory(s);
-//	       return txManager;
-//	    }
+	    @Bean
+	    public LocalSessionFactoryBean sessionFactory() {
+	        LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
+	        sessionFactory.setDataSource(dataSource());
+	        sessionFactory.setPackagesToScan(new String[] { "iii.runninglife.model" });
+	        sessionFactory.setHibernateProperties(hibernateProperties());
+	        return sessionFactory;
+	     }
+	     
+	    @Bean
+	    public DataSource dataSource() {
+	        DriverManagerDataSource dataSource = new DriverManagerDataSource();
+	        dataSource.setDriverClassName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+	        dataSource.setUrl("jdbc:sqlserver://localhost:1433;database=runninglife");
+	        dataSource.setUsername("sa");
+	        dataSource.setPassword("sa1234");
+	        return dataSource;
+	    }
+	     
+	    private Properties hibernateProperties() {
+	        Properties properties = new Properties();
+	        properties.put("hibernate.dialect","org.hibernate.dialect.SQLServerDialect" );
+	        properties.put("hibernate.show_sql", "true");
+	        properties.put("hibernate.format_sql","false");
+	        return properties;        
+	    }
+	     
+	    @Bean
+	    @Autowired
+	    public HibernateTransactionManager transactionManager(SessionFactory s) {
+	       HibernateTransactionManager txManager = new HibernateTransactionManager();
+	       txManager.setSessionFactory(s);
+	       return txManager;
+	    }
 	
 	
 }

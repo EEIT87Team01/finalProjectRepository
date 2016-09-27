@@ -8,13 +8,16 @@ import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import iii.runninglife.model.contest.ContestVO;
 import iii.runninglife.model.event.EventVO;
+import iii.runninglife.model.members.MembersVO;
 import iii.runninglife.model.team.TeamVO;
+
 
 @Entity
 @Table(name = "runner")
@@ -23,43 +26,74 @@ public class RunnerVO implements Serializable {
 	// @OneToOne(cascade=CascadeType.ALL,fetch=FetchType.EAGER)
 	// @JoinColumn(name="memberID")
 	@EmbeddedId
-	private RunnerPK runnerPK;
-	@ManyToOne
-	@JoinColumn(name = "eventID", referencedColumnName = "eventID",insertable = false, updatable = false)
-	private EventVO eventID;
-	@ManyToOne
-	@JoinColumn(name = "teamID", referencedColumnName = "teamID",insertable = false, updatable = false)
-	private TeamVO teamID;
+	private RunnerPK pk;
+	@Column
+	private int eventID;
+	@Column
+	private int teamID;
 	@Column
 	private String clothesSize;
 	@Column
 	private Time runTime;
-//	@JoinColumn(name = "contestID", referencedColumnName = "contestID", updatable = false, insertable = false)
-//	private int contestID;
+	@OneToOne
+	@JoinColumn(name = "memberID", referencedColumnName = "memberID", insertable = false, updatable = false)
+	private MembersVO member;
 	@Column
 	private String status;
+	@ManyToOne
+	@JsonBackReference(value="runner-contest")
+	@JoinColumn(name = "contestID", referencedColumnName = "contestID",insertable = false, updatable = false)
+	private ContestVO contest;
+	@ManyToOne
+	@JoinColumn(name = "eventID", referencedColumnName = "eventID",insertable = false, updatable = false)
+	private EventVO event;
+	@ManyToOne
+	@JoinColumn(name = "teamID", referencedColumnName = "teamID",insertable = false, updatable = false)
+	private TeamVO team;
 	
 	public RunnerVO() {
 		super();
 	}
-	public TeamVO getTeamID() {
-		return teamID;
+	public TeamVO getTeam() {
+		return team;
 	}
-	public void setTeamID(TeamVO teamID) {
-		this.teamID = teamID;
+	public void setTeam(TeamVO team) {
+		this.team = team;
 	}
-	public EventVO getEventID() {
-		return eventID;
+	public EventVO getEvent() {
+		return event;
 	}
-	public void setEventID(EventVO eventID) {
-		this.eventID = eventID;
+	public void setEvent(EventVO event) {
+		this.event = event;
 	}
-	public RunnerPK getRunnerPK() {
-		return runnerPK;
+	public ContestVO getContest() {
+		return contest;
+	}
+	public void setContest(ContestVO contest) {
+		this.contest = contest;
+	}
+	public RunnerPK getPk() {
+		return pk;
 	}
 
-	public void setRunnerPK(RunnerPK runnerPK) {
-		this.runnerPK = runnerPK;
+	public void setPk(RunnerPK pk) {
+		this.pk = pk;
+	}
+
+	public int getEventID() {
+		return eventID;
+	}
+
+	public void setEventID(int eventID) {
+		this.eventID = eventID;
+	}
+
+	public int getTeamID() {
+		return teamID;
+	}
+
+	public void setTeamID(int teamID) {
+		this.teamID = teamID;
 	}
 
 	public String getClothesSize() {
@@ -82,6 +116,12 @@ public class RunnerVO implements Serializable {
 	}
 	public void setStatus(String status) {
 		this.status = status;
+	}
+	public MembersVO getMember() {
+		return member;
+	}
+	public void setMember(MembersVO member) {
+		this.member = member;
 	}
 	
 
