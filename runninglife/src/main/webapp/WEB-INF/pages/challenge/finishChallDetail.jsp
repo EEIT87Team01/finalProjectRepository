@@ -195,11 +195,8 @@ $(document).on("click",".back",function(){
 					</tr>               
 					<tr>
 						<td><!-- Button trigger modal -->
-						<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">參加者名單</button>
-						<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#ranking">排行榜</button>
-						</td>
-						<td>
-						
+						<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">參加者名單</button>
+						<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#ranking">排行榜</button>
 						</td>
 					</tr>
 					<tr><td colspan="2"><p align="right">

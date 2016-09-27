@@ -2,6 +2,7 @@ package iii.runninglife.controller.challs;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -70,18 +71,30 @@ public class ChallsCRUD_Servlet {
 		Map<String, Object> model = new HashMap<>();
 		Long nowTime = (new Date()).getTime();
 		ChallsVO challenge = challsCRUDService.searchOneService(challenID);
+		List<ChallDataVO> challengeDataList = challDataCRUDService.challProgressService(challenge);
+		List<MembersVO> compare = new ArrayList<>();
+		List<MembersVO> friends = new ArrayList<>();
 		//預定的挑戰
 		if(challenge.getChallenStartTime().getTime() > nowTime){
 			model.put("challenge", challenge);
 			model.put("myChallengeData", challDataCRUDService.searchOneService(new ChallDataPK(challenge, membersVO)));
-			model.put("challengeDataList", challDataCRUDService.challProgressService(challenge)); //"from ChallDataVO where challDataPK.challenID = :chall order by finishTime desc";
+			model.put("challengeDataList", challengeDataList); //"from ChallDataVO where challDataPK.challenID = :chall order by finishTime desc";
+			for (ChallDataVO c:challengeDataList) {compare.add(c.getChallDataPK().getMemberID());}
+			friends = friendRelationshipService.findByMemberIDALLFriendID(membersVO);
+			friends.removeAll(compare);
+			model.put("friends", friends);
+			
 			return new ModelAndView("challenge/reservedChallDetail", model);
 		}
 		//進行中的挑戰
 		if(challenge.getChallenStartTime().getTime() <= nowTime && nowTime <= challenge.getChallenEndTime().getTime()){
 			model.put("challenge", challenge);
 			model.put("myChallengeData", challDataCRUDService.searchOneService(new ChallDataPK(challenge, membersVO)));
-			model.put("challengeDataList", challDataCRUDService.challProgressService(challenge));
+			model.put("challengeDataList", challengeDataList);
+			for (ChallDataVO c:challengeDataList) {compare.add(c.getChallDataPK().getMemberID());}
+			friends = friendRelationshipService.findByMemberIDALLFriendID(membersVO);
+			friends.removeAll(compare);
+			model.put("friends", friends);
 			return new ModelAndView("challenge/ingChallDetail", model);
 		}
 		//結束的挑戰
