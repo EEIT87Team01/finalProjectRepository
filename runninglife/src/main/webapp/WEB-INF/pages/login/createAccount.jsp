@@ -169,12 +169,6 @@ ol, ul {
 						</td>
 					</tr>
 					<tr class="form-group col-lg-12">
-						<td>
-							<label for="name" class="control-label login-label">大頭貼:</label><br/> 
-							<input id="input-2" name="file1" type="file" class="file" multiple="" data-show-upload="false" data-show-caption="true">
-						</td>
-					</tr>
-					<tr class="form-group col-lg-12">
 						<td style="margin-right: 30px; ">
 							<input type="submit" id="btn" class="btn btn-primary" value="送出">
 						</td>

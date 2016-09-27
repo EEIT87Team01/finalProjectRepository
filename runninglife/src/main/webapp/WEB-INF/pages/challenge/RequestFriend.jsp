@@ -90,7 +90,7 @@
 						<td>${friend.firstName}</td>
 						<td>${friend.lastName}</td>
 						<td>
-						<button class="btn btn-accept" id="${friend.memberID}" >邀請挑戰</button>
+						<button class="btn btn-accept" id="${friend.memberID}" >邀請挑戰</button></td>
 					</tr>
 				</c:forEach>
 			</c:if>

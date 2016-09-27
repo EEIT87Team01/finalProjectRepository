@@ -83,16 +83,20 @@ $(document).on("click",".back",function(){
        <table class="table">
 			<c:if test="${challengeDataList != null}">
 				<c:forEach var="challengeData" items="${challengeDataList}">
-				<c:if test="${challengeData.isFounder eq '0'}">
 				<c:set var="membersVO" value="${challengeData.challDataPK.memberID}" />
 					<tr><td><img src="data:image/png;base64,${r:byteToBase64(membersVO.photo)}" style='width:50px;height:50px;'></td>
 						<td>${membersVO.firstName}</td>
 						<td>${membersVO.lastName}</td>
-						<td><c:if test="${challengeData.status eq '0'}">未接受邀請</c:if>
-							<c:if test="${challengeData.status eq '1'}">參加者</c:if>
+						<td>
+						<c:choose>
+							<c:when test="${challengeData.isFounder eq '1'}">發起者</c:when>
+							<c:otherwise>
+								<c:if test="${challengeData.status eq '0'}">未接受邀請</c:if>
+								<c:if test="${challengeData.status eq '1' || challengeData.status eq '2'}">參加者</c:if>
+							</c:otherwise>
+						</c:choose>
 						</td>
 					</tr>
-				</c:if>
 				</c:forEach>
 			</c:if>
 		</table>
@@ -163,9 +167,6 @@ $(document).on("click",".back",function(){
 						<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
 						  參加者名單
 						</button>
-						</td>
-						<td>
-						
 						</td>
 					</tr>
 					<tr><td colspan="2"><p align="right"><button class="btn btn-success back">返回</button></p></td></tr>

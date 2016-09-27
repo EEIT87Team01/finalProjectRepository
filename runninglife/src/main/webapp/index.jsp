@@ -41,56 +41,56 @@ ol, ul {
 <!-- 彈出式窗 -->
 <div class="modal fade bs-example-modal-sm" tabindex="-1" id="myModal" role="dialog" aria-labelledby="mySmallModalLabel">
   <div class="modal-dialog modal-sm" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="gridSystemModalLabel">登入</h4>
-      </div>
-      
+  
       <!-- 	get || post -->
 	  <!-- /Login/DBCheck -->
-      <form action="/runninglife/Login/DBCheck.do" method="post">
-      	<div style="padding-left:50px;">
-			<table >
-				<thead>
-					<tr>
-						<th>
-						</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td class="cols-sm-6">
-						<label class="control-label">帳號:</label>
-						<input type="text" id="account" class="form-control" name="memberAccount" value="${param.memberAccount}">
-						</td>
-					</tr>
-					<tr>
-						<td>
-						<label class="control-label">密碼:</label>
-						<input type="text" class="form-control" id="password" name="password" value="${param.password}">
-						</td>
-					</tr>
-
-					<tr>
-						<td>
-							<a href="/runninglife/Login/ChangeForgetPage.do">忘記密碼?</a>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<a href="/runninglife/Login/CreateAccountPage.do">新增用戶</a>
-						</td>
-					</tr>
-				</tbody>
-			</table>
+      <div class="container" style="margin-top:40px">
+		<div class="row">
+			<div class="col-sm-6 col-md-4 ">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<strong id="gridSystemModalLabel">登入</strong>
+					</div>
+					<div class="panel-body">
+						<form role="form" action="/runninglife/Login/DBCheck.do" method="post">
+							<fieldset>
+<!-- 								<div class="row"> -->
+<!-- 									<div class="center-block"> -->
+<!-- 									</div> -->
+<!-- 								</div> -->
+								<div class="row">
+									<div class="col-sm-12 col-md-10  col-md-offset-1 ">
+										<div class="form-group">
+											<div class="input-group">
+												<span class="input-group-addon">
+													<i class="glyphicon glyphicon-user"></i>
+												</span> 
+												<input type="text" id="account" class="form-control" name="memberAccount" value="${param.memberAccount}" placeholder="帳號" autofocus>
+											</div>
+										</div>
+										<div class="form-group">
+											<div class="input-group">
+												<span class="input-group-addon">
+													<i class="glyphicon glyphicon-lock"></i>
+												</span>
+												<input type="password" class="form-control" id="password" name="password" value="${param.password}" placeholder="密碼">
+											</div>
+										</div>
+										<div class="form-group">
+											<input type="submit" class="btn btn-lg btn-primary btn-block" value="登入">
+										</div>
+									</div>
+								</div>
+							</fieldset>
+						</form>
+					</div>
+					<div class="panel-footer ">
+						<a href="/runninglife/Login/ChangeForgetPage.do"> 忘記密碼? </a><br/>
+						<a href="/runninglife/Login/CreateAccountPage.do"> 新增用戶 </a>
+					</div>
+                </div>
+			</div>
 		</div>
-		<div class="modal-footer">
-			<button type="button" id="loginBtn" class="btn btn-primary">登入</button>
-			<button type="submit" id="loginBtn1" class="btn btn-primary hidden"></button>
-		    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-		</div>
-      </form>
     </div>
   </div>
 </div>
@@ -117,7 +117,7 @@ ol, ul {
 						<li><a href="">賽事活動</a></li>
 						<li><a href="calendar.do">行事曆</a></li>
 						<li><a href="contact.html">運動文章</a></li>
-							<li>你好, ${membersVO.firstName}</li>
+							<li>你好, ${membersVO.lastName}</li>
 							<li class="cta"><a href="Login/Logout.do">登出</a></li>
 						</c:when>
 						<c:otherwise>
@@ -553,6 +553,21 @@ $(function(){
 		// ---------------------------------------------------------------------------
 		// login.jsp
 		// ---------------------------------------------------------------------------
+		
+		$('#username').focusout(function(){
+			var input = $('#username').val();
+			$.get("../../../../main/java/_01/controller/loginController/LoginSpring/Login",{'name':input},function(data){
+				switch(data){
+				case "查無此帳號":
+					$('#span1').removeClass().addClass('glyphicon glyphicon-ok-sign');
+					break;
+				case "帳號已存在":
+					$('#span1').removeClass().addClass('glyphicon glyphicon-remove-sign');
+					break;
+				}
+			});
+		});
+		
 		$('#loginBtn').click(function(){
 			var account = $('#account').val();
 			var password = $('#password').val();
