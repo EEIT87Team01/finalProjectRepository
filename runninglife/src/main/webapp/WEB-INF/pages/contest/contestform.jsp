@@ -8,9 +8,7 @@
 <html>
 <head>
 <link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
-	crossorigin="anonymous">
+	href="<c:url value="/resources/css/bootstrap.min.css"/>">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>編輯賽事</title>
 </head>
@@ -20,17 +18,6 @@
 			<div class="text-center">
 				<h2>編輯賽事</h2>
 			</div>
-			${action}
-
-<%-- 			<c:choose> --%>
-<%-- 				<c:when test="${action == 1 }"> --%>
-<!--       						 Salary is very low to survive. -->
-<%--   				</c:when> --%>
-<%-- 				<c:otherwise> --%>
-<!--       					  No comment sir... -->
-<%--    			 	</c:otherwise> --%>
-<%-- 			</c:choose> --%>
-
 
 			<spring:url value="/contest/${contest.contestID}" var="updateContest" />
 			<spring:url value="/contest/edit" var="addContest" />
@@ -163,6 +150,11 @@
 						<input class="form-control" type="file" id="fileUpload"
 							name=fileUpload />
 					</div>
+					<label class="col-sm-2 control-label">路徑圖</label>
+					<div class="col-sm-10">
+						<input class="form-control" type="file" id="fileUpload"
+							name=fileUpload />
+					</div>
 				</div>
 
 				<div class="form-group">
@@ -190,17 +182,5 @@
 	</div>
 </body>
 <script type="text/javascript">
-	var formData = new FormData();
-	formData.append('file', $('#file')[0].files[0]);
-	$.ajax({
-		url : '/upload',
-		type : 'POST',
-		cache : false,
-		data : formData,
-		processData : false,
-		contentType : false
-	}).done(function(res) {
-	}).fail(function(res) {
-	});
 </script>
 </html>

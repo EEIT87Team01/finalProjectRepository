@@ -14,17 +14,13 @@
 <link rel="stylesheet"
 	href="https://fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet"
-	href="<c:url value="/static/css/bootstrap.min.css"/>">
+	href="<c:url value="/resources/css/bootstrap.min.css"/>">
 
 </head>
 <body>
 	<%-- 	<jsp:include page="${request.contextPath}/contest/1"/> --%>
-	<%@ include file="/WEB-INF/pages/header.jsp"%>
 	<div id="countPage" class="hidden">${countPage}</div>
-	<div>共有${countPage}頁</div>
-	<div>memberID:${member.memberID}</div>
 	<div id="auth" class="">admin</div>
-	${pageContext.request.contextPath }
 	<!-- 	載入列表	 -->
 	<section>
 	<div class="container">
@@ -122,15 +118,14 @@
 	</div>
 
 	</section>
-	<%@ include file="/WEB-INF/pages/footer.jsp"%>
 	<script></script>
 </body>
 
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-<script src="<c:url value="/static/js/jquery.confirm.min.js"/>"></script>
-<script src="<c:url value="/static/js/bootstrap.min.js"/>"></script>
-<script src="<c:url value="/static/js/jquery.twbsPagination.js"/>"></script>
+<script src="<c:url value="/resources/js/jquery.confirm.min.js"/>"></script>
+<script src="<c:url value="/resources/js/bootstrap.min.js"/>"></script>
+<script src="<c:url value="/resources/js/jquery.twbsPagination.js"/>"></script>
 <script>
 	$(document).ready(auth());
 	function auth() {
