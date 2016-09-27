@@ -10,7 +10,8 @@
 	<head>
 		<title>RunningLife貼文頁面</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
+		
+		
 		<script src="<%=request.getContextPath()%>/static/js/jquery-3.1.0.min.js"></script>
 		<script src="<%=request.getContextPath()%>/static/js/bootstrap.min.js"></script>
 		<script src="<%=request.getContextPath()%>/static/js/fileinput.min.js"></script>
@@ -69,7 +70,6 @@
 	  </div>
 	</div>
 <body>
-
 	<header id="fh5co-header" role="banner">
 		<div class="container">
 			<div class="header-inner">
@@ -113,10 +113,6 @@ ${onePosts.postID}
 	</div> 
 	<div class="col-md-2"></div> 	
 	<div class="col-md-8">	
-		<ul class="nav nav-tabs">
-			<li role="presentation"><a href="<%=request.getContextPath()%>/postsController/posts.do">塗鴉牆</a></li>
-			<li role="presentation"><a href="<%=request.getContextPath()%>/friend/page">好友資訊</a></li>
-		</ul>
 		<form:form method="post" action="newPosts.do" enctype="multipart/form-data">
 			<div class="col-md-12" style="border-style:solid;border-color:#EDEDED;padding:20px">
 				<textarea id="textarea" name="postsContent" class="form-control col-xs-12" rows="5"></textarea>
@@ -127,11 +123,12 @@ ${onePosts.postID}
 		</form:form>
 		<c:forEach var="posts" items="${postsVO}"> 
 			<div class="col-md-12">
+<%-- 			<c:if test="${posts.postMemberID.memberID==membersVO.memberID}">		 --%>
 				<c:if test="${posts.parent==null&&posts.status==1}">	
 					<div>
 						<div  class="col-md-12" style="border-style:solid;border-color:#EDEDED">							
 							<div  class="col-md-12" style="border-style:solid;border-color:#EDEDED">	
-								<div class="col-md-1"><a href="<%=request.getContextPath()%>/postsController/personalPosts.do?membersID=${posts.postMemberID.memberID}"><img style="width:99%" src="data:image/png;base64,${r:byteToBase64(posts.postMemberID.photo)}"></a></div>
+								<div class="col-md-1"><img style="width:99%" src="data:image/png;base64,${r:byteToBase64(posts.postMemberID.photo)}"></div>
 								<div class="col-md-10"><h4>${posts.postMemberID.lastName}</h4>${posts.time}</div>	
 								<div class="col-md-1">
 							</div>	
@@ -160,7 +157,7 @@ ${onePosts.postID}
 						</div>	
 						<form method="post" action="responsePosts.do">
 							<div class="col-md-12" style="border-style:solid;border-color:#EDEDED">
-								<div class="col-md-1"><a href="<%=request.getContextPath()%>/postsController/personalPosts.do?membersID=${posts.postMemberID.memberID}"><img  style="width:80%" src="data:image/png;base64,${r:byteToBase64(membersVO.photo)}"></a></div>
+								<div class="col-md-1"><img  style="width:80%" src="data:image/png;base64,${r:byteToBase64(membersVO.photo)}"></div>
 								<div class="col-md-9"><textarea id="textarea" name="responsePosts_content" class="form-control col-xs-12" rows="1"></textarea></div>
 								<div class="col-md-2"><button type="submit" class="btn btn btn-primary">回覆</button></div>	
 								<input type="hidden" name="memberID" value="${membersVO.memberID}">
@@ -173,7 +170,7 @@ ${onePosts.postID}
 					<c:forEach var="response" items="${responseVO}"> 
 						<c:if test="${response.parent==posts.postID&&response.status==1}">
 							<div class="col-md-12" style="border-style:solid;border-color:#EDEDED">
-								<div class="col-md-1"><a href="<%=request.getContextPath()%>/postsController/personalPosts.do?membersID=${response.postMemberID.memberID}"><img  style="width:80%" src="data:image/png;base64,${r:byteToBase64(membersVO.photo)}"></a></div>
+								<div class="col-md-1"><img  style="width:80%" src="data:image/png;base64,${r:byteToBase64(membersVO.photo)}"></div>
 								<div class="col-md-10"><span>${response.content}</span></div>
 								<div class="col-md-1">  
 									<div class="btn-group ">
@@ -188,6 +185,7 @@ ${onePosts.postID}
 							</div>		
 						</c:if>
 					</c:forEach>
+<%-- 			</c:if> --%>
 			</div>
 				<div class="col-md-12"></div>
 		</c:forEach>			
