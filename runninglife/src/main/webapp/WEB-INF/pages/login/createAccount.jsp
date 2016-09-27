@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="r" uri="http://iii.runningLife.com/util" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -79,6 +80,7 @@ ol, ul {
 						<!-- 判斷是否已登入 -->
 						<c:choose>
 						<c:when test="${!empty membersVO}">
+							<li><img src="data:image/png;base64,${r:byteToBase64(membersVO.photo)}" style='width:50px;height:50px;'></li>
 							<li>Hello, ${membersVO.lastName}</li>
 							<li class="cta"><a href="Login/Logout.do">Logout</a></li>
 						</c:when>
@@ -172,6 +174,12 @@ ol, ul {
 						<td style="margin-right: 30px; ">
 							<input type="submit" id="btn" class="btn btn-primary" value="送出">
 						</td>
+					</tr>
+					<tr class="form-group col-lg-12">
+					   <td>
+					     <label for="name" class="ccontrol-label login-label">大頭貼:</label><br/>
+					     <input id="input-2" name="file1" type="file" class="file" multiple="" data-show-upload="false" data-show-caption="true"/>
+					   </td>
 					</tr>
 				</tbody>
 			</table>
