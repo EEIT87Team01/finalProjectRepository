@@ -53,25 +53,26 @@
 </head>
 <body>
 <div id="fh5co-page">
-		<header id="fh5co-header" role="banner">
-			<div class="container">
-				<div class="header-inner">
-					<h1><a href="../index.jsp">RunningLife</a></h1>
-					<nav role="navigation">
-						<ul>
-							<li><a href="../friend/page.do">塗鴉牆</a></li>
-							<li><a href="../challenge/page.do">挑戰</a></li>
-							<li><a href="">賽事活動</a></li>
-							<li class="active">><a href="../calendar.do">行事曆</a></li>
-							<li><a href="contact.html">運動文章</a></li>
-							<li>Hello, ${memberFirstName}</li>
-							<li class="cta"><a href="../Login/Logout.do">Logout</a></li>
-						</ul>
-					</nav>
-				</div>
+	<header id="fh5co-header" role="banner">
+		<div class="container">
+			<div class="header-inner">
+				<h1><a href="../index.jsp">RunningLife</a></h1>
+				<nav role="navigation">
+					<ul>
+						<li><a href="../friend/page.do">塗鴉牆</a></li>
+						<li><a href="../challenge/page.do">挑戰</a></li>
+						<li><a href="">賽事活動</a></li>
+						<li class="active">><a href="../calendar.do">行事曆</a></li>
+						<li><a href="contact.html">運動文章</a></li>
+						<li>Hello, ${memberFirstName}</li>
+						<li class="cta"><a href="../Login/Logout.do">Logout</a></li>
+					</ul>
+				</nav>
 			</div>
-		</header>
+		</div>
+	</header>
 	<div class="container" style="margin-top: 50px;">
+	<h1>運動紀錄</h1>
 		<div class="row">
 			<table class="table">
 				<tr>
