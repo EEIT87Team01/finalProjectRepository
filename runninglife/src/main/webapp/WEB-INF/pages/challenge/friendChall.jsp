@@ -98,23 +98,7 @@ $(document).on("click",".back",function(){
 </head>
 <body>
 <div id="fh5co-page">
-		<header id="fh5co-header" role="banner">
-			<div class="container">
-				<div class="header-inner">
-					<h1><a href="index.html">Flew</a></h1>
-					<nav role="navigation">
-						<ul>
-							<li><a href="work.html">Work</a></li>
-							<li><a href="services.html">Services</a></li>
-							<li><a href="pricing.html">Pricing</a></li>
-							<li><a href="about.html">About</a></li>
-							<li><a href="contact.html">Contact</a></li>
-							<li class="cta"><a href="#">Get started</a></li>
-						</ul>
-					</nav>
-				</div>
-			</div>
-		</header>
+		<%@ include file="/WEB-INF/pages/header.jsp"%>
 
 		<div class="container">
             <h1>好友的挑戰</h1>
