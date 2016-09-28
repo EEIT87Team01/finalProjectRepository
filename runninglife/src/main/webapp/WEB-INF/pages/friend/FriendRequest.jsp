@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="r" uri="http://iii.runningLife.com/util" %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -121,37 +122,39 @@
 			</div>
 		</div>
 	</header>
-	<div class="col-md-12 label" id="bannermenu">
-	<ul class="list-inline">
-		<li>塗鴉牆</li>
-		<li><a href="/runninglife/friend/listFriend.do">朋友名單</a></li>
-		<li><a href="/runninglife/friend/listFriendRequest.do">接受邀請</a></li>
-		<li><a href="/runninglife/friend/sendRequest.do">邀請好友</a></li>
-	</ul>
-	</div>
-	
-	<div class="col-md-2 col-md-offset-2">
-		<ul class="list-unstyled">
-		<c:if test="${member != null}">
-		  <li>${member.firstName}, ${member.lastName}</li>
-		  <li>${sessionScope.member.firstName}, ${sessionScope.member.lastName}</li>
-		</c:if>
+	<div class="col-md-2"></div>
+	<div class="col-md-8">
+		<ul class="nav nav-tabs">
+		<li role="presentation"><a href="<%=request.getContextPath()%>/postsController/posts.do">塗鴉牆</a></li>
+		<li role="presentation" class="dropdown">
+	        <a id="drop4" href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false">
+	          	好友資訊<span class="caret"></span>
+	        </a>
+	        <ul id="menu1" class="dropdown-menu" role="menu" aria-labelledby="drop4">
+	          <li role="presentation"><a role="menuitem" tabindex="-1" href="<%=request.getContextPath()%>/friend/listFriend.do">好友列表</a></li>
+	          <li role="presentation"><a role="menuitem" tabindex="-1" href="<%=request.getContextPath()%>/friend/listFriendRequest.do">收到的邀請</a></li>
+	          <li role="presentation"><a role="menuitem" tabindex="-1" href="<%=request.getContextPath()%>/friend/sendRequest.do">邀請好友</a></li>
+	        </ul>
+		</li>
 		</ul>
-	</div>
 	
-	<div class="col-md-6">
+	<div class="container" style='margin-top:5%;'>
 	<c:if test="${receivedRequest != null}">
-	<table  class="table" id="receivedList" style="width: 300px">
-	<tr><th>FirstName</th><th>LastName</th><th></th></tr>
+	<table  class="table" id="receivedList">
+	<tr><th>照片</th><th>FirstName</th><th>LastName</th>	<th></th></tr>
 	<c:forEach var="memberRequest" items="${receivedRequest}">
-		<tr><td>${memberRequest.friendRequestPK.requesterID.firstName}</td>
-			<td>${memberRequest.friendRequestPK.requesterID.lastName}</td>
+	<c:set var="membersVO" value="${memberRequest.friendRequestPK.requesterID}"/>
+		<tr>
+			<td><img src="data:image/png;base64,${r:byteToBase64(membersVO.photo)}" style='width:50px;height:50px;'></td>
+			<td>${membersVO.firstName}</td>
+			<td>${membersVO.lastName}</td>
 			<td>
-			<button class="btn btn-success" id="${memberRequest.friendRequestPK.requesterID.memberID}">接受</button>
+			<button class="btn btn-success" id="${membersVO.memberID}">接受</button>
 		</tr>	
 	</c:forEach>
 	</table>
 	</c:if>
+	</div>
 	</div>
 	
 	

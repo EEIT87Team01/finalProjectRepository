@@ -121,14 +121,21 @@
 			</div>
 		</div>
 	</header>
-	<div class="col-md-12 label" id="bannermenu">
-	<ul class="list-inline">
-		<li>塗鴉牆</li>
-		<li><a href="/runninglife/friend/listFriend.do">朋友名單</a></li>
-		<li><a href="/runninglife/friend/listFriendRequest.do">接受邀請</a></li>
-		<li><a href="/runninglife/friend/sendRequest.do">邀請好友</a></li>
+	<div class="col-md-2"></div>
+	<div class="col-md-8">
+	<ul class="nav nav-tabs">
+	<li role="presentation"><a href="<%=request.getContextPath()%>/postsController/posts.do">塗鴉牆</a></li>
+	<li role="presentation" class="dropdown">
+        <a id="drop4" href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false">
+          	好友資訊<span class="caret"></span>
+        </a>
+        <ul id="menu1" class="dropdown-menu" role="menu" aria-labelledby="drop4">
+          <li role="presentation"><a role="menuitem" tabindex="-1" href="<%=request.getContextPath()%>/friend/listFriend.do">好友列表</a></li>
+          <li role="presentation"><a role="menuitem" tabindex="-1" href="<%=request.getContextPath()%>/friend/listFriendRequest.do">收到的邀請</a></li>
+          <li role="presentation"><a role="menuitem" tabindex="-1" href="<%=request.getContextPath()%>/friend/sendRequest.do">邀請好友</a></li>
+        </ul>
+	</li>
 	</ul>
-	</div>
 	
 	<div class="col-md-2 col-md-offset-2">
 		<ul class="list-unstyled">
@@ -149,6 +156,7 @@
 	<tbody id="searchResult">
 	</tbody>
 	</table>
+	</div>
 	</div>
 	
 	

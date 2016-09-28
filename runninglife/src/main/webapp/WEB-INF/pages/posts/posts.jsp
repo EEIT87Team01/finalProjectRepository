@@ -115,8 +115,18 @@ ${onePosts.postID}
 	<div class="col-md-8">	
 		<ul class="nav nav-tabs">
 			<li role="presentation"><a href="<%=request.getContextPath()%>/postsController/posts.do">塗鴉牆</a></li>
-			<li role="presentation"><a href="<%=request.getContextPath()%>/friend/page">好友資訊</a></li>
+			<li role="presentation" class="dropdown">
+		        <a id="drop4" href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false">
+		          	好友資訊<span class="caret"></span>
+		        </a>
+		        <ul id="menu1" class="dropdown-menu" role="menu" aria-labelledby="drop4">
+		          <li role="presentation"><a role="menuitem" tabindex="-1" href="<%=request.getContextPath()%>/friend/listFriend.do">好友列表</a></li>
+		          <li role="presentation"><a role="menuitem" tabindex="-1" href="<%=request.getContextPath()%>/friend/listFriendRequest.do">收到的邀請</a></li>
+		          <li role="presentation"><a role="menuitem" tabindex="-1" href="<%=request.getContextPath()%>/friend/sendRequest.do">邀請好友</a></li>
+		        </ul>
+			</li>
 		</ul>
+		
 		<form:form method="post" action="newPosts.do" enctype="multipart/form-data">
 			<div class="col-md-12" style="border-style:solid;border-color:#EDEDED;padding:20px">
 				<textarea id="textarea" name="postsContent" class="form-control col-xs-12" rows="5"></textarea>
@@ -198,6 +208,7 @@ ${onePosts.postID}
 	
 <script>
 $(function(){
+	$('.dropdown-toggle').dropdown();
 	$('.deletePosts').click(function(){
 		$.post("delete.do",{"postID":$(this).attr('postID'),"memberID":$('#memberID').val()},
 				function (deletePosts){ location.reload();

@@ -20,9 +20,15 @@ import iii.runninglife.model.articles.ArticlesVO;
 
 
 @Controller
+@RequestMapping("/article")
 public class ArticlesCRUD_Servlet{
 	@Autowired
 	ArticlesCRUDService articlesCRUDService;
+	
+	@RequestMapping(value = "/page")
+	public String articlePage(){
+		return "article/articleList";
+	}
     
 	@RequestMapping(value = "/searchArticles.do", method = RequestMethod.GET)
 	public @ResponseBody String searchArticles() {
