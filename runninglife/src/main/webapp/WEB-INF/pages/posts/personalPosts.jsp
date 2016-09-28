@@ -83,8 +83,9 @@
 								<li><a href="<%=request.getContextPath()%>/">賽事活動</a></li>
 								<li><a href="<%=request.getContextPath()%>/calendar.do">行事曆</a></li>
 								<li><a href="<%=request.getContextPath()%>/contact.html">運動文章</a></li>
+								<li><img src="data:image/png;base64,${r:byteToBase64(membersVO.photo)}" style='width:50px;height:50px;'></li>
 								<li>你好, ${membersVO.firstName}</li>
-								<li class="cta"><a href="Login/Logout.do">登出</a></li>
+								<li class="cta"><a href="<%=request.getContextPath()%>/Login/Logout.do">登出</a></li>
 							</c:when>
 							<c:otherwise>
 								<li class="cta" data-toggle="modal" data-target="#myModal"><a href="#">Login</a></li> <!-- 登入視窗按鈕 -->
@@ -113,7 +114,7 @@ ${onePosts.postID}
 	</div> 
 	<div class="col-md-2"></div> 	
 	<div class="col-md-8">	
-		<form:form method="post" action="newPosts.do" enctype="multipart/form-data">
+		<form:form method="post" action="personalNewPosts.do" enctype="multipart/form-data">
 			<div class="col-md-12" style="border-style:solid;border-color:#EDEDED;padding:20px">
 				<textarea id="textarea" name="postsContent" class="form-control col-xs-12" rows="5"></textarea>
 				<div class="col-md-10"><input id="input-2" name="file1" type="file" class="file" multiple="" data-show-upload="false" data-show-caption="true"></div>
@@ -155,7 +156,7 @@ ${onePosts.postID}
 								<div class="col-md-12"></div>
 							</div>
 						</div>	
-						<form method="post" action="responsePosts.do">
+						<form method="post" action="personalResponsePosts.do">
 							<div class="col-md-12" style="border-style:solid;border-color:#EDEDED">
 								<div class="col-md-1"><img  style="width:80%" src="data:image/png;base64,${r:byteToBase64(membersVO.photo)}"></div>
 								<div class="col-md-9"><textarea id="textarea" name="responsePosts_content" class="form-control col-xs-12" rows="1"></textarea></div>
@@ -197,12 +198,12 @@ ${onePosts.postID}
 <script>
 $(function(){
 	$('.deletePosts').click(function(){
-		$.post("delete.do",{"postID":$(this).attr('postID'),"memberID":$('#memberID').val()},
+		$.post("personalDelete.do",{"postID":$(this).attr('postID'),"memberID":$('#memberID').val()},
 				function (deletePosts){ location.reload();
 		});
 	});
 	$('.deleteResponsePosts').click(function(){
-		$.post("deleteResponsePosts.do",{"postID":$(this).attr('postID'),"memberID":$('#memberID').val()},
+		$.post("personalDeleteResponsePosts.do",{"postID":$(this).attr('postID'),"memberID":$('#memberID').val()},
 				function (deleteResponsePosts){ location.reload();
 		});
 	});
