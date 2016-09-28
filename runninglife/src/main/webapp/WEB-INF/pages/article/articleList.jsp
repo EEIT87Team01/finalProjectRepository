@@ -26,7 +26,7 @@
 
 <link href="https://fonts.googleapis.com/css?family=Raleway:200,300,400,700" rel="stylesheet">
 <!-- Animate.css -->
-	<link rel="stylesheet" href="../css/web/animate.css">
+	<link rel="stylesheet" href="<%=request.getContextPath()%>/css/web/animate.css">
 <!-- Icomoon Icon Fonts-->
 	<link rel="stylesheet" href="../css/web/icomoon.css">
 <!-- Bootstrap  -->

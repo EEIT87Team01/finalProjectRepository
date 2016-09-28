@@ -5,6 +5,7 @@ import java.util.Map;
 
 import iii.runninglife.model.city.CityVO;
 import iii.runninglife.model.country.CountryVO;
+import iii.runninglife.model.emergencyRelation.EmergencyRelationVO;
 import iii.runninglife.model.location.LocationVO;
 import iii.runninglife.model.members.MembersVO;
 
@@ -21,6 +22,8 @@ public interface LoginService_Interface {
 	public List<CountryVO> Country();
 	public List<CityVO> city(String countryID);
 	public List<LocationVO> location(String cityID);
+	public List<EmergencyRelationVO> EmergencyRelation();
+	public String AccountCheck(String memberAccount);
 	public MembersVO CreateMember(String memberAccount, String password, String firstName, String lastName, String phone,
 			String email, String gender, String birthday, byte[] photo);
 }
