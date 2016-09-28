@@ -95,7 +95,7 @@ public class FriendController {
 	}
 	
 	//刪除好友
-	@RequestMapping(value = {"/deletefriend"}, method = RequestMethod.POST)
+	@RequestMapping(value = {"/deletefriend"}, method = RequestMethod.GET)
 	@ResponseStatus(value = HttpStatus.OK)
 	public void deleteFriend(@ModelAttribute("membersVO")MembersVO member, @RequestParam String friendID){
 		MembersVO friendMVO = memberService.selectOne(friendID);

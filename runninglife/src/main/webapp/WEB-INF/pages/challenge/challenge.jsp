@@ -56,74 +56,10 @@
 </head>
 <body>
 <div id="fh5co-page">
-	<header id="fh5co-header" role="banner">
-		<div class="container">
-			<div class="header-inner">
-				<h1><a href="index.html">RunningLife</a></h1>
-				<nav role="navigation">
-					<ul>
-						<li><a href="friend/page.do">塗鴉牆</a></li>
-						<li><a href="challenge/page.do">挑戰</a></li>
-						<li><a href="">賽事活動</a></li>
-						<li><a href="calendar.do">行事曆</a></li>
-						<li><a href="contact.html">運動文章</a></li>
-						<li><img src="data:image/png;base64,${r:byteToBase64(membersVO.photo)}" style='width:50px;height:50px;'></li>
-						<li>你好, ${membersVO.lastName}</li>
-						<li class="cta"><a href="Login/Logout.do">登出</a></li>
-					</ul>
-				</nav>
-			</div>
-		</div>
-	</header>
+	<%@ include file="/WEB-INF/pages/header.jsp"%>
 	
 	<div class="container">
 		
-	</div>
-	<aside id="fh5co-hero" class="js-fullheight">
-		<div class="flexslider js-fullheight">
-			<ul class="slides">
-		   	<li style="background-image: url(../images/slide_1.jpg);">
-		   		<div class="overlay-gradient"></div>
-		   		<div class="container">
-		   			<div class="col-md-10 col-md-offset-1 text-center js-fullheight slider-text">
-		   				<div class="slider-text-inner">
-		   					<h2>快來創設屬於自己的目標!!</h2>
-		   					<p><a href="#" class="btn btn-primary btn-lg">建立新挑戰</a></p>
-		   				</div>
-		   			</div>
-		   		</div>
-		   	</li>
-		   	<li style="background-image: url(../images/slide_2.jpg);">
-		   		<div class="container">
-		   			<div class="col-md-10 col-md-offset-1 text-center js-fullheight slider-text">
-		   				<div class="slider-text-inner">
-		   					<h2>與朋友一同競賽會有更多樂趣~~</h2>
-		   					<p><a href="#" class="btn btn-primary btn-lg">進行中的挑戰</a></p>
-		   				</div>
-		   			</div>
-		   		</div>
-		   	</li>
-		   	<li style="background-image: url(../images/slide_3.jpg);">
-		   		<div class="container">
-		   			<div class="col-md-10 col-md-offset-1 text-center js-fullheight slider-text">
-		   				<div class="slider-text-inner">
-		   					<h2>加油!堅持下去!豐碩的果實再等的著你!!</h2>
-		   					<p><a href="#" class="btn btn-primary btn-lg">朋友的挑戰</a></p>
-		   				</div>
-		   			</div>
-		   		</div>
-		   	</li>
-		  	</ul>
-	  	</div>
-	</aside>
-	<div id="fh5co-work-section" class="fh5co-light-grey-section">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-6 col-md-offset-3 text-center fh5co-heading animate-box">
-					<h2>不要把跑步當作是「很特別的事」，而是要把它看成是「生活的一部份」，讓身體去習慣它是很重要的。</h2>
-					<p>-----日本超級馬拉松名將關家良一</p>
-				</div>
-			</div>
 			<div class="row">
 				<div class="col-md-4 animate-box">
 					<a href="createChallPage.do" class="item-grid text-center">
