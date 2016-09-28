@@ -40,7 +40,7 @@
 			<ul>
 				<li><a href="<c:url value="/postsController/posts.do"/>">塗鴉牆</a></li>
 				<li><a href="<c:url value="/challenge/page.do"/>">挑戰</a></li>
-				<li class="active"><a href="<c:url value="/contest"/>">賽事活動</a></li>
+				<li><a href="<c:url value="/contest"/>">賽事活動</a></li>
 				<li><a href="<c:url value="/calendar.do"/>">行事曆</a></li>
 				<li><a href="<c:url value="/article/page"/>">文章</a></li>
 				<li class="cta"><a href="<c:url value="/logout"/>">登入</a></li>

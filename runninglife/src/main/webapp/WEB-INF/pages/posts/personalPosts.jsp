@@ -73,7 +73,7 @@
 	<header id="fh5co-header" role="banner">
 		<div class="container">
 			<div class="header-inner">
-				<h1><a href="index.html">RunningLife</a></h1>
+				<h1><a href="<%=request.getContextPath()%>/index.jsp">RunningLife</a></h1>
 				<nav role="navigation">
 					<ul>
 						<c:choose>
