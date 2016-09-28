@@ -185,7 +185,7 @@ ol, ul {
 
 	
 	<footer id="fh5co-footer" role="contentinfo">
-		<div class="container" style='padding-top:30px;'>
+		<div class="container">
 			<div class="col-md-3 col-sm-12 col-sm-push-0 col-xs-12 col-xs-push-0">
 				<h3>關於我們</h3>
 				<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;我們是一群熱愛跑步的年輕人，因想與其他跑友認識及交流，為此建立此網站，希望能有加入我們一起維護網站或撰寫運動相關文章。</p>
