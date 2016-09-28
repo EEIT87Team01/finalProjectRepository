@@ -51,7 +51,7 @@ public class EmergencyRelationDAO implements EmergencyRelationInterface {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<EmergencyRelationVO> selectAll(EmergencyRelationVO emergencyRelationVO) {
+	public List<EmergencyRelationVO> selectAll() {
 		Query query = sessionFactory.getCurrentSession().createQuery(GET_ALL_STMT); 
 		return query.list();
 	}

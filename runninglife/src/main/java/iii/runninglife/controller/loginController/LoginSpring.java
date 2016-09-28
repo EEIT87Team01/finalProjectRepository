@@ -28,9 +28,12 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
+
 import iii.runninglife.globalservice.GlobalService;
 import iii.runninglife.model.city.CityVO;
 import iii.runninglife.model.country.CountryVO;
+import iii.runninglife.model.emergencyRelation.EmergencyRelationVO;
 import iii.runninglife.model.location.LocationVO;
 import iii.runninglife.model.loginInformation.LoginInformationInterface;
 import iii.runninglife.model.loginInformation.LoginInformationPK;
@@ -205,6 +208,22 @@ public class LoginSpring {
 	@RequestMapping(value="/Location", method = RequestMethod.POST,produces="application/json")
 	public @ResponseBody List<LocationVO> getLocation(@RequestParam String cityID){
 		return loginService.location(cityID);
+	}
+	
+	@RequestMapping(value="/EmergencyRelation.do", method = RequestMethod.GET,produces="application/json")
+	public @ResponseBody List<EmergencyRelationVO> getEmergencyRelation(){
+		return loginService.EmergencyRelation();
+	}
+	
+	//Client驗證----------------------------------------------------------------------
+	@RequestMapping(value="/AccountCheck.do", method = RequestMethod.POST,produces="application/json")
+	public @ResponseBody String getAccountCheck(@RequestParam String memberAccount){
+		System.out.println("star");
+		System.out.println(loginService.AccountCheck(memberAccount));
+		String result = null;
+		Gson gson = new Gson();
+		result = gson.toJson(loginService.AccountCheck(memberAccount));
+		return result;
 	}
 	
 }

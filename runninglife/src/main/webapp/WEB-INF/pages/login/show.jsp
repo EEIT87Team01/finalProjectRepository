@@ -1,60 +1,99 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
-<style>
-table, th, td { 
-   border: 1px solid blue; 
-} 
-</style>
+
+<link rel="stylesheet" href="/runninglife/static/css/bootstrap.min.css" />
+<link rel="stylesheet" href="/runninglife/static/css/bootstrap-theme.min.css"></link>
+<link rel="stylesheet" href="/runninglife/static/css/mainStyle.css"></link>
+<script src="/runninglife/static/js/jquery-3.1.0.min.js"></script>
+<script src="/runninglife/static/js/bootstrap.min.js"></script>
+
+
+	
+	<!-- Animate.css -->
+	<style type="text/css">@import url("<c:url value="/static/css/animate.css" />");</style>
+	<!-- Icomoon Icon Fonts-->
+	<style type="text/css">@import url("<c:url value="/static/css/icomoon.css" />");</style>
+	<!-- Flexslider  -->
+	<style type="text/css">@import url("<c:url value="/static/css/flexslider.css" />");</style>
+	<!-- Theme style  -->
+	<style type="text/css">@import url("<c:url value="/static/css/style.css" />");</style>
+	<!-- Modernizr JS -->
+	<script type="text/javascript" src="<c:url value="/static/js/modernizr-2.6.2.min.js" />"></script>
+	<script type="text/javascript" src="<c:url value="/static/js/login.js" />"></script>
+	
+	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.0/themes/smoothness/jquery-ui.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.0/jquery-ui.min.js"></script>
+	
 </head>
-<body>
-<form action="Logout.do" method="get">
-<table border='1'>
-<tr>
-  <td>
-       ${errorMessage}
-  </td>
-</tr> 
-<tr>
-	<td>
-		姓氏:<input type="text" value="${membersVO.firstName}"/><br/>
-		名子:<input type="text" value="${membersVO.lastName}"/><br/>
-		暱稱:<input type="text" value="${membersVO.nickname}"/><br/>
-		email:<input type="text" value="${membersVO.email}"/><br/>
-		性別:<input type="text" value="${membersVO.gender}"/><br/>
-		生日:<input type="text" value="${membersVO.birthday}"/><br/>
-		地區:<input type="text" value="${membersVO.locationID.locationID.locationID}"/><br/>
-		城市:<input type="text" value="${membersVO.locationID.locationID.cityID.cityID.cityID}"/><br/>
-		國家:<input type="text" value="${membersVO.locationID.locationID.cityID.cityID.countryID.countryID}"/><br/>
-		地址:<input type="text" value="${membersVO.address}"/><br/>
-		身高:<input type="text" value="${membersVO.height}"/><br/>
-		體重:<input type="text" value="${membersVO.weight}"/><br/>
-		電話:<input type="text" value="${membersVO.phone}"/><br/>
-		大頭照:<input type="text" value="${membersVO.photo}"/><br/>
-		權限:<input type="text" value="${membersVO.competenceID.competenceID}"/><br/>
-		身分證字號:<input type="text" value="${membersVO.identityID}"/><br/>
-		緊急連絡人:<input type="text" value="${membersVO.emergencyContact}"/><br/>
-		緊急聯絡人電話:<input type="text" value="${membersVO.emergencyPhone}"/><br/>
-		緊急連絡人關係:<input type="text" value="${membersVO.emergencyRelation.relationID}"/><br/>
-		建立日期:<input type="text" value="${membersVO.createDate}"/><br/>
-		最後上線時間:<input type="text" value="${membersVO.lastOnlineDateTime}"/><br/>
-	</td>
-</tr>
-<tr>
-	<td>
-		<input type="submit" class="btn btn-primary" value="登出">
-	</td>
-</tr>
-</table>
-</form>
-<form action="/testlife/Login/UpdateAccountPage.do" method="post">
-<%-- 	<input type="hidden" name="membersVO" value="${membersVO}"/> --%>
-	<input type="submit" class="btn btn-primary" value="修改資料">
-</form>
+<body style="background-image: url('../static/images/create.jpg');
+ 			background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-position: center;
+            background-size: cover;">
+<div id="fh5co-page">
+	<header id="fh5co-header" role="banner">
+		<div class="container">
+			<div class="header-inner">
+				<h1><a href="<%=request.getContextPath() %>/index.jsp">RunningLife</a></h1>
+				<nav role="navigation">
+					<ul>
+						<li><a href="<%=request.getContextPath()%>/postsController/posts.do">塗鴉牆</a></li>
+						<li><a href="<%=request.getContextPath()%>/challenge/page.do">挑戰</a></li>
+						<li><a href="<%=request.getContextPath()%>/contest.do">賽事活動</a></li>
+						<li><a href="<%=request.getContextPath()%>/calendar.do">行事曆</a></li>
+						<li><a href="<%=request.getContextPath()%>/article/page.do">文章</a></li>
+						<!-- 判斷是否已登入 -->
+						<c:choose>
+						<c:when test="${!empty membersVO}">
+							<li>Hello, ${membersVO.lastName}</li>
+							<li class="cta"><a href="Login/Logout.do">登出</a></li>
+						</c:when>
+						<c:otherwise>
+							<li class="cta" data-toggle="modal" data-target="#myModal"><a href="#">登入</a></li> <!-- 登入視窗按鈕 -->
+						</c:otherwise>	
+						</c:choose>
+					</ul>
+				</nav>
+			</div>
+		</div>
+	</header>
+  </div>
+<div class="col-md-offset-2 col-md-5">
+		<div class="row">
+			<form action="/runninglife/Login/UpdateAccountPage.do" method="get" class="form-horizontal">
+			 	
+				<table class="table" style="color:black;">
+				<tr><td>姓氏:${membersVO.firstName}</td></tr>
+				<tr><td>名子:${membersVO.lastName}</td></tr>
+				<tr><td>暱稱:${membersVO.nickname}</td></tr>
+				<tr><td>生日:${membersVO.birthday}</td></tr>
+				<tr><td>Email:${membersVO.email}</td></tr>
+				<tr><td>國家:${membersVO.locationID.locationID.cityID.cityID.countryID.country}</td></tr>
+				<tr><td>城市:${membersVO.locationID.locationID.cityID.cityName}</td></tr>
+				<tr><td>地區:${membersVO.locationID.locationName}</td></tr>
+				<tr><td>身高:${membersVO.height}</td></tr>
+				<tr><td>體重:${membersVO.weight}</td></tr>
+				<tr><td>電話:${membersVO.phone}</td></tr>
+				<tr><td>地址:${membersVO.address}</td></tr>
+				<tr><td>身分證字號:${membersVO.identityID}</tr>
+				<tr><td>緊急連絡人:${membersVO.emergencyContact}</td></tr>
+				<tr><td>緊急聯絡人電話:${membersVO.emergencyPhone}</td></tr>
+				<tr><td>緊急連絡人關係:${membersVO.emergencyRelation.relationName}</td></tr>
+
+				<tr class="col-md-offset-7 col-md-4" style="padding-left: 100px;">
+					<td>
+						<input type="submit" class="btn btn-primary" value="修改資料">
+					</td>
+				</tr>
+				</table>
+			</form>
+		</div>
+</div>
 
 </body>
 </html>

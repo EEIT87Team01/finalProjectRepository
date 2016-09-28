@@ -26,7 +26,7 @@
 	<style type="text/css">@import url("<c:url value="/static/css/login.css" />");</style>
 	<!-- Modernizr JS -->
 	<script type="text/javascript" src="<c:url value="/static/js/modernizr-2.6.2.min.js" />"></script>
-	<script type="text/javascript" src="<c:url value="/static/js/login.js" />"></script>
+<%-- 	<script type="text/javascript" src="<c:url value="/static/js/login.js" />"></script> --%>
 	
 	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.0/themes/smoothness/jquery-ui.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.0/jquery-ui.min.js"></script>
@@ -58,34 +58,89 @@ ol, ul {
 }
 </style>
 </head>
-<body style="background-image: url('../static/images/create.jpg') ;
+<body style="background-image: url('<%=request.getContextPath()%>/static/images/create.jpg') ;
  			background-repeat: no-repeat;
             background-attachment: fixed;
             background-position: center;
             background-size: cover;">
             
+   <!-- 彈出式窗 -->
+<div class="modal fade bs-example-modal-sm" tabindex="-1" id="myModal" role="dialog" aria-labelledby="mySmallModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+  
+      <!-- 	get || post -->
+	  <!-- /Login/DBCheck -->
+      <div class="container" style="margin-top:40px">
+		<div class="row">
+			<div class="col-sm-6 col-md-4 ">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<strong id="gridSystemModalLabel">登入</strong>
+					</div>
+					<div class="panel-body">
+						<form role="form" action="/runninglife/Login/DBCheck.do" method="post">
+							<fieldset>
+<!-- 								<div class="row"> -->
+<!-- 									<div class="center-block"> -->
+<!-- 									</div> -->
+<!-- 								</div> -->
+								<div class="row">
+									<div class="col-sm-12 col-md-10  col-md-offset-1 ">
+										<div class="form-group">
+											<div class="input-group">
+												<span class="input-group-addon">
+													<i class="glyphicon glyphicon-user"></i>
+												</span> 
+												<input type="text" id="account" class="form-control" name="memberAccount" value="${param.memberAccount}" placeholder="帳號" autofocus>
+											</div>
+										</div>
+										<div class="form-group">
+											<div class="input-group">
+												<span class="input-group-addon">
+													<i class="glyphicon glyphicon-lock"></i>
+												</span>
+												<input type="password" class="form-control" id="password" name="password" value="${param.password}" placeholder="密碼">
+											</div>
+										</div>
+										<div class="form-group">
+											<input type="submit" class="btn btn-lg btn-primary btn-block" value="登入">
+										</div>
+									</div>
+								</div>
+							</fieldset>
+						</form>
+					</div>
+					<div class="panel-footer ">
+						<a href="/runninglife/Login/ChangeForgetPage.do"> 忘記密碼? </a><br/>
+						<a href="/runninglife/Login/CreateAccountPage.do"> 新增用戶 </a>
+					</div>
+                </div>
+			</div>
+		</div>
+    </div>
+  </div>
+</div>
+            
    <div id="fh5co-page">
 	<header id="fh5co-header" role="banner">
 		<div class="container">
 			<div class="header-inner">
-				<h1><a href="index.html">RunningLife</a></h1>
+				<h1><a href="<%=request.getContextPath() %>/index.jsp">RunningLife</a></h1>
 				<nav role="navigation">
 					<ul>
-						<li><a href="friend/page.do">塗鴉牆</a></li>
-						<li><a href="challenge/.do">挑戰</a></li>
-						<li><a href="">賽事活動</a></li>
-						<li><a href="calendar.do">行事曆</a></li>
-						<li><a href="contact.html">運動文章</a></li>
-						<li><a href="Login/ShowPage.do">個人資料</a></li>
+						<li><a href="<%=request.getContextPath()%>/postsController/posts.do">塗鴉牆</a></li>
+						<li><a href="<%=request.getContextPath()%>/challenge/page.do">挑戰</a></li>
+						<li><a href="<%=request.getContextPath()%>/contest.do">賽事活動</a></li>
+						<li><a href="<%=request.getContextPath()%>/calendar.do">行事曆</a></li>
+						<li><a href="<%=request.getContextPath()%>/article/page.do">文章</a></li>
 						<!-- 判斷是否已登入 -->
 						<c:choose>
 						<c:when test="${!empty membersVO}">
-							<li><img src="data:image/png;base64,${r:byteToBase64(membersVO.photo)}" style='width:50px;height:50px;'></li>
 							<li>Hello, ${membersVO.lastName}</li>
-							<li class="cta"><a href="Login/Logout.do">Logout</a></li>
+							<li class="cta"><a href="login/Logout.do">登出</a></li>
 						</c:when>
 						<c:otherwise>
-							<li class="cta" data-toggle="modal" data-target="#myModal"><a href="#">Login</a></li> <!-- 登入視窗按鈕 -->
+							<li class="cta" data-toggle="modal" data-target="#myModal"><a href="#">登入</a></li> <!-- 登入視窗按鈕 -->
 						</c:otherwise>	
 						</c:choose>
 					</ul>
@@ -102,7 +157,7 @@ ol, ul {
 				<thead>
 					<tr>
 						<th>
-							<div class="page">
+							<div class="page" style="margin-top:20px;">
 	  							<h1 class="login-label">新增會員</h1>
 							</div>
 <!-- 							<h2 class="dark-grey login-label"></h2> -->
@@ -111,75 +166,75 @@ ol, ul {
 				</thead>
 				<tbody>
 					<tr class="form-group col-lg-12">
-						<td style="margin-right: 30px; ">
-							<label for="name" class=" control-label login-label">帳號</label>
-							<input type="text" id="memberAccount" name="memberAccount" class="form-control cols-sm-5" placeholder="請輸入帳號"/>
+						<td>
+<!-- 							<label for="name" class=" control-label login-label">帳號</label> -->
+							<input type="text" id="memberAccount" name="memberAccount" class="alert alert-dismissible cols-sm-5 input-group" placeholder="請輸入帳號"/>
 							<span class="glyphicon glyphicon-question-sign hidden" id="showText1"></span>
 						</td>
 						<td class="form-group col-lg-2"></td>
 <!-- 						<td><span class="form-group col-lg-2"></span></td> -->
 						<td style="padding-top:6px; ">
-							<label for="name" class="control-label login-label">姓氏</label>
-							<input type="text" id="firstName" name="firstName" class="form-control cols-sm-5"/>
+<!-- 							<label for="name" class="control-label login-label">姓氏</label> -->
+							<input type="text" id="firstName" name="firstName" class="alert alert-dismissible cols-sm-5 input-group" placeholder="請輸入姓氏"/>
 							<span class="form-group col-lg-2"></span>
 							<span class="glyphicon glyphicon-question-sign hidden" id="showText4"></span><br/>
 						</td>
 					</tr>
 					
 					<tr class="form-group col-lg-12">
-						<td>
-							<label for="name" class="control-label login-label">密碼</label>
-							<input type="text" id="password" name="password" class="form-control cols-sm-5" id="name"  placeholder="請輸入密碼"/>
+						<td style="top:-20px; ">
+<!-- 							<label for="name" class="control-label login-label">密碼</label> -->
+							<input type="password" id="createPassword" name="password" class="alert alert-dismissible cols-sm-5 input-group" id="name"  placeholder="請輸入密碼"/>
 							<span class="test-text">(請輸入長度不小於6密碼)</span><br/>
 							<span class="glyphicon glyphicon-question-sign hidden" id="showText2"></span>
 						</td>
 						<td class="form-group col-lg-2"></td>
 						<td>
-							<label for="name" class="control-label login-label">名子</label>
-							<input type="text" id="lastName" name="lastName" class="form-control cols-sm-5" />
+<!-- 							<label for="name" class="control-label login-label">名子</label> -->
+							<input type="text" id="lastName" name="lastName" class="alert alert-dismissible cols-sm-5 input-group" placeholder="請輸入名子"/>
 							<span class="form-group col-lg-2"></span>
 							<span class="glyphicon glyphicon-question-sign hidden" id="showText5"></span>
 						</td>
 					</tr>
 					
 					<tr class="form-group col-lg-12">
-						<td style="margin-right: 30px; ">
-							<label for="name" class="control-label login-label">電話</label>
-							<input type="text" id="phone" name="phone" class="form-control cols-sm-5"/>
+						<td >
+<!-- 							<label for="name" class="control-label login-label">電話</label> -->
+							<input type="text" id="phone" name="phone" class="alert alert-dismissible cols-sm-5 input-group" placeholder="請輸入電話"/>
 							<span class="glyphicon glyphicon-question-sign hidden" id="showText6"></span>
 						</td>
 						<td class="form-group col-lg-2"></td>
 						<td>
-							<label for="name" class="control-label login-label">email</label>
-							<input type="text" id="email" name="email" class="form-control cols-sm-5"/>
+<!-- 							<label for="name" class="control-label login-label">email</label> -->
+							<input type="text" id="email" name="email" class="alert alert-dismissible cols-sm-5 input-group" placeholder="請輸入Email"/>
 							<span class="test-text">(範例:XXX@gmial.com)</span><br/>
 							<span class="glyphicon glyphicon-question-sign hidden" id="showText3"></span>
 						</td>
 					</tr>
 					<tr class="form-group col-lg-12">
-						<td style="margin-right: 30px; ">
-							<label for="name" class="control-label login-label">生日</label>
-							<input type="text" id="createBirthday" name="birthday" class="form-control cols-sm-5"/>
+						<td >
+<!-- 							<label for="name" class="control-label login-label">生日</label> -->
+							<input type="text" id="createBirthday" name="birthday" class="alert alert-dismissible cols-sm-5" placeholder="請選擇生日"/>
 							<span class="glyphicon glyphicon-question-sign hidden" id="showText7"></span>
 						</td>
-						<td class="form-group col-lg-2"></td>
+						<td class="form-group col-lg-3"></td>
 						<td class="login-label">
-							<label for="name" class="ccontrol-label login-label">性別</label>
-							<input type="radio" name="gender" value="1" class="login-label">男
-							<input type="radio" name="gender" value="0" class="login-label"> 女
-							<input type="radio" name="gender" value="2" checked="checked" class="login-label"> 不公開
+							<label for="name" class="control-label">性別</label>
+							<input type="radio" name="gender" value="1" >男
+							<input type="radio" name="gender" value="0"> 女
+							<input type="radio" name="gender" value="2" checked="checked" > 不公開
 						</td>
 					</tr>
 					<tr class="form-group col-lg-12">
-						<td style="margin-right: 30px; ">
+						<td>
+							<label for="name" class="ccontrol-label login-label">大頭貼:</label><br/>
+							<input id="input-2" name="file1" type="file" class="file" multiple="" data-show-upload="false" data-show-caption="true"/>
+						</td>
+					</tr>
+					<tr class="form-group col-lg-12">
+						<td >
 							<input type="submit" id="btn" class="btn btn-primary" value="送出">
 						</td>
-					</tr>
-					<tr class="form-group col-lg-12">
-					   <td>
-					     <label for="name" class="ccontrol-label login-label">大頭貼:</label><br/>
-					     <input id="input-2" name="file1" type="file" class="file" multiple="" data-show-upload="false" data-show-caption="true"/>
-					   </td>
 					</tr>
 				</tbody>
 			</table>
@@ -189,52 +244,53 @@ ol, ul {
 	</div>
 <script>
 $(function(){
-	var flag = true;
-	$("#btn").attr("disabled", flag);
+	var accountFlag = false;
+	var passwordFlag = false;
+	var firstNameFlag = false;
+	var lastNameFlag = false;
+	var phoneFlag = false;
+	var eMailFlag = false;
+	var birthdayFlag = false;
+	
 	$('#memberAccount').focusout(function(){
 		var inAccount = $('#memberAccount').val();
-		var AccountLength = inAccount.length;
-		if(AccountLength == 0){
+		if(inAccount.length == 0){
 			$('#showText1').removeClass().addClass("glyphicon glyphicon-remove-sign show1").text("帳號未填");
-			flag = true;
+			accountFlag = false;
 		}else{
-			//ajax
 			var myUrl = '/runninglife/Login/AccountCheck.do';
 			var type = 'post';
 			var dataType = 'json';
 			var data = { "memberAccount" : $('#memberAccount').val() };
 			
 			var response = ajaxFunction(myUrl,type,data,dataType);
-			console.log(response);
 			if(response == "fail"){
 				$('#showText1').removeClass().addClass('glyphicon glyphicon-remove-sign show1').text("帳號不可使用");
-				flag = true;
+				accountFlag = false;
 			}else{
 				$('#showText1').removeClass().addClass("glyphicon glyphicon-ok-sign show2").text("可使用");
-				flag = false;
+				accountFlag = true;
 			}
 		}
 	})
 	
-	$('#password').focusout(function(){
-		var inPassword = $('#password').val();
-		var paswdLength = inPassword.length;
-		if(paswdLength == 0){
+	$('#createPassword').focusout(function(){
+		var inPassword = $('#createPassword').val();
+		if(inPassword.length == 0){
 			$('#showText2').removeClass().addClass("glyphicon glyphicon-remove-sign show1").text("密碼未填");
-			flag = true;
+			passwordFlag = false;
 		}else{
-			if(paswdLength <= 6){
+			if(inPassword.length < 6){
 				$('#showText2').removeClass().addClass("glyphicon glyphicon-remove-sign show1").text("密碼長度不可小於6");
-				flag = true;
+				passwordFlag = false;
 			}else{
-				var regx = /^[\w][^\s]{6,20}$/;
-				var test = inPassword.match(regx);
-				if(test){
+				var regx = /^[\w][^\s]{5,20}$/;
+				if(inPassword.match(regx)){
 					$('#showText2').removeClass().addClass("glyphicon glyphicon-ok-sign show2").text("正確");
-					flag = false;
+					passwordFlag = true;
 				}else{
 					$('#showText2').removeClass().addClass("glyphicon glyphicon-remove-sign show1").text("請輸入正確密碼");
-					flag = true;
+					passwordFlag = false;
 				}
 			}
 		}
@@ -242,20 +298,17 @@ $(function(){
 	
 	$('#email').focusout(function(){
 		var inEmail = $('#email').val();
-		var emailLength = inEmail.length;
-		if(emailLength == 0){
+		if(inEmail.length == 0){
 			$('#showText3').removeClass().addClass("glyphicon glyphicon-remove-sign show1").text("Eamil未填");
-			flag = true;
+			eMailFlag = false;
 		}else{
 			var regx = /^.+@.+\..{2,4}$/;
-			var test = inEmail.match(regx);
-			
-			if(test){
+			if(inEmail.match(regx)){
 				$('#showText3').removeClass().addClass("glyphicon glyphicon-ok-sign show2").text("正確");
-				flag = false;
+				eMailFlag = true;
 			}else{
 				$('#showText3').removeClass().addClass("glyphicon glyphicon-remove-sign show1").text("Email格式不正確");
-				flag = true;
+				eMailFlag = false;
 			}
 			
 		}
@@ -263,68 +316,85 @@ $(function(){
 	
 	$('#firstName').focusout(function(){
 		var inFirstName = $('#firstName').val();
-		var firstNameLength = inFirstName.length;
-		if(firstNameLength == 0){
+		if(inFirstName.length == 0){
 			$('#showText4').removeClass().addClass("glyphicon glyphicon-remove-sign show1").text("姓氏未填");
-			flag = true;
+			firstNameFlag = false;
 		}else{
 			$('#showText4').removeClass().addClass("hidden");
-			flag = false;
+			firstNameFlag = true;
 		}
 	})
 	
 	$('#lastName').focusout(function(){
 		var inLastName = $('#lastName').val();
-		var lastNameLength = inLastName.length;
-		if(lastNameLength == 0){
+		if(inLastName.length == 0){
 			$('#showText5').removeClass().addClass("glyphicon glyphicon-remove-sign show1").text("名子未填");
-			flag = true;
+			lastNameFlag = false;
 		}else{
 			$('#showText5').removeClass().addClass("hidden");
-			flag = false;
+			lastNameFlag = true;
 		}
 	})
 	
 	$('#phone').focusout(function(){
 		var inPhone = $('#phone').val();
-		var phoneLength = inPhone.length;
-		if(phoneLength == 0){
+		if(inPhone.length == 0){
 			$('#showText6').removeClass().addClass("glyphicon glyphicon-remove-sign show1").text("電話未填");
-			flag = true;
+			phoneFlag = false;
 		}else{
-			$('#showText6').removeClass().addClass("hidden");
-			flag = false;
+			var regx = /^[0-9]*[^\s]$/;
+			if(inPhone.match(regx)){
+				$('#showText6').removeClass().addClass("hidden");
+				phoneFlag = true;	
+			}else{
+				$('#showText6').removeClass().addClass("glyphicon glyphicon-remove-sign show1").text("請輸入正確電話號碼");
+				phoneFlag = false;
+			}
 		}
 	})
 	
+	$('#createBirthday').focusout(function(){
+		var inBirthday = $('#createBirthday').val();
+		if(inBirthday.length == 0){
+			birthdayFlag = false;
+		}else{
+			birthdayFlag = true;	
+		}
+	})
 	
 	$("#createBirthday").datepicker({
+		changeMonth: true,
+	    changeYear: true,
 		dateFormat:"yy-mm-dd"
 	});
 	
-	$('#memberAccount,#password,#email,#firstName,#lastName,#phone,#createBirthday').change(function(){
-		var inAccount = $('#memberAccount').val();
-		var accountLen = inAccount.length;
-		var inPassword = $('#password').val();
-		var passLen = inPassword.length;
-		var inEmail = $('#email').val();
-		var emailLen = inEmail.length;
-		var inFirstName = $('#firstName').val();
-		var firstLen = inFirstName.length;
-		var inLastName = $('#lastName').val();
-		var lastLen = inLastName.length;
-		var inPhone = $('#phone').val();
-		var phoneLen = inPhone.length;
-		var inBirthday = $('#createBirthday').val();
-		var birthLen = inBirthday.length;
+	$('#memberAccount,#createPassword,#email,#firstName,#lastName,#phone,#createBirthday').focusout(function(){
 		
-		if(accountLen == 0 && passLen == 0 && emailLen == 0 && firstLen == 0 && lastLen == 0 && phoneLen == 0 && birthLen == 0){
-			$("#btn").attr("disabled", flag);
+		if(accountFlag && passwordFlag && firstNameFlag && lastNameFlag && phoneFlag && eMailFlag && birthdayFlag){
+			$("#btn").prop("disabled", false);
 		}else{
-			$("#btn").attr("disabled", flag);
+			$("#btn").prop("disabled", true);
 		}
 	})
 });
+
+	function ajaxFunction(url,type,data,dataType){
+		var result;
+		$.ajax({
+			url : url,
+			type : type,
+			dataType : dataType,
+			data : data,
+			async : false,
+			success : function(response){
+				result = response;
+			},
+			error : function(response) {
+				console.log("error");
+			}
+		});
+			return result;
+	}
 </script>
 </body>
 </html>

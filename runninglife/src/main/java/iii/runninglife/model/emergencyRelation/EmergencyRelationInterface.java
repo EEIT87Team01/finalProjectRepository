@@ -7,5 +7,5 @@ public interface EmergencyRelationInterface {
 	public void update(EmergencyRelationVO emergencyRelationVO);
 	public void delete(int emergencyRelationVO);
 	public EmergencyRelationVO selectOne(int emergencyRelationVO);
-	public List<EmergencyRelationVO> selectAll(EmergencyRelationVO emergencyRelationVO);
+	public List<EmergencyRelationVO> selectAll();
 }
