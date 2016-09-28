@@ -117,7 +117,7 @@ $(document).on("click",".back",function(){
 		</div>
 	</header>
 	
-	<div class="container" style="margin-bottom: 10%;">
+	<div class="container" style="margin-bottom: 1%;">
 		
 	</div>
 	<div class="container">

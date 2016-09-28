@@ -51,7 +51,7 @@
 						<c:choose>
 						<c:when test="${!empty membersVO}">
 							<li>Hello, ${membersVO.lastName}</li>
-							<li class="cta"><a href="Login/Logout.do">登出</a></li>
+							<li class="cta"><a href="<%=request.getContextPath()%>/Login/Logout.do">登出</a></li>
 						</c:when>
 						<c:otherwise>
 							<li class="cta" data-toggle="modal" data-target="#myModal"><a href="#">登入</a></li> <!-- 登入視窗按鈕 -->

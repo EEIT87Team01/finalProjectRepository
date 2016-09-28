@@ -157,7 +157,7 @@
 			</div>
 		</header>
 
-		<div class="container" style="margin-top: 50px;background-image: url('<%=request.getContextPath()%>/static/images/challenge.jpg');opacity: 0.2;">
+		<div class="container" style="margin-top: 50px;">
 			<div class="row">
 				<h1>挑戰資訊<span style="float:right; font-size: 20px;">${r:day(challenge.challenEndTime)} 天後結束</span></h1>
 				<table class="table">

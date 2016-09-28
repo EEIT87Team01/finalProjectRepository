@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="r" uri="http://iii.runningLife.com/util" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -38,7 +39,7 @@
 			</h1>
 			<nav role="navigation">
 			<ul>
-				<li><a href="<c:url value="/postsController/posts.do"/>">塗鴉牆</a></li>
+				<li><a href="<%=request.getContextPath()%>/postsController/posts.do"/>">塗鴉牆</a></li>
 				<li><a href="<c:url value="/challenge/page.do"/>">挑戰</a></li>
 				<li><a href="<c:url value="/contest"/>">賽事活動</a></li>
 				<li><a href="<c:url value="/calendar.do"/>">行事曆</a></li>
