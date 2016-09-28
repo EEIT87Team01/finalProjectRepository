@@ -19,6 +19,7 @@ import iii.runninglife.model.city.CityVO;
 import iii.runninglife.model.competence.CompetenceVO;
 import iii.runninglife.model.country.CountryInterface;
 import iii.runninglife.model.country.CountryVO;
+import iii.runninglife.model.emergencyRelation.EmergencyRelationInterface;
 import iii.runninglife.model.emergencyRelation.EmergencyRelationVO;
 import iii.runninglife.model.location.LocationInterface;
 import iii.runninglife.model.location.LocationPK;
@@ -45,6 +46,8 @@ public class LoginService implements LoginService_Interface{
 	
 	@Autowired
 	LoginInformationInterface loginInfoDAO;
+	@Autowired
+	EmergencyRelationInterface emergencyRelationDAO;
 	@Autowired
 	GlobalService globalservice;
 	
@@ -128,10 +131,16 @@ public class LoginService implements LoginService_Interface{
 		//輸入帳號CO Hibernate
 		loginInfo = loginInfoDAO.selectOne(loginInfoPK);
 		if(loginInfo != null){
+			
+			int ran = (int)(Math.random()*1000)+1;
+			String random = ""+ran;
+			loginInfo.setStatus(random);
+			loginInfoDAO.update(loginInfo);
+			
 //			message = "帳號無誤";
 			membersVO = membersDAO.selectOne(loginInfo.getMemberID().getMemberID().toString());
 			DBEmail = membersVO.getEmail();
-			return DBEmail;
+			return random;
 		}else {
 			message = "無此帳號";
 			return message;
@@ -314,6 +323,36 @@ public class LoginService implements LoginService_Interface{
 		
 		System.out.println(location);
 		return location;
+	}
+	
+	//EmergencyRelation取得
+	@Override
+	public List<EmergencyRelationVO> EmergencyRelation(){
+			
+		List<EmergencyRelationVO> emergencyRelation = emergencyRelationDAO.selectAll();
+			
+		return emergencyRelation;
+	}
+		
+	//Client驗證----------------------------------------------------------------------
+	//用戶端帳號確認
+	@Override
+	public String AccountCheck(String memberAccount){
+		LoginInformationVO loginInfo = new LoginInformationVO();
+		LoginInformationPK loginInfoPK = new LoginInformationPK();
+//		List<LoginInformationVO> list;
+		String Info = null;
+		
+		loginInfoPK.setMemberAccount(memberAccount);
+		loginInfoPK.setLoginMethod("1");
+		
+		loginInfo = loginInfoDAO.selectOne(loginInfoPK);
+		if(loginInfo != null){
+			Info = "fail";
+		}else{
+			Info = "success";
+		}
+		return Info;
 	}
 	
 	//正規表示式確認

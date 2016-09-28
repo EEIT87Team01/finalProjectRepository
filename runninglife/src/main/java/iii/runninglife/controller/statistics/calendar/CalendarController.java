@@ -160,13 +160,13 @@ public class CalendarController{
 	@RequestMapping(value="/challen",method = RequestMethod.GET)
 	public ModelAndView getChallenDetailView(@RequestParam String challenID){
 		 		
-		return new ModelAndView("redirect:/challenge/detail/" + challenID + ".do");
+		return new ModelAndView("redirect:/challenge/detail/" + challenID);
 	}
 	
 	@RequestMapping(value="/race",method = RequestMethod.GET)
 	public ModelAndView getRaceDetailView(@RequestParam String contestID){
 
-		return new ModelAndView("redirect:/contest/" + contestID + ".do");
+		return new ModelAndView("redirect:/contest/" + contestID);
 	}
 	
 	private String formatDateTime(Timestamp dateTime){

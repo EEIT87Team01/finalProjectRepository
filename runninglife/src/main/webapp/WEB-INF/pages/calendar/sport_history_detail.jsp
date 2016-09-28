@@ -71,20 +71,20 @@
 				<h1><a href="../index.jsp">RunningLife</a></h1>
 				<nav role="navigation">
 					<ul>
-						<li><a href="../postsController/posts.do">塗鴉牆</a></li>
-						<li><a href="../challenge/page.do">挑戰</a></li>
-						<li><a href="">賽事活動</a></li>
-						<li class="active">><a href="../calendar.do">行事曆</a></li>
-						<li><a href="contact.html">運動文章</a></li>
+						<li><a href="<%=request.getContextPath()%>/postsController/posts.do">塗鴉牆</a></li>
+						<li><a href="<%=request.getContextPath()%>/challenge/page.do">挑戰</a></li>
+						<li><a href="<%=request.getContextPath()%>/contest.do">賽事活動</a></li>
+						<li class="active">><a href="<%=request.getContextPath()%>/calendar.do">行事曆</a></li>
+						<li><a href="<%=request.getContextPath()%>/article/page.do">文章</a></li>
 						<li><img src="data:image/png;base64,${r:byteToBase64(memberPhoto)}" style='width:50px;height:50px;'></li>
 						<li>Hello, ${memberFirstName}</li>
-						<li class="cta"><a href="../Login/Logout.do">Logout</a></li>
+						<li class="cta"><a href="<%=request.getContextPath()%>/Login/Logout.do">登出</a></li>
 					</ul>
 				</nav>
 			</div>
 		</div>
 	</header>
-	<div class="container background-image" style="margin-top: 50px;">
+	<div class="container" style="margin-top: 50px;">
 	<h1>運動紀錄</h1>
 		<div class="row">
 			<table class="table">
