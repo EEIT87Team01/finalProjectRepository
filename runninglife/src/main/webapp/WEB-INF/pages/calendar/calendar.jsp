@@ -166,7 +166,9 @@
 			        editable: false,//是否可拖動 
 			        defaultView: 'month',
 	 		        eventSources: '<%=request.getContextPath()%>/calendar/get_calendar_json_data.do?memberID=${memberVO.memberID}'    //事件数据	         
-			    }) 
+			    });
+			    
+			    $('#fh5co-header > div > div > nav > ul > li:nth-child(4)').addClass('active');
 			});	  
 		</script> 
 	

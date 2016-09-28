@@ -35,7 +35,7 @@
 	<div class="container">
 		<div class="header-inner">
 			<h1>
-				<a href="index.jsp">RunningLife</a>
+				<a href="<%=request.getContextPath()%>/index.jsp">RunningLife</a>
 			</h1>
 			<nav role="navigation">
 			<ul>

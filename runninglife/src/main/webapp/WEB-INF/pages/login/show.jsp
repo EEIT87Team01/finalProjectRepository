@@ -12,8 +12,6 @@
 <script src="/runninglife/static/js/jquery-3.1.0.min.js"></script>
 <script src="/runninglife/static/js/bootstrap.min.js"></script>
 
-
-	
 	<!-- Animate.css -->
 	<style type="text/css">@import url("<c:url value="/static/css/animate.css" />");</style>
 	<!-- Icomoon Icon Fonts-->
@@ -36,33 +34,8 @@
             background-position: center;
             background-size: cover;">
 <div id="fh5co-page">
-	<header id="fh5co-header" role="banner">
-		<div class="container">
-			<div class="header-inner">
-				<h1><a href="<%=request.getContextPath() %>/index.jsp">RunningLife</a></h1>
-				<nav role="navigation">
-					<ul>
-						<li><a href="<%=request.getContextPath()%>/postsController/posts.do">塗鴉牆</a></li>
-						<li><a href="<%=request.getContextPath()%>/challenge/page.do">挑戰</a></li>
-						<li><a href="<%=request.getContextPath()%>/contest.do">賽事活動</a></li>
-						<li><a href="<%=request.getContextPath()%>/calendar.do">行事曆</a></li>
-						<li><a href="<%=request.getContextPath()%>/article/page.do">文章</a></li>
-						<!-- 判斷是否已登入 -->
-						<c:choose>
-						<c:when test="${!empty membersVO}">
-							<li>Hello, ${membersVO.lastName}</li>
-							<li class="cta"><a href="<%=request.getContextPath()%>/Login/Logout.do">登出</a></li>
-						</c:when>
-						<c:otherwise>
-							<li class="cta" data-toggle="modal" data-target="#myModal"><a href="#">登入</a></li> <!-- 登入視窗按鈕 -->
-						</c:otherwise>	
-						</c:choose>
-					</ul>
-				</nav>
-			</div>
-		</div>
-	</header>
-  </div>
+	<%@ include file="/WEB-INF/pages/header.jsp"%>
+</div>
 <div class="col-md-offset-2 col-md-5">
 		<div class="row">
 			<form action="/runninglife/Login/UpdateAccountPage.do" method="get" class="form-horizontal">

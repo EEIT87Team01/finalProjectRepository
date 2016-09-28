@@ -19,7 +19,7 @@
 <!-- <script src="/runninglife/js/bootstrap.min.js"></script> -->
 
 
-<title>Insert title here</title>
+<title>login</title>
 </head>
 <body>
 <!-- 	get || post -->
