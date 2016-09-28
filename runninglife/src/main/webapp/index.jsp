@@ -115,7 +115,7 @@ ol, ul {
 						<c:when test="${!empty membersVO}">
 						<li><a href="<%=request.getContextPath()%>/postsController/posts.do">塗鴉牆</a></li>
 						<li><a href="<%=request.getContextPath()%>/challenge/page.do">挑戰</a></li>
-						<li><a href="<%=request.getContextPath()%>/cnotest">賽事活動</a></li>
+						<li><a href="<%=request.getContextPath()%>/contest">賽事活動</a></li>
 						<li><a href="<%=request.getContextPath()%>/calendar.do">行事曆</a></li>
 						<li><a href="<%=request.getContextPath()%>/article/page">運動文章</a></li>
 							<li><img src="data:image/png;base64,${r:byteToBase64(membersVO.photo)}" style='width:50px;height:50px;'></li>
