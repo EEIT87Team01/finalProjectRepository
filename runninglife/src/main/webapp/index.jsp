@@ -101,42 +101,9 @@ ol, ul {
 
 
 <body>
-	
-	
 	<div id="fh5co-page">
-	<header id="fh5co-header" role="banner">
-		<div class="container">
-			<div class="header-inner">
-				<h1><a href="<%=request.getContextPath()%>/index.jsp">RunningLife</a></h1>
-				<nav role="navigation">
-					<ul>
-						<!-- 判斷是否已登入 -->
-						<c:choose>
-						<c:when test="${!empty membersVO}">
-						<li><a href="<%=request.getContextPath()%>/postsController/posts.do">塗鴉牆</a></li>
-						<li><a href="<%=request.getContextPath()%>/challenge/page.do">挑戰</a></li>
-						<li><a href="<%=request.getContextPath()%>/contest">賽事活動</a></li>
-						<li><a href="<%=request.getContextPath()%>/calendar.do">行事曆</a></li>
-						<li><a href="<%=request.getContextPath()%>/article/page">運動文章</a></li>
-							<li><img src="data:image/png;base64,${r:byteToBase64(membersVO.photo)}" style='width:50px;height:50px;'></li>
-							<li>你好, ${membersVO.firstName}</li>
-							<li class="cta"><a href="Login/Logout.do">登出</a></li>
-						</c:when>
-						<c:otherwise>
-							<li><a href="Login/CreateAccountPage.do">新增用戶，開始屬於你的RunningLife</a></li>
-							<li> 或是 </li>
-							<li class="cta" data-toggle="modal" data-target="#myModal"><a id="loginModalBtn" href="#">登入</a></li> <!-- 登入視窗按鈕 -->
-						</c:otherwise>	
-						</c:choose>
-					</ul>
-				</nav>
-			</div>
-		</div>
-	</header>
-	
-	<div class="container">
-	
-	</div>
+	<%@ include file="/WEB-INF/pages/header.jsp"%>
+	<div class="container"></div>
 	<aside id="fh5co-hero" class="js-fullheight">
 		<div class="flexslider js-fullheight">
 			<ul class="slides">
@@ -202,7 +169,6 @@ ol, ul {
 						</div>
 					</div>
 				</div>
-				
 			</div>
 		</div>
 	</div>
@@ -219,45 +185,37 @@ ol, ul {
 
 	
 	<footer id="fh5co-footer" role="contentinfo">
-	
-		<div class="container">
+		<div class="container" style='padding-top:30px;'>
 			<div class="col-md-3 col-sm-12 col-sm-push-0 col-xs-12 col-xs-push-0">
 				<h3>關於我們</h3>
-				<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. </p>
-				<p><a href="#" class="btn btn-primary btn-outline with-arrow btn-sm">Join Us <i class="icon-arrow-right"></i></a></p>
+				<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;我們是一群熱愛跑步的年輕人，因想與其他跑友認識及交流，為此建立此網站，希望能有加入我們一起維護網站或撰寫運動相關文章。</p>
+				<p><a href="#" class="btn btn-primary btn-outline with-arrow btn-sm">加入我們<i class="icon-thumbs-up"></i></a></p>
 			</div>
 			<div class="col-md-6 col-md-push-1 col-sm-12 col-sm-push-0 col-xs-12 col-xs-push-0">
 				<h3>聯絡我們</h3>
 				<ul class="float">
-					<li><a href="#">Web Design</a></li>
-					<li><a href="#">Branding &amp; Identity</a></li>
-					<li><a href="#">Free HTML5</a></li>
-					<li><a href="#">HandCrafted Templates</a></li>
+					<li>聯絡電話：</li>
+					<li>E-mail：</li>
+					<li>聯絡地址：</li>
 				</ul>
 				<ul class="float">
-					<li><a href="#">Free Bootstrap Template</a></li>
-					<li><a href="#">Free HTML5 Template</a></li>
-					<li><a href="#">Free HTML5 &amp; CSS3 Template</a></li>
-					<li><a href="#">HandCrafted Templates</a></li>
+					<li>(02) 2222-2222</li>
+					<li><a href="runninglife@gmail.com">runninglife@gmail.com</a></li>
+					<li>台北市大安區復興南路一段390號</li>
 				</ul>
-
 			</div>
-
 			<div class="col-md-2 col-md-push-1 col-sm-12 col-sm-push-0 col-xs-12 col-xs-push-0">
-				<h3>Follow Us</h3>
+				<h3>追隨我們</h3>
 				<ul class="fh5co-social">
-					<li><a href="#"><i class="icon-twitter"></i></a></li>
-					<li><a href="#"><i class="icon-facebook"></i></a></li>
-					<li><a href="#"><i class="icon-google-plus"></i></a></li>
-					<li><a href="#"><i class="icon-instagram"></i></a></li>
+					<li><a href="#"><i class="icon-twitter"> Twitter</i></a></li>
+					<li><a href="#"><i class="icon-facebook"> Facebook</i></a></li>
+					<li><a href="#"><i class="icon-google-plus"> Google Plus</i></a></li>
+					<li><a href="#"><i class="icon-instagram"> Instagram</i></a></li>
 				</ul>
 			</div>
-			
-			
 			<div class="col-md-12 fh5co-copyright text-center">
-				<p>&copy; 2016 Free HTML5 template. All Rights Reserved. <span>Designed with <i class="icon-heart"></i> by <a href="http://freehtml5.co/" target="_blank">FreeHTML5.co</a> Demo Images by <a href="http://unsplash.com/" target="_blank">Unsplash</a></span></p>	
+				<p>財團法人資訊工業策進會JAVA就業養成班第87期</p>	
 			</div>
-			
 		</div>
 	</footer>
 	</div>

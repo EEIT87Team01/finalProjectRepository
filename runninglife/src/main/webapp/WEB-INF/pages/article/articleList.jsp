@@ -64,7 +64,7 @@ function searchArticleList() {
 	console.log(ArticleData);
 	for ( var i in ArticleData) {
 		var articleColumn = $($('.list').find('.articleList').clone()).clone();
-		$(articleColumn).find('.Thumbnail').attr('src',ArticleData[i].photoPath);
+		$(articleColumn).find('.Thumbnail').attr('src','<%=request.getContextPath() %>/photoController/getPhoto.do?photoID='+ArticleData[i].photoPath);
 		$(articleColumn).find('.title').text(ArticleData[i].title);
 		$(articleColumn).find('.writerAccount').text(ArticleData[i].writerAccount.name);
 		$(articleColumn).find('.createTime').text(ArticleData[i].createTime);
