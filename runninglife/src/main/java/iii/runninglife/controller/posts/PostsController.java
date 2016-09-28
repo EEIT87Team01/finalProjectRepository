@@ -97,7 +97,12 @@ public class PostsController {
 			String imgPath = null;
 			String imgPathtotal = "";
 			String extension;
-			File file ;
+			File file=new File(storePath);
+			if(!file.exists()){
+				file.mkdir();
+			}
+
+		
 			if (req.getPart("file1") != null) {
 				if (req.getPart("file1").getSize() != 0) {
 					System.out.println("getPartStart");
@@ -150,7 +155,12 @@ public class PostsController {
 			String imgPath = null;
 			String imgPathtotal = "";
 			String extension;
-			File file ;
+
+			File file=new File(storePath);
+			if(!file.exists()){
+				file.mkdir();
+			}
+			
 			if (req.getPart("file1") != null) {
 				if (req.getPart("file1").getSize() != 0) {
 					System.out.println("getPartStart");

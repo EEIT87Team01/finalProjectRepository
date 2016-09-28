@@ -7,10 +7,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.Part;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import iii.runninglife.controller.ContestFormValidator;
@@ -114,9 +116,13 @@ public class ContestService {
 	}
 
 	// 賽事新增圖片
-	public String photo(CommonsMultipartFile[] fileUpload, ContestVO contest) {
+	public String photo(MultipartFile[] fileUpload, ContestVO contest) {
 		String path = "c:/run/";
-
+		
+		File file=new File(path);
+		if(!file.exists()){
+			file.mkdir();
+		}
 		if (fileUpload != null && fileUpload.length > 0) {
 			// 小圖
 			if (fileUpload[0].getSize() > 0) {
@@ -150,11 +156,11 @@ public class ContestService {
 			}
 			
 			if (fileUpload[2].getSize() > 0) {
-				System.out.println("Saving file: " + path + contest.getContestID() + "route" + fileUpload[1]
-						.getOriginalFilename().substring(fileUpload[1].getOriginalFilename().indexOf(".")));
+				System.out.println("Saving file: " + path + contest.getContestID() + "route" + fileUpload[2]
+						.getOriginalFilename().substring(fileUpload[2].getOriginalFilename().indexOf(".")));
 				try {
-					fileUpload[1].transferTo(new File(path + contest.getContestID() + "route" + fileUpload[1]
-							.getOriginalFilename().substring(fileUpload[1].getOriginalFilename().indexOf("."))));
+					fileUpload[2].transferTo(new File(path + contest.getContestID() + "route" + fileUpload[2]
+							.getOriginalFilename().substring(fileUpload[2].getOriginalFilename().indexOf("."))));
 				} catch (IllegalStateException e) {
 					e.printStackTrace();
 				} catch (IOException e) {

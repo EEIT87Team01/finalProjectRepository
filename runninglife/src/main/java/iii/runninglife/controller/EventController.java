@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -246,7 +247,7 @@ public class EventController {
 	/// add.update contest
 	@RequestMapping(value = "/contest/edit", method = RequestMethod.POST)
 	public String SaveUser(@ModelAttribute("contest") @Validated ContestVO contest, BindingResult result, Model model,
-			final RedirectAttributes redirectAttributes, @RequestParam @Validated CommonsMultipartFile[] fileUpload) {
+			final RedirectAttributes redirectAttributes, @RequestParam @Validated MultipartFile[] fileUpload) {
 		if (result.hasErrors()) {
 			return "/contest/newcontest";
 		} else {
