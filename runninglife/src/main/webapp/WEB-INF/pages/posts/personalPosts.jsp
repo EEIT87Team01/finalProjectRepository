@@ -70,32 +70,7 @@
 	  </div>
 	</div>
 <body>
-	<header id="fh5co-header" role="banner">
-		<div class="container">
-			<div class="header-inner">
-				<h1><a href="<%=request.getContextPath()%>/index.jsp">RunningLife</a></h1>
-				<nav role="navigation">
-					<ul>
-						<c:choose>
-							<c:when test="${!empty membersVO}">
-								<li><a href="<%=request.getContextPath()%>/postsController/posts.do">塗鴉牆</a></li>
-								<li><a href="<%=request.getContextPath()%>/challenge/page.do">挑戰</a></li>
-								<li><a href="<%=request.getContextPath()%>/">賽事活動</a></li>
-								<li><a href="<%=request.getContextPath()%>/calendar.do">行事曆</a></li>
-								<li><a href="<%=request.getContextPath()%>/contact.html">運動文章</a></li>
-								<li><img src="data:image/png;base64,${r:byteToBase64(membersVO.photo)}" style='width:50px;height:50px;'></li>
-								<li>你好, ${membersVO.firstName}</li>
-								<li class="cta"><a href="<%=request.getContextPath()%>/Login/Logout.do">登出</a></li>
-							</c:when>
-							<c:otherwise>
-								<li class="cta" data-toggle="modal" data-target="#myModal"><a href="#">Login</a></li> <!-- 登入視窗按鈕 -->
-							</c:otherwise>	
-						</c:choose>
-					</ul>
-				</nav>
-			</div>
-		</div>
-	</header>
+	<%@ include file="/WEB-INF/pages/header.jsp"%>
 		<div class="container"></div>
 <aside>
 ${onePosts.postID}
