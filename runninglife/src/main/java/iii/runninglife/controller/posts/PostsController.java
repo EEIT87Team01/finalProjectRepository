@@ -85,6 +85,60 @@ public class PostsController {
 		return new ModelAndView("posts/posts",map);
 	}
 	
+	@RequestMapping(value = "/personalNewPosts.do", method = RequestMethod.POST)
+	public ModelAndView personalNewPosts(HttpServletRequest req,@ModelAttribute("membersVO") MembersVO membersVO) throws IOException, ServletException {
+		String contextPath =req.getContextPath();
+		String postsContent= req.getParameter("postsContent");	
+		String referrer = req.getHeader("referer");
+		ArrayList<String> list = new ArrayList<String>();
+		if (postsContent != "") {
+			String fileName;
+			String storePath = "c:/test/";
+			String imgPath = null;
+			String imgPathtotal = "";
+			String extension;
+			File file ;
+			if (req.getPart("file1") != null) {
+				if (req.getPart("file1").getSize() != 0) {
+					System.out.println("getPartStart");
+					List<Part> fileParts = req.getParts().stream().filter(part -> "file1".equals(part.getName()))
+							.collect(Collectors.toList());
+					for (Part filePart : fileParts) {
+						fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
+						extension = fileName.substring(fileName.lastIndexOf(46));
+						fileName = globalSvc.findMaxSeq("photoID", new PhotoBaseVO()) + extension;
+						InputStream fileContent = filePart.getInputStream();
+						file = new File(storePath, fileName);
+						OutputStream out = new FileOutputStream(file);
+						imgPath = storePath + fileName;
+						imgPathtotal += ",,," + imgPath;
+						String photoID = photoSvc.newPhoto(imgPath);						
+						list.add(photoID);
+						try {
+							byte[] buffer = new byte[1024];
+							int len = 0;
+							while ((len = fileContent.read(buffer)) > -1)
+								out.write(buffer, 0, len);
+
+						} finally {
+							out.close();
+							fileContent.close();
+						}
+					}
+					postsSvc.newPostsWithImages(membersVO.getMemberID(), postsContent, imgPathtotal, list,contextPath);
+				} else {
+					imgPath = null;
+					postsSvc.newPosts(membersVO.getMemberID(), postsContent, imgPath);
+				}
+			} else {
+				imgPath = null;
+				postsSvc.newPosts(membersVO.getMemberID(), postsContent, imgPath);
+			}
+		}
+//		return new ModelAndView("redirect:/postsController/personalPosts.do?membersID="+);
+		return new ModelAndView("redirect:"+ referrer);
+	}
+	
 	@RequestMapping(value = "/newPosts.do", method = RequestMethod.POST)
 	public ModelAndView newPosts(HttpServletRequest req,@ModelAttribute("membersVO") MembersVO membersVO) throws IOException, ServletException {
 		String contextPath =req.getContextPath();
@@ -137,6 +191,13 @@ public class PostsController {
 		return new ModelAndView("redirect:/postsController/posts.do");
 	}
 	
+	@RequestMapping(value = "/personalDelete.do", method = RequestMethod.POST)
+	public ModelAndView personalDeletePosts(HttpServletRequest req,@RequestParam String postID,@ModelAttribute("membersVO") MembersVO membersVO) {
+		String referrer = req.getHeader("referer");
+		postsSvc.deletePosts(membersVO.getMemberID(), postID);
+		return new ModelAndView("redirect:"+ referrer);
+	}
+	
 	@RequestMapping(value = "/delete.do", method = RequestMethod.POST)
 	public ModelAndView deletePosts(@RequestParam String postID,@ModelAttribute("membersVO") MembersVO membersVO) {
 		postsSvc.deletePosts(membersVO.getMemberID(), postID);
@@ -150,10 +211,24 @@ public class PostsController {
 		return goodCount;
 	}
 	
+	@RequestMapping(value = "/personalResponsePosts.do", method = RequestMethod.POST)
+	public ModelAndView personalResponsePosts(HttpServletRequest req,@RequestParam String postID,@RequestParam String responsePosts_content,@RequestParam String memberID) {
+		String referrer = req.getHeader("referer");
+		postsSvc.responsePosts(postID, memberID, responsePosts_content);
+		return new ModelAndView("redirect:"+ referrer);
+	}
+	
 	@RequestMapping(value = "/responsePosts.do", method = RequestMethod.POST)
 	public ModelAndView responsePosts(@RequestParam String postID,@RequestParam String responsePosts_content,@RequestParam String memberID) {
 		postsSvc.responsePosts(postID, memberID, responsePosts_content);
 		return new ModelAndView("redirect:/postsController/posts.do");
+	}
+	
+	@RequestMapping(value = "/personalDeleteResponsePosts.do", method = RequestMethod.POST)
+	public ModelAndView personalDeleteResponsePosts(HttpServletRequest req,@RequestParam String postID,@RequestParam String memberID) {
+		String referrer = req.getHeader("referer");
+		postsSvc.deleteResponsePosts(postID, memberID);
+		return new ModelAndView("redirect:"+ referrer);
 	}
 	
 	@RequestMapping(value = "/deleteResponsePosts.do", method = RequestMethod.POST)
