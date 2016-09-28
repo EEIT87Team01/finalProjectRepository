@@ -81,7 +81,17 @@ public class LoginService implements LoginService_Interface{
 					insetPswd= globalservice.changeMD5Encoding(password);
 					//從DB取出
 					byte[] dbPassword = loginInfo.getPassword();
-												
+											
+					for(byte i:insetPswd){
+						System.out.print(i);
+					}
+				
+					System.out.println("");
+					
+					for(byte i:dbPassword){
+						System.out.print(i);
+					}
+					
 					//確認密碼正確
 					if(dbPassword != null && Arrays.equals(dbPassword, insetPswd)){
 						loginInfo.setMemberAccount(loginInfoPK);
@@ -203,8 +213,7 @@ public class LoginService implements LoginService_Interface{
 		memberID = loginInfo.getMemberID().getMemberID();
 		membersVO = membersDAO.selectOne(memberID);
 		
-		byte[] temp = password.getBytes();	//明碼  //使用者輸入byte[]
-		temp = mDigest.digest(temp); 		//亂碼
+		byte[] temp = globalservice.changeMD5Encoding(password);
 		loginInfo.setPassword(temp);
 		loginInfoDAO.update(loginInfo);
 		

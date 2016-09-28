@@ -56,7 +56,7 @@ public class LoginSpring {
 		Map<String ,Object> InfoMsg = new HashMap<String ,Object>();
 		
 		System.out.println("logincheck");
-		
+		System.out.println(password);
 		/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
 		if (memberAccount == null || memberAccount.trim().length() == 0){ 
 			errorMessage.put("errorMessage","NoAccount"); 
@@ -91,7 +91,7 @@ public class LoginSpring {
 		return map;
 	}
 	
-	//登入
+	//登出
 	@RequestMapping(value="/Logout" ,method=RequestMethod.GET)
 	public ModelAndView Logout(@ModelAttribute("membersVO") MembersVO membersVO , HttpServletRequest requst,SessionStatus sessionStatus){
 		sessionStatus.setComplete();
@@ -149,7 +149,7 @@ public class LoginSpring {
 	//變更密碼
 	@RequestMapping(value="/ChangePassword" ,method=RequestMethod.POST)
 	public ModelAndView changePassword(@RequestParam String memberAccount,@RequestParam String password){
-		return new ModelAndView("login/show","membersVO",loginService.ChangePaswd(memberAccount,password));
+		return new ModelAndView("redirect:/");
 	}
 	
 	

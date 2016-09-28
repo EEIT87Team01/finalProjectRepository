@@ -78,7 +78,8 @@ ol, ul {
 											</div>
 										</div>
 										<div class="form-group">
-											<input type="submit" class="btn btn-lg btn-primary btn-block" value="登入">
+											<input type="button" id="loginBtn" class="btn btn-lg btn-primary btn-block" value="登入">
+											<input type="submit" id="loginBtn1" class="btn btn-lg btn-primary btn-block hidden" value="登入">
 										</div>
 									</div>
 								</div>
