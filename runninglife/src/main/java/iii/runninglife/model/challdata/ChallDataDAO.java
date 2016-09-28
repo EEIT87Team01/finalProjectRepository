@@ -58,7 +58,7 @@ public class ChallDataDAO implements IchallDataDAO {
 	}
 
 	public void update(ChallDataVO challDataVO) {
-		sessionFactory.getCurrentSession().saveOrUpdate(challDataVO);
+		sessionFactory.getCurrentSession().update(challDataVO);
 	}
 
 	@Override

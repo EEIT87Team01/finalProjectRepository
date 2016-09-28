@@ -20,7 +20,15 @@ public class ChallDataVO implements Serializable{
 	private String status;
 	private String isFounder;
 
-    public ChallDataVO(){
+	
+	
+    @Override
+	public String toString() {
+		return "ChallDataVO [challDataPK=" + challDataPK + ", finishTime=" + finishTime + ", processLength="
+				+ processLength + ", duration=" + duration + ", status=" + status + ", isFounder=" + isFounder + "]";
+	}
+
+	public ChallDataVO(){
 		
 	}
 	

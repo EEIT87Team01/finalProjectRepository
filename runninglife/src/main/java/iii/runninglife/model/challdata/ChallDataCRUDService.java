@@ -102,6 +102,9 @@ public class ChallDataCRUDService {
 	public int deleteByChanllegeID(ChallsVO challenID){
 		return dao.deleteByChallengeID(challenID);
 	}
+	public void update(ChallDataVO challDataVO){
+		dao.update(challDataVO);
+	}
 	
 	
 	

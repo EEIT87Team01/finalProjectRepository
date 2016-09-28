@@ -83,10 +83,10 @@ $(document).on("click",".back",function(){
        <table class="table">
 			<c:if test="${challengeDataList != null}">
 				<c:forEach var="challengeData" items="${challengeDataList}">
-				<c:set var="membersVO" value="${challengeData.challDataPK.memberID}" />
-					<tr><td><img src="data:image/png;base64,${r:byteToBase64(membersVO.photo)}" style='width:50px;height:50px;'></td>
-						<td>${membersVO.firstName}</td>
-						<td>${membersVO.lastName}</td>
+				<c:set var="attender" value="${challengeData.challDataPK.memberID}" />
+					<tr><td><img src="data:image/png;base64,${r:byteToBase64(attender.photo)}" style='width:50px;height:50px;'></td>
+						<td>${attender.firstName}</td>
+						<td>${attender.lastName}</td>
 						<td>
 						<c:choose>
 							<c:when test="${challengeData.isFounder eq '1'}">發起者</c:when>
@@ -118,12 +118,12 @@ $(document).on("click",".back",function(){
        <table class="table">
 			<c:if test="${challengeDataList != null}">
 				<c:forEach begin="0" end="9" var="challengeData" items="${challengeDataList}">
-				<c:set var="membersVO" value="${challengeData.challDataPK.memberID}" />
+				<c:set var="rank" value="${challengeData.challDataPK.memberID}" />
 					<c:if test="${!(empty challengeData.finishTime)}">
 					<tr><td><span class="glyphicon glyphicon-star" aria-hidden="true"></span></td>
-						<td><img src="data:image/png;base64,${r:byteToBase64(membersVO.photo)}" style='width:50px;height:50px;'></td>
-						<td>${membersVO.firstName}</td>
-						<td>${membersVO.lastName}</td>
+						<td><img src="data:image/png;base64,${r:byteToBase64(rank.photo)}" style='width:50px;height:50px;'></td>
+						<td>${rank.firstName}</td>
+						<td>${rank.lastName}</td>
 						<td>完成時間：${challengeData.finishTime}
 						</td>
 					</tr>

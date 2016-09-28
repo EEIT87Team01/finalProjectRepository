@@ -206,5 +206,12 @@ public class ChallsCRUD_Servlet {
 				new ChallDataPK(challsCRUDService.searchOneService(challenID),mdao.selectOne(memberID)), d, 0, "0000000", "0", "0");
 	}
 	
-	
+	@RequestMapping(value = "/acceptRequest", method = RequestMethod.GET)
+	@ResponseStatus(value = HttpStatus.OK)
+	public void acceptRequest(@RequestParam String challenID,@RequestParam String memberID) {
+		ChallDataVO challDataVO = challDataCRUDService.searchOneService(
+				new ChallDataPK(challsCRUDService.searchOneService(challenID), mdao.selectOne(memberID)));
+		challDataVO.setStatus("1");
+		challDataCRUDService.update(challDataVO);
+	}
 }

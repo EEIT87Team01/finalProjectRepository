@@ -57,17 +57,7 @@
 	<link rel="stylesheet" href="../css/web/owl.theme.default.min.css">
 <!-- Owl Carousel -->
 	<script src="../js/web/owl.carousel.min.js"></script>
-<script>
-$(document).ready(function(){
 
-});
-
-$(document).on("click",".back",function(){
-
-    history.back();
-})
-
-</script>	
 </head>
 
 
@@ -83,10 +73,10 @@ $(document).on("click",".back",function(){
        <table class="table">
 			<c:if test="${challengeDataList != null}">
 				<c:forEach var="challengeData" items="${challengeDataList}">
-				<c:set var="membersVO" value="${challengeData.challDataPK.memberID}" />
-					<tr><td><img src="data:image/png;base64,${r:byteToBase64(membersVO.photo)}" style='width:50px;height:50px;'></td>
-						<td>${membersVO.firstName}</td>
-						<td>${membersVO.lastName}</td>
+				<c:set var="attender" value="${challengeData.challDataPK.memberID}" />
+					<tr><td><img src="data:image/png;base64,${r:byteToBase64(attender.photo)}" style='width:50px;height:50px;'></td>
+						<td>${attender.firstName}</td>
+						<td>${attender.lastName}</td>
 						<td>
 						<c:choose>
 							<c:when test="${challengeData.isFounder eq '1'}">發起者</c:when>
@@ -210,6 +200,8 @@ $(document).on("click",".back",function(){
 					</tr>
 					<tr><td colspan="2"><p align="right">
 					<c:if test="${myChallengeData.isFounder == '1'}"><button class="btn btn-danger" onclick="location.href='../deleteChall/${challenge.challenID}.do'">刪除</button></c:if>
+					<c:if test="${myChallengeData.isFounder == '0' && myChallengeData.status == '0'}"><button class="btn btn-info acceptRequest" >
+					接受邀請</button></c:if>
 					<button class="btn btn-success back">返回</button></p></td></tr>
 				</table>
 			</div>
@@ -271,4 +263,27 @@ $(document).on("click",".back",function(){
 		</footer>
 	</div>
 </body>
+<script>
+$(document).ready(function(){
+	$(".acceptRequest").click(function(){
+		var btn = $(this);
+		var friend = $(this).attr("id");
+		$.ajax({
+			type: "get", 
+			datatype: "json",
+			data : { "challenID" : '${challenge.challenID}', "memberID" : '${membersVO.memberID}'},
+			url: '<%=request.getContextPath()%>/challenge/acceptRequest.do',
+			success: function(){
+				btn.text("已接受").attr("class","btn btn-primary");
+				btn.off();
+			}
+		});
+	});
+});
+
+$(document).on("click",".back",function(){
+    history.back();
+})
+
+</script>	
 </html>

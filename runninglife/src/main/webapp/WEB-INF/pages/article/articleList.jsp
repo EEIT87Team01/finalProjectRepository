@@ -26,49 +26,50 @@
 
 <link href="https://fonts.googleapis.com/css?family=Raleway:200,300,400,700" rel="stylesheet">
 <!-- Animate.css -->
-	<link rel="stylesheet" href="../css/web/animate.css">
+	<link rel="stylesheet" href="<%=request.getContextPath()%>/static/css/web/animate.css">
 <!-- Icomoon Icon Fonts-->
-	<link rel="stylesheet" href="../css/web/icomoon.css">
+	<link rel="stylesheet" href="<%=request.getContextPath()%>/static/css/web/icomoon.css">
 <!-- Bootstrap  -->
-	<link rel="stylesheet" href="../css/web/bootstrap.css">
+	<link rel="stylesheet" href="<%=request.getContextPath()%>/static/css/web/bootstrap.css">
 <!-- Flexslider  -->
-	<link rel="stylesheet" href="../css/web/flexslider.css">
+	<link rel="stylesheet" href="<%=request.getContextPath()%>/static/css/web/flexslider.css">
 <!-- Owl Carousel  -->
-	<link rel="stylesheet" href="../css/web/owl.carousel.min.css">
-	<link rel="stylesheet" href="../css/web/owl.theme.default.min.css">
+	<link rel="stylesheet" href="<%=request.getContextPath()%>/static/css/web/owl.carousel.min.css">
+	<link rel="stylesheet" href="<%=request.getContextPath()%>/static/css/web/owl.theme.default.min.css">
 <!-- Theme style  -->
-	<link rel="stylesheet" href="../css/web/style.css">
+	<link rel="stylesheet" href="<%=request.getContextPath()%>/static/css/web/style.css">
 <!-- Modernizr JS -->
-	<script src="../js/web/modernizr-2.6.2.min.js"></script>
+	<script src="<%=request.getContextPath()%>/static/js/web/modernizr-2.6.2.min.js"></script>
 <!-- jQuery -->
-	<script src="../js/web/jquery.min.js"></script>
+	<script src="<%=request.getContextPath()%>/static/js/web/jquery.min.js"></script>
 <!-- jQuery Easing -->
-	<script src="../js/web/jquery.easing.1.3.js"></script>
+	<script src="<%=request.getContextPath()%>/static/js/web/jquery.easing.1.3.js"></script>
 <!-- Bootstrap -->
-	<script src="../js/web/bootstrap.min.js"></script>
+	<script src="<%=request.getContextPath()%>/static/js/web/bootstrap.min.js"></script>
 <!-- Waypoints -->
-	<script src="../js/web/jquery.waypoints.min.js"></script>
+	<script src="<%=request.getContextPath()%>/static/js/web/jquery.waypoints.min.js"></script>
 <!-- Owl Carousel -->
-	<script src="../js/web/owl.carousel.min.js"></script>
+	<script src="<%=request.getContextPath()%>/static/js/web/owl.carousel.min.js"></script>
 <!-- Flexslider -->
-	<script src="../js/web/jquery.flexslider-min.js"></script>
+	<script src="<%=request.getContextPath()%>/static/js/web/jquery.flexslider-min.js"></script>
 <!-- MAIN JS -->
-	<script src="../js/web/main.js"></script>
+	<script src="<%=request.getContextPath()%>/static/js/web/main.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
     searchArticleList();
 });
 
 function searchArticleList() {
-	var ArticleData = ajax('GET', null, '../searchArticles.do', 'json', false);
+	var ArticleData = ajax('GET', null, 'searchArticles.do', 'json', false);
 	console.log(ArticleData);
 	for ( var i in ArticleData) {
 		var articleColumn = $($('.list').find('.articleList').clone()).clone();
 		$(articleColumn).find('.Thumbnail').attr('src',ArticleData[i].photoPath);
 		$(articleColumn).find('.title').text(ArticleData[i].title);
-		$(articleColumn).find('.writerAccount').text(ArticleData[i].writerAccount);
+		$(articleColumn).find('.writerAccount').text(ArticleData[i].writerAccount.name);
 		$(articleColumn).find('.createTime').text(ArticleData[i].createTime);
-		$(articleColumn).find('.link').attr('href','articleDetail.jsp?articleid='+ArticleData[i].articleID);
+		$(articleColumn).find('.link').attr('href','detail/'+ArticleData[i].articleID);
+		console.log(ArticleData[i].articleID);
 		
 		$(articleColumn).removeClass().addClass('articleShow');
 		$('.list').append(articleColumn);
