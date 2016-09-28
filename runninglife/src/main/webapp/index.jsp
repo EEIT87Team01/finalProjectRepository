@@ -113,11 +113,11 @@ ol, ul {
 						<!-- 判斷是否已登入 -->
 						<c:choose>
 						<c:when test="${!empty membersVO}">
-						<li><a href="postsController/posts.do">塗鴉牆</a></li>
-						<li><a href="challenge/page.do">挑戰</a></li>
-						<li><a href="">賽事活動</a></li>
-						<li><a href="calendar.do">行事曆</a></li>
-						<li><a href="contact.html">運動文章</a></li>
+						<li><a href="<%=request.getContextPath()%>/postsController/posts.do">塗鴉牆</a></li>
+						<li><a href="<%=request.getContextPath()%>/challenge/page.do">挑戰</a></li>
+						<li><a href="<%=request.getContextPath()%>/cnotest">賽事活動</a></li>
+						<li><a href="<%=request.getContextPath()%>/calendar.do">行事曆</a></li>
+						<li><a href="<%=request.getContextPath()%>/article/page">運動文章</a></li>
 							<li><img src="data:image/png;base64,${r:byteToBase64(membersVO.photo)}" style='width:50px;height:50px;'></li>
 							<li>你好, ${membersVO.lastName}</li>
 							<li class="cta"><a href="Login/Logout.do">登出</a></li>

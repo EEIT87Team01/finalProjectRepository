@@ -200,11 +200,7 @@ h2.no-span {
 
 
 <body class="smoothscroll enable-animation">
-	<div>context:${pageContext.request.contextPath}</div>
-	<div>身分:${not empty adminsVO ? "admin" : "guest" }</div>
-
 	<div id="contestID" class="hidden">${contest.contestID}</div>
-	<div id="timer" class="hidden">${timer}</div>
 	<section id="slider">
 	<div>
 		<img class="img-responsive "
@@ -286,14 +282,15 @@ h2.no-span {
 							class="table table-hover table-bordered lohas-table text-center">
 							<thead>
 								<tr class="info">
-									<th class="col-xs-1 ${not empty adminsVO ? '':'hidden' }">編號</th>
+									<th class="col-xs-1">編號</th>
 									<!-- 隱藏 -->
 									<th class="col-xs-2">項目名稱</th>
 									<th class="col-xs-2">距離</th>
 									<th class="col-xs-2">報名費用</th>
 									<th class="col-xs-2">開放名額</th>
 									<th class="col-xs-2">起跑時間</th>
-									<th class="col-xs-2">限制時間(分)</th> ${not empty adminsVO ?'<th colspan="2" class="col-xs-2"></th>':'' }
+									<th class="col-xs-2">限制時間(分)</th>
+									<th colspan="2" class="col-xs-2"></th>
 									<!-- 隱藏 -->
 
 									<!-- 								<th class="col-xs-2"></th> -->
@@ -302,26 +299,27 @@ h2.no-span {
 							<tbody id="eventBody">
 								<c:forEach var="event" items="${events}">
 									<tr>
-										<td class="eventID ${not empty adminsVO ? '':'hidden' }">${event.eventID}</td>
+										<td class="eventID">${event.eventID}</td>
 										<!-- 隱藏 -->
 										<td>${event.eventName}</td>
 										<td>${event.distance}</td>
 										<td>${event.fee}</td>
 										<td>${event.quota}</td>
 										<td>${event.whenToRun}</td>
-										<td>${event.limitTime }</td> ${not empty adminsVO ? '<td><a id="/runninglife/event/${event.eventID}/delete"    
+										<td>${event.limitTime }</td>
+										<td><a id="${pageContext.request.contextPath}/event/${event.eventID}/delete"
 											class="btn btn-danger btn-xs  eventDelete" role="button"
 											data-text="真的要刪除此項目嗎?" data-confirm-button="是的"
 											data-cancel-button="不了"data-confirm-button-class: "btn-danger ">刪除</a></td>
-										<td><a class="btn btn-warning btn-xs edit" role="button">修改</a></td>':''}
+										<td><a class="btn btn-warning btn-xs edit" role="button">修改</a></td>
 										<!-- 隱藏 -->
 									</tr>
 								</c:forEach>
 								<!-- 隱藏 -->
 
-								<tr class="${member.memberID == 'admin' ? '':'hidden' }">
+								<tr class="">
 									<form id="eventForm"
-										action="/runninglife/${contest.contestID}/event/add">
+										action="${pageContext.request.contextPath}/${contest.contestID}/event/add">
 										<td><input type="text"
 											class="form-group form-control readonly" id="eventID"
 											name="eventID" placeholder="" readonly /></td>
@@ -335,8 +333,8 @@ h2.no-span {
 											name="quota" placeholder="開放名額" /></td>
 										<td><input type="datetime" class="form-control"
 											id="whenToRun" name="whenToRun" placeholder="06:50:00" /></td>
-										<td><input type="" class="form-control"
-											id="limitTime" name="limitTime" placeholder="90" /></td>
+										<td><input type="" class="form-control" id="limitTime"
+											name="limitTime" placeholder="90" /></td>
 										<td colspan="2"><input type="submit"
 											class="form-control  btn-success" name="submit" value="更新" /></td>
 									</form>
@@ -357,28 +355,28 @@ h2.no-span {
 						<table class="table table-hover table-bordered text-center ">
 							<thead>
 								<tr class="info">
-									<th class="col-xs-1 ${not empty adminsVO ? '':'hidden' }">組別編號</th>
+									<th class="col-xs-1">組別編號</th>
 									<th class="col-xs-5 text-center">組別</th>
 									<th class="col-xs-5 text-center">年齡範圍</th>
-									<th colspan="2"
-										class="col-xs-1 ${not empty adminsVO ? '':'hidden' }"></th>
+									<th colspan="2" class="col-xs-1"></th>
 								</tr>
 							</thead>
 							<tbody id="teamBody">
 								<c:forEach var='team' items='${teams}'>
 									<tr>
-										<td class="teamID ${not empty adminsVO ? '':'hidden' }">${team.teamID}</td>
+										<td class="teamID">${team.teamID}</td>
 										<td>${team.teamName}</td>
-										<td>${team.ageRange}~${team.ageRange + 9}</td> ${not empty adminsVO ? '<td><a class="btn btn-danger btn-xs teamDelete" role="button"
-											data-text="真的要刪除此項目嗎?" data-confirm-button="是的"
+										<td>${team.ageRange}~${team.ageRange + 9}</td>
+										<td><a class="btn btn-danger btn-xs teamDelete"
+											role="button" data-text="真的要刪除此項目嗎?" data-confirm-button="是的"
 											data-cancel-button="不了"data-confirm-button-class: "btn-danger">刪除</a></td>
-										<td><a class="btn btn-warning btn-xs edit" role="button">修改</a></td>':'' }
+										<td><a class="btn btn-warning btn-xs edit" role="button">修改</a></td>
 									</tr>
 								</c:forEach>
-								<tr class="${member.memberID == 'admin' ? '':'hidden' }">
+								<tr class="">
 									<form id="teamForm">
 										<td><input type="text"
-											class="form-control ${member.memberID == 'admin' ? '':'hidden' }"
+											class="form-control"
 											name="teamID" id="teamID" placeholder="" readonly /></td>
 										<td><input type="text" class="form-control"
 											name="teamName" id="teamName" placeholder="甲組" /></td>

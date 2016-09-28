@@ -191,7 +191,7 @@
 							賽事修改</small>
 						</h1>
 						<ol class="breadcrumb">
-							<li class="active"><i class="fa fa-dashboard"></i> Dashboard
+							<li class="active"><a href="${pageContext.request.contextPath}/contest/edit" class="btn btn-success">新增賽事</a>
 							</li>
 						</ol>
 					</div>

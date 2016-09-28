@@ -23,6 +23,18 @@
 		<meta name="twitter:image" content="" />
 		<meta name="twitter:url" content="" />
 		<meta name="twitter:card" content="" />
+		
+		<style>
+		
+			.background-image {
+				background-image: url('<%=request.getContextPath()%>/static/images/calendarDetailBG.jpg');
+				background-repeat: no-repeat;
+				background-attachment: fixed;
+	        	background-position: center;
+	        	background-size: cover;
+			}
+
+		</style>
 	
 		<link rel="shortcut icon" href="favicon.ico">
 		
@@ -59,11 +71,12 @@
 				<h1><a href="../index.jsp">RunningLife</a></h1>
 				<nav role="navigation">
 					<ul>
-						<li><a href="../friend/page.do">塗鴉牆</a></li>
+						<li><a href="../postsController/posts.do">塗鴉牆</a></li>
 						<li><a href="../challenge/page.do">挑戰</a></li>
 						<li><a href="">賽事活動</a></li>
 						<li class="active">><a href="../calendar.do">行事曆</a></li>
 						<li><a href="contact.html">運動文章</a></li>
+						<li><img src="data:image/png;base64,${r:byteToBase64(memberPhoto)}" style='width:50px;height:50px;'></li>
 						<li>Hello, ${memberFirstName}</li>
 						<li class="cta"><a href="../Login/Logout.do">Logout</a></li>
 					</ul>
@@ -71,7 +84,7 @@
 			</div>
 		</div>
 	</header>
-	<div class="container" style="margin-top: 50px;">
+	<div class="container background-image" style="margin-top: 50px;">
 	<h1>運動紀錄</h1>
 		<div class="row">
 			<table class="table">

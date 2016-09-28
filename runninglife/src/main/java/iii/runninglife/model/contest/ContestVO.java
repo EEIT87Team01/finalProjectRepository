@@ -153,4 +153,13 @@ public class ContestVO {
 		}
 		return status;
 	}
+	public Boolean getFinish(){
+		Boolean status = false;
+		long current =System.currentTimeMillis();
+		long finish = getStartDate().getTime();
+		if(current>finish){
+			status=true;
+		}
+		return status;
+	}
 }

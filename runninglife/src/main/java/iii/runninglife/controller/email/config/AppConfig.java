@@ -107,7 +107,7 @@ public class AppConfig extends WebMvcConfigurerAdapter{
 	        dataSource.setDriverClassName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
 	        dataSource.setUrl("jdbc:sqlserver://localhost:1433;database=runninglife");
 	        dataSource.setUsername("sa");
-	        dataSource.setPassword("sa1234");
+	        dataSource.setPassword("P@ssw0rd");
 	        return dataSource;
 	    }
 	     

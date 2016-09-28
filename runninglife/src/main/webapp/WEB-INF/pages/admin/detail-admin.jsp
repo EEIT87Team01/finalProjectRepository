@@ -197,10 +197,6 @@
 						<h1 class="page-header">
 							賽事修改</small>
 						</h1>
-						<ol class="breadcrumb">
-							<li class="active"><i class="fa fa-dashboard"></i> Dashboard
-							</li>
-						</ol>
 					</div>
 				</div>
 				<!-- /.row -->
