@@ -41,8 +41,8 @@
 			<form action="/runninglife/Login/UpdateAccountPage.do" method="get" class="form-horizontal">
 			 	
 				<table class="table" style="color:black;">
-				<tr><td>姓氏:${membersVO.firstName}</td></tr>
-				<tr><td>名子:${membersVO.lastName}</td></tr>
+				<tr><td>姓氏:${membersVO.lastName}</td></tr>
+				<tr><td>名子:${membersVO.firstName}</td></tr>
 				<tr><td>暱稱:${membersVO.nickname}</td></tr>
 				<tr><td>生日:${membersVO.birthday}</td></tr>
 				<tr><td>Email:${membersVO.email}</td></tr>

@@ -33,7 +33,6 @@
 
 <script>
 $(function(){
-	console.log('${membersVO.memberID}');
 	$('#myModal').on('shown.bs.modal', function () {
 		  $('#account').focus();
 	})
@@ -172,6 +171,24 @@ $(function(){
 		}
 	});
 });
+
+function ajaxFunction(url,type,data,dataType){
+	var result;
+	$.ajax({
+		url : url,
+		type : type,
+		dataType : dataType,
+		data : data,
+		async : false,
+		success : function(response){
+			result = response;
+		},
+		error : function(response) {
+			console.log("error");
+		}
+	});
+		return result;
+}
 </script>
 </body>
 </html>

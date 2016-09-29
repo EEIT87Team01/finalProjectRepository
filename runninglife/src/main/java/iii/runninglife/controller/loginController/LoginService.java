@@ -127,7 +127,6 @@ public class LoginService implements LoginService_Interface{
 		LoginInformationPK loginInfoPK = new LoginInformationPK();
 		MembersVO membersVO = new MembersVO();
 //		MailService email = new MailService();
-		String DBEmail = null;
 		String message = null;
 		loginInfoPK.setMemberAccount(memberAccount);
 		loginInfoPK.setLoginMethod("1");
@@ -144,7 +143,6 @@ public class LoginService implements LoginService_Interface{
 //			message = "帳號無誤";
 			membersVO = membersDAO.selectOne(loginInfo.getMemberID().getMemberID());
 			mailService.sendForgetPswEmail(membersVO, random);
-			DBEmail = membersVO.getEmail();
 			return random;
 		}else {
 			message = "無此帳號";
