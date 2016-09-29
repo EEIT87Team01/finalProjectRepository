@@ -30,6 +30,7 @@
 	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.0/themes/smoothness/jquery-ui.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.0/jquery-ui.min.js"></script>
 <title>verifyCode</title>
+<link rel="icon" type="image/png" href="<%=request.getContextPath()%>/static/images/icon.png">
 </head>
 <body style="background-image: url('../static/images/create.jpg');
  			background-repeat: no-repeat;

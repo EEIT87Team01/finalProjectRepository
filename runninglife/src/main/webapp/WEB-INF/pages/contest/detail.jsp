@@ -7,6 +7,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>${contest.contestName }</title>
+<link rel="icon" type="image/png" href="<%=request.getContextPath()%>/static/images/icon.png">
 <style>
 .ui-widget-header, .ui-state-default, ui-button {
 	background: #b9cd6d;

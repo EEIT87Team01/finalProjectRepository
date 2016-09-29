@@ -7,6 +7,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>${contest.contestName }</title>
+<link rel="icon" type="image/png" href="<%=request.getContextPath()%>/static/images/icon.png">
 <link rel="stylesheet"
 	href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css"
 	type="text/css">

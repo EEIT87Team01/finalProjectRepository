@@ -5,6 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+<link rel="icon" type="image/png" href="<%=request.getContextPath()%>/static/images/icon.png">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 <!-- Bootstrap -->
@@ -15,15 +16,15 @@
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
 <!-- Custom CSS -->
-<link href="../../css/server/sb-admin.css" rel="stylesheet">
+<link href="<%=request.getContextPath()%>/static/css/sb-admin.css" rel="stylesheet">
 <!-- Morris Charts CSS -->
-<link href="../../css/server/plugins/morris.css" rel="stylesheet">
+<link href="<%=request.getContextPath()%>/static/css/server/plugins/morris.css" rel="stylesheet">
 <!-- Custom Fonts -->
-<link href="../../font-awesome/server/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+<link href="<%=request.getContextPath()%>/static/font-awesome/server/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 <!-- Morris Charts JavaScript -->
-<script src="../../js/server/plugins/morris/raphael.min.js"></script>
-<script src="../../js/server/plugins/morris/morris.min.js"></script>
-<script src="../../js/server/plugins/morris/morris-data.js"></script>
+<script src="<%=request.getContextPath()%>/static/js/plugins/morris/raphael.min.js"></script>
+<script src="<%=request.getContextPath()%>/static/js/plugins/morris/morris.min.js"></script>
+<script src="<%=request.getContextPath()%>/static/js/plugins/morris/morris-data.js"></script>
 <script>
 $(document).ready(function(){
 // 	var dataId = location.search ;
@@ -35,7 +36,7 @@ $(document).ready(function(){
 });
 
 function searchAdDetail(adID) {
-	var adDetail = ajax('GET', {'adID':adID}, '../searchAd.do', 'json', false);
+	var adDetail = ajax('GET', {'adID':adID}, '<%=request.getContextPath()%>/ads/searchAd.do', 'json', false);
 	console.log(adDetail);
 	$('.adID').val(adDetail.adID);
 	$('.adName').val(adDetail.adName);
@@ -58,7 +59,7 @@ $(document).on('click',".modify",function(){
     console.log($('.site').val()) ; 
     console.log($('.priority').val()) ; 
     console.log($(this).attr('adID')) ; 
-    ajax('POST', {'adID':$(this).attr('adID'),'adName':$('.adName').val(),'division':$('.division').val(),'adStartTime':$('.adStartTime').val(),'adEndTime':$('.adEndTime').val(),'site':$('.site').val(),'priority':$('.priority').val()}, '../updateAd.do', 'json', false);
+    ajax('POST', {'adID':$(this).attr('adID'),'adName':$('.adName').val(),'division':$('.division').val(),'adStartTime':$('.adStartTime').val(),'adEndTime':$('.adEndTime').val(),'site':$('.site').val(),'priority':$('.priority').val()}, '<%=request.getContextPath()%>/ads/updateAd.do', 'json', false);
 });
 
 function ajax(Method, Data, Url, Datetype, Async) {

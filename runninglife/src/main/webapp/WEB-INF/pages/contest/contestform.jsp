@@ -11,6 +11,7 @@
 	href="<c:url value="/static/css/bootstrap.min.css"/>">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>編輯賽事</title>
+<link rel="icon" type="image/png" href="<%=request.getContextPath()%>/static/images/icon.png">
 </head>
 <body>
 	<div class="container ">

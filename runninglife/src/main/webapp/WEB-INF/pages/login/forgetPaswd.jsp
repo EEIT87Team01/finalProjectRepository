@@ -30,7 +30,7 @@
 	
 
 <title>Forget Password</title>
-
+<link rel="icon" type="image/png" href="<%=request.getContextPath()%>/static/images/icon.png">
 <script>
 $(function(){
 	$('#myModal').on('shown.bs.modal', function () {
