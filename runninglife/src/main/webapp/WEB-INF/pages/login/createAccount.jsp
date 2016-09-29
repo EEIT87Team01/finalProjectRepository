@@ -148,12 +148,13 @@ ol, ul {
 						</td>
 						<td class="form-group col-lg-2"></td>
 <!-- 						<td><span class="form-group col-lg-2"></span></td> -->
-						<td style="padding-top:6px; ">
-<!-- 							<label for="name" class="control-label login-label">姓氏</label> -->
-							<input type="text" id="firstName" name="firstName" class="alert alert-dismissible cols-sm-5 input-group" placeholder="請輸入姓氏"/>
+						<td>
+<!-- 							<label for="name" class="control-label login-label">名子</label> -->
+							<input type="text" id="lastName" name="lastName" class="alert alert-dismissible cols-sm-5 input-group" placeholder="請輸入姓氏"/>
 							<span class="form-group col-lg-2"></span>
-							<span class="glyphicon glyphicon-question-sign hidden" id="showText4"></span><br/>
+							<span class="glyphicon glyphicon-question-sign hidden" id="showText5"></span>
 						</td>
+	
 					</tr>
 					
 					<tr class="form-group col-lg-12">
@@ -164,11 +165,11 @@ ol, ul {
 							<span class="glyphicon glyphicon-question-sign hidden" id="showText2"></span>
 						</td>
 						<td class="form-group col-lg-2"></td>
-						<td>
-<!-- 							<label for="name" class="control-label login-label">名子</label> -->
-							<input type="text" id="lastName" name="lastName" class="alert alert-dismissible cols-sm-5 input-group" placeholder="請輸入名子"/>
+						<td style="padding-top:6px; ">
+<!-- 							<label for="name" class="control-label login-label">姓氏</label> -->
+							<input type="text" id="firstName" name="firstName" class="alert alert-dismissible cols-sm-5 input-group" placeholder="請輸入名子"/>
 							<span class="form-group col-lg-2"></span>
-							<span class="glyphicon glyphicon-question-sign hidden" id="showText5"></span>
+							<span class="glyphicon glyphicon-question-sign hidden" id="showText4"></span><br/>
 						</td>
 					</tr>
 					
@@ -227,7 +228,7 @@ $(function(){
 	var eMailFlag = false;
 	var birthdayFlag = false;
 	
-	$('#memberAccount').keyup(function(){
+	$('#memberAccount').change(function(){
 		var inAccount = $('#memberAccount').val();
 		if(inAccount.length == 0){
 			$('#showText1').removeClass().addClass("glyphicon glyphicon-remove-sign show1").text("帳號未填");

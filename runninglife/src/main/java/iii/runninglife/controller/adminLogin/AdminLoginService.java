@@ -13,8 +13,8 @@ import org.springframework.stereotype.Service;
 import iii.runninglife.globalservice.GlobalService;
 import iii.runninglife.model.admins.AdminsInterface;
 import iii.runninglife.model.admins.AdminsVO;
+import iii.runninglife.model.adminsPriority.AdminsPriorityInterface;
 import iii.runninglife.model.adminsPriority.AdminsPriorityVO;
-import iii.runninglife.model.members.MembersDAO;
 import iii.runninglife.model.members.MembersInterface;
 import iii.runninglife.model.members.MembersVO;
 
@@ -25,6 +25,8 @@ public class AdminLoginService implements AdminLoginService_Interface{
 	AdminsPriorityVO adminsPritoryVO = new AdminsPriorityVO();
 	@Autowired
 	AdminsInterface adminsDAO;
+	@Autowired
+	AdminsPriorityInterface adminsPriorityDAO;
 	@Autowired
 	MembersInterface membersDAO;
 	@Autowired
@@ -95,16 +97,8 @@ public class AdminLoginService implements AdminLoginService_Interface{
 	@Override
 	public AdminsVO createAdmin(String adminAccount,String password,String name,String levelID,String status) throws UnsupportedEncodingException{
 			
-		MessageDigest mDigest = null;
-		try {
-			mDigest = MessageDigest.getInstance("MD5");
-		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
-		}
-			
 		adminsVO.setAdminAccount(adminAccount);
-		byte[] temp = password.getBytes("UTF-8");	//明碼  //使用者輸入byte[]
-		temp = mDigest.digest(temp); 		//亂碼
+		byte[] temp = globalservice.changeMD5Encoding(password);	
 		adminsVO.setPassword(temp);
 		adminsVO.setName(name);
 		

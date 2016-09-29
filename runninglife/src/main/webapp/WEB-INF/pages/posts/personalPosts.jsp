@@ -72,13 +72,10 @@
 	</div>
 <body>
 	
-	<body>
-
-
 	<header id="fh5co-header" role="banner">
 		<div class="container">
 			<div class="header-inner">
-				<h1><a href="<%=request.getContextPath()%>/index.jsp">RunningLife</a></h1>
+				<h1><a href="<%=request.getContextPath()%>index.html">RunningLife</a></h1>
 				<nav role="navigation">
 					<ul>
 					<c:choose>
@@ -101,26 +98,26 @@
 			</div>
 		</div>
 	</header>
+
+
 		<div class="container"></div>
 <aside>
 ${onePosts.postID}
 <div id = "sss" ></div>
+	<div id="question" style="display:none; cursor: default;"> 
+      <form method="get" action="postsController/posts.do">
+		<div class="col-md-12" style="border-style:solid;border-color:#EDEDED"> 
+			<textarea id="textarea" name="postsContent" class="form-control col-xs-12" rows="15"></textarea>
+			<div class="col-md-12">
+				<button id="btn_update" type="submit" class="btn btn-success">發文</button>
+				<button id="no">取消</button>
+			</div>
+			<input type="hidden" id="memberID" name="memberID" value="${membersVO.memberID}">
+		</div>		
+       </form>
+	</div> 
 	<div class="col-md-2"></div> 	
 	<div class="col-md-8">	
-		<ul class="nav nav-tabs">
-			<li role="presentation"><a href="<%=request.getContextPath()%>/postsController/posts.do">塗鴉牆</a></li>
-			<li role="presentation" class="dropdown">
-		        <a id="drop4" href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false">
-		          	好友資訊<span class="caret"></span>
-		        </a>
-		        <ul id="menu1" class="dropdown-menu" role="menu" aria-labelledby="drop4">
-		          <li role="presentation"><a role="menuitem" tabindex="-1" href="<%=request.getContextPath()%>/friend/listFriend.do">好友列表</a></li>
-		          <li role="presentation"><a role="menuitem" tabindex="-1" href="<%=request.getContextPath()%>/friend/listFriendRequest.do">收到的邀請</a></li>
-		          <li role="presentation"><a role="menuitem" tabindex="-1" href="<%=request.getContextPath()%>/friend/sendRequest.do">邀請好友</a></li>
-		        </ul>
-			</li>
-		</ul>
-		
 		<form:form method="post" action="personalNewPosts.do" enctype="multipart/form-data">
 			<div class="col-md-12" style="border-style:solid;border-color:#EDEDED;padding:20px">
 				<textarea id="textarea" name="postsContent" class="form-control col-xs-12" rows="5"></textarea>
@@ -130,13 +127,14 @@ ${onePosts.postID}
 	</div>					
 		</form:form>
 		<c:forEach var="posts" items="${postsVO}"> 
-			<c:if test="${posts.parent==null&&posts.status==1}">
-				<div class="col-md-12" style="margin:10px">
+			<div class="col-md-12">
+<%-- 			<c:if test="${posts.postMemberID.memberID==membersVO.memberID}">		 --%>
+				<c:if test="${posts.parent==null&&posts.status==1}">	
 					<div>
 						<div  class="col-md-12" style="border-style:solid;border-color:#EDEDED">							
-							<div  class="col-md-12">	
-								<div class="col-md-1"><a href="<%=request.getContextPath()%>/postsController/personalPosts.do?membersID=${posts.postMemberID.memberID}"><img style="width:99%" src="data:image/png;base64,${r:byteToBase64(posts.postMemberID.photo)}"></a></div>
-								<div class="col-md-10"><h4>${posts.postMemberID.firstName}</h4>${posts.time}</div>	
+							<div  class="col-md-12" style="border-style:solid;border-color:#EDEDED">	
+								<div class="col-md-1"><img style="width:99%" src="data:image/png;base64,${r:byteToBase64(posts.postMemberID.photo)}"></div>
+								<div class="col-md-10"><h4>${posts.postMemberID.lastName}</h4>${posts.time}</div>	
 								<div class="col-md-1">
 							</div>	
 								<div class="btn-group ">
@@ -163,8 +161,8 @@ ${onePosts.postID}
 							</div>
 						</div>	
 						<form method="post" action="personalResponsePosts.do">
-							<div class="col-md-12" style="border-style:solid;border-color:#EDEDED;padding-top:10px;padding-bottom:10px">
-								<div class="col-md-1"><a href="<%=request.getContextPath()%>/postsController/personalPosts.do?membersID=${membersVO.memberID}"><img  style="width:80%" src="data:image/png;base64,${r:byteToBase64(membersVO.photo)}"></a></div>
+							<div class="col-md-12" style="border-style:solid;border-color:#EDEDED">
+								<div class="col-md-1"><img  style="width:80%" src="data:image/png;base64,${r:byteToBase64(membersVO.photo)}"></div>
 								<div class="col-md-9"><textarea id="textarea" name="responsePosts_content" class="form-control col-xs-12" rows="1"></textarea></div>
 								<div class="col-md-2"><button type="submit" class="btn btn btn-primary">回覆</button></div>	
 								<input type="hidden" name="memberID" value="${membersVO.memberID}">
@@ -173,10 +171,11 @@ ${onePosts.postID}
 							</div>
 						</form>													
 					</div>
+				</c:if>
 					<c:forEach var="response" items="${responseVO}"> 
 						<c:if test="${response.parent==posts.postID&&response.status==1}">
 							<div class="col-md-12" style="border-style:solid;border-color:#EDEDED">
-								<div class="col-md-1"><a href="<%=request.getContextPath()%>/postsController/personalPosts.do?membersID=${posts.postMemberID.memberID}"><img  style="width:80%" src="data:image/png;base64,${r:byteToBase64(response.postMemberID.photo)}"></a></div>
+								<div class="col-md-1"><img  style="width:80%" src="data:image/png;base64,${r:byteToBase64(membersVO.photo)}"></div>
 								<div class="col-md-10"><span>${response.content}</span></div>
 								<div class="col-md-1">  
 									<div class="btn-group ">
@@ -191,8 +190,9 @@ ${onePosts.postID}
 							</div>		
 						</c:if>
 					</c:forEach>
-				</div>
-			</c:if>
+<%-- 			</c:if> --%>
+			</div>
+				<div class="col-md-12"></div>
 		</c:forEach>			
 	</div>
 	<div class="col-md-2"></div>	
