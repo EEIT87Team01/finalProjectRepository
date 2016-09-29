@@ -102,18 +102,6 @@
 <aside>
 ${onePosts.postID}
 <div id = "sss" ></div>
-	<div id="question" style="display:none; cursor: default;"> 
-      <form method="get" action="postsController/posts.do">
-		<div class="col-md-12" style="border-style:solid;border-color:#EDEDED"> 
-			<textarea id="textarea" name="postsContent" class="form-control col-xs-12" rows="15"></textarea>
-			<div class="col-md-12">
-				<button id="btn_update" type="submit" class="btn btn-success">發文</button>
-				<button id="no">取消</button>
-			</div>
-			<input type="hidden" id="memberID" name="memberID" value="${membersVO.memberID}">
-		</div>		
-       </form>
-	</div> 
 	<div class="col-md-2"></div> 	
 	<div class="col-md-8">	
 		<ul class="nav nav-tabs">
@@ -139,7 +127,8 @@ ${onePosts.postID}
 	</div>					
 		</form:form>
 		<c:forEach var="posts" items="${postsVO}"> 
-			<div class="col-md-12"  style="padding:10px">
+		
+			<div class="col-md-12">
 				<c:if test="${posts.parent==null&&posts.status==1}">	
 					<div>
 						<div  class="col-md-12" style="border-style:solid;border-color:#EDEDED">							
@@ -202,6 +191,7 @@ ${onePosts.postID}
 						</c:if>
 					</c:forEach>
 			</div>
+		<c:if test="${posts.parent==null&&posts.status==1}"><br><br><br><br><br></c:if>
 		</c:forEach>			
 	</div>
 	<div class="col-md-2"></div>	
