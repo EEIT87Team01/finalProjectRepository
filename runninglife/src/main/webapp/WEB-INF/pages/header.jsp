@@ -51,7 +51,6 @@
 							<img src="data:image/png;base64,${r:byteToBase64(membersVO.photo)}" style='width:50px;height:50px;'>
 							你好, ${membersVO.firstName}
 						</a>
-						
 					</li>
 					
 					<li class="cta"><a href="<%=request.getContextPath()%>/Login/Logout.do">登出</a></li>

@@ -16,17 +16,16 @@
 		<script src="<%=request.getContextPath()%>/static/js/fileinput.min.js"></script>
 		<script src="<%=request.getContextPath()%>/static/js/jquery.blockUI.js"></script>
 
-
-		
-			<!-- Animate.css -->
-			<style type="text/css">@import url("<c:url value="/static/css/animate.css" />");</style>
-			<!-- Icomoon Icon Fonts -->
-			<style type="text/css">@import url("<c:url value="/static/css/icomoon.css" />");</style>
-			<!-- Flexslider  -->
-			<style type="text/css">@import url("<c:url value="/static/css/flexslider.css" />");</style>
-			<!-- Theme style  -->
-			<style type="text/css">@import url("<c:url value="/static/css/style.css" />");</style>
-			
+		<!-- Animate.css -->
+		<link rel="stylesheet"	href="<%=request.getContextPath()%>/static/css/animate.css">
+		<!-- Icomoon Icon Fonts-->
+		<link rel="stylesheet"	href="<%=request.getContextPath()%>/static/css/icomoon.css">
+		<!-- Flexslider  -->
+		<link rel="stylesheet"	href="<%=request.getContextPath()%>/static/css/flexslider.css">
+		<!-- Theme style  -->
+		<link rel="stylesheet"	href="<%=request.getContextPath()%>/static/css/style.css">
+		<!-- Modernizr JS -->
+		<link rel="stylesheet"	href="<%=request.getContextPath()%>/static/js/modernizr-2.6.2.min.js">
 			
 		<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/static/css/mainStyle.css"/>
 		<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/static/css/bootstrap.min.css" />
@@ -73,30 +72,40 @@
 
 
 	<header id="fh5co-header" role="banner">
-		<div class="container">
-			<div class="header-inner">
-				<h1><a href="<%=request.getContextPath()%>/index.jsp">RunningLife</a></h1>
-				<nav role="navigation">
-					<ul>
-					<c:choose>
-						<c:when test="${!empty membersVO}">
-								<li><a href="<%=request.getContextPath()%>/postsController/posts.do">塗鴉牆</a></li>
-								<li><a href="<%=request.getContextPath()%>/challenge/page.do">挑戰</a></li>
-								<li><a href="<%=request.getContextPath()%>/contest">賽事活動</a></li>
-								<li><a href="<%=request.getContextPath()%>/calendar.do">行事曆</a></li>
-								<li><a href="<%=request.getContextPath()%>/article/page">運動文章</a></li>
-								<li><img src="data:image/png;base64,${r:byteToBase64(membersVO.photo)}" style='width:50px;height:50px;'></li>
-								<li>你好, ${membersVO.firstName}</li>
-								<li class="cta"><a href="<%=request.getContextPath()%>/Login/Logout.do">登出</a></li>
-						</c:when>
-							<c:otherwise>
-								<li class="cta" data-toggle="modal" data-target="#myModal"><a href="#">Login</a></li> <!-- 登入視窗按鈕 -->
-							</c:otherwise>	
-					</c:choose>
-					</ul>
-				</nav>
-			</div>
+	<div class="container">
+		<div class="header-inner">
+			<h1>
+				<a href="<%=request.getContextPath()%>/index.jsp">RunningLife</a>
+			</h1>
+			<nav role="navigation">
+			<ul>
+				<c:choose>
+				<c:when test="${!empty membersVO}">
+					<li><a href="<%=request.getContextPath()%>/postsController/posts.do">塗鴉牆</a></li>
+					<li><a href="<%=request.getContextPath()%>/challenge/myChallenges.do">挑戰</a></li>
+					<li><a href="<%=request.getContextPath()%>/contest">賽事活動</a></li>
+					<li><a href="<%=request.getContextPath()%>/calendar.do">行事曆</a></li>
+					<li><a href="<%=request.getContextPath()%>/article/page">運動文章</a></li>
+					<li>
+						<a href="<%=request.getContextPath()%>/Login/AccountShowPage.do">
+							<img src="data:image/png;base64,${r:byteToBase64(membersVO.photo)}" style='width:50px;height:50px;'>
+							你好, ${membersVO.firstName}
+						</a>
+						
+					</li>
+					
+					<li class="cta"><a href="<%=request.getContextPath()%>/Login/Logout.do">登出</a></li>
+				</c:when>
+				<c:otherwise>
+					<li><a href="<%=request.getContextPath()%>/Login/CreateAccountPage.do">新增用戶，開始屬於你的RunningLife</a></li>
+					<li> 或是 </li>
+					<li class="cta" data-toggle="modal" data-target="#myModal"><a id="loginModalBtn" href="#">登入</a></li> <!-- 登入視窗按鈕 -->
+				</c:otherwise>	
+				</c:choose>
+			</ul>
+			</nav>
 		</div>
+	</div>
 	</header>
 		<div class="container"></div>
 <aside>
