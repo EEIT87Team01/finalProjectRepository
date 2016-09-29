@@ -51,7 +51,6 @@
 					<li class="cta"><a href="<%=request.getContextPath()%>/Login/Logout.do">登出</a></li>
 				</c:when>
 				<c:otherwise>
-					<li><a href="<%=request.getContextPath()%>/contest">賽事活動</a></li>
 					<li><a href="<%=request.getContextPath()%>/Login/CreateAccountPage.do">新增用戶，開始屬於你的RunningLife</a></li>
 					<li> 或是 </li>
 					<li class="cta" data-toggle="modal" data-target="#myModal"><a id="loginModalBtn" href="#">登入</a></li> <!-- 登入視窗按鈕 -->

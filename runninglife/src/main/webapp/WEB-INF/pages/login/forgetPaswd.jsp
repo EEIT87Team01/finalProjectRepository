@@ -145,7 +145,7 @@ $(function(){
 	var accountFlag = false;
 	var eMailFlag = false;
 		
-	$('#fAccount').focusout(function(){
+	$('#fAccount').keyup(function(){
 		var inAccount = $('#fAccount').val();
 		if(inAccount.length == 0){
 			accountFlag = false;
@@ -154,7 +154,7 @@ $(function(){
 		}
 	});
 	
-	$('#fEmail').focusout(function(){
+	$('#fEmail').keyup(function(){
 		var inEmail = $('#fEmail').val();
 		if(inEmail.length == 0){
 			eMailFlag = false;
@@ -163,7 +163,7 @@ $(function(){
 		}
 	});
 	
-	$('#fAccount,#fEmail').focusout(function(){
+	$('#fAccount,#fEmail').keyup(function(){
 		
 		if(accountFlag && eMailFlag){
 			$("#btn").prop("disabled", false);
