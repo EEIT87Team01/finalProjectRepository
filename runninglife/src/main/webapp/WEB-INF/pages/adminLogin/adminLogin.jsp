@@ -11,7 +11,7 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
 
-<title>Insert title here</title>
+<title></title>
 </head>
 <body>
 <form action="/runninglife/AdminLogin/AdminAccountCheck.do" method="post">

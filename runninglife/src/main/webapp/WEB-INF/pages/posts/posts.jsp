@@ -75,7 +75,7 @@
 	<header id="fh5co-header" role="banner">
 		<div class="container">
 			<div class="header-inner">
-				<h1><a href="<%=request.getContextPath()%>index.html">RunningLife</a></h1>
+				<h1><a href="<%=request.getContextPath()%>/index.jsp">RunningLife</a></h1>
 				<nav role="navigation">
 					<ul>
 					<c:choose>
@@ -102,18 +102,6 @@
 <aside>
 ${onePosts.postID}
 <div id = "sss" ></div>
-	<div id="question" style="display:none; cursor: default;"> 
-      <form method="get" action="postsController/posts.do">
-		<div class="col-md-12" style="border-style:solid;border-color:#EDEDED"> 
-			<textarea id="textarea" name="postsContent" class="form-control col-xs-12" rows="15"></textarea>
-			<div class="col-md-12">
-				<button id="btn_update" type="submit" class="btn btn-success">發文</button>
-				<button id="no">取消</button>
-			</div>
-			<input type="hidden" id="memberID" name="memberID" value="${membersVO.memberID}">
-		</div>		
-       </form>
-	</div> 
 	<div class="col-md-2"></div> 	
 	<div class="col-md-8">	
 		<ul class="nav nav-tabs">
@@ -139,13 +127,13 @@ ${onePosts.postID}
 	</div>					
 		</form:form>
 		<c:forEach var="posts" items="${postsVO}"> 
-			<div class="col-md-12"  style="padding:10px">
-				<c:if test="${posts.parent==null&&posts.status==1}">	
+			<c:if test="${posts.parent==null&&posts.status==1}">
+				<div class="col-md-12" style="margin:10px">
 					<div>
 						<div  class="col-md-12" style="border-style:solid;border-color:#EDEDED">							
-							<div  class="col-md-12" style="border-style:solid;border-color:#EDEDED">	
+							<div  class="col-md-12">	
 								<div class="col-md-1"><a href="<%=request.getContextPath()%>/postsController/personalPosts.do?membersID=${posts.postMemberID.memberID}"><img style="width:99%" src="data:image/png;base64,${r:byteToBase64(posts.postMemberID.photo)}"></a></div>
-								<div class="col-md-10"><h4>${posts.postMemberID.lastName}</h4>${posts.time}</div>	
+								<div class="col-md-10"><h4>${posts.postMemberID.firstName}</h4>${posts.time}</div>	
 								<div class="col-md-1">
 							</div>	
 								<div class="btn-group ">
@@ -172,8 +160,8 @@ ${onePosts.postID}
 							</div>
 						</div>	
 						<form method="post" action="responsePosts.do">
-							<div class="col-md-12" style="border-style:solid;border-color:#EDEDED">
-								<div class="col-md-1"><a href="<%=request.getContextPath()%>/postsController/personalPosts.do?membersID=${posts.postMemberID.memberID}"><img  style="width:80%" src="data:image/png;base64,${r:byteToBase64(membersVO.photo)}"></a></div>
+							<div class="col-md-12" style="border-style:solid;border-color:#EDEDED;padding-top:10px;padding-bottom:10px">
+								<div class="col-md-1"><a href="<%=request.getContextPath()%>/postsController/personalPosts.do?membersID=${membersVO.memberID}"><img  style="width:80%" src="data:image/png;base64,${r:byteToBase64(membersVO.photo)}"></a></div>
 								<div class="col-md-9"><textarea id="textarea" name="responsePosts_content" class="form-control col-xs-12" rows="1"></textarea></div>
 								<div class="col-md-2"><button type="submit" class="btn btn btn-primary">回覆</button></div>	
 								<input type="hidden" name="memberID" value="${membersVO.memberID}">
@@ -182,7 +170,6 @@ ${onePosts.postID}
 							</div>
 						</form>													
 					</div>
-				</c:if>
 					<c:forEach var="response" items="${responseVO}"> 
 						<c:if test="${response.parent==posts.postID&&response.status==1}">
 							<div class="col-md-12" style="border-style:solid;border-color:#EDEDED">
@@ -201,7 +188,8 @@ ${onePosts.postID}
 							</div>		
 						</c:if>
 					</c:forEach>
-			</div>
+				</div>
+			</c:if>
 		</c:forEach>			
 	</div>
 	<div class="col-md-2"></div>	
