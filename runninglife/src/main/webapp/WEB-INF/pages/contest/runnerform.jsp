@@ -15,7 +15,7 @@
 				class="table table-striped table-bordered"  width="1000px">
 
 				<thead>
-					<tr class="success">
+					<tr class="info">
 						<th>編號</th>
 						<th>會員姓名</th>
 						<th>賽事名稱</th>
@@ -82,11 +82,11 @@
 
 
 </body>
-<script src="${pageContext.request.contextPath}/resources/js/jquery.js"></script>
+<script src="${pageContext.request.contextPath}/static/js/jquery.js"></script>
 <script
-	src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
+	src="${pageContext.request.contextPath}/static/js/bootstrap.min.js"></script>
 <script
-	src="${pageContext.request.contextPath}/resources/js/jquery.dataTables.min.js"></script>
+	src="${pageContext.request.contextPath}/static/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript">
 	$(function() {
 		$('#test').DataTable({

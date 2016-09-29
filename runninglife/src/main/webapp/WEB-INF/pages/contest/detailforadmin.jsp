@@ -204,7 +204,7 @@ h2.no-span {
 	<section id="slider">
 	<div>
 		<img class="img-responsive "
-			src="${pageContext.request.contextPath}/static/${contest.contestID}banner.jpg"
+			src="${pageContext.request.contextPath}/resources/${contest.contestID}banner.jpg"
 			alt="banner">
 	</div>
 
@@ -217,9 +217,9 @@ h2.no-span {
 
 	<section>
 	<div class="container">
-		<div class="col-lg-9 col-md-9 col-sm-9 letter-spacing-1">
+		<div class="col-lg-12 col-md-12 col-sm-12 letter-spacing-1">
 			<ul class="nav nav-tabs nav-pills">
-				<li role="presentation" class="active"><a href="#rule"
+				<li role="presentation" class="active"  ><a href="#rule"
 					data-toggle="tab">競賽規程</a></li>
 				<li role="presentation"><a href="#map" data-toggle="tab">競賽路線</a></li>
 				<li role="presentation"><a href="#runnerList" data-toggle="tab">參賽名單</a></li>
@@ -299,7 +299,7 @@ h2.no-span {
 							<tbody id="eventBody">
 								<c:forEach var="event" items="${events}">
 									<tr>
-										<td class="eventID">${event.eventID}</td>
+										<td class="eventID ">${event.eventID}</td>
 										<!-- 隱藏 -->
 										<td>${event.eventName}</td>
 										<td>${event.distance}</td>
@@ -405,9 +405,9 @@ h2.no-span {
 						<div class="col-md-9 col-md-offset-1">
 							<div class="item-box">
 								<figure> <a
-									href="${pageContext.request.contextPath}/static/${contest.contestID}route.jpg"
+									href="${pageContext.request.contextPath}/resources/${contest.contestID}route.jpg"
 									target="blank"> <img class="img-responsive"
-									src="${pageContext.request.contextPath}/static/${contest.contestID}route.jpg">
+									src="${pageContext.request.contextPath}/resources/${contest.contestID}route.jpg">
 								</a> </figure>
 							</div>
 						</div>

@@ -9,7 +9,7 @@
 
 	<head>
 		<title>RunningLife貼文頁面</title>
-		<link rel="icon" type="image/png" href="/runninglife/images/icon.png">
+		<link rel="icon" type="image/png" href="<%=request.getContextPath()%>/images/icon.png">
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		
 		

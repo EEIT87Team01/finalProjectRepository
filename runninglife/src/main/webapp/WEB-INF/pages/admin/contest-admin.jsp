@@ -157,7 +157,7 @@
 						</li>
 						<li><a href="tables.html"><i class="fa fa-fw fa-table"></i>賽事編輯</a>
 						</li>
-						<li><a href="bootstrap-elements.html"><i
+						<li><a href="${pageContext.request.contextPath}/reportController/reportList.do"><i
 								class="fa fa-fw fa-desktop"></i>處理檢舉</a></li>
 						<li><a href="bootstrap-grid.html"><i
 								class="fa fa-fw fa-wrench"></i> Bootstrap Grid</a></li>

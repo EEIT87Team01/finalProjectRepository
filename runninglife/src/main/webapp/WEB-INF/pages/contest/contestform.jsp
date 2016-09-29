@@ -8,7 +8,7 @@
 <html>
 <head>
 <link rel="stylesheet"
-	href="<c:url value="/resources/css/bootstrap.min.css"/>">
+	href="<c:url value="/static/css/bootstrap.min.css"/>">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>編輯賽事</title>
 </head>
