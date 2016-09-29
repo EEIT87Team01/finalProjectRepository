@@ -786,7 +786,7 @@ h2.no-span {
 	var eventMark = $('#contestID');
 	var teamMark = $('#contestID');
 	$(function() {
-
+		$('#fh5co-header > div > div > nav > ul > li:nth-child(3)').addClass('active');
 	
 		var teamRow;
 		var teamID;

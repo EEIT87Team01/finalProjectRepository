@@ -107,7 +107,7 @@ public class AppConfig extends WebMvcConfigurerAdapter{
 	        dataSource.setDriverClassName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
 	        dataSource.setUrl("jdbc:sqlserver://localhost:1433;database=runninglife");
 	        dataSource.setUsername("sa");
-	        dataSource.setPassword("P@ssw0rd");
+	        dataSource.setPassword("P@ssw0rdssss");
 	        return dataSource;
 	    }
 	     
@@ -125,7 +125,7 @@ public class AppConfig extends WebMvcConfigurerAdapter{
 	       HibernateTransactionManager txManager = new HibernateTransactionManager();
 	       txManager.setSessionFactory(s);
 	       return txManager;
-	    }
+	    } 
 	
 	
 }
