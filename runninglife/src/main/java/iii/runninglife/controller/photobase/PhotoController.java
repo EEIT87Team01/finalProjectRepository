@@ -35,6 +35,8 @@ public class PhotoController {
 
 	@RequestMapping(value = "/getPhoto.do", method = RequestMethod.GET)
 	public @ResponseBody String getPhoto(HttpServletResponse res,@RequestParam String photoID) throws IOException {
+		
+		
 		res.setContentType("image/jpeg");
 		OutputStream out = res.getOutputStream();
 		byte[] photo = PhotoSvc.getPhoto(photoID, out);
