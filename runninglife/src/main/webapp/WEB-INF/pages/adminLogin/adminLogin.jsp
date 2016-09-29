@@ -15,6 +15,9 @@
 <script src="/runninglife/static/js/jquery-3.1.0.min.js"></script>
 <script src="/runninglife/static/js/bootstrap.min.js"></script>
 
+<<<<<<< HEAD
+<title></title>
+=======
 
 <link rel="stylesheet" type="text/css"
 	href="<%=request.getContextPath()%>/static/css/server/bootstrap.min.css">
@@ -28,6 +31,7 @@
 	color:white;
 }
 </style>
+>>>>>>> branch 'final' of https://github.com/EEIT87Team01/finalProjectRepository.git
 </head>
 <body>
 

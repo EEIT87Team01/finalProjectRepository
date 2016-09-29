@@ -36,6 +36,114 @@ ol, ul {
     margin-bottom: 10px;
 }
 </style>
+	<script type="text/javascript">
+$(function(){
+
+	console.log('${membersVO.memberID}');
+	$('#myModal').on('shown.bs.modal', function () {
+		  $('#account').focus();
+	})
+	searchads();
+	$(function() {
+		// ---------------------------------------------------------------------------
+		// login.jsp
+		// ---------------------------------------------------------------------------
+		
+		$('#username').focusout(function(){
+			var input = $('#username').val();
+			$.get("../../../../main/java/_01/controller/loginController/LoginSpring/Login",{'name':input},function(data){
+				switch(data){
+				case "查無此帳號":
+					$('#span1').removeClass().addClass('glyphicon glyphicon-ok-sign');
+					break;
+				case "帳號已存在":
+					$('#span1').removeClass().addClass('glyphicon glyphicon-remove-sign');
+					break;
+				}
+			});
+		});
+		
+		$('#loginBtn').click(function(){
+			var account = $('#account').val();
+			var password = $('#password').val();
+			var myUrl = '/runninglife/Login/LoginCheck.do';
+			var type = 'post';
+			var dataType = 'json';
+			var data = { "memberAccount" : account , "password" : password };
+			var response = ajaxFunction(myUrl,type,data,dataType);
+			console.log(response);
+			for ( var i in response) {
+				switch(response[i]){
+					case "WrongPassword":
+						$('#gridSystemModalLabel').text('密碼錯誤');
+						break;
+					case "NotExistAccount":
+						$('#gridSystemModalLabel').text('查無此帳號');
+						break;
+					case "LoginFail":
+						$('#gridSystemModalLabel').text('登入失敗');
+						break;
+					case "LoginOK":
+						$('#loginBtn1').click();
+						break;
+				}
+			}
+		});
+	});
+	//ajax
+	function ajaxFunction(url,type,data,dataType){
+		var result;
+		$.ajax({
+			url : url,
+			type : type,
+			dataType : dataType,
+			data : data,
+			async : false,
+			success : function(response){
+				result = response;
+			},
+			error : function(response) {
+				console.log("error");
+			}
+		});
+			return result;
+	}
+})
+
+function searchads() {
+	var adsData = ajax('GET', null, 'ads/searchDisplayAds.do', 'json', false);
+	console.log(adsData);
+	for ( var i in adsData) {
+		if(i==0){
+// 			$('.slides').find('.adName').text(adsData[i].adName);
+			$('.slides').find('a').attr('href',adsData[i].link);
+			$('.slides').find('.adli').attr('style',"background-image: url(<c:url value='photoController/getPhoto.do?photoID="+adsData[i].image+"'/>);");
+		}else{
+			var adsli=$($('.slides').find('.adli').clone()).clone();
+// 			$(adsli).find('.adName').text(adsData[i].adName);
+			$(adsli).find('a').attr('href',adsData[i].link);
+			$(adsli).attr('style',"background-image: url(<c:url value='photoController/getPhoto.do?photoID="+adsData[i].image+"'/>);");
+			$(adsli).removeClass().addClass('adShow');
+			$('.slides').append(adsli);
+		}
+	}
+}
+function ajax(Method, Data, Url, Datetype, Async) {
+	var result;
+	$.ajax({
+		type : Method,
+		data : Data,
+		url : Url,
+		dataType : Datetype,
+		async : Async,
+		success : function(response) {
+
+			result = response;
+		}
+	});
+	return result;
+}
+</script>
 </head>
 
 
@@ -112,8 +220,8 @@ ol, ul {
 		   		<div class="container">
 		   			<div class="col-md-10 col-md-offset-1 text-center js-fullheight slider-text">
 		   				<div class="slider-text-inner">
-		   					<h2 class='adName'>Start Your Startup With This Template</h2>
-		   					<p><a href="#" class="btn btn-primary btn-lg">馬上購買！！</a></p>
+<!-- 		   					<h2 class='adName'>Start Your Startup With This Template</h2> -->
+		   					<p style='margin-top: 400px;'><a href="#" class="btn btn-primary btn-lg">馬上購買！！</a></p>
 		   				</div>
 		   			</div>
 		   		</div>
@@ -233,112 +341,5 @@ ol, ul {
 	<script type="text/javascript" src="<c:url value="/static/js/main.js" />"></script>
 	
 	</body>
-	<script type="text/javascript">
-$(function(){
 
-	console.log('${membersVO.memberID}');
-	$('#myModal').on('shown.bs.modal', function () {
-		  $('#account').focus();
-	})
-	searchads();
-	$(function() {
-		// ---------------------------------------------------------------------------
-		// login.jsp
-		// ---------------------------------------------------------------------------
-		
-		$('#username').focusout(function(){
-			var input = $('#username').val();
-			$.get("../../../../main/java/_01/controller/loginController/LoginSpring/Login",{'name':input},function(data){
-				switch(data){
-				case "查無此帳號":
-					$('#span1').removeClass().addClass('glyphicon glyphicon-ok-sign');
-					break;
-				case "帳號已存在":
-					$('#span1').removeClass().addClass('glyphicon glyphicon-remove-sign');
-					break;
-				}
-			});
-		});
-		
-		$('#loginBtn').click(function(){
-			var account = $('#account').val();
-			var password = $('#password').val();
-			var myUrl = '/runninglife/Login/LoginCheck.do';
-			var type = 'post';
-			var dataType = 'json';
-			var data = { "memberAccount" : account , "password" : password };
-			var response = ajaxFunction(myUrl,type,data,dataType);
-			console.log(response);
-			for ( var i in response) {
-				switch(response[i]){
-					case "WrongPassword":
-						$('#gridSystemModalLabel').text('密碼錯誤');
-						break;
-					case "NotExistAccount":
-						$('#gridSystemModalLabel').text('查無此帳號');
-						break;
-					case "LoginFail":
-						$('#gridSystemModalLabel').text('登入失敗');
-						break;
-					case "LoginOK":
-						$('#loginBtn1').click();
-						break;
-				}
-			}
-		});
-	});
-	//ajax
-	function ajaxFunction(url,type,data,dataType){
-		var result;
-		$.ajax({
-			url : url,
-			type : type,
-			dataType : dataType,
-			data : data,
-			async : false,
-			success : function(response){
-				result = response;
-			},
-			error : function(response) {
-				console.log("error");
-			}
-		});
-			return result;
-	}
-})
-
-function searchads() {
-	var adsData = ajax('GET', null, 'ads/searchDisplayAds.do', 'json', false);
-	console.log(adsData);
-	for ( var i in adsData) {
-		if(i==0){
-			$('.slides').find('.adName').text(adsData[i].adName);
-			$('.slides').find('a').attr('href',adsData[i].link);
-			$('.slides').find('.adli').attr('style',"background-image: url(<c:url value='photoController/getPhoto.do?photoID="+adsData[i].image+"'/>);");
-		}else{
-			var adsli=$($('.slides').find('.adli').clone()).clone();
-			$(adsli).find('.adName').text(adsData[i].adName);
-			$(adsli).find('a').attr('href',adsData[i].link);
-			$(adsli).attr('style',"background-image: url(<c:url value='photoController/getPhoto.do?photoID="+adsData[i].image+"'/>);");
-			$(adsli).removeClass().addClass('adShow');
-			$('.slides').append(adsli);
-		}
-	}
-}
-function ajax(Method, Data, Url, Datetype, Async) {
-	var result;
-	$.ajax({
-		type : Method,
-		data : Data,
-		url : Url,
-		dataType : Datetype,
-		async : Async,
-		success : function(response) {
-
-			result = response;
-		}
-	});
-	return result;
-}
-</script>
 </html>

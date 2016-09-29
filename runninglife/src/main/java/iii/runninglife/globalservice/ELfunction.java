@@ -14,6 +14,7 @@ public class ELfunction {
 	}
 	
 	public static String byteToBase64(byte[] photo){
+		if(photo == null) return "";
 		return new String(Base64.getEncoder().encode(photo));
 	}
 	
