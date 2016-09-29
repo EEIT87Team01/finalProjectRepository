@@ -58,8 +58,6 @@ public class LoginSpring {
 		Map<String ,String> errorMessage = new HashMap<String ,String>();
 		Map<String ,Object> InfoMsg = new HashMap<String ,Object>();
 		
-		System.out.println("logincheck");
-		System.out.println(password);
 		/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
 		if (memberAccount == null || memberAccount.trim().length() == 0){ 
 			errorMessage.put("errorMessage","NoAccount"); 
@@ -194,6 +192,12 @@ public class LoginSpring {
 	public ModelAndView UpdateAccountPage(@ModelAttribute MembersVO membersVO, Model model){
 		model.addAttribute("memberForm", new MembersVO());
 		return new ModelAndView("login/updateAccount","membersVO",membersVO);
+	}
+	
+	//顯示個人頁面
+	@RequestMapping(value="/AccountShowPage")
+	public ModelAndView AccountShowPage(@ModelAttribute MembersVO membersVO){
+		return new ModelAndView("login/show","membersVO",membersVO);
 	}
 	
 	//修改會員

@@ -126,6 +126,7 @@
 		</div>
 		<div id="map"></div>
 	</div>
+	<%@ include file="/WEB-INF/pages/footer.jsp"%>
 </div>
     <script>
 		var map;
@@ -148,9 +149,9 @@
 		    flightPath.setMap(map);
 		}
 		
-// 		$(function(){
+		$(function(){
 			$('#fh5co-header > div > div > nav > ul > li:nth-child(4)').addClass('active');
-// 		});
+		});
     </script>
     
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBCmOChQ6jjB4VB9Q1vptGEmkcAcNiJZuk&callback=initMap"
