@@ -139,8 +139,8 @@ ${onePosts.postID}
 	</div>					
 		</form:form>
 		<c:forEach var="posts" items="${postsVO}"> 
-			<div class="col-md-12"  style="padding:10px">
-				<c:if test="${posts.parent==null&&posts.status==1}">	
+			<c:if test="${posts.parent==null&&posts.status==1}">	
+				<div class="col-md-12"  style="padding:10px">
 					<div>
 						<div  class="col-md-12" style="border-style:solid;border-color:#EDEDED">							
 							<div  class="col-md-12" style="border-style:solid;border-color:#EDEDED">	
@@ -182,7 +182,7 @@ ${onePosts.postID}
 							</div>
 						</form>													
 					</div>
-				</c:if>
+				
 					<c:forEach var="response" items="${responseVO}"> 
 						<c:if test="${response.parent==posts.postID&&response.status==1}">
 							<div class="col-md-12" style="border-style:solid;border-color:#EDEDED">
@@ -201,7 +201,8 @@ ${onePosts.postID}
 							</div>		
 						</c:if>
 					</c:forEach>
-			</div>
+				</div>
+			</c:if>
 		</c:forEach>			
 	</div>
 	<div class="col-md-2"></div>	
