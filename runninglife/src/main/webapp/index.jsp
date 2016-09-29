@@ -203,128 +203,6 @@ function ajax(Method, Data, Url, Datetype, Async) {
 	
 
 <!-- Modal end-->
-
-<<<<<<< HEAD
-
-<body>
-	<div id="fh5co-page">
-	<%@ include file="/WEB-INF/pages/header.jsp"%>
-	<div class="container"></div>
-	<aside id="fh5co-hero" class="js-fullheight">
-		<div class="flexslider js-fullheight">
-			<ul class="slides">
-		   	<li style="background-image: url(<c:url value="/static/images/slide_1.jpg"/>);" class='adli'>
-		   		<div class="overlay-gradient"></div>
-		   		<div class="container">
-		   			<div class="col-md-10 col-md-offset-1 text-center js-fullheight slider-text">
-		   				<div class="slider-text-inner">
-		   					<p style='margin-top:400px;'><a href="#" class="btn btn-primary btn-lg">馬上購買！！</a></p>
-		   				</div>
-		   			</div>
-		   		</div>
-		   	</li>
-		  	</ul>
-	  	</div>
-	</aside>
-	<div id="fh5co-services-section">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-4 animate-box">
-					<div class="services">
-						<i class="icon-map-marker"></i>
-						<div class="desc">
-							<h3>紀錄</h3>
-							<p>提供會員觀看自己的運動情況，藉以調整自身的運動頻率、運動時間及運動強度。</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-4 animate-box">
-					<div class="services">
-						<i class="icon-comments"></i>
-						<div class="desc">
-							<h3>與好友互動</h3>
-							<p>提供會員擁有自己的塗鴉牆，可以在塗鴉牆上聊天、分享運動紀錄及運動資訊。</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-4 animate-box">
-					<div class="services">
-						<i class="icon-trophy"></i>
-						<div class="desc">
-							<h3>挑戰</h3>
-							<p>可以藉此為自身設立目標，亦可做為好友間的小型競賽，與互相激勵以維持良好的運動習慣。</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-offset-2 col-md-4 animate-box">
-					<div class="services">
-						<i class="icon-flag-checkered"></i>
-						<div class="desc">
-							<h3>賽事參與</h3>
-							<p>由廠商與相關機構所不定期舉辦的大型賽事活動，可以評測自己過去努力是否有所成長，是會員間互相認識、互相交流最好活動。</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-4 animate-box">
-					<div class="services">
-						<i class="icon-calendar"></i>
-						<div class="desc">
-							<h3>日曆</h3>
-							<p>可以記錄會員過去的運動時間、也可記錄會員所參加或將參加的挑戰及賽事活動。</p>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<div class="fh5co-cta" style="background-image: url(images/slide_2.jpg);">
-		<div class="overlay"></div>
-		<div class="container">
-			<div class="col-md-12 text-center animate-box">
-				<h3>We Try To Update The Site Everyday</h3>
-				<p><a href="#" class="btn btn-primary btn-outline with-arrow">回到頂端<i class="icon-arrow-up"></i></a></p>
-			</div>
-		</div>
-	</div>
-
-	<img class='img' src="">
-	<footer id="fh5co-footer" role="contentinfo">
-		<div class="container">
-			<div class="col-md-3 col-sm-12 col-sm-push-0 col-xs-12 col-xs-push-0">
-				<h3>關於我們</h3>
-				<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;我們是一群熱愛跑步的年輕人，因想與其他跑友認識及交流，為此建立此網站，希望能有加入我們一起維護網站或撰寫運動相關文章。</p>
-				<p><a href="#" class="btn btn-primary btn-outline with-arrow btn-sm">加入我們<i class="icon-thumbs-up"></i></a></p>
-			</div>
-			<div class="col-md-6 col-md-push-1 col-sm-12 col-sm-push-0 col-xs-12 col-xs-push-0">
-				<h3>聯絡我們</h3>
-				<ul class="float">
-					<li>聯絡電話：</li>
-					<li>E-mail：</li>
-					<li>聯絡地址：</li>
-				</ul>
-				<ul class="float">
-					<li>(02) 2222-2222</li>
-					<li><a href="runninglife@gmail.com">runninglife@gmail.com</a></li>
-					<li>台北市大安區復興南路一段390號</li>
-				</ul>
-			</div>
-			<div class="col-md-2 col-md-push-1 col-sm-12 col-sm-push-0 col-xs-12 col-xs-push-0">
-				<h3>追隨我們</h3>
-				<ul class="fh5co-social">
-					<li><a href="#"><i class="icon-twitter"> Twitter</i></a></li>
-					<li><a href="#"><i class="icon-facebook"> Facebook</i></a></li>
-					<li><a href="#"><i class="icon-google-plus"> Google Plus</i></a></li>
-					<li><a href="#"><i class="icon-instagram"> Instagram</i></a></li>
-				</ul>
-			</div>
-			<div class="col-md-12 fh5co-copyright text-center">
-				<p>財團法人資訊工業策進會JAVA就業養成班第87期</p>	
-			</div>
-		</div>
-	</footer>
-	</div>
-=======
 <body>
 <div id="fh5co-page">
 	<%@ include file="/WEB-INF/pages/header.jsp"%>
@@ -400,8 +278,6 @@ function ajax(Method, Data, Url, Datetype, Async) {
 	
 	<%@ include file="/WEB-INF/pages/footer.jsp"%>
 </div>
->>>>>>> branch 'final' of https://github.com/EEIT87Team01/finalProjectRepository
-	
 	
 	<!-- jQuery Easing -->
 	<script type="text/javascript" src="<c:url value="/static/js/jquery.easing.1.3.js" />"></script>
