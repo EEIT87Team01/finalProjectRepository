@@ -6,11 +6,11 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-<link rel="stylesheet" href="/runninglife/static/css/bootstrap.min.css" />
-<link rel="stylesheet" href="/runninglife/static/css/bootstrap-theme.min.css"></link>
-<link rel="stylesheet" href="/runninglife/static/css/mainStyle.css"></link>
-<script src="/runninglife/static/js/jquery-3.1.0.min.js"></script>
-<script src="/runninglife/static/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="<%=request.getContextPath()%>/static/css/bootstrap.min.css" />
+<link rel="stylesheet" href="<%=request.getContextPath()%>/static/css/bootstrap-theme.min.css"></link>
+<link rel="stylesheet" href="<%=request.getContextPath()%>/static/css/mainStyle.css"></link>
+<script src="<%=request.getContextPath()%>/static/js/jquery-3.1.0.min.js"></script>
+<script src="<%=request.getContextPath()%>/static/js/bootstrap.min.js"></script>
 
 
 	
@@ -23,11 +23,11 @@
 	<!-- Theme style  -->
 	<style type="text/css">@import url("<c:url value="/static/css/style.css" />");</style>
 	<!-- Modernizr JS -->
-	<script type="text/javascript" src="<c:url value="/static/js/modernizr-2.6.2.min.js" />"></script>
+	<script type="text/javascript" src="<c:url value="<%=request.getContextPath()%>/static/js/modernizr-2.6.2.min.js" />"></script>
 	
 <title>Running Life</title>
 <!-- ico	 -->
-	<link rel="icon" type="image/png" href="/runninglife/images/icon.png">
+<link rel="icon" type="image/png" href="<%=request.getContextPath()%>/static/images/icon.png">
 	
 <style type="text/css">
 ol, ul {
@@ -49,7 +49,7 @@ ol, ul {
       
       <!-- 	get || post -->
 	  <!-- /Login/DBCheck -->
-      <form action="/runninglife/Login/DBCheck.do" method="post">
+      <form action="<%=request.getContextPath()%>/Login/DBCheck.do" method="post">
       	<div style="padding-left:50px;">
 			<table >
 				<thead>
@@ -74,12 +74,12 @@ ol, ul {
 
 					<tr>
 						<td>
-							<a href="/runninglife/Login/ChangeForgetPage.do">忘記密碼?</a>
+							<a href="<%=request.getContextPath()%>/Login/ChangeForgetPage.do">忘記密碼?</a>
 						</td>
 					</tr>
 					<tr>
 						<td>
-							<a href="/runninglife/Login/CreateAccountPage.do">新增用戶</a>
+							<a href="<%=request.getContextPath()%>/Login/CreateAccountPage.do">新增用戶</a>
 						</td>
 					</tr>
 				</tbody>
@@ -109,7 +109,7 @@ $(function(){
 		$('#loginBtn').click(function(){
 			var account = $('#account').val();
 			var password = $('#password').val();
-			var myUrl = '/runninglife/Login/LoginCheck.do';
+			var myUrl = '<%=request.getContextPath()%>/Login/LoginCheck.do';
 			var type = 'post';
 			var dataType = 'json';
 			var data = { "memberAccount" : account , "password" : password };
@@ -154,7 +154,7 @@ $(function(){
 })
 
 function searchads() {
-	var adsData = ajax('GET', null, 'ads/searchDisplayAds.do', 'json', false);
+	var adsData = ajax('GET', null, '<%=request.getContextPath()%>/ads/searchDisplayAds.do', 'json', false);
 	console.log(adsData);
 	for ( var i in adsData) {
 		if(i==0){

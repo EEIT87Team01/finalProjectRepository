@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>廣告列表</title>
 <!-- ico	 -->
-	<link rel="icon" type="image/png" href="/runninglife/static/images/icon.png">
+	<link rel="icon" type="image/png" href="<%=request.getContextPath()%>/static/images/icon.png">
 <style >
 table{
     color:white;

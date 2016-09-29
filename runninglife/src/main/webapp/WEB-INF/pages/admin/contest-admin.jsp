@@ -13,7 +13,7 @@
 <meta name="author" content="">
 
 <title>編輯賽事資訊</title>
-
+<link rel="icon" type="image/png" href="<%=request.getContextPath()%>/static/images/icon.png">
 <!-- Bootstrap Core CSS -->
 <link href="<c:url value="/static/css/bootstrap.min.css"/>"
 	rel="stylesheet">

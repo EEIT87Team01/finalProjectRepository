@@ -9,6 +9,7 @@
 
 	<head>
 		<title>RunningLife貼文頁面</title>
+		<link rel="icon" type="image/png" href="<%=request.getContextPath()%>/static/images/icon.png">
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 		<script src="<%=request.getContextPath()%>/static/js/jquery-3.1.0.min.js"></script>
@@ -33,7 +34,7 @@
 		<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/static/css/fileinput.min.css"/>
 
 	</head>
-	<link rel="icon" type="image/png" href="/runninglife/images/icon.png">
+	<link rel="icon" type="image/png" href="<%=request.getContextPath()%>/static/images/icon.png">
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog">
 	  <div class="modal-dialog" role="document">
 	    <div class="modal-content">
@@ -155,7 +156,7 @@ ${onePosts.postID}
 											<c:if test="${posts.postMemberID.memberID==membersVO.memberID}">
 										  <li class ="deletePosts" postID="${posts.postID}">刪除</li>
 											</c:if>    
-											<c:if test="${posts.postMemberID.memberID!=memberVO.memberID}">
+											<c:if test="${posts.postMemberID.memberID!=membersVO.memberID}">
 										  <li class ="reportPosts" postID="${posts.postID}" data-toggle="modal" data-target="#myModal">檢舉</li>
 											</c:if>
 									 </ul>

@@ -8,12 +8,13 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <title>後端檢舉頁面</title>
+<link rel="icon" type="image/png" href="<%=request.getContextPath()%>/static/images/icon.png">
 <link rel="stylesheet" type="text/css"
-	href="<%=request.getContextPath()%>/css/server/bootstrap.min.css">
+	href="<%=request.getContextPath()%>/static/css/server/bootstrap.min.css">
 <link rel="stylesheet" type="text/css"
-	href="<%=request.getContextPath()%>/css/server/sb-admin.css">
+	href="<%=request.getContextPath()%>/static/css/server/sb-admin.css">
 <link rel="stylesheet" type="text/css"
-	href="<%=request.getContextPath()%>/font-awesome/server/css/font-awesome.min.css">
+	href="<%=request.getContextPath()%>/static/font-awesome/server/css/font-awesome.min.css">
 
 </head>
 
@@ -130,11 +131,10 @@
 		<!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
 		<div class="collapse navbar-collapse navbar-ex1-collapse">
 			<ul class="nav navbar-nav side-nav">
-				<li><a href="index.html"><i class="fa fa-fw fa-dashboard"></i>維護管理員</a></li>
-				<li><a href="charts.html"><i class="fa fa-fw fa-bar-chart-o"></i> 維護駐台作家</a></li>
-				<li class="active"><a href="tables.html"><i	class="fa fa-fw fa-table"></i> 廣告設置</a></li><li><a href="forms.html">
+				<li><a href="<%=request.getContextPath()%>/AdminLogin/CreateWriterPage.do"><i class="fa fa-fw fa-bar-chart-o"></i> 維護駐台作家</a></li>
+				<li ><a href="<%=request.getContextPath()%>/ads/adList.do"><i	class="fa fa-fw fa-table"></i> 廣告設置</a></li><li><a href="forms.html">
 				<i class="fa fa-fw fa-edit"></i>活動賽事</a></li>
-				<li><a href="../reportController/reportList.do"><i class="fa fa-fw fa-desktop"></i>檢舉審核</a></li>
+				<li class="active"><a href="../reportController/reportList.do"><i class="fa fa-fw fa-desktop"></i>檢舉審核</a></li>
 			</ul>
 		</div>
 		<!-- /.navbar-collapse --> </nav>
@@ -247,8 +247,8 @@
 			</div>
 		</div>
 	</div>
-	<script language="JavaScript" src="<%=request.getContextPath()%>/js/server/jquery.js"></script>
-	<script language="JavaScript" src="<%=request.getContextPath()%>/js/server/bootstrap.min.js"></script>
+	<script language="JavaScript" src="<%=request.getContextPath()%>/static/js/jquery.js"></script>
+	<script language="JavaScript" src="<%=request.getContextPath()%>/static/js/bootstrap.min.js"></script>
 	<script>
 		$(function() {
 			

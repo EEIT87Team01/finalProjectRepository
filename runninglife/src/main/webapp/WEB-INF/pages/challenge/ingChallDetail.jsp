@@ -8,7 +8,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>RunningLife - 挑戰資訊</title>
 <!-- ico	 -->
-	<link rel="icon" type="image/png" href="/runninglife/images/icon.png">
+<link rel="icon" type="image/png" href="<%=request.getContextPath()%>/static/images/icon.png">
 	
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="Free HTML5 Website Template by FreeHTML5.co" />

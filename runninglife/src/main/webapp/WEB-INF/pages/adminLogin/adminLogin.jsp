@@ -8,7 +8,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <%@ include file="/WEB-INF/pages/header-admin.jsp"%>
 <title>後端檢舉頁面</title>
-
+<link rel="icon" type="image/png" href="<%=request.getContextPath()%>/static/images/icon.png">
 <link rel="stylesheet" href="/runninglife/static/css/bootstrap.min.css" />
 <link rel="stylesheet" href="/runninglife/static/css/bootstrap-theme.min.css"></link>
 <link rel="stylesheet" href="/runninglife/static/css/mainStyle.css"></link>

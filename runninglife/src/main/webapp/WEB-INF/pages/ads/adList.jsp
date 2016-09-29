@@ -6,6 +6,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>廣告列表</title>
+<link rel="icon" type="image/png" href="<%=request.getContextPath()%>/static/images/icon.png">
 <style >
 table{
     color:white;
@@ -24,15 +25,15 @@ table{
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
 <!-- Custom CSS -->
-<link href="../css/server/sb-admin.css" rel="stylesheet">
+<link href="<%=request.getContextPath()%>/static/css/sb-admin.css" rel="stylesheet">
 <!-- Morris Charts CSS -->
-<link href="../css/server/plugins/morris.css" rel="stylesheet">
+<link href="<%=request.getContextPath()%>/static/css/server/plugins/morris.css" rel="stylesheet">
 <!-- Custom Fonts -->
-<link href="../font-awesome/server/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+<link href="<%=request.getContextPath()%>/static/font-awesome/server/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 <!-- Morris Charts JavaScript -->
-<script src="../js/server/plugins/morris/raphael.min.js"></script>
-<script src="../js/server/plugins/morris/morris.min.js"></script>
-<script src="../js/server/plugins/morris/morris-data.js"></script>
+<script src="<%=request.getContextPath()%>/static/js/plugins/morris/raphael.min.js"></script>
+<script src="<%=request.getContextPath()%>/static/js/plugins/morris/morris.min.js"></script>
+<script src="<%=request.getContextPath()%>/static/js/plugins/morris/morris-data.js"></script>
 <script>
 	$(document).ready(function() {
 		searchAdList();

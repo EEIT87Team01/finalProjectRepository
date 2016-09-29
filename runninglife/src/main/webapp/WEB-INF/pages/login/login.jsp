@@ -20,6 +20,7 @@
 
 
 <title>login</title>
+<link rel="icon" type="image/png" href="<%=request.getContextPath()%>/static/images/icon.png">
 </head>
 <body>
 <!-- 	get || post -->

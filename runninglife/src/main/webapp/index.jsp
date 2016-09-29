@@ -26,7 +26,7 @@
 	
 <title>Running Life</title>
 
-	<link rel="icon" type="image/png" href="<%=request.getContextPath()%>/images/icon.png">
+<link rel="icon" type="image/png" href="<%=request.getContextPath()%>/static/images/icon.png">
 	
 <style type="text/css">
 ol, ul {

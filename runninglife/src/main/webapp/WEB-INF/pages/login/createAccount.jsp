@@ -29,8 +29,7 @@
 	
 <title>Running Life</title>
 <!-- ico	 -->
-	<link rel="icon" type="image/png" href="/runninglife/images/icon.png">
-	
+<link rel="icon" type="image/png" href="<%=request.getContextPath()%>/static/images/icon.png">
 <style type="text/css">
 ol, ul {
     margin-top: 0;
