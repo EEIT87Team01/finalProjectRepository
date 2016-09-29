@@ -47,8 +47,8 @@
 					<li><a href="<%=request.getContextPath()%>/calendar.do">行事曆</a></li>
 					<li><a href="<%=request.getContextPath()%>/article/page">運動文章</a></li>
 					<li>
+						<img src="data:image/png;base64,${r:byteToBase64(membersVO.photo)}" style='width:50px;height:50px;'>
 						<a href="<%=request.getContextPath()%>/Login/AccountShowPage.do">
-							<img src="data:image/png;base64,${r:byteToBase64(membersVO.photo)}" style='width:50px;height:50px;'>
 							你好, ${membersVO.firstName}
 						</a>
 					</li>
