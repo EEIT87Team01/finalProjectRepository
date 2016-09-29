@@ -6,7 +6,7 @@ import java.util.*;
 import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public interface IarticleDAO {
-	public void insert(String writerAccount,String content,String title);
+	public void insert(String writerAccount,String content,String title,String photoPath);
 	public void update(ArticlesVO articlesVO);
 	public ArticlesVO findByPrimaryKey(String adID);
 	public List<ArticlesVO> getAll();
