@@ -23,10 +23,10 @@
 	<div id="auth" class="">admin</div>
 	<!-- 	載入列表	 -->
 	<section>
-	<div class="container">
+	<div class="container" style="background-color: #bce2e8;">
 
 		<form class="text-center form-control" id="queryContest" method="get"
-			action="${pageContext.request.contextPath}/admin/contest/">
+			action="${pageContext.request.contextPath}/admin/contest/" style="border:0px;background-color: #bce2e8;">
 			<div>
 				<label>搜尋 <select class="selectpicker" id="year" name="year">
 						<option value="0">年</option>
@@ -55,7 +55,7 @@
 		<c:forEach var="contest" items="${contests}">
 			<br>
 			<div class="col-lg-9 col-md-9 col-sm-9">
-				<div class="col-lg-2 col-md-2 col-sm-3 col-xs-3 nopadding-right">
+				<div class="col-lg-2 col-md-2 col-sm-3 col-xs-3 nopadding-right" style="margin-bottom:100px">
 					<a
 						href="${pageContext.request.contextPath}/contest/${contest.contestID}"
 						target="_blank"><img class="img-responsive thumbnail"
@@ -66,7 +66,7 @@
 						<span
 							class="label ${contest.start ? 'label-success size-15' : 'label label-default'}">${contest.start ? '開放報名' : '結束報名'}</span>
 						<a class="text-muted"
-							href="${pageContext.request.contextPath}/contest/${contest.contestID}"
+							href="${pageContext.request.contextPath}/admin/contest/${contest.contestID}"
 							target="_blank">${contest.contestName}</a>
 					</div>
 				</div>
