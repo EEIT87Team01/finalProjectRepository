@@ -12,8 +12,6 @@
 <link rel="stylesheet" href="/runninglife/static/css/mainStyle.css"></link>
 <script src="/runninglife/static/js/jquery-3.1.0.min.js"></script>
 <script src="/runninglife/static/js/bootstrap.min.js"></script>
-
-
 	
 	<!-- Animate.css -->
 	<style type="text/css">@import url("<c:url value="/static/css/animate.css" />");</style>
@@ -39,7 +37,6 @@ ol, ul {
 	<script type="text/javascript">
 $(function(){
 
-	console.log('${membersVO.memberID}');
 	$('#myModal').on('shown.bs.modal', function () {
 		  $('#account').focus();
 	})
@@ -112,7 +109,6 @@ $(function(){
 
 function searchads() {
 	var adsData = ajax('GET', null, 'ads/searchDisplayAds.do', 'json', false);
-	console.log(adsData);
 	for ( var i in adsData) {
 		if(i==0){
 // 			$('.slides').find('.adName').text(adsData[i].adName);
