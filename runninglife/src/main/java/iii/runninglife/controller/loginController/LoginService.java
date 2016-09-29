@@ -12,6 +12,8 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import iii.runninglife.controller.email.IMailService;
+import iii.runninglife.controller.email.MailService;
 import iii.runninglife.globalservice.GlobalService;
 import iii.runninglife.model.city.CityInterface;
 import iii.runninglife.model.city.CityPK;
@@ -43,14 +45,14 @@ public class LoginService implements LoginService_Interface{
 	CityInterface cityDAO;
 	@Autowired
 	LocationInterface locationDAO;
-	
 	@Autowired
 	LoginInformationInterface loginInfoDAO;
 	@Autowired
 	EmergencyRelationInterface emergencyRelationDAO;
 	@Autowired
 	GlobalService globalservice;
-	
+	@Autowired
+	MailService mailService;
 
 	MembersVO memberVO = new MembersVO();
 	public void getPhotoFromByte(String memberID , byte[] bytes) {
@@ -79,7 +81,17 @@ public class LoginService implements LoginService_Interface{
 					insetPswd= globalservice.changeMD5Encoding(password);
 					//從DB取出
 					byte[] dbPassword = loginInfo.getPassword();
-												
+											
+					for(byte i:insetPswd){
+						System.out.print(i);
+					}
+				
+					System.out.println("");
+					
+					for(byte i:dbPassword){
+						System.out.print(i);
+					}
+					
 					//確認密碼正確
 					if(dbPassword != null && Arrays.equals(dbPassword, insetPswd)){
 						loginInfo.setMemberAccount(loginInfoPK);
@@ -124,6 +136,7 @@ public class LoginService implements LoginService_Interface{
 		LoginInformationVO loginInfo = new LoginInformationVO();
 		LoginInformationPK loginInfoPK = new LoginInformationPK();
 		MembersVO membersVO = new MembersVO();
+//		MailService email = new MailService();
 		String DBEmail = null;
 		String message = null;
 		loginInfoPK.setMemberAccount(memberAccount);
@@ -132,13 +145,16 @@ public class LoginService implements LoginService_Interface{
 		loginInfo = loginInfoDAO.selectOne(loginInfoPK);
 		if(loginInfo != null){
 			
-			int ran = (int)(Math.random()*1000)+1;
-			String random = ""+ran;
+			Integer ran = (int)(Math.random()*1000)+1;
+			String random = ran.toString();
 			loginInfo.setStatus(random);
 			loginInfoDAO.update(loginInfo);
 			
+			
 //			message = "帳號無誤";
-			membersVO = membersDAO.selectOne(loginInfo.getMemberID().getMemberID().toString());
+			membersVO = membersDAO.selectOne(loginInfo.getMemberID().getMemberID());
+			System.out.println(membersVO.getEmail() + membersVO.getMemberID());
+			mailService.sendForgetPswEmail(membersVO, random);
 			DBEmail = membersVO.getEmail();
 			return random;
 		}else {
@@ -197,8 +213,7 @@ public class LoginService implements LoginService_Interface{
 		memberID = loginInfo.getMemberID().getMemberID();
 		membersVO = membersDAO.selectOne(memberID);
 		
-		byte[] temp = password.getBytes();	//明碼  //使用者輸入byte[]
-		temp = mDigest.digest(temp); 		//亂碼
+		byte[] temp = globalservice.changeMD5Encoding(password);
 		loginInfo.setPassword(temp);
 		loginInfoDAO.update(loginInfo);
 		

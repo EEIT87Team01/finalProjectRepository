@@ -19,7 +19,7 @@
 <!-- <script src="/runninglife/js/bootstrap.min.js"></script> -->
 
 
-<title>Insert title here</title>
+<title>login</title>
 </head>
 <body>
 <!-- 	get || post -->
@@ -69,7 +69,7 @@
 	<script>
 	$(function(){
 		
-		$('#username').focusout(function(){
+		$('#username').keyup(function(){
 			var input = $('#username').val();
 			$.get("../../../../main/java/_01/controller/loginController/LoginSpring/Login",{'name':input},function(data){
 				switch(data){

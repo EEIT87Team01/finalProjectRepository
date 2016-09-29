@@ -121,34 +121,9 @@ ol, ul {
   </div>
 </div>
             
-   <div id="fh5co-page">
-	<header id="fh5co-header" role="banner">
-		<div class="container">
-			<div class="header-inner">
-				<h1><a href="<%=request.getContextPath() %>/index.jsp">RunningLife</a></h1>
-				<nav role="navigation">
-					<ul>
-						<li><a href="<%=request.getContextPath()%>/postsController/posts.do">塗鴉牆</a></li>
-						<li><a href="<%=request.getContextPath()%>/challenge/page.do">挑戰</a></li>
-						<li><a href="<%=request.getContextPath()%>/contest.do">賽事活動</a></li>
-						<li><a href="<%=request.getContextPath()%>/calendar.do">行事曆</a></li>
-						<li><a href="<%=request.getContextPath()%>/article/page.do">文章</a></li>
-						<!-- 判斷是否已登入 -->
-						<c:choose>
-						<c:when test="${!empty membersVO}">
-							<li>Hello, ${membersVO.lastName}</li>
-							<li class="cta"><a href="login/Logout.do">登出</a></li>
-						</c:when>
-						<c:otherwise>
-							<li class="cta" data-toggle="modal" data-target="#myModal"><a href="#">登入</a></li> <!-- 登入視窗按鈕 -->
-						</c:otherwise>	
-						</c:choose>
-					</ul>
-				</nav>
-			</div>
-		</div>
-	</header>
-  </div>
+<div id="fh5co-page">
+	<%@ include file="/WEB-INF/pages/header.jsp"%>
+</div>
 <div class="container">
 		<div class="main-login main-center">
 		<div class="row main">
@@ -233,7 +208,7 @@ ol, ul {
 					</tr>
 					<tr class="form-group col-lg-12">
 						<td >
-							<input type="submit" id="btn" class="btn btn-primary" value="送出">
+							<input type="submit" id="btn" class="btn btn-primary" disabled="disabled" value="送出">
 						</td>
 					</tr>
 				</tbody>
@@ -252,7 +227,7 @@ $(function(){
 	var eMailFlag = false;
 	var birthdayFlag = false;
 	
-	$('#memberAccount').focusout(function(){
+	$('#memberAccount').keyup(function(){
 		var inAccount = $('#memberAccount').val();
 		if(inAccount.length == 0){
 			$('#showText1').removeClass().addClass("glyphicon glyphicon-remove-sign show1").text("帳號未填");
@@ -274,7 +249,7 @@ $(function(){
 		}
 	})
 	
-	$('#createPassword').focusout(function(){
+	$('#createPassword').keyup(function(){
 		var inPassword = $('#createPassword').val();
 		if(inPassword.length == 0){
 			$('#showText2').removeClass().addClass("glyphicon glyphicon-remove-sign show1").text("密碼未填");
@@ -296,7 +271,7 @@ $(function(){
 		}
 	})
 	
-	$('#email').focusout(function(){
+	$('#email').keyup(function(){
 		var inEmail = $('#email').val();
 		if(inEmail.length == 0){
 			$('#showText3').removeClass().addClass("glyphicon glyphicon-remove-sign show1").text("Eamil未填");
@@ -314,7 +289,7 @@ $(function(){
 		}
 	})
 	
-	$('#firstName').focusout(function(){
+	$('#firstName').keyup(function(){
 		var inFirstName = $('#firstName').val();
 		if(inFirstName.length == 0){
 			$('#showText4').removeClass().addClass("glyphicon glyphicon-remove-sign show1").text("姓氏未填");
@@ -325,7 +300,7 @@ $(function(){
 		}
 	})
 	
-	$('#lastName').focusout(function(){
+	$('#lastName').keyup(function(){
 		var inLastName = $('#lastName').val();
 		if(inLastName.length == 0){
 			$('#showText5').removeClass().addClass("glyphicon glyphicon-remove-sign show1").text("名子未填");
@@ -336,7 +311,7 @@ $(function(){
 		}
 	})
 	
-	$('#phone').focusout(function(){
+	$('#phone').keyup(function(){
 		var inPhone = $('#phone').val();
 		if(inPhone.length == 0){
 			$('#showText6').removeClass().addClass("glyphicon glyphicon-remove-sign show1").text("電話未填");
@@ -353,7 +328,7 @@ $(function(){
 		}
 	})
 	
-	$('#createBirthday').focusout(function(){
+	$('#createBirthday').keyup(function(){
 		var inBirthday = $('#createBirthday').val();
 		if(inBirthday.length == 0){
 			birthdayFlag = false;
@@ -365,10 +340,13 @@ $(function(){
 	$("#createBirthday").datepicker({
 		changeMonth: true,
 	    changeYear: true,
-		dateFormat:"yy-mm-dd"
+		dateFormat:"yy-mm-dd",
+		onSelect: function(dateText) {
+			birthdayFlag = true;
+		}
 	});
 	
-	$('#memberAccount,#createPassword,#email,#firstName,#lastName,#phone,#createBirthday').focusout(function(){
+	$('#memberAccount,#createPassword,#email,#firstName,#lastName,#phone,#createBirthday').keyup(function(){
 		
 		if(accountFlag && passwordFlag && firstNameFlag && lastNameFlag && phoneFlag && eMailFlag && birthdayFlag){
 			$("#btn").prop("disabled", false);

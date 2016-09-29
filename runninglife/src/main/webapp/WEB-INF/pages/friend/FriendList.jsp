@@ -103,32 +103,7 @@
 	
 	
 	<div id="fh5co-page">
-	<header id="fh5co-header" role="banner">
-		<div class="container">
-			<div class="header-inner">
-				<h1><a href="index.html">RunningLife</a></h1>
-				<nav role="navigation">
-					<ul>
-						<li class="active"><a href="work.html">Work</a></li>
-						<li><a href="services.html">Services</a></li>
-						<li><a href="pricing.html">Pricing</a></li>
-						<li><a href="about.html">About</a></li>
-						<li><a href="contact.html">Contact</a></li>
-						<!-- 判斷是否已登入 -->
-						<c:choose>
-						<c:when test="${member != null}">
-							<li>Hello, ${member.firstName}</li>
-							<li class="cta"><a href="../member/logout.do">Logout</a></li>
-						</c:when>
-						<c:otherwise>
-							<li class="cta" data-toggle="modal" data-target="#myModal"><a href="#">Login</a></li> <!-- 登入視窗按鈕 -->
-						</c:otherwise>	
-						</c:choose>
-					</ul>
-				</nav>
-			</div>
-		</div>
-	</header>
+	<%@ include file="/WEB-INF/pages/header.jsp"%>
 	<div class="col-md-2"></div>
 	<div class="col-md-8">
 		<ul class="nav nav-tabs">

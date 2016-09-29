@@ -54,7 +54,35 @@
 		<!-- Theme style  -->
 		<link rel="stylesheet" href="<%=request.getContextPath()%>/static/css/style.css">
 		<!-- 	fullcalendar  -->
-		<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/static/css/fullcalendar.css">	
+		<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/static/css/fullcalendar.css">
+		
+		<!-- Modernizr JS -->
+		<script src="<%=request.getContextPath()%>/static/js/modernizr-2.6.2.min.js"></script>
+		<!-- jQuery -->
+		<script src="<%=request.getContextPath()%>/static/js/jquery.min.js"></script>
+		<!-- jQuery Easing -->
+		<script src="<%=request.getContextPath()%>/static/js/jquery.easing.1.3.js"></script>
+		<!-- Bootstrap -->
+		<script src="<%=request.getContextPath()%>/static/js/bootstrap.min.js"></script>
+		<!-- Waypoints -->
+		<script src="<%=request.getContextPath()%>/static/js/jquery.waypoints.min.js"></script>
+		<!-- Owl Carousel -->
+		<script src="<%=request.getContextPath()%>/static/js/owl.carousel.min.js"></script>
+		<!-- Flexslider -->
+		<script src="<%=request.getContextPath()%>/static/js/jquery.flexslider-min.js"></script>
+		<!-- 	Moment -->
+		<script src="<%=request.getContextPath()%>/static/js/moment.min.js"></script>
+		<!-- 	fullcalendar  -->
+		<script src="<%=request.getContextPath()%>/static/js/fullcalendar.min.js"></script>
+		<!-- 	jQuery-UI  -->
+		<script src="<%=request.getContextPath()%>/static/js/jquery-ui-1.12.0.min.js"></script>
+		<!-- MAIN JS -->
+		<script src="<%=request.getContextPath()%>/static/js/jquery.flexslider-min.js"></script>
+		<script src="<%=request.getContextPath()%>/static/js/main.js"></script>
+	
+	    
+	    <script src="<%=request.getContextPath()%>/static/js/jquery-3.1.0.min.js"></script>
+			
     <style>
       html, body {
         height: 100%;
@@ -119,35 +147,12 @@
 			});
 		    flightPath.setMap(map);
 		}
+		
+// 		$(function(){
+			$('#fh5co-header > div > div > nav > ul > li:nth-child(4)').addClass('active');
+// 		});
     </script>
     
-    	
-	<!-- Modernizr JS -->
-	<script src="<%=request.getContextPath()%>/static/js/modernizr-2.6.2.min.js"></script>
-	<!-- jQuery -->
-	<script src="<%=request.getContextPath()%>/static/js/jquery.min.js"></script>
-	<!-- jQuery Easing -->
-	<script src="<%=request.getContextPath()%>/static/js/jquery.easing.1.3.js"></script>
-	<!-- Bootstrap -->
-	<script src="<%=request.getContextPath()%>/static/js/bootstrap.min.js"></script>
-	<!-- Waypoints -->
-	<script src="<%=request.getContextPath()%>/static/js/jquery.waypoints.min.js"></script>
-	<!-- Owl Carousel -->
-	<script src="<%=request.getContextPath()%>/static/js/owl.carousel.min.js"></script>
-	<!-- Flexslider -->
-	<script src="<%=request.getContextPath()%>/static/js/jquery.flexslider-min.js"></script>
-	<!-- 	Moment -->
-	<script src="<%=request.getContextPath()%>/static/js/moment.min.js"></script>
-	<!-- 	fullcalendar  -->
-	<script src="<%=request.getContextPath()%>/static/js/fullcalendar.min.js"></script>
-	<!-- 	jQuery-UI  -->
-	<script src="<%=request.getContextPath()%>/static/js/jquery-ui-1.12.0.min.js"></script>
-	<!-- MAIN JS -->
-	<script src="<%=request.getContextPath()%>/static/js/jquery.flexslider-min.js"></script>
-	<script src="<%=request.getContextPath()%>/static/js/main.js"></script>
-
-    
-    <script src="<%=request.getContextPath()%>/static/js/jquery-3.1.0.min.js"></script>
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBCmOChQ6jjB4VB9Q1vptGEmkcAcNiJZuk&callback=initMap"
    		async defer></script>
 </body>
