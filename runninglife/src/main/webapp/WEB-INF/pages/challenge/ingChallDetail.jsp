@@ -85,12 +85,17 @@
 						<td>${attender.lastName}</td>
 						<td>
 						<c:choose>
-							<c:when test="${challengeData.isFounder eq '1'}">發起者</c:when>
+							<c:when test="${challengeData.isFounder eq '1'}">發起者123</c:when>
 							<c:otherwise>
 								<c:if test="${challengeData.status eq '0'}">未接受邀請</c:if>
 								<c:if test="${challengeData.status eq '1' || challengeData.status eq '2'}">參加者</c:if>
 							</c:otherwise>
 						</c:choose>
+						</td>
+						<td>
+							<c:choose>
+								<c:when test="${challengeData.isFounder eq '1'||challengeData.status eq '1' || challengeData.status eq '2'}">${challengeData.processLength}公里</c:when>
+							</c:choose>	
 						</td>
 					</tr>
 				</c:forEach>

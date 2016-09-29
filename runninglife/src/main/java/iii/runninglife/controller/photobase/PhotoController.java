@@ -35,14 +35,13 @@ public class PhotoController {
 
 	@RequestMapping(value = "/getPhoto.do", method = RequestMethod.GET)
 	public @ResponseBody String getPhoto(HttpServletResponse res,@RequestParam String photoID) throws IOException {
-		
-		
-		res.setContentType("image/jpeg");
+		res.setContentType("image/jpeg"); 
 		OutputStream out = res.getOutputStream();
 		byte[] photo = PhotoSvc.getPhoto(photoID, out);
 		String gson = new Gson().toJson(photo);
 		return gson;
 	}
+	
 
 	@RequestMapping(value = "/getMemberPhoto.do", method = RequestMethod.POST)
 	public void getPhotoByte(HttpServletRequest req,@RequestParam String memberID) throws IOException, ServletException {

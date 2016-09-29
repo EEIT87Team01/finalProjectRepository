@@ -66,7 +66,7 @@ $(document).on("click",".back",function(){
 <body>
 <div id="fh5co-page">
 		<%@ include file="/WEB-INF/pages/header.jsp"%>
-		<div class="container">
+		<div class="container" style='margin-top: 50px;'>
 		<!-- Nav tabs -->
 		<ul class="nav nav-tabs" role="tablist">
 		  <li role="presentation" class="active"><a href="#foundedChallengeList" aria-controls="foundedChallengeList" role="tab" data-toggle="tab">我建立的</a></li>
@@ -75,11 +75,11 @@ $(document).on("click",".back",function(){
 		  <li role="presentation"><a href="#reservedChallengeList" aria-controls="reservedChallengeList" role="tab" data-toggle="tab">預定的</a></li>
 		  <li role="presentation"><a href="#receivedRequestChallengeList" aria-controls="receivedRequestChallengeList" role="tab" data-toggle="tab">收到邀請的</a></li>
 		</ul>
-		
+		<a href="<%=request.getContextPath()%>/challenge/createChallPage.do" class='btn btn-warning' style="float: right; margin-top:20px;" >新增挑戰</a>
 		<div class="tab-content">
 		<!-- 我建立的挑戰區塊  #foundedChallengeList-->
 		<div role="tabpanel" class="tab-pane active" id="foundedChallengeList">
-
+        
 		<c:forEach var="challenge" items="${foundedChallengeList}">
 		<div class="container">
 			<div class="row">
@@ -198,59 +198,9 @@ $(document).on("click",".back",function(){
 		</div>
 		</div>
 
-		<div class="fh5co-cta" style="background-image: url(../images/slide_2.jpg);">
-			<div class="overlay"></div>
-			<div class="container">
-				<div class="col-md-12 text-center animate-box">
-					<h3>We Try To Update The Site Everyday</h3>
-					<p><a href="#" class="btn btn-primary btn-outline with-arrow">Get started now! <i class="icon-arrow-right"></i></a></p>
-				</div>
-			</div>
-		</div>
 
 
-		<footer id="fh5co-footer" role="contentinfo">
-
-			<div class="container">
-				<div class="col-md-3 col-sm-12 col-sm-push-0 col-xs-12 col-xs-push-0">
-					<h3>About Us</h3>
-					<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. </p>
-					<p><a href="#" class="btn btn-primary btn-outline with-arrow btn-sm">Join Us <i class="icon-arrow-right"></i></a></p>
-				</div>
-				<div class="col-md-6 col-md-push-1 col-sm-12 col-sm-push-0 col-xs-12 col-xs-push-0">
-					<h3>Our Services</h3>
-					<ul class="float">
-						<li><a href="#">Web Design</a></li>
-						<li><a href="#">Branding &amp; Identity</a></li>
-						<li><a href="#">Free HTML5</a></li>
-						<li><a href="#">HandCrafted Templates</a></li>
-					</ul>
-					<ul class="float">
-						<li><a href="#">Free Bootstrap Template</a></li>
-						<li><a href="#">Free HTML5 Template</a></li>
-						<li><a href="#">Free HTML5 &amp; CSS3 Template</a></li>
-						<li><a href="#">HandCrafted Templates</a></li>
-					</ul>
-
-				</div>
-
-				<div class="col-md-2 col-md-push-1 col-sm-12 col-sm-push-0 col-xs-12 col-xs-push-0">
-					<h3>Follow Us</h3>
-					<ul class="fh5co-social">
-						<li><a href="#"><i class="icon-twitter"></i></a></li>
-						<li><a href="#"><i class="icon-facebook"></i></a></li>
-						<li><a href="#"><i class="icon-google-plus"></i></a></li>
-						<li><a href="#"><i class="icon-instagram"></i></a></li>
-					</ul>
-				</div>
-
-
-				<div class="col-md-12 fh5co-copyright text-center">
-					<p>&copy; 2016 Free HTML5 template. All Rights Reserved. <span>Designed with <i class="icon-heart"></i> by <a href="http://freehtml5.co/" target="_blank">FreeHTML5.co</a> Demo Images by <a href="http://unsplash.com/" target="_blank">Unsplash</a></span></p>	
-				</div>
-
-			</div>
-		</footer>
+<%@ include file="/WEB-INF/pages/footer.jsp"%>
 	</div>
 </body>
 </html>
