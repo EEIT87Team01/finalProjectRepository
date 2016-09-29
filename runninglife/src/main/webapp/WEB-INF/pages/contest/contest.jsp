@@ -97,17 +97,7 @@
 					<div class="divider margin-top-0 margin-bottom-10"></div>
 				</div>
 			</div>
-			<div class="col-lg-3 col-md-3 col-sm-3">
-				<a
-					href="${pageContext.request.contextPath}/contest/edit?id=${contest.contestID}"
-					class="btn btn-info edit" role="button"">編輯</a>
-			</div>
-			<div class="col-lg-3 col-md-3 col-sm-3">
-				<a
-					href="${pageContext.request.contextPath}/contest/${contest.contestID}/delete"
-					class="btn btn-danger  delete" role="button" data-text="真的要刪除此賽事嗎?"
-					data-confirm-button="是的" data-cancel-button="不了"data-confirm-button-class: "btn-danger">刪除</a>
-			</div>
+
 
 		</c:forEach>
 		<div class="col-lg-10 col-md-10 col-sm-9 col-xs-9 ">
@@ -126,7 +116,7 @@
 </body>
 
 <script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+	src="${pageContext.request.contextPath}/static/js/jquery.min.js"></script>
 <script src="<c:url value="/static/js/jquery.confirm.min.js"/>"></script>
 <script src="<c:url value="/static/js/bootstrap.min.js"/>"></script>
 <script src="<c:url value="/static/js/jquery.twbsPagination.js"/>"></script>
@@ -177,6 +167,7 @@
 			}
 
 		});
+		$('#fh5co-header > div > div > nav > ul > li:nth-child(3)').addClass('active');
 	});
 	//刪除確認視窗
 	$(".delete").confirm({

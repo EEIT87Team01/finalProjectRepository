@@ -34,6 +34,7 @@
 		<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/static/css/fileinput.min.css"/>
 
 	</head>
+	<link rel="icon" type="image/png" href="/runninglife/images/icon.png">
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog">
 	  <div class="modal-dialog" role="document">
 	    <div class="modal-content">
@@ -70,23 +71,37 @@
 	</div>
 <body>
 
-<%@ include file="/WEB-INF/pages/header.jsp"%>
+
+	<header id="fh5co-header" role="banner">
+		<div class="container">
+			<div class="header-inner">
+				<h1><a href="<%=request.getContextPath()%>/index.jsp">RunningLife</a></h1>
+				<nav role="navigation">
+					<ul>
+					<c:choose>
+						<c:when test="${!empty membersVO}">
+								<li><a href="<%=request.getContextPath()%>/postsController/posts.do">塗鴉牆</a></li>
+								<li><a href="<%=request.getContextPath()%>/challenge/page.do">挑戰</a></li>
+								<li><a href="<%=request.getContextPath()%>/contest">賽事活動</a></li>
+								<li><a href="<%=request.getContextPath()%>/calendar.do">行事曆</a></li>
+								<li><a href="<%=request.getContextPath()%>/article/page">運動文章</a></li>
+								<li><img src="data:image/png;base64,${r:byteToBase64(membersVO.photo)}" style='width:50px;height:50px;'></li>
+								<li>你好, ${membersVO.firstName}</li>
+								<li class="cta"><a href="<%=request.getContextPath()%>/Login/Logout.do">登出</a></li>
+						</c:when>
+							<c:otherwise>
+								<li class="cta" data-toggle="modal" data-target="#myModal"><a href="#">Login</a></li> <!-- 登入視窗按鈕 -->
+							</c:otherwise>	
+					</c:choose>
+					</ul>
+				</nav>
+			</div>
+		</div>
+	</header>
 		<div class="container"></div>
 <aside>
 ${onePosts.postID}
 <div id = "sss" ></div>
-	<div id="question" style="display:none; cursor: default;"> 
-      <form method="get" action="postsController/posts.do">
-		<div class="col-md-12" style="border-style:solid;border-color:#EDEDED"> 
-			<textarea id="textarea" name="postsContent" class="form-control col-xs-12" rows="15"></textarea>
-			<div class="col-md-12">
-				<button id="btn_update" type="submit" class="btn btn-success">發文</button>
-				<button id="no">取消</button>
-			</div>
-			<input type="hidden" id="memberID" name="memberID" value="${membersVO.memberID}">
-		</div>		
-       </form>
-	</div> 
 	<div class="col-md-2"></div> 	
 	<div class="col-md-8">	
 		<ul class="nav nav-tabs">
@@ -112,13 +127,13 @@ ${onePosts.postID}
 	</div>					
 		</form:form>
 		<c:forEach var="posts" items="${postsVO}"> 
-			<div class="col-md-12">
-				<c:if test="${posts.parent==null&&posts.status==1}">	
+			<c:if test="${posts.parent==null&&posts.status==1}">
+				<div class="col-md-12" style="margin:10px">
 					<div>
 						<div  class="col-md-12" style="border-style:solid;border-color:#EDEDED">							
-							<div  class="col-md-12" style="border-style:solid;border-color:#EDEDED">	
+							<div  class="col-md-12">	
 								<div class="col-md-1"><a href="<%=request.getContextPath()%>/postsController/personalPosts.do?membersID=${posts.postMemberID.memberID}"><img style="width:99%" src="data:image/png;base64,${r:byteToBase64(posts.postMemberID.photo)}"></a></div>
-								<div class="col-md-10"><h4>${posts.postMemberID.lastName}</h4>${posts.time}</div>	
+								<div class="col-md-10"><h4>${posts.postMemberID.firstName}</h4>${posts.time}</div>	
 								<div class="col-md-1">
 							</div>	
 								<div class="btn-group ">
@@ -145,8 +160,8 @@ ${onePosts.postID}
 							</div>
 						</div>	
 						<form method="post" action="responsePosts.do">
-							<div class="col-md-12" style="border-style:solid;border-color:#EDEDED">
-								<div class="col-md-1"><a href="<%=request.getContextPath()%>/postsController/personalPosts.do?membersID=${posts.postMemberID.memberID}"><img  style="width:80%" src="data:image/png;base64,${r:byteToBase64(membersVO.photo)}"></a></div>
+							<div class="col-md-12" style="border-style:solid;border-color:#EDEDED;padding-top:10px;padding-bottom:10px">
+								<div class="col-md-1"><a href="<%=request.getContextPath()%>/postsController/personalPosts.do?membersID=${membersVO.memberID}"><img  style="width:80%" src="data:image/png;base64,${r:byteToBase64(membersVO.photo)}"></a></div>
 								<div class="col-md-9"><textarea id="textarea" name="responsePosts_content" class="form-control col-xs-12" rows="1"></textarea></div>
 								<div class="col-md-2"><button type="submit" class="btn btn btn-primary">回覆</button></div>	
 								<input type="hidden" name="memberID" value="${membersVO.memberID}">
@@ -155,11 +170,10 @@ ${onePosts.postID}
 							</div>
 						</form>													
 					</div>
-				</c:if>
 					<c:forEach var="response" items="${responseVO}"> 
 						<c:if test="${response.parent==posts.postID&&response.status==1}">
 							<div class="col-md-12" style="border-style:solid;border-color:#EDEDED">
-								<div class="col-md-1"><a href="<%=request.getContextPath()%>/postsController/personalPosts.do?membersID=${response.postMemberID.memberID}"><img  style="width:80%" src="data:image/png;base64,${r:byteToBase64(membersVO.photo)}"></a></div>
+								<div class="col-md-1"><a href="<%=request.getContextPath()%>/postsController/personalPosts.do?membersID=${response.postMemberID.memberID}"><img  style="width:80%" src="data:image/png;base64,${r:byteToBase64(response.postMemberID.photo)}"></a></div>
 								<div class="col-md-10"><span>${response.content}</span></div>
 								<div class="col-md-1">  
 									<div class="btn-group ">
@@ -174,8 +188,8 @@ ${onePosts.postID}
 							</div>		
 						</c:if>
 					</c:forEach>
-			</div>
-				<div class="col-md-12"></div>
+				</div>
+			</c:if>
 		</c:forEach>			
 	</div>
 	<div class="col-md-2"></div>	
@@ -227,7 +241,21 @@ $(function(){
 			  }
 		});
 	});
+	$("#fh5co-header > div > div > nav > ul > li:nth-child(1)").addClass("active");
 });	
+
+
+// $("#input-2").fileinput({
+//     language: "fr",
+//     uploadUrl: "/file-upload-batch/2",
+//     allowedFileExtensions: ["jpg", "png", "gif"]
+// });
+
+
+
+
+
+
 </script>
 </aside>
 </body>

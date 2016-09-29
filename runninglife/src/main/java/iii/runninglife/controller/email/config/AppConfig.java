@@ -125,7 +125,7 @@ public class AppConfig extends WebMvcConfigurerAdapter{
 	       HibernateTransactionManager txManager = new HibernateTransactionManager();
 	       txManager.setSessionFactory(s);
 	       return txManager;
-	    }
+	    } 
 	
 	
 }

@@ -11,15 +11,15 @@
 	href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css"
 	type="text/css">
 <link rel="stylesheet"
-	href="<c:url value="/resources/css/bootstrap.min.css"/>"
+	href="<c:url value="/static/css/bootstrap.min.css"/>"
 	type="text/css">
 <link rel="stylesheet"
-	href="<c:url value="/resources/css/jquery.countdown.css"/>"
+	href="<c:url value="/static/css/jquery.countdown.css"/>"
 	type="text/css">
-<link rel="stylesheet" href="<c:url value="/resources/css/apply.css"/>"
+<link rel="stylesheet" href="<c:url value="/static/css/apply.css"/>"
 	type="text/css">
 <link rel="stylesheet"
-	href="<c:url value="/resources/css/jquery.dataTables.min.css"/>"
+	href="<c:url value="/static/css/jquery.dataTables.min.css"/>"
 	type="text/css">
 <style>
 .bs-callout {
@@ -204,7 +204,7 @@ h2.no-span {
 	<section id="slider">
 	<div>
 		<img class="img-responsive "
-			src="${pageContext.request.contextPath}/resources/${contest.contestID}banner.jpg"
+			src="${pageContext.request.contextPath}/static/${contest.contestID}banner.jpg"
 			alt="banner">
 	</div>
 
@@ -405,9 +405,9 @@ h2.no-span {
 						<div class="col-md-9 col-md-offset-1">
 							<div class="item-box">
 								<figure> <a
-									href="${pageContext.request.contextPath}/resources/${contest.contestID}route.jpg"
+									href="${pageContext.request.contextPath}/static/${contest.contestID}route.jpg"
 									target="blank"> <img class="img-responsive"
-									src="${pageContext.request.contextPath}/resources/${contest.contestID}route.jpg">
+									src="${pageContext.request.contextPath}/static/${contest.contestID}route.jpg">
 								</a> </figure>
 							</div>
 						</div>

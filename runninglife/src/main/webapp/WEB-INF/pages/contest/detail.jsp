@@ -760,7 +760,7 @@ h2.no-span {
 <c:url value="/static/js/jquery.dataTables.min.js"/>
 </body>
 <script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+	src="${pageContext.request.contextPath}/static/js/jquery.min.js"></script>
 <script src="<c:url value="/static/js/jquery.countdown.min.js"/>"></script>
 <script src="<c:url value="/static/js/bootstrap.min.js"/>"></script>
 <script src="<c:url value="/static/js/jquery.confirm.min.js"/>"></script>
@@ -786,7 +786,7 @@ h2.no-span {
 	var eventMark = $('#contestID');
 	var teamMark = $('#contestID');
 	$(function() {
-
+		$('#fh5co-header > div > div > nav > ul > li:nth-child(3)').addClass('active');
 	
 		var teamRow;
 		var teamID;
@@ -851,7 +851,7 @@ h2.no-span {
 							"processing" : false,
 							// 								"serverSide" : true,
 							"columns" : [ {
-								data : 'member.lastName'
+								data : 'member.firstName'
 							}, {
 								data : 'event.eventName'
 							}, {
@@ -901,7 +901,7 @@ h2.no-span {
 							"processing" : false,
 							// 								"serverSide" : true,
 							"columns" : [ {
-								data : 'member.lastName'
+								data : 'member.firstName'
 							}, {
 								data : 'event.eventName'
 							}, {

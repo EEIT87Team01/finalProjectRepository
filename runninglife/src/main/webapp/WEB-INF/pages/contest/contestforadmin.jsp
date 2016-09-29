@@ -14,7 +14,7 @@
 <link rel="stylesheet"
 	href="https://fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet"
-	href="<c:url value="/resources/css/bootstrap.min.css"/>">
+	href="<c:url value="/static/css/bootstrap.min.css"/>">
 
 </head>
 <body>
@@ -121,11 +121,10 @@
 	<script></script>
 </body>
 
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-<script src="<c:url value="/resources/js/jquery.confirm.min.js"/>"></script>
-<script src="<c:url value="/resources/js/bootstrap.min.js"/>"></script>
-<script src="<c:url value="/resources/js/jquery.twbsPagination.js"/>"></script>
+<script src="<c:url value="/static/js/jquery.js"/>"></script>
+<script src="<c:url value="/static/js/jquery.confirm.min.js"/>"></script>
+<script src="<c:url value="/static/js/bootstrap.min.js"/>"></script>
+<script src="<c:url value="/static/js/jquery.twbsPagination.js"/>"></script>
 <script>
 	$(document).ready(auth());
 	function auth() {

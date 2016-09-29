@@ -448,40 +448,7 @@ span[class=ios-color-hack3] a {
 					width="500" id="emailBody">
 
 					<!-- header -->
-					<!-- MODULE ROW // -->
-					<tr>
-						<td align="center" valign="top">
-							<!-- CENTERING TABLE // -->
-							<table border="0" cellpadding="0" cellspacing="0" width="100%">
-								<tr>
-									<td align="center" valign="top">
-										<!-- FLEXIBLE CONTAINER // -->
-										<table border="0" cellpadding="0" cellspacing="0" width="500"
-											class="flexibleContainer">
-											<tr>
-												<td align="center" valign="top" width="500"
-													class="flexibleContainerCell">
-													<!-- CONTENT TABLE // -->
-													<table border="0" cellpadding="0" cellspacing="0"
-														width="100%">
-														<tr>
-															<td valign="top" class="imageContent"><img
-																src="${headURL}"
-																width="500" class="flexibleImage"
-																style="max-width: 500px; width: 100%; display: block;"
-																alt="Text" title="Text" /></td>
-														</tr>
-													</table> <!-- // CONTENT TABLE -->
 
-												</td>
-											</tr>
-										</table> <!-- // FLEXIBLE CONTAINER -->
-									</td>
-								</tr>
-							</table> <!-- // CENTERING TABLE -->
-						</td>
-					</tr>
-					<!-- // MODULE ROW -->
 
 					<!-- 註冊信圖片] -->
 					<!-- MODULE ROW // -->
@@ -519,6 +486,9 @@ span[class=ios-color-hack3] a {
 					</tr>
 					<!-- // MODULE ROW -->
 
+
+
+
 					<!-- 驗證資訊 -->
 					<!-- MODULE ROW // -->
 					<tr>
@@ -552,8 +522,9 @@ span[class=ios-color-hack3] a {
 																				style="color: #5F5F5F; line-height: 125%; font-family: Helvetica, Arial, sans-serif; font-size: 20px; font-weight: normal; margin-top: 0; margin-bottom: 3px; text-align: left;">個人聯絡資訊</h3>
 																			<div mc:edit="body"
 																				style="text-align: left; font-family: Helvetica, Arial, sans-serif; font-size: 15px; margin-bottom: 0; color: #5F5F5F; line-height: 135%;">
-																				${member.firstName} 您好，請輸入驗證碼，以便取得密碼
+																				輸入驗證碼，以便取得密碼
 																				<ul>
+																					<li>帳號:${member.lastName}${member.firstName}</li>
 																					<li>驗證碼:${chkStr}</li>
 																				</ul>
 																			</div>
