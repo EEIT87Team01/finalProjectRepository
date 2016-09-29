@@ -100,7 +100,6 @@ ol, ul {
 
 <!-- Modal end-->
 
-
 <body>
 	<div id="fh5co-page">
 	<%@ include file="/WEB-INF/pages/header.jsp"%>

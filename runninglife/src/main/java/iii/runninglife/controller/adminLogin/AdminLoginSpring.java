@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.xml.ws.RequestWrapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -31,6 +32,11 @@ public class AdminLoginSpring {
 	WriterLoginService writerLoginService;
 	@Autowired
 	GlobalService globalservice;
+	
+	@RequestMapping("/AdminPageChange.do")
+	public ModelAndView AdminPageChange(){
+		return new ModelAndView("adminLogin/adminLogin");
+	}
 	
 	//登入
 	@RequestMapping("/AdminAccountCheck.do")
@@ -78,6 +84,11 @@ public class AdminLoginSpring {
 //		return new ModelAndView("redirect:"+ referer,"membersVO",membersVO);
 		//回到登入頁面or首頁
 		return new ModelAndView("adminLogin/adminLogin");
+	}
+	
+	@RequestMapping("/CreateAdminPage.do")
+	public ModelAndView CreateAdminPage(){
+		return new ModelAndView("adminLogin/adminCreateAccount");
 	}
 	
 	//新增管理者
