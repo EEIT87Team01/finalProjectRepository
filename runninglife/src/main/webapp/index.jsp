@@ -27,8 +27,8 @@
 	<script type="text/javascript" src="<c:url value="/static/js/modernizr-2.6.2.min.js" />"></script>
 	
 <title>Running Life</title>
-<!-- ico	 -->
-	<link rel="icon" type="image/png" href="/runninglife/images/icon.png">
+
+	<link rel="icon" type="image/png" href="<%=request.getContextPath()%>/images/icon.png">
 	
 <style type="text/css">
 ol, ul {

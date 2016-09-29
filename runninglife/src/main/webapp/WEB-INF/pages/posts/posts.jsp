@@ -69,7 +69,7 @@
 	    </div>
 	  </div>
 	</div>
-<body>
+<body style="background-image:url('<%=request.getContextPath()%>/static/images/20120825122124339.jpg')">
 
 
 	<header id="fh5co-header" role="banner">
@@ -103,7 +103,7 @@
 ${onePosts.postID}
 <div id = "sss" ></div>
 	<div class="col-md-2"></div> 	
-	<div class="col-md-8">	
+	<div class="col-md-8" style="background-color:#ffffff">	
 		<ul class="nav nav-tabs">
 			<li role="presentation"><a href="<%=request.getContextPath()%>/postsController/posts.do">塗鴉牆</a></li>
 			<li role="presentation" class="dropdown">
@@ -133,7 +133,7 @@ ${onePosts.postID}
 						<div  class="col-md-12" style="border-style:solid;border-color:#EDEDED">							
 							<div  class="col-md-12">	
 								<div class="col-md-1"><a href="<%=request.getContextPath()%>/postsController/personalPosts.do?membersID=${posts.postMemberID.memberID}"><img style="width:99%" src="data:image/png;base64,${r:byteToBase64(posts.postMemberID.photo)}"></a></div>
-								<div class="col-md-10"><h4>${posts.postMemberID.firstName}</h4>${posts.time}</div>	
+								<div class="col-md-10"><h4>${posts.postMemberID.lastName}</h4>${posts.time}</div>	
 								<div class="col-md-1">
 							</div>	
 								<div class="btn-group ">

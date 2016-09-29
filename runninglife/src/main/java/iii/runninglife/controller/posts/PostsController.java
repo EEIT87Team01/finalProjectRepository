@@ -102,7 +102,6 @@ public class PostsController {
 				file.mkdir();
 			}
 
-		
 			if (req.getPart("file1") != null) {
 				if (req.getPart("file1").getSize() != 0) {
 					System.out.println("getPartStart");
@@ -140,7 +139,6 @@ public class PostsController {
 				postsSvc.newPosts(membersVO.getMemberID(), postsContent, imgPath);
 			}
 		}
-//		return new ModelAndView("redirect:/postsController/personalPosts.do?membersID="+);
 		return new ModelAndView("redirect:"+ referrer);
 	}
 	
@@ -202,16 +200,13 @@ public class PostsController {
 	}
 	
 	@RequestMapping(value = "/personalDelete.do", method = RequestMethod.POST)
-	public ModelAndView personalDeletePosts(HttpServletRequest req,@RequestParam String postID,@ModelAttribute("membersVO") MembersVO membersVO) {
-		String referrer = req.getHeader("referer");
+	public void personalDeletePosts(HttpServletRequest req,@RequestParam String postID,@ModelAttribute("membersVO") MembersVO membersVO) {
 		postsSvc.deletePosts(membersVO.getMemberID(), postID);
-		return new ModelAndView("redirect:"+ referrer);
 	}
 	
 	@RequestMapping(value = "/delete.do", method = RequestMethod.POST)
-	public ModelAndView deletePosts(@RequestParam String postID,@ModelAttribute("membersVO") MembersVO membersVO) {
+	public void deletePosts(@RequestParam String postID,@ModelAttribute("membersVO") MembersVO membersVO) {
 		postsSvc.deletePosts(membersVO.getMemberID(), postID);
-		return new ModelAndView("redirect:/postsController/posts.do");
 	}
 	
 	@RequestMapping(value = "/goodOperation.do", method = RequestMethod.POST)
@@ -235,16 +230,13 @@ public class PostsController {
 	}
 	
 	@RequestMapping(value = "/personalDeleteResponsePosts.do", method = RequestMethod.POST)
-	public ModelAndView personalDeleteResponsePosts(HttpServletRequest req,@RequestParam String postID,@RequestParam String memberID) {
-		String referrer = req.getHeader("referer");
+	public void personalDeleteResponsePosts(HttpServletRequest req,@RequestParam String postID,@RequestParam String memberID) {
 		postsSvc.deleteResponsePosts(postID, memberID);
-		return new ModelAndView("redirect:"+ referrer);
 	}
 	
 	@RequestMapping(value = "/deleteResponsePosts.do", method = RequestMethod.POST)
-	public ModelAndView deleteResponsePosts(@RequestParam String postID,@RequestParam String memberID) {
+	public void deleteResponsePosts(@RequestParam String postID,@RequestParam String memberID) {
 		postsSvc.deleteResponsePosts(postID, memberID);
-		return new ModelAndView("redirect:/postsController/posts.do");
 	}
 	
 	@RequestMapping(value = "/onePost.do", method = RequestMethod.POST,produces="application/json")
