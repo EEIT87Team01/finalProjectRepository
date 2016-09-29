@@ -51,7 +51,7 @@
 				<input type="hidden" id="reportPostID" name="reportPostID" value="">	
 						<div class="form-group">
 							<select class="typeID" name="typeID">
-								<option class="option" value="1">這令人噁心或討厭	</option>
+								<option class="option" value="1">這令人噁心或討厭</option>
 								<option class="option" value="2">我認為這不應該出現在RunningLife的頁面上</option>
 								<option class="option" value="3">這是垃圾訊息</option>
 								<option class="option" value="3">有性別歧視字眼</option>
@@ -119,18 +119,20 @@ ${onePosts.postID}
 		</ul>
 		
 		<form:form method="post" action="newPosts.do" enctype="multipart/form-data">
-			<div class="col-md-12" style="border-style:solid;border-color:#EDEDED;padding:20px">
-				<textarea id="textarea" name="postsContent" class="form-control col-xs-12" rows="5"></textarea>
-				<div class="col-md-10"><input id="input-2" name="file1" type="file" class="file" multiple="" data-show-upload="false" data-show-caption="true"></div>
-				<div class="col-md-2"><button id="btn_posts" type="submit" class="btn btn-primary">發文</button></div>
+			<div class="col-md-12" style="border-style:solid;border-color:#EDEDED;padding:20px;padding-top:0px;background-color: white;">
+			<h4>新增貼文</h4>
+				<textarea id="textarea" name="postsContent" class="form-control col-xs-12" rows="5" placeholder="輸入內文"></textarea>
+				<div class="col-md-10" style="margin-top: 10px;"><input id="input-2" name="file1" type="file" class="file" multiple="" data-show-upload="false" data-show-caption="true" ></div>
+				<div class="col-md-2" style="margin-top: 10px;"><button id="btn_posts" type="submit" class="btn btn-primary" style="float:right;">發文</button></div>
 				<input type="hidden" id="memberID" name="memberID" value="${membersVO.memberID}">
 	</div>					
 		</form:form>
 		<c:forEach var="posts" items="${postsVO}"> 
 			<c:if test="${posts.parent==null&&posts.status==1}">
-				<div class="col-md-12" style="margin:10px">
+			<div class="col-md-1"></div>
+				<div class="col-md-10" style="margin:10px">
 					<div>
-						<div  class="col-md-12" style="border-style:solid;border-color:#EDEDED">							
+						<div  class="col-md-12" style="border-style:solid;border-color:#EDEDED;">							
 							<div  class="col-md-12">	
 								<div class="col-md-1"><a href="<%=request.getContextPath()%>/postsController/personalPosts.do?membersID=${posts.postMemberID.memberID}"><img style="width:99%" src="data:image/png;base64,${r:byteToBase64(posts.postMemberID.photo)}"></a></div>
 								<div class="col-md-10"><h4>${posts.postMemberID.firstName}</h4>${posts.time}</div>	
@@ -158,24 +160,24 @@ ${onePosts.postID}
 								<div class="col-md-10"></div>
 								<div class="col-md-12"></div>
 							</div>
-						</div>	
 						<form method="post" action="responsePosts.do">
-							<div class="col-md-12" style="border-style:solid;border-color:#EDEDED;padding-top:10px;padding-bottom:10px">
+							<div class="col-md-12" style="padding-top:4px;padding-bottom:4px;">
+							<div class="col-md-1"></div>
 								<div class="col-md-1"><a href="<%=request.getContextPath()%>/postsController/personalPosts.do?membersID=${membersVO.memberID}"><img  style="width:80%" src="data:image/png;base64,${r:byteToBase64(membersVO.photo)}"></a></div>
-								<div class="col-md-9"><textarea id="textarea" name="responsePosts_content" class="form-control col-xs-12" rows="1"></textarea></div>
+								<div class="col-md-8"><textarea id="textarea" name="responsePosts_content" class="form-control col-xs-12" rows="1"></textarea></div>
 								<div class="col-md-2"><button type="submit" class="btn btn btn-primary">回覆</button></div>	
 								<input type="hidden" name="memberID" value="${membersVO.memberID}">
 								<input type="hidden" name="postID" value="${posts.postID}">
 								<input type="hidden" name="action" value="responsePosts">
 							</div>
 						</form>													
-					</div>
 					<c:forEach var="response" items="${responseVO}"> 
 						<c:if test="${response.parent==posts.postID&&response.status==1}">
-							<div class="col-md-12" style="border-style:solid;border-color:#EDEDED">
+							<div class="col-md-12" style="border-top: thick solid #EDEDED;padding-top:4px;padding-bottom:4px;">
+							<div class="col-md-1"></div>
 								<div class="col-md-1"><a href="<%=request.getContextPath()%>/postsController/personalPosts.do?membersID=${response.postMemberID.memberID}"><img  style="width:80%" src="data:image/png;base64,${r:byteToBase64(response.postMemberID.photo)}"></a></div>
-								<div class="col-md-10"><span>${response.content}</span></div>
-								<div class="col-md-1">  
+								<div class="col-md-8"><span>${response.content}</span></div>
+								<div class="col-md-2">  
 									<div class="btn-group ">
 										<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
 											<span class="caret"></span>
@@ -188,6 +190,8 @@ ${onePosts.postID}
 							</div>		
 						</c:if>
 					</c:forEach>
+						</div>	
+					</div>
 				</div>
 			</c:if>
 		</c:forEach>			
