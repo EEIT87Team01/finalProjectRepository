@@ -65,7 +65,7 @@ $(document).on("click",".back",function(){
 <body>
 <div id="fh5co-page">
 		<%@ include file="/WEB-INF/pages/header.jsp"%>
-		<div class="container">
+		<div class="container" style='margin-top: 50px;'>
 		<!-- Nav tabs -->
 		<ul class="nav nav-tabs" role="tablist">
 		  <li role="presentation" class="active"><a href="#foundedChallengeList" aria-controls="foundedChallengeList" role="tab" data-toggle="tab">我建立的</a></li>
@@ -74,11 +74,11 @@ $(document).on("click",".back",function(){
 		  <li role="presentation"><a href="#reservedChallengeList" aria-controls="reservedChallengeList" role="tab" data-toggle="tab">預定的</a></li>
 		  <li role="presentation"><a href="#receivedRequestChallengeList" aria-controls="receivedRequestChallengeList" role="tab" data-toggle="tab">收到邀請的</a></li>
 		</ul>
-		
+		<a href="<%=request.getContextPath()%>/challenge/createChallPage.do" class='btn btn-warning' style="float: right; margin-top:20px;" >新增挑戰</a>
 		<div class="tab-content">
 		<!-- 我建立的挑戰區塊  #foundedChallengeList-->
 		<div role="tabpanel" class="tab-pane active" id="foundedChallengeList">
-
+        
 		<c:forEach var="challenge" items="${foundedChallengeList}">
 		<div class="container">
 			<div class="row">
@@ -197,15 +197,7 @@ $(document).on("click",".back",function(){
 		</div>
 		</div>
 
-		<div class="fh5co-cta" style="background-image: url(../images/slide_2.jpg);">
-			<div class="overlay"></div>
-			<div class="container">
-				<div class="col-md-12 text-center animate-box">
-					<h3>We Try To Update The Site Everyday</h3>
-					<p><a href="#" class="btn btn-primary btn-outline with-arrow">Get started now! <i class="icon-arrow-right"></i></a></p>
-				</div>
-			</div>
-		</div>
+
 
 
 		<footer id="fh5co-footer" role="contentinfo">
