@@ -177,6 +177,7 @@
 			}
 
 		});
+		$('#fh5co-header > div > div > nav > ul > li:nth-child(3)').addClass('active');
 	});
 	//刪除確認視窗
 	$(".delete").confirm({

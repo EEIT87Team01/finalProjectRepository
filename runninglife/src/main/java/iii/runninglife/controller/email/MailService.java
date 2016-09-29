@@ -52,7 +52,7 @@ public class MailService {
 	public void sendForgetPswEmail(MembersVO member,String chkStr) {
 
 		Map<String,Object> model = new HashMap<String,Object>();
-	
+		
 		model.put("member", member);
 		model.put("title", "RunningLife取回密碼");
 		model.put("headURL", "http://i.imgur.com/UQF9DKA.png");

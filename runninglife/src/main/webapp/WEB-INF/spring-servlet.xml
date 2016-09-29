@@ -55,5 +55,12 @@
         <!-- one of the properties available; the maximum file size in bytes -->
 		<!--         <property name="maxUploadSize" value="512000"/> -->
 	</bean>
+	
+	<bean name="openSessionInViewInterceptor" class="org.springframework.orm.hibernate4.support.OpenSessionInViewInterceptor">    
+	<property name="sessionFactory">    
+	<ref bean="sessionFactory"/>    
+	</property>    
+	</bean>    
+
     
 </beans>  

@@ -34,6 +34,7 @@
 		<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/static/css/fileinput.min.css"/>
 
 	</head>
+	<link rel="icon" type="image/png" href="/runninglife/images/icon.png">
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog">
 	  <div class="modal-dialog" role="document">
 	    <div class="modal-content">
@@ -70,7 +71,33 @@
 	</div>
 <body>
 
-<%@ include file="/WEB-INF/pages/header.jsp"%>
+
+	<header id="fh5co-header" role="banner">
+		<div class="container">
+			<div class="header-inner">
+				<h1><a href="<%=request.getContextPath()%>index.html">RunningLife</a></h1>
+				<nav role="navigation">
+					<ul>
+					<c:choose>
+						<c:when test="${!empty membersVO}">
+								<li><a href="<%=request.getContextPath()%>/postsController/posts.do">塗鴉牆</a></li>
+								<li><a href="<%=request.getContextPath()%>/challenge/page.do">挑戰</a></li>
+								<li><a href="<%=request.getContextPath()%>/contest">賽事活動</a></li>
+								<li><a href="<%=request.getContextPath()%>/calendar.do">行事曆</a></li>
+								<li><a href="<%=request.getContextPath()%>/article/page">運動文章</a></li>
+								<li><img src="data:image/png;base64,${r:byteToBase64(membersVO.photo)}" style='width:50px;height:50px;'></li>
+								<li>你好, ${membersVO.firstName}</li>
+								<li class="cta"><a href="<%=request.getContextPath()%>/Login/Logout.do">登出</a></li>
+						</c:when>
+							<c:otherwise>
+								<li class="cta" data-toggle="modal" data-target="#myModal"><a href="#">Login</a></li> <!-- 登入視窗按鈕 -->
+							</c:otherwise>	
+					</c:choose>
+					</ul>
+				</nav>
+			</div>
+		</div>
+	</header>
 		<div class="container"></div>
 <aside>
 ${onePosts.postID}
@@ -112,7 +139,7 @@ ${onePosts.postID}
 	</div>					
 		</form:form>
 		<c:forEach var="posts" items="${postsVO}"> 
-			<div class="col-md-12">
+			<div class="col-md-12"  style="padding:10px">
 				<c:if test="${posts.parent==null&&posts.status==1}">	
 					<div>
 						<div  class="col-md-12" style="border-style:solid;border-color:#EDEDED">							
@@ -175,7 +202,6 @@ ${onePosts.postID}
 						</c:if>
 					</c:forEach>
 			</div>
-				<div class="col-md-12"></div>
 		</c:forEach>			
 	</div>
 	<div class="col-md-2"></div>	
@@ -227,7 +253,21 @@ $(function(){
 			  }
 		});
 	});
+	$("#fh5co-header > div > div > nav > ul > li:nth-child(1)").addClass("active");
 });	
+
+
+// $("#input-2").fileinput({
+//     language: "fr",
+//     uploadUrl: "/file-upload-batch/2",
+//     allowedFileExtensions: ["jpg", "png", "gif"]
+// });
+
+
+
+
+
+
 </script>
 </aside>
 </body>
