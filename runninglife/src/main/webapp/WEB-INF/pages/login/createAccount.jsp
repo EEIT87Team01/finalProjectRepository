@@ -342,7 +342,7 @@ $(function(){
 	    changeYear: true,
 		dateFormat:"yy-mm-dd",
 		onSelect: function(dateText) {
-			birthdayFlag = true;
+			$(this).keyup();
 		}
 	});
 	
