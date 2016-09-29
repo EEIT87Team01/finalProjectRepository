@@ -204,7 +204,6 @@ function ajax(Method, Data, Url, Datetype, Async) {
 
 <!-- Modal end-->
 
-<<<<<<< HEAD
 
 <body>
 	<div id="fh5co-page">
@@ -324,7 +323,6 @@ function ajax(Method, Data, Url, Datetype, Async) {
 		</div>
 	</footer>
 	</div>
-=======
 <body>
 <div id="fh5co-page">
 	<%@ include file="/WEB-INF/pages/header.jsp"%>
@@ -400,7 +398,7 @@ function ajax(Method, Data, Url, Datetype, Async) {
 	
 	<%@ include file="/WEB-INF/pages/footer.jsp"%>
 </div>
->>>>>>> branch 'final' of https://github.com/EEIT87Team01/finalProjectRepository
+
 	
 	
 	<!-- jQuery Easing -->
