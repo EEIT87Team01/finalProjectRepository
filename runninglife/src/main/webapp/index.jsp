@@ -159,10 +159,6 @@ function ajax(Method, Data, Url, Datetype, Async) {
 					<div class="panel-body">
 						<form role="form" action="/runninglife/Login/DBCheck.do" method="post">
 							<fieldset>
-<!-- 								<div class="row"> -->
-<!-- 									<div class="center-block"> -->
-<!-- 									</div> -->
-<!-- 								</div> -->
 								<div class="row">
 									<div class="col-sm-12 col-md-10  col-md-offset-1 ">
 										<div class="form-group">
@@ -200,9 +196,8 @@ function ajax(Method, Data, Url, Datetype, Async) {
     </div>
   </div>
 </div>
-	
-
 <!-- Modal end-->
+
 <body>
 <div id="fh5co-page">
 	<%@ include file="/WEB-INF/pages/header.jsp"%>
@@ -278,7 +273,6 @@ function ajax(Method, Data, Url, Datetype, Async) {
 	
 	<%@ include file="/WEB-INF/pages/footer.jsp"%>
 </div>
-	
 	<!-- jQuery Easing -->
 	<script type="text/javascript" src="<c:url value="/static/js/jquery.easing.1.3.js" />"></script>
 	<!-- Waypoints -->

@@ -200,7 +200,6 @@ $(document).on("click",".back",function(){
 
 
 <%@ include file="/WEB-INF/pages/footer.jsp"%>
-
 	</div>
 </body>
 </html>
