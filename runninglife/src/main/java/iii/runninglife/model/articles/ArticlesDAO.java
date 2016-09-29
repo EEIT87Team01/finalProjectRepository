@@ -26,13 +26,13 @@ public class ArticlesDAO implements IarticleDAO {
 	private static final String CHANGE_STATUS_STMT = "update articles set status= :newStatus where ArticleID = :articleID";
 
 	@Override
-	public void insert(String writerAccount,String content,String title) {
+	public void insert(String writerAccount,String content,String title,String photoPath) {
 		Timestamp d=new Timestamp(System.currentTimeMillis());
 		Query query = sessionFactory.getCurrentSession().createSQLQuery(INSERT_STMT)
 				             .setParameter(0, writerAccount)
 				             .setParameter(1, content)
 				             .setParameter(2, title)
-				             .setParameter(3, "")
+				             .setParameter(3, photoPath)
 				             .setParameter(4, d)
 				             .setParameter(5, "1")
 				             .setParameter(6, 0);

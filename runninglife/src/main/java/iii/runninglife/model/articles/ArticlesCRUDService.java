@@ -19,8 +19,8 @@ public class ArticlesCRUDService {
 	@Autowired
 	WriterInterface wdao;
 	
-	public void insertService(String writerAccount,String content,String title){
-		dao.insert(writerAccount,content,title);
+	public void insertService(String writerAccount,String content,String title,String photoPath){
+		dao.insert(writerAccount,content,title,photoPath);
 	}
 	public void updateService(int ArticleID,String writerAccount,Clob content,String title,String photoPath,java.sql.Timestamp createTime,String status,int good){
 		ArticlesVO updateArticle=new ArticlesVO(ArticleID,wdao.selectOne(writerAccount),content,title,photoPath,createTime,status,good);

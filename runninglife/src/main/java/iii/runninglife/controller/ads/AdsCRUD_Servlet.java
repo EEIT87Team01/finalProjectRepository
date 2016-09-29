@@ -2,6 +2,7 @@ package iii.runninglife.controller.ads;
 
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -91,7 +92,7 @@ public class AdsCRUD_Servlet {
 		return adjson;
 	}
 	@RequestMapping(value = "/createAd.do", method = RequestMethod.POST)
-	public void createAd(HttpServletRequest req,@RequestParam String adName,@RequestParam String division,@RequestParam String adStartTime,@RequestParam String adEndTime,@RequestParam String site,@RequestParam String priority) throws ParseException, IOException, ServletException {
+	public ModelAndView createAd(HttpServletRequest req,@RequestParam String adName,@RequestParam String division,@RequestParam String adStartTime,@RequestParam String adEndTime,@RequestParam String site,@RequestParam String priority) throws ParseException, IOException, ServletException {
 		
 		System.out.println(req.getPart("file1"));
 		String fileName;
@@ -136,16 +137,18 @@ public class AdsCRUD_Servlet {
 			}
 			
 		} 
+		return new ModelAndView("ads/adList");
 	}
 	
 	@RequestMapping(value = "/updateAd.do", method = RequestMethod.POST)
-	public void updateAd(@RequestParam String adID,
-			             @RequestParam String adName,
-			             @RequestParam String division,
-			             @RequestParam String adStartTime,
-			             @RequestParam String adEndTime,
-			             @RequestParam String site,
-			             @RequestParam String priority) throws ParseException {
+	public ModelAndView updateAd(HttpServletRequest req,
+								 @RequestParam String adID,
+					             @RequestParam String adName,
+					             @RequestParam String division,
+					             @RequestParam String adStartTime,
+					             @RequestParam String adEndTime,
+					             @RequestParam String site,
+					             @RequestParam String priority) throws ParseException, NumberFormatException, FileNotFoundException, IOException, ServletException {
 
 		System.out.println(adID);
 		System.out.println(adName);
@@ -154,14 +157,50 @@ public class AdsCRUD_Servlet {
 		System.out.println(adEndTime);
 		System.out.println(site);
 		System.out.println(priority);
-		
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		Date parseS = sdf.parse(adStartTime);
-		Date parseE = sdf.parse(adEndTime);
-        java.sql.Date dateS = new java.sql.Date(parseS.getTime());
-        java.sql.Date dateE = new java.sql.Date(parseE.getTime());
-		int priorityI=Integer.valueOf(priority);
-		adsCRUDService.updateService(adID,adName,division,site,dateS,dateE,priorityI,"c:/");
+		System.out.println(req.getPart("file1"));
+		String fileName;
+		String storePath = "c:/test/";
+		String imgPath = null;
+		String extension;
+		File file ;
+		if (req.getPart("file1") != null) {
+			if (req.getPart("file1").getSize() != 0) {
+				System.out.println("getPartStart");
+				List<Part> fileParts = req.getParts().stream().filter(part -> "file1".equals(part.getName()))
+						.collect(Collectors.toList());
+				for (Part filePart : fileParts) {
+					fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
+					extension = fileName.substring(fileName.lastIndexOf(46));
+					fileName = globalSvc.findMaxSeq("photoID", new PhotoBaseVO()) + extension;
+					InputStream fileContent = filePart.getInputStream();
+					
+					file = new File(storePath, fileName);
+					OutputStream out = new FileOutputStream(file);
+					try {
+						byte[] buffer = new byte[1024];
+						int len = 0;
+						while ((len = fileContent.read(buffer)) > -1)
+							out.write(buffer, 0, len);
+
+					} finally {
+						out.close();
+						fileContent.close();
+					}
+					imgPath = storePath + fileName;
+					String photoID = photoSvc.newPhoto(imgPath);
+					System.out.println(photoID);
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+					Date parseS = sdf.parse(adStartTime);
+					Date parseE = sdf.parse(adEndTime);
+			        java.sql.Date dateS = new java.sql.Date(parseS.getTime());
+			        java.sql.Date dateE = new java.sql.Date(parseE.getTime());
+					int priorityI=Integer.valueOf(priority);
+					adsCRUDService.updateService(adID,adName,division,site,dateS,dateE,priorityI,photoID);
+					
+				}
+			}
+		}
+		return new ModelAndView("ads/adList");
 	}
 	
 	@RequestMapping(value = "/deleteAd.do", method = RequestMethod.DELETE)
