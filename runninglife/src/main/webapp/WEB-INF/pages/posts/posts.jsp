@@ -186,7 +186,7 @@ ${onePosts.postID}
 					<c:forEach var="response" items="${responseVO}"> 
 						<c:if test="${response.parent==posts.postID&&response.status==1}">
 							<div class="col-md-12" style="border-style:solid;border-color:#EDEDED">
-								<div class="col-md-1"><a href="<%=request.getContextPath()%>/postsController/personalPosts.do?membersID=${response.postMemberID.memberID}"><img  style="width:80%" src="data:image/png;base64,${r:byteToBase64(membersVO.photo)}"></a></div>
+								<div class="col-md-1"><a href="<%=request.getContextPath()%>/postsController/personalPosts.do?membersID=${response.postMemberID.memberID}"><img  style="width:80%" src="data:image/png;base64,${r:byteToBase64(response.postMemberID.photo)}"></a></div>
 								<div class="col-md-10"><span>${response.content}</span></div>
 								<div class="col-md-1">  
 									<div class="btn-group ">
