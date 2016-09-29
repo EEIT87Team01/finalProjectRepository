@@ -15,20 +15,19 @@
 <title>編輯賽事資訊</title>
 
 <!-- Bootstrap Core CSS -->
-<link href="<c:url value="/resources/css/bootstrap.min.css"/>"
+<link href="<c:url value="/static/css/bootstrap.min.css"/>"
 	rel="stylesheet">
 
 <!-- Custom CSS -->
-<link href="<c:url value="/resources/css/sb-admin.css"/>"
-	rel="stylesheet">
+<link href="<c:url value="/static/css/sb-admin.css"/>" rel="stylesheet">
 
 <!-- Morris Charts CSS -->
-<link href="<c:url value="/resources/css/plugins/morris.css"/>"
+<link href="<c:url value="/static/css/plugins/morris.css"/>"
 	rel="stylesheet">
 
 <!-- Custom Fonts -->
 <link
-	href="<c:url value="/resources/font-awesome/css/font-awesome.min.css"/>"
+	href="<c:url value="/static/font-awesome/css/font-awesome.min.css"/>"
 	rel="stylesheet" type="text/css">
 
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -200,7 +199,58 @@
 					</div>
 				</div>
 				<!-- /.row -->
-
+				<div class="modal fade" tabindex="-1" role="dialog"
+					aria-labelledby="gridSystemModalLabel">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal"
+									aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+								<h4 class="modal-title" id="gridSystemModalLabel">Modal
+									title</h4>
+							</div>
+							<div class="modal-body">
+								<div class="row">
+									<div class="col-md-4">.col-md-4</div>
+									<div class="col-md-4 col-md-offset-4">.col-md-4
+										.col-md-offset-4</div>
+								</div>
+								<div class="row">
+									<div class="col-md-3 col-md-offset-3">.col-md-3
+										.col-md-offset-3</div>
+									<div class="col-md-2 col-md-offset-4">.col-md-2
+										.col-md-offset-4</div>
+								</div>
+								<div class="row">
+									<div class="col-md-6 col-md-offset-3">.col-md-6
+										.col-md-offset-3</div>
+								</div>
+								<div class="row">
+									<div class="col-sm-9">
+										Level 1: .col-sm-9
+										<div class="row">
+											<div class="col-xs-8 col-sm-6">Level 2: .col-xs-8
+												.col-sm-6</div>
+											<div class="col-xs-4 col-sm-6">Level 2: .col-xs-4
+												.col-sm-6</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default"
+									data-dismiss="modal">Close</button>
+								<button type="button" class="btn btn-primary">Save
+									changes</button>
+							</div>
+						</div>
+						<!-- /.modal-content -->
+					</div>
+					<!-- /.modal-dialog -->
+				</div>
+				<!-- /.modal -->
 				<div class="row">
 					<div class="col-lg-12">
 						<jsp:include
@@ -220,26 +270,23 @@
 	<!-- /#wrapper -->
 
 	<!-- jQuery -->
-	<script src="<c:url value="/resources/js/jquery.js"/>"></script>
+	<script src="<c:url value="/static/js/jquery.js"/>"></script>
 
 	<!-- Bootstrap Core JavaScript -->
-	<script src="<c:url value="/resources/js/bootstrap.min.js"/>"></script>
+	<script src="<c:url value="/static/js/bootstrap.min.js"/>"></script>
 
 	<!-- Morris Charts JavaScript -->
-	<script
-		src="<c:url value="/resources/js/plugins/morris/raphael.min.js"/>"></script>
-	<script
-		src="<c:url value="/resources/js/plugins/morris/morris.min.js"/>"></script>
-	<script
-		src="<c:url value="/resources/js/plugins/morris/morris-data.js"/>"></script>
+	<script src="<c:url value="/static/js/plugins/morris/raphael.min.js"/>"></script>
+	<script src="<c:url value="/static/js/plugins/morris/morris.min.js"/>"></script>
+	<script src="<c:url value="/static/js/plugins/morris/morris-data.js"/>"></script>
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-	<script src="<c:url value="/resources/js/jquery.countdown.min.js"/>"></script>
-	<script src="<c:url value="/resources/js/bootstrap.min.js"/>"></script>
-	<script src="<c:url value="/resources/js/jquery.confirm.min.js"/>"></script>
-	<script src="<c:url value="/resources/js/time.js"/>"></script>
-	<script src="<c:url value="/resources/js/jquery.countdown.js"/>"></script>
-	<script src="<c:url value="/resources/js/jquery.dataTables.min.js"/>"></script>
+	<script src="<c:url value="/static/js/jquery.countdown.min.js"/>"></script>
+	<script src="<c:url value="/static/js/bootstrap.min.js"/>"></script>
+	<script src="<c:url value="/static/js/jquery.confirm.min.js"/>"></script>
+	<script src="<c:url value="/static/js/time.js"/>"></script>
+	<script src="<c:url value="/static/js/jquery.countdown.js"/>"></script>
+	<script src="<c:url value="/static/js/jquery.dataTables.min.js"/>"></script>
 	<script type="text/javascript">
 		// 	$('#eventForm').ajaxForm({
 		// 		type : 'post',
@@ -848,37 +895,6 @@
 			$('#limitTime').val("");
 			$('#whenToRun').val("");
 		}
-
-		$("#applyLink").on("click", function() {
-
-			if ($('#runnerForm > div:nth-child(4) > input').val() == "") {
-				window.location.replace("<c:url value="/index.jsp"/>");
-			} else {
-				document.getElementById('applyForm').style.display = "block";
-			}
-
-		})
-
-		//Function To Display Popup
-		function div_show() {
-			document.getElementById('applyForm').style.display = "block";
-		}
-		//Function to Hide Popup
-		function div_hide() {
-			document.getElementById('applyForm').style.display = "none";
-		}
-		// 	$(".delete").confirm({
-		// 		post : true,
-		// 		confirmButtonClass : "btn-danger btn-sm",
-		// 		cancelButtonClass : "btn-default btn-sm",
-		// 		dialogClass : "modal-dialog modal-sm", // Bootstrap classes for large modal
-		// 		confirm: function(button) {
-
-		// 		    },
-		// 		cancel: function(button) {
-		// 		        // nothing to do
-		// 		    }
-		// 	});
 		function getParameterByName(name, url) {
 			if (!url)
 				url = window.location.href;

@@ -7,18 +7,30 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>${contest.contestName }</title>
+<style>
+.ui-widget-header, .ui-state-default, ui-button {
+	background: #b9cd6d;
+	border: 1px solid #b9cd6d;
+	color: #FFFFFF;
+	font-weight: bold;
+}
+</style>
 <link rel="stylesheet"
 	href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css"
 	type="text/css">
 <link rel="stylesheet"
 	href="<c:url value="/static/css/bootstrap.min.css"/>" type="text/css">
 <link rel="stylesheet"
-	href="<c:url value="/static/css/jquery.countdown.css"/>" type="text/css">
+	href="<c:url value="/static/css/jquery.countdown.css"/>"
+	type="text/css">
 <link rel="stylesheet" href="<c:url value="/static/css/apply.css"/>"
 	type="text/css">
 <link rel="stylesheet"
 	href="<c:url value="/static/css/jquery.dataTables.min.css"/>"
 	type="text/css">
+<link
+	href="https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css"
+	rel="stylesheet">
 <style>
 .bs-callout {
 	padding: 10px;
@@ -199,14 +211,14 @@ h2.no-span {
 
 <body class="smoothscroll enable-animation">
 	<%@ include file="/WEB-INF/pages/header.jsp"%>
-	
-<%-- 		<div>context:${pageContext.request.contextPath}</div> --%>
-	
-<%-- 	<div>身分:${not empty adminsVO ? "admin" : "guest" }</div> --%>
+
+	<%-- 		<div>context:${pageContext.request.contextPath}</div> --%>
+
+	<%-- 	<div>身分:${not empty adminsVO ? "admin" : "guest" }</div> --%>
 	<div>finish:${contest.finish}</div>
 	<div>start:${contest.start}</div>
 	<div>over:${contest.start && contest.finish}</div>
-	<div id="contestID" class="hidden">${contest.contestID} </div>
+	<div id="contestID" class="hidden">${contest.contestID}</div>
 	<div id="timer" class="hidden">${timer}</div>
 	<section id="slider">
 	<div>
@@ -223,7 +235,7 @@ h2.no-span {
 	</section>
 
 	<section>
-	<div class="container">
+	<div class="container" >
 		<div class="col-lg-9 col-md-9 col-sm-9 letter-spacing-1">
 			<ul class="nav nav-tabs nav-pills">
 				<li role="presentation" class="active"><a href="#rule"
@@ -290,11 +302,10 @@ h2.no-span {
 					</div>
 					<div class="table-responsive">
 						<table
-							class="table table-hover table-bordered lohas-table text-center">
+							class="table table-hover table-bordered  text-center">
 							<thead>
 								<tr class="info">
-									<th
-										class="col-xs-1 ${not empty adminsVO ? '':'hidden' }">編號</th>
+									<th class="col-xs-1 ${not empty adminsVO ? '':'hidden' }">編號</th>
 									<!-- 隱藏 -->
 									<th class="col-xs-2">項目名稱</th>
 									<th class="col-xs-2">距離</th>
@@ -308,8 +319,7 @@ h2.no-span {
 							<tbody id="eventBody">
 								<c:forEach var="event" items="${events}">
 									<tr>
-										<td
-											class="eventID ${not empty adminsVO ? '':'hidden' }">${event.eventID}</td>
+										<td class="eventID ${not empty adminsVO ? '':'hidden' }">${event.eventID}</td>
 										<td>${event.eventName}</td>
 										<td>${event.distance}公里</td>
 										<td>${event.fee}元</td>
@@ -342,7 +352,7 @@ h2.no-span {
 								<c:forEach var='team' items='${teams}'>
 									<tr>
 										<td>${team.teamName}</td>
-										<td>${team.ageRange}歲 ~ ${team.ageRange + 9}歲</td>
+										<td>${team.ageRange}歲~${team.ageRange + 9}歲</td>
 									</tr>
 								</c:forEach>
 							</tbody>
@@ -550,19 +560,19 @@ h2.no-span {
 										</select></label></label>
 								</div>
 							</div>
-<!-- 							<div class="col-md-7 col-sm-12"> -->
-<!-- 								<div>2. 或請單獨輸入您的參賽資料查詢</div> -->
-<!-- 								<div class="col-md-10"> -->
-<!-- 									<label for="show_text"> <input type="text" -->
-<!-- 										class="form-control" id="show_name" -->
-<!-- 										placeholder="請輸入「姓名」或「號碼布」或「團隊名稱」查詢"> -->
-<!-- 									</label> -->
-<!-- 								</div> -->
-<!-- 								<div class="col-md-2 pull-right"> -->
-<!-- 									<input type="button" class="btn btn-info btn-md" -->
-<!-- 										id="querySubmit" value="送出"> -->
-<!-- 								</div> -->
-<!-- 							</div> -->
+							<!-- 							<div class="col-md-7 col-sm-12"> -->
+							<!-- 								<div>2. 或請單獨輸入您的參賽資料查詢</div> -->
+							<!-- 								<div class="col-md-10"> -->
+							<!-- 									<label for="show_text"> <input type="text" -->
+							<!-- 										class="form-control" id="show_name" -->
+							<!-- 										placeholder="請輸入「姓名」或「號碼布」或「團隊名稱」查詢"> -->
+							<!-- 									</label> -->
+							<!-- 								</div> -->
+							<!-- 								<div class="col-md-2 pull-right"> -->
+							<!-- 									<input type="button" class="btn btn-info btn-md" -->
+							<!-- 										id="querySubmit" value="送出"> -->
+							<!-- 								</div> -->
+							<!-- 							</div> -->
 						</div>
 					</div>
 					<!-- 成績結果 -->
@@ -608,7 +618,8 @@ h2.no-span {
 							<tbody>
 								<c:forEach var='runner' items="${mycontest}">
 									<tr>
-										<td><a href="${pageContext.request.contextPath}/contest/${runner.contest.contestID}">${runner.contest.contestName}</a></td>
+										<td><a
+											href="${pageContext.request.contextPath}/contest/${runner.contest.contestID}">${runner.contest.contestName}</a></td>
 										<td>${runner.contest.startDate}</td>
 										<td>${runner.event.eventName}</td>
 										<td>${runner.team.teamName}</td>
@@ -626,8 +637,6 @@ h2.no-span {
 			<!-- 11 -->
 		</div>
 		<div class="col-lg-3 col-md-3 col-sm-3 " id="activity-sidebar">
-			<div id="countdown" class="countdownHolder breadcrumb size-10"></div>
-			<div id="note"></div>
 			<!-- 籃圈 -->
 			<div class="panel-group text-center margin-bottom-40"
 				style="min-height: 351px;">
@@ -660,26 +669,32 @@ h2.no-span {
 		</div>
 	</div>
 	</section>
+
+
+
+
 	<div id="applyForm">
 		<!-- 彈出報名 -->
 		<div id="popupApply" class="">
 			<!-- 報名表單 -->
-			<form action="${pageContext.request.contextPath}/apply" id="runnerForm" method="post"
-				name="runner">
-				<img id="close" src="${pageContext.request.contextPath}/resources/images/Close-2-icon.png"
+			<form action="${pageContext.request.contextPath}/apply"
+				id="runnerForm" method="post" name="runner">
+				<img id="close"
+					src="${pageContext.request.contextPath}/static/images/Close-2-icon.png"
 					onclick="div_hide()">
 				<h3>報名賽事</h3>
 				<hr>
 				<div>
 					<label for="disabledTextInput">會員帳號(測試用)</label> <input type="text"
-						class="form-control" name="pk.memberID" value="${membersVO.memberID}" />
+						class="form-control" name="pk.memberID"
+						value="${membersVO.memberID}" />
 				</div>
 				<div>
 					<label for="disabledTextInput">賽事編號(測試用)</label> <input type="text"
 						class="form-control" name="pk.contestID"
 						value="${contest.contestID}">
 				</div>
-				
+
 				<div>
 					<label for="disabledTextInput">項目</label> <select
 						class="form-control" name="eventID">
@@ -707,90 +722,28 @@ h2.no-span {
 		<!-- Popup Div Ends Here -->
 	</div>
 	<%@ include file="/WEB-INF/pages/footer.jsp"%>
-	<!-- 	<div id="eventPopForm"> -->
-	<!-- 		<!-- 彈出報名 -->
-	<!-- 		<div id="popupEvent" class="form-group"> -->
-	<!-- 			<!-- 報名表單 -->
-	<%-- 			<form action="/runninglife/event/add" id="eventFormNew" method="post" --%>
-	<%-- 				name="event"> --%>
-	<!-- 				<img id="closeEvent" -->
-	<!-- 					src="/runninglife/resources/images/Close-2-icon.png" -->
-	<!-- 					onclick="div_hide()"> -->
-	<!-- 				<h2>編輯項目</h2> -->
-	<!-- 				<hr> -->
-	<!-- 				<div class="form-group"> -->
-	<!-- 					<label for="disabledTextInput"></label> <input type="text" -->
-	<!-- 						class="form-control" id="contestID" name="contestID" value=""> -->
-	<!-- 				</div> -->
-	<!-- 				<div class="form-group"> -->
-	<!-- 					<label for="disabledTextInput">賽事名稱</label> <input type="text" -->
-	<!-- 						class="form-control" id="contestName" name="contestName" value=""> -->
-	<!-- 				</div> -->
-	<!-- 				<div class="form-group"> -->
-	<!-- 					<label for="disabledTextInput">距離</label> <input type="text" -->
-	<!-- 						class="form-control" id="distance" name="distance" value=""> -->
-	<!-- 				</div> -->
-	<!-- 				<div class="form-group"> -->
-	<!-- 					<label for="disabledTextInput">費用</label> <input type="text" -->
-	<!-- 						class="form-control" id="fee" name="fee" value=""> -->
-	<!-- 				</div> -->
-	<!-- 				<div class="form-group"> -->
-	<!-- 					<label for="disabledTextInput">名額</label> <input type="text" -->
-	<!-- 						class="form-control" id="quota" name="quota" value=""> -->
-	<!-- 				</div> -->
-	<!-- 				<div class="form-group"> -->
-	<!-- 					<label for="disabledTextInput">起跑時間</label> <input type="text" -->
-	<!-- 						class="form-control" id="whenToRun" name="whenToRun" value=""> -->
-	<!-- 				</div> -->
-	<!-- 				<div class="form-group"> -->
-	<!-- 					<label for="disabledTextInput">時間限制</label> -->
-	<!-- 				</div> -->
-	<!-- 				<div class="form-group"> -->
-	<!-- 					<input type="text" class="form-control" id="limitTime" -->
-	<!-- 						name="limitTime" value=""> -->
-	<!-- 				</div> -->
 
 
-	<%-- 			</form> --%>
-	<!-- 		</div> -->
-	<!-- 		<!-- Popup Div Ends Here -->
-	<!-- 	</div> -->
 
 
-<c:url value="/static/js/jquery.dataTables.min.js"/>
+
+
 </body>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+
+
+<script src="${pageContext.request.contextPath}/static/js/jquery.min.js"></script>
+<script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
 <script src="<c:url value="/static/js/jquery.countdown.min.js"/>"></script>
 <script src="<c:url value="/static/js/bootstrap.min.js"/>"></script>
 <script src="<c:url value="/static/js/jquery.confirm.min.js"/>"></script>
 <script src="<c:url value="/static/js/time.js"/>"></script>
 <script src="<c:url value="/static/js/jquery.countdown.js"/>"></script>
-<script
-	src="<c:url value="/static/js/jquery.dataTables.min.js"/>"></script>
+<script src="<c:url value="/static/js/jquery.dataTables.min.js"/>"></script>
 <script type="text/javascript">
-	// 	$('#eventForm').ajaxForm({
-	// 		type : 'post',
-	// 		contentType: "application/jason;charset=UTF-8",
-	// 		success : processJson,
-	// 		processData : false,
-	// 		dataType : 'json'
-	// 	});
-	function processJson(data) {
-		//debugger;
-		alert(data);
-		console.log("respose: " + data);
-	}
-	var eventID;
-	var eventRow;
-	var eventMark = $('#contestID');
-	var teamMark = $('#contestID');
 	$(function() {
 
-	
-		var teamRow;
-		var teamID;
-
+		$('#fh5co-header > div > div > nav > ul > li:nth-child(3)').addClass(
+				'active');
 		$('#runnerTable').DataTable({
 
 			"lengthMenu" : [ [ 5, 10, 15, -1 ], [ 5, 10, 15, "全部" ] ],
@@ -808,7 +761,6 @@ h2.no-span {
 					"last" : "尾頁"
 				}
 			}
-
 		});
 		$('#myContestTable').DataTable({
 
@@ -827,109 +779,129 @@ h2.no-span {
 					"last" : "尾頁"
 				}
 			}
-
 		});
 		//自動搜尋
 		var contestID = $("#contestID").text();
 		var eventItem = $('#select_eventItem').val();
 		var teamItem = $('#select_teamItem').val();
-		$('#select_eventItem').change(function() {
-			eventItem = $('#select_eventItem').val();
-			teamItem = $('#select_teamItem').val();
-			if(eventItem!=0&&teamItem!=0){
-				$('#testTable').dataTable().fnDestroy();
-				$('#testTable').DataTable(
-						{
-							"ajax" : {
-								url : "${pageContext.request.contextPath}/api/score/"
-										+ contestID + "/" + eventItem
-										+ "/" + teamItem,
-								// 									url : "/runninglife/resources/abc.txt",
-								dataSrc : ''
-							},
-							// 				rowId: 'pk.memberID',
-							"processing" : false,
-							// 								"serverSide" : true,
-							"columns" : [ {
-								data : 'member.lastName'
-							}, {
-								data : 'event.eventName'
-							}, {
-								data : 'team.teamName'
-							}, {
-								data : 'runTime'
-							} ],
-							"order" : [ [ 3, "asc" ] ],
-							"lengthMenu" : [ [ 5, 10, 15, -1 ],
-									[ 5, 10, 15, "全部" ] ],
-							"language" : {
-								"info" : "",
-								"infoEmpty" : "沒有資料",
-								"infoFiltered" : "",
-								"zeroRecords" : "沒有符合的結果",
-								"lengthMenu" : "顯示 _MENU_ 筆資料",
-								"search" : "搜尋",
-								"paginate" : {
-									"first" : "首頁",
-									"previous" : "上一頁",
-									"next" : "下一頁",
-									"last" : "尾頁"
-								}
+		$('#select_eventItem')
+				.change(
+						function() {
+							eventItem = $('#select_eventItem').val();
+							teamItem = $('#select_teamItem').val();
+							if (eventItem != 0 && teamItem != 0) {
+								$('#testTable').dataTable().fnDestroy();
+								$('#testTable')
+										.DataTable(
+												{
+													"ajax" : {
+														url : "${pageContext.request.contextPath}/api/score/"
+																+ contestID
+																+ "/"
+																+ eventItem
+																+ "/"
+																+ teamItem,
+														// 									url : "/runninglife/resources/abc.txt",
+														dataSrc : ''
+													},
+													// 				rowId: 'pk.memberID',
+													"processing" : false,
+													// 								"serverSide" : true,
+													"columns" : [
+															{
+																data : 'member.firstName'
+															},
+															{
+																data : 'event.eventName'
+															},
+															{
+																data : 'team.teamName'
+															},
+															{
+																data : 'runTime'
+															} ],
+													"order" : [ [ 3, "asc" ] ],
+													"lengthMenu" : [
+															[ 5, 10, 15, -1 ],
+															[ 5, 10, 15, "全部" ] ],
+													"language" : {
+														"info" : "",
+														"infoEmpty" : "沒有資料",
+														"infoFiltered" : "",
+														"zeroRecords" : "沒有符合的結果",
+														"lengthMenu" : "顯示 _MENU_ 筆資料",
+														"search" : "搜尋",
+														"paginate" : {
+															"first" : "首頁",
+															"previous" : "上一頁",
+															"next" : "下一頁",
+															"last" : "尾頁"
+														}
+													}
+
+												});
 							}
-
 						});
-			}
-		});
+		$('#select_teamItem')
+				.change(
+						function() {
+							eventItem = $('#select_eventItem').val();
+							teamItem = $('#select_teamItem').val();
 
-		$('#select_teamItem').change(function() {
-			eventItem = $('#select_eventItem').val();
-			teamItem = $('#select_teamItem').val();
-			
-			if(eventItem!=0&&teamItem!=0){
+							if (eventItem != 0 && teamItem != 0) {
 
-				$('#testTable').dataTable().fnDestroy();
-				$('#testTable').DataTable(
-						{
-							"ajax" : {
-								url : "${pageContext.request.contextPath}/api/score/"
-										+ contestID + "/" + eventItem
-										+ "/" + teamItem,
-								// 									url : "/runninglife/resources/abc.txt",
-								dataSrc : ''
-							},
-							// 				rowId: 'pk.memberID',
-							"processing" : false,
-							// 								"serverSide" : true,
-							"columns" : [ {
-								data : 'member.lastName'
-							}, {
-								data : 'event.eventName'
-							}, {
-								data : 'team.teamName'
-							}, {
-								data : 'runTime'
-							} ],
-							"order" : [ [ 3, "asc" ] ],
-							"lengthMenu" : [ [ 5, 10, 15, -1 ],
-									[ 5, 10, 15, "全部" ] ],
-							"language" : {
-								"info" : "",
-								"infoEmpty" : "沒有資料",
-								"infoFiltered" : "",
-								"zeroRecords" : "沒有符合的結果",
-								"lengthMenu" : "顯示 _MENU_ 筆資料",
-								"search" : "搜尋",
-								"paginate" : {
-									"first" : "首頁",
-									"previous" : "上一頁",
-									"next" : "下一頁",
-									"last" : "尾頁"
-								}
+								$('#testTable').dataTable().fnDestroy();
+								$('#testTable')
+										.DataTable(
+												{
+													"ajax" : {
+														url : "${pageContext.request.contextPath}/api/score/"
+																+ contestID
+																+ "/"
+																+ eventItem
+																+ "/"
+																+ teamItem,
+														// 									url : "/runninglife/resources/abc.txt",
+														dataSrc : ''
+													},
+													// 				rowId: 'pk.memberID',
+													"processing" : false,
+													// 								"serverSide" : true,
+													"columns" : [
+															{
+																data : 'member.firstName'
+															},
+															{
+																data : 'event.eventName'
+															},
+															{
+																data : 'team.teamName'
+															},
+															{
+																data : 'runTime'
+															} ],
+													"order" : [ [ 3, "asc" ] ],
+													"lengthMenu" : [
+															[ 5, 10, 15, -1 ],
+															[ 5, 10, 15, "全部" ] ],
+													"language" : {
+														"info" : "",
+														"infoEmpty" : "沒有資料",
+														"infoFiltered" : "",
+														"zeroRecords" : "沒有符合的結果",
+														"lengthMenu" : "顯示 _MENU_ 筆資料",
+														"search" : "搜尋",
+														"paginate" : {
+															"first" : "首頁",
+															"previous" : "上一頁",
+															"next" : "下一頁",
+															"last" : "尾頁"
+														}
+													}
+
+												});
 							}
-
 						});
-			}
-		});
 
 		//報名驗證	
 		$('#runnerForm')
@@ -959,49 +931,15 @@ h2.no-span {
 
 	});
 
+	// 	$("#applyLink").on("click", function() {
 
-	function addEvent(event) {
-		alert("更新成功")
-		$('#eventForm')
-				.parent()
-				.before(
-						'<tr><td>'
-								+ event.eventID
-								+ '</td><td>'
-								+ event.eventName
-								+ '</td><td>'
-								+ event.distance
-								+ 'km</td><td>$'
-								+ event.fee
-								+ '</td><td>'
-								+ event.quota
-								+ '</td><td>'
-								+ event.whenToRun
-								+ '</td><td>'
-								+ event.limitTime
-								+ '</td><td><a id="/runninglife/event/'
-								+ event.eventID
-								+ '/delete"class="btn btn-danger  delete" role="button"data-text="真的要刪除此項目嗎?" data-confirm-button="是的"data-cancel-button="不了"data-confirm-button-class: "btn-danger">刪除</a></td>'
-								+ '<td><a class="btn btn-warning  delete" role="button">修改</a></td></tr>');
+	// 		if ($('#runnerForm > div:nth-child(4) > input').val() == "") {
+	// 			window.location.replace("<c:url value="/index.jsp"/>");
+	// 		} else {
+	// 			document.getElementById('applyForm').style.display = "block";
+	// 		}
 
-		$('#eventID').val("");
-		$('#even' + 'tName').val("");
-		$('#distance').val("");
-		$('#fee').val("");
-		$('#quota').val("");
-		$('#limitTime').val("");
-		$('#whenToRun').val("");
-	}
-	
-	$("#applyLink").on("click", function() {
-
-		if($('#runnerForm > div:nth-child(4) > input').val()==""){
-			window.location.replace("<c:url value="/index.jsp"/>");
-		}else{
-			document.getElementById('applyForm').style.display = "block";
-		}
-
-	})
+	// 	})
 
 	//Function To Display Popup
 	function div_show() {

@@ -13,18 +13,16 @@
 <script src="/runninglife/static/js/jquery-3.1.0.min.js"></script>
 <script src="/runninglife/static/js/bootstrap.min.js"></script>
 
-
-	
 	<!-- Animate.css -->
-	<style type="text/css">@import url("<c:url value="/static/css/animate.css" />");</style>
+	<link rel="stylesheet"	href="<%=request.getContextPath()%>/static/css/animate.css">
 	<!-- Icomoon Icon Fonts-->
-	<style type="text/css">@import url("<c:url value="/static/css/icomoon.css" />");</style>
+	<link rel="stylesheet"	href="<%=request.getContextPath()%>/static/css/icomoon.css">
 	<!-- Flexslider  -->
-	<style type="text/css">@import url("<c:url value="/static/css/flexslider.css" />");</style>
+	<link rel="stylesheet"	href="<%=request.getContextPath()%>/static/css/flexslider.css">
 	<!-- Theme style  -->
-	<style type="text/css">@import url("<c:url value="/static/css/style.css" />");</style>
+	<link rel="stylesheet"	href="<%=request.getContextPath()%>/static/css/style.css">
 	<!-- Modernizr JS -->
-	<script type="text/javascript" src="<c:url value="/static/js/modernizr-2.6.2.min.js" />"></script>
+	<link rel="stylesheet"	href="<%=request.getContextPath()%>/static/js/modernizr-2.6.2.min.js">
 	
 	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.0/themes/smoothness/jquery-ui.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.0/jquery-ui.min.js"></script>

@@ -12,23 +12,21 @@
 <link rel="stylesheet" href="/runninglife/static/css/mainStyle.css"></link>
 <script src="/runninglife/static/js/jquery-3.1.0.min.js"></script>
 <script src="/runninglife/static/js/bootstrap.min.js"></script>
-
-
 	
 	<!-- Animate.css -->
-	<style type="text/css">@import url("<c:url value="/static/css/animate.css" />");</style>
+	<link rel="stylesheet"	href="<%=request.getContextPath()%>/static/css/animate.css">
 	<!-- Icomoon Icon Fonts-->
-	<style type="text/css">@import url("<c:url value="/static/css/icomoon.css" />");</style>
+	<link rel="stylesheet"	href="<%=request.getContextPath()%>/static/css/icomoon.css">
 	<!-- Flexslider  -->
-	<style type="text/css">@import url("<c:url value="/static/css/flexslider.css" />");</style>
+	<link rel="stylesheet"	href="<%=request.getContextPath()%>/static/css/flexslider.css">
 	<!-- Theme style  -->
-	<style type="text/css">@import url("<c:url value="/static/css/style.css" />");</style>
+	<link rel="stylesheet"	href="<%=request.getContextPath()%>/static/css/style.css">
 	<!-- Modernizr JS -->
-	<script type="text/javascript" src="<c:url value="/static/js/modernizr-2.6.2.min.js" />"></script>
+	<link rel="stylesheet"	href="<%=request.getContextPath()%>/static/js/modernizr-2.6.2.min.js">
 	
 <title>Running Life</title>
-<!-- ico	 -->
-	<link rel="icon" type="image/png" href="/runninglife/images/icon.png">
+
+	<link rel="icon" type="image/png" href="<%=request.getContextPath()%>/images/icon.png">
 	
 <style type="text/css">
 ol, ul {
@@ -39,7 +37,6 @@ ol, ul {
 <script type="text/javascript">
 $(function(){
 
-	console.log('${membersVO.memberID}');
 	$('#myModal').on('shown.bs.modal', function () {
 		  $('#account').focus();
 	})
@@ -112,7 +109,6 @@ $(function(){
 
 function searchads() {
 	var adsData = ajax('GET', null, 'ads/searchDisplayAds.do', 'json', false);
-	console.log(adsData);
 	for ( var i in adsData) {
 		if(i==0){
 // 			$('.slides').find('.adName').text(adsData[i].adName);
@@ -208,6 +204,7 @@ function ajax(Method, Data, Url, Datetype, Async) {
 
 <!-- Modal end-->
 
+<<<<<<< HEAD
 
 <body>
 	<div id="fh5co-page">
@@ -327,6 +324,83 @@ function ajax(Method, Data, Url, Datetype, Async) {
 		</div>
 	</footer>
 	</div>
+=======
+<body>
+<div id="fh5co-page">
+	<%@ include file="/WEB-INF/pages/header.jsp"%>
+	<div class="container"></div>
+	<aside id="fh5co-hero" class="js-fullheight">
+		<div class="flexslider js-fullheight">
+			<ul class="slides">
+		   	<li style="background-image: url(<c:url value="/static/images/slide_1.jpg"/>);" class='adli'>
+		   		<div class="overlay-gradient"></div>
+		   		<div class="container">
+		   			<div class="col-md-10 col-md-offset-1 text-center js-fullheight slider-text">
+		   				<div class="slider-text-inner">
+<!-- 		   					<h2 class='adName'>Start Your Startup With This Template</h2> -->
+		   					<p style='margin-top: 400px;'><a href="#" class="btn btn-primary btn-lg">馬上購買！！</a></p>
+		   				</div>
+		   			</div>
+		   		</div>
+		   	</li>
+		  	</ul>
+	  	</div>
+	</aside>
+	<div id="fh5co-services-section">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-4 animate-box">
+					<div class="services">
+						<i class="icon-map-marker"></i>
+						<div class="desc">
+							<h3>紀錄</h3>
+							<p>提供會員觀看自己的運動情況，藉以調整自身的運動頻率、運動時間及運動強度。</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4 animate-box">
+					<div class="services">
+						<i class="icon-comments"></i>
+						<div class="desc">
+							<h3>與好友互動</h3>
+							<p>提供會員擁有自己的塗鴉牆，可以在塗鴉牆上聊天、分享運動紀錄及運動資訊。</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4 animate-box">
+					<div class="services">
+						<i class="icon-trophy"></i>
+						<div class="desc">
+							<h3>挑戰</h3>
+							<p>可以藉此為自身設立目標，亦可做為好友間的小型競賽，與互相激勵以維持良好的運動習慣。</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-offset-2 col-md-4 animate-box">
+					<div class="services">
+						<i class="icon-flag-checkered"></i>
+						<div class="desc">
+							<h3>賽事參與</h3>
+							<p>由廠商與相關機構所不定期舉辦的大型賽事活動，可以評測自己過去努力是否有所成長，是會員間互相認識、互相交流最好活動。</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4 animate-box">
+					<div class="services">
+						<i class="icon-calendar"></i>
+						<div class="desc">
+							<h3>日曆</h3>
+							<p>可以記錄會員過去的運動時間、也可記錄會員所參加或將參加的挑戰及賽事活動。</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<%@ include file="/WEB-INF/pages/footer.jsp"%>
+</div>
+>>>>>>> branch 'final' of https://github.com/EEIT87Team01/finalProjectRepository
 	
 	
 	<!-- jQuery Easing -->

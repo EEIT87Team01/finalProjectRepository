@@ -519,9 +519,6 @@ span[class=ios-color-hack3] a {
 					</tr>
 					<!-- // MODULE ROW -->
 
-
-
-
 					<!-- 驗證資訊 -->
 					<!-- MODULE ROW // -->
 					<tr>
@@ -555,9 +552,8 @@ span[class=ios-color-hack3] a {
 																				style="color: #5F5F5F; line-height: 125%; font-family: Helvetica, Arial, sans-serif; font-size: 20px; font-weight: normal; margin-top: 0; margin-bottom: 3px; text-align: left;">個人聯絡資訊</h3>
 																			<div mc:edit="body"
 																				style="text-align: left; font-family: Helvetica, Arial, sans-serif; font-size: 15px; margin-bottom: 0; color: #5F5F5F; line-height: 135%;">
-																				請點擊下列網址輸入驗證碼，以便取得密碼
+																				${member.firstName} 您好，請輸入驗證碼，以便取得密碼
 																				<ul>
-																					<li>帳號:${member.memberID}</li>
 																					<li>驗證碼:${chkStr}</li>
 																				</ul>
 																			</div>

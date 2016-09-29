@@ -48,6 +48,9 @@ public class LoginSpring {
 	@Autowired
 	GlobalService globalservice;
 	
+	private static final String ACCOUNT_CHECK_SUCCESS = "success";
+	private static final String ACCOUNT_CHECK_FAIL = "fail";
+	
 	
 	//登入驗證
 	@RequestMapping(value="/LoginCheck" ,method=RequestMethod.POST,produces="application/json")
@@ -55,8 +58,6 @@ public class LoginSpring {
 		Map<String ,String> errorMessage = new HashMap<String ,String>();
 		Map<String ,Object> InfoMsg = new HashMap<String ,Object>();
 		
-		System.out.println("logincheck");
-		System.out.println(password);
 		/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
 		if (memberAccount == null || memberAccount.trim().length() == 0){ 
 			errorMessage.put("errorMessage","NoAccount"); 
@@ -120,12 +121,8 @@ public class LoginSpring {
 			errorMessage.add("無此帳號");
 			return  new ModelAndView("login/show","errorMessage",errorMessage);
 		}else{
-			//co兆良的Email發送程式
-
 			//跳到驗證碼頁面
 			return  new ModelAndView("login/verification");
-			//跳到更換密碼頁面
-		
 		}
 	}
 	
@@ -175,17 +172,32 @@ public class LoginSpring {
 		photo = IOUtils.toByteArray(is); 
 		} 
 		
-		return new ModelAndView("redirect:/","membersVO"
-				,loginService.CreateMember(memberAccount,password,firstName,lastName,phone,email,gender,birthday,photo));
+		//>>>>>>ethan modify 2016-09-29
+		if(loginService.AccountCheck(memberAccount).equals(ACCOUNT_CHECK_SUCCESS)){
+			return new ModelAndView("redirect:/","membersVO"
+					,loginService.CreateMember(memberAccount,password,firstName,lastName,phone,email,gender,birthday,photo));		
+		}else{
+			return new ModelAndView("redirect:/Login/CreateAccountPage.do");
+		//<<<<<<
+			
+		//old
+//		return new ModelAndView("redirect:/","membersVO"
+//			,loginService.CreateMember(memberAccount,password,firstName,lastName,phone,email,gender,birthday,photo));
+			
+		}
 	}
-	
-	
 	
 	//修改會員資料換頁(Spring)
 	@RequestMapping(value="/UpdateAccountPage")
 	public ModelAndView UpdateAccountPage(@ModelAttribute MembersVO membersVO, Model model){
 		model.addAttribute("memberForm", new MembersVO());
 		return new ModelAndView("login/updateAccount","membersVO",membersVO);
+	}
+	
+	//顯示個人頁面
+	@RequestMapping(value="/AccountShowPage")
+	public ModelAndView AccountShowPage(@ModelAttribute MembersVO membersVO){
+		return new ModelAndView("login/show","membersVO",membersVO);
 	}
 	
 	//修改會員
@@ -218,8 +230,6 @@ public class LoginSpring {
 	//Client驗證----------------------------------------------------------------------
 	@RequestMapping(value="/AccountCheck.do", method = RequestMethod.POST,produces="application/json")
 	public @ResponseBody String getAccountCheck(@RequestParam String memberAccount){
-		System.out.println("star");
-		System.out.println(loginService.AccountCheck(memberAccount));
 		String result = null;
 		Gson gson = new Gson();
 		result = gson.toJson(loginService.AccountCheck(memberAccount));

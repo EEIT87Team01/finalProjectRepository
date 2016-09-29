@@ -13,20 +13,16 @@
 <script src="/runninglife/static/js/jquery-3.1.0.min.js"></script>
 <script src="/runninglife/static/js/bootstrap.min.js"></script>
 
-
-	
 	<!-- Animate.css -->
-	<style type="text/css">@import url("<c:url value="/static/css/animate.css" />");</style>
+	<link rel="stylesheet"	href="<%=request.getContextPath()%>/static/css/animate.css">
 	<!-- Icomoon Icon Fonts-->
-	<style type="text/css">@import url("<c:url value="/static/css/icomoon.css" />");</style>
+	<link rel="stylesheet"	href="<%=request.getContextPath()%>/static/css/icomoon.css">
 	<!-- Flexslider  -->
-	<style type="text/css">@import url("<c:url value="/static/css/flexslider.css" />");</style>
+	<link rel="stylesheet"	href="<%=request.getContextPath()%>/static/css/flexslider.css">
 	<!-- Theme style  -->
-	<style type="text/css">@import url("<c:url value="/static/css/style.css" />");</style>
-	<style type="text/css">@import url("<c:url value="/static/css/login.css" />");</style>
+	<link rel="stylesheet"	href="<%=request.getContextPath()%>/static/css/style.css">
 	<!-- Modernizr JS -->
-	<script type="text/javascript" src="<c:url value="/static/js/modernizr-2.6.2.min.js" />"></script>
-<%-- 	<script type="text/javascript" src="<c:url value="/static/js/login.js" />"></script> --%>
+	<link rel="stylesheet"	href="<%=request.getContextPath()%>/static/js/modernizr-2.6.2.min.js">
 	
 	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.0/themes/smoothness/jquery-ui.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.0/jquery-ui.min.js"></script>
@@ -148,12 +144,13 @@ ol, ul {
 						</td>
 						<td class="form-group col-lg-2"></td>
 <!-- 						<td><span class="form-group col-lg-2"></span></td> -->
-						<td style="padding-top:6px; ">
-<!-- 							<label for="name" class="control-label login-label">姓氏</label> -->
-							<input type="text" id="firstName" name="firstName" class="alert alert-dismissible cols-sm-5 input-group" placeholder="請輸入姓氏"/>
+						<td>
+<!-- 							<label for="name" class="control-label login-label">名子</label> -->
+							<input type="text" id="lastName" name="lastName" class="alert alert-dismissible cols-sm-5 input-group" placeholder="請輸入姓氏"/>
 							<span class="form-group col-lg-2"></span>
-							<span class="glyphicon glyphicon-question-sign hidden" id="showText4"></span><br/>
+							<span class="glyphicon glyphicon-question-sign hidden" id="showText5"></span>
 						</td>
+	
 					</tr>
 					
 					<tr class="form-group col-lg-12">
@@ -164,11 +161,11 @@ ol, ul {
 							<span class="glyphicon glyphicon-question-sign hidden" id="showText2"></span>
 						</td>
 						<td class="form-group col-lg-2"></td>
-						<td>
-<!-- 							<label for="name" class="control-label login-label">名子</label> -->
-							<input type="text" id="lastName" name="lastName" class="alert alert-dismissible cols-sm-5 input-group" placeholder="請輸入名子"/>
+						<td style="padding-top:6px; ">
+<!-- 							<label for="name" class="control-label login-label">姓氏</label> -->
+							<input type="text" id="firstName" name="firstName" class="alert alert-dismissible cols-sm-5 input-group" placeholder="請輸入名子"/>
 							<span class="form-group col-lg-2"></span>
-							<span class="glyphicon glyphicon-question-sign hidden" id="showText5"></span>
+							<span class="glyphicon glyphicon-question-sign hidden" id="showText4"></span><br/>
 						</td>
 					</tr>
 					
@@ -208,7 +205,7 @@ ol, ul {
 					</tr>
 					<tr class="form-group col-lg-12">
 						<td >
-							<input type="submit" id="btn" class="btn btn-primary" value="送出">
+							<input type="submit" id="btn" class="btn btn-primary" disabled="disabled" value="送出">
 						</td>
 					</tr>
 				</tbody>
@@ -227,7 +224,7 @@ $(function(){
 	var eMailFlag = false;
 	var birthdayFlag = false;
 	
-	$('#memberAccount').focusout(function(){
+	$('#memberAccount').change(function(){
 		var inAccount = $('#memberAccount').val();
 		if(inAccount.length == 0){
 			$('#showText1').removeClass().addClass("glyphicon glyphicon-remove-sign show1").text("帳號未填");
@@ -249,7 +246,7 @@ $(function(){
 		}
 	})
 	
-	$('#createPassword').focusout(function(){
+	$('#createPassword').keyup(function(){
 		var inPassword = $('#createPassword').val();
 		if(inPassword.length == 0){
 			$('#showText2').removeClass().addClass("glyphicon glyphicon-remove-sign show1").text("密碼未填");
@@ -271,7 +268,7 @@ $(function(){
 		}
 	})
 	
-	$('#email').focusout(function(){
+	$('#email').keyup(function(){
 		var inEmail = $('#email').val();
 		if(inEmail.length == 0){
 			$('#showText3').removeClass().addClass("glyphicon glyphicon-remove-sign show1").text("Eamil未填");
@@ -289,7 +286,7 @@ $(function(){
 		}
 	})
 	
-	$('#firstName').focusout(function(){
+	$('#firstName').keyup(function(){
 		var inFirstName = $('#firstName').val();
 		if(inFirstName.length == 0){
 			$('#showText4').removeClass().addClass("glyphicon glyphicon-remove-sign show1").text("姓氏未填");
@@ -300,7 +297,7 @@ $(function(){
 		}
 	})
 	
-	$('#lastName').focusout(function(){
+	$('#lastName').keyup(function(){
 		var inLastName = $('#lastName').val();
 		if(inLastName.length == 0){
 			$('#showText5').removeClass().addClass("glyphicon glyphicon-remove-sign show1").text("名子未填");
@@ -311,7 +308,7 @@ $(function(){
 		}
 	})
 	
-	$('#phone').focusout(function(){
+	$('#phone').keyup(function(){
 		var inPhone = $('#phone').val();
 		if(inPhone.length == 0){
 			$('#showText6').removeClass().addClass("glyphicon glyphicon-remove-sign show1").text("電話未填");
@@ -328,7 +325,7 @@ $(function(){
 		}
 	})
 	
-	$('#createBirthday').focusout(function(){
+	$('#createBirthday').keyup(function(){
 		var inBirthday = $('#createBirthday').val();
 		if(inBirthday.length == 0){
 			birthdayFlag = false;
@@ -340,10 +337,13 @@ $(function(){
 	$("#createBirthday").datepicker({
 		changeMonth: true,
 	    changeYear: true,
-		dateFormat:"yy-mm-dd"
+		dateFormat:"yy-mm-dd",
+		onSelect: function(dateText) {
+			$(this).keyup();
+		}
 	});
 	
-	$('#memberAccount,#createPassword,#email,#firstName,#lastName,#phone,#createBirthday').focusout(function(){
+	$('#memberAccount,#createPassword,#email,#firstName,#lastName,#phone,#createBirthday').keyup(function(){
 		
 		if(accountFlag && passwordFlag && firstNameFlag && lastNameFlag && phoneFlag && eMailFlag && birthdayFlag){
 			$("#btn").prop("disabled", false);

@@ -11,15 +11,15 @@
 	href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css"
 	type="text/css">
 <link rel="stylesheet"
-	href="<c:url value="/resources/css/bootstrap.min.css"/>"
+	href="<c:url value="/static/css/bootstrap.min.css"/>"
 	type="text/css">
 <link rel="stylesheet"
-	href="<c:url value="/resources/css/jquery.countdown.css"/>"
+	href="<c:url value="/static/css/jquery.countdown.css"/>"
 	type="text/css">
-<link rel="stylesheet" href="<c:url value="/resources/css/apply.css"/>"
+<link rel="stylesheet" href="<c:url value="/static/css/apply.css"/>"
 	type="text/css">
 <link rel="stylesheet"
-	href="<c:url value="/resources/css/jquery.dataTables.min.css"/>"
+	href="<c:url value="/static/css/jquery.dataTables.min.css"/>"
 	type="text/css">
 <style>
 .bs-callout {
@@ -217,9 +217,9 @@ h2.no-span {
 
 	<section>
 	<div class="container">
-		<div class="col-lg-9 col-md-9 col-sm-9 letter-spacing-1">
+		<div class="col-lg-12 col-md-12 col-sm-12 letter-spacing-1">
 			<ul class="nav nav-tabs nav-pills">
-				<li role="presentation" class="active"><a href="#rule"
+				<li role="presentation" class="active"  ><a href="#rule"
 					data-toggle="tab">競賽規程</a></li>
 				<li role="presentation"><a href="#map" data-toggle="tab">競賽路線</a></li>
 				<li role="presentation"><a href="#runnerList" data-toggle="tab">參賽名單</a></li>
@@ -299,7 +299,7 @@ h2.no-span {
 							<tbody id="eventBody">
 								<c:forEach var="event" items="${events}">
 									<tr>
-										<td class="eventID">${event.eventID}</td>
+										<td class="eventID ">${event.eventID}</td>
 										<!-- 隱藏 -->
 										<td>${event.eventName}</td>
 										<td>${event.distance}</td>

@@ -91,7 +91,7 @@
 </div>
 	<script>
 		$(function(){
-			$('#password').focusout(function(){
+			$('#password').keyup(function(){
 				var inpassword = $('#password').val();
 				var paswdLength = inpassword.length;
 				if(paswdLength == 0){
@@ -110,7 +110,7 @@
 				}
 			});
 			
-			$('#password,#newPassword').focusout(function(){
+			$('#password,#newPassword').keyup(function(){
 				var inpassword = $('#password').val();
 				var newPassword = $('#newPassword').val();
 				if(inpassword == newPassword && inpassword.length>0 && newPassword.length>0){

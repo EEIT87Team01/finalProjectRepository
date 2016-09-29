@@ -5,6 +5,16 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<style>
+	.page{
+		color:#bce2e8
+	
+	
+	
+	}
+
+
+</style>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>賽事資訊</title>
 
@@ -22,14 +32,12 @@
 	<%@ include file="/WEB-INF/pages/header.jsp"%>
 	<div id="countPage" class="hidden">${countPage}</div>
 	<div>共有${countPage}頁</div>
-	<div>目前登入的是:${membersVO.memberID}</div>
-	<div id="auth" class="">admin</div>
 	<!-- 	載入列表	 -->
 	<section>
-	<div class="container">
+	<div class="container" style="background-color: #bce2e8;">
 
 		<form class="text-center form-control" id="queryContest" method="get"
-			action="${pageContext.request.contextPath}/admin/contest/">
+			action="${pageContext.request.contextPath}/admin/contest/" style="border:0px;">
 			<div>
 				<label>搜尋 <select class="selectpicker" id="year" name="year">
 						<option value="0">年</option>
@@ -58,7 +66,7 @@
 		<c:forEach var="contest" items="${contests}">
 			<br>
 			<div class="col-lg-9 col-md-9 col-sm-9">
-				<div class="col-lg-2 col-md-2 col-sm-3 col-xs-3 nopadding-right">
+				<div class="col-lg-2 col-md-2 col-sm-3 col-xs-3 nopadding-right" style="margin-bottom:100px">
 					<a
 						href="${pageContext.request.contextPath}/contest/${contest.contestID}"
 						target="_blank"><img class="img-responsive thumbnail"
@@ -97,19 +105,14 @@
 					<div class="divider margin-top-0 margin-bottom-10"></div>
 				</div>
 			</div>
-			<div class="col-lg-3 col-md-3 col-sm-3">
-				<a
-					href="${pageContext.request.contextPath}/contest/edit?id=${contest.contestID}"
-					class="btn btn-info edit" role="button"">編輯</a>
-			</div>
-			<div class="col-lg-3 col-md-3 col-sm-3">
-				<a
-					href="${pageContext.request.contextPath}/contest/${contest.contestID}/delete"
-					class="btn btn-danger  delete" role="button" data-text="真的要刪除此賽事嗎?"
-					data-confirm-button="是的" data-cancel-button="不了"data-confirm-button-class: "btn-danger">刪除</a>
-			</div>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
 
 		</c:forEach>
+		
 		<div class="col-lg-10 col-md-10 col-sm-9 col-xs-9 ">
 			<ul class="text-center" id="pagination" class="pagination-sm"></ul>
 		</div>
@@ -126,7 +129,7 @@
 </body>
 
 <script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+	src="${pageContext.request.contextPath}/static/js/jquery.min.js"></script>
 <script src="<c:url value="/static/js/jquery.confirm.min.js"/>"></script>
 <script src="<c:url value="/static/js/bootstrap.min.js"/>"></script>
 <script src="<c:url value="/static/js/jquery.twbsPagination.js"/>"></script>
@@ -177,6 +180,7 @@
 			}
 
 		});
+		$('#fh5co-header > div > div > nav > ul > li:nth-child(3)').addClass('active');
 	});
 	//刪除確認視窗
 	$(".delete").confirm({
@@ -240,7 +244,8 @@
 				first : '第一頁',
 				prev : '上一頁',
 				next : '下一頁',
-				last : '最後一頁'
+				last : '最後一頁',
+				
 			});
 	//js拿取queryStr
 	function getParameterByName(name, url) {

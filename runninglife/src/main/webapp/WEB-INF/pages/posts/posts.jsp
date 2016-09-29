@@ -16,17 +16,16 @@
 		<script src="<%=request.getContextPath()%>/static/js/fileinput.min.js"></script>
 		<script src="<%=request.getContextPath()%>/static/js/jquery.blockUI.js"></script>
 
-
-		
-			<!-- Animate.css -->
-			<style type="text/css">@import url("<c:url value="/static/css/animate.css" />");</style>
-			<!-- Icomoon Icon Fonts -->
-			<style type="text/css">@import url("<c:url value="/static/css/icomoon.css" />");</style>
-			<!-- Flexslider  -->
-			<style type="text/css">@import url("<c:url value="/static/css/flexslider.css" />");</style>
-			<!-- Theme style  -->
-			<style type="text/css">@import url("<c:url value="/static/css/style.css" />");</style>
-			
+		<!-- Animate.css -->
+		<link rel="stylesheet"	href="<%=request.getContextPath()%>/static/css/animate.css">
+		<!-- Icomoon Icon Fonts-->
+		<link rel="stylesheet"	href="<%=request.getContextPath()%>/static/css/icomoon.css">
+		<!-- Flexslider  -->
+		<link rel="stylesheet"	href="<%=request.getContextPath()%>/static/css/flexslider.css">
+		<!-- Theme style  -->
+		<link rel="stylesheet"	href="<%=request.getContextPath()%>/static/css/style.css">
+		<!-- Modernizr JS -->
+		<link rel="stylesheet"	href="<%=request.getContextPath()%>/static/js/modernizr-2.6.2.min.js">
 			
 		<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/static/css/mainStyle.css"/>
 		<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/static/css/bootstrap.min.css" />
@@ -34,6 +33,7 @@
 		<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/static/css/fileinput.min.css"/>
 
 	</head>
+	<link rel="icon" type="image/png" href="/runninglife/images/icon.png">
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog">
 	  <div class="modal-dialog" role="document">
 	    <div class="modal-content">
@@ -50,7 +50,7 @@
 				<input type="hidden" id="reportPostID" name="reportPostID" value="">	
 						<div class="form-group">
 							<select class="typeID" name="typeID">
-								<option class="option" value="1">這令人噁心或討厭	</option>
+								<option class="option" value="1">這令人噁心或討厭</option>
 								<option class="option" value="2">我認為這不應該出現在RunningLife的頁面上</option>
 								<option class="option" value="3">這是垃圾訊息</option>
 								<option class="option" value="3">有性別歧視字眼</option>
@@ -70,23 +70,47 @@
 	</div>
 <body>
 
-<%@ include file="/WEB-INF/pages/header.jsp"%>
+
+	<header id="fh5co-header" role="banner">
+	<div class="container">
+		<div class="header-inner">
+			<h1>
+				<a href="<%=request.getContextPath()%>/index.jsp">RunningLife</a>
+			</h1>
+			<nav role="navigation">
+			<ul>
+				<c:choose>
+				<c:when test="${!empty membersVO}">
+					<li><a href="<%=request.getContextPath()%>/postsController/posts.do">塗鴉牆</a></li>
+					<li><a href="<%=request.getContextPath()%>/challenge/myChallenges.do">挑戰</a></li>
+					<li><a href="<%=request.getContextPath()%>/contest">賽事活動</a></li>
+					<li><a href="<%=request.getContextPath()%>/calendar.do">行事曆</a></li>
+					<li><a href="<%=request.getContextPath()%>/article/page">運動文章</a></li>
+					<li>
+						<a href="<%=request.getContextPath()%>/Login/AccountShowPage.do">
+							<img src="data:image/png;base64,${r:byteToBase64(membersVO.photo)}" style='width:50px;height:50px;'>
+							你好, ${membersVO.firstName}
+						</a>
+						
+					</li>
+					
+					<li class="cta"><a href="<%=request.getContextPath()%>/Login/Logout.do">登出</a></li>
+				</c:when>
+				<c:otherwise>
+					<li><a href="<%=request.getContextPath()%>/Login/CreateAccountPage.do">新增用戶，開始屬於你的RunningLife</a></li>
+					<li> 或是 </li>
+					<li class="cta" data-toggle="modal" data-target="#myModal"><a id="loginModalBtn" href="#">登入</a></li> <!-- 登入視窗按鈕 -->
+				</c:otherwise>	
+				</c:choose>
+			</ul>
+			</nav>
+		</div>
+	</div>
+	</header>
 		<div class="container"></div>
 <aside>
 ${onePosts.postID}
 <div id = "sss" ></div>
-	<div id="question" style="display:none; cursor: default;"> 
-      <form method="get" action="postsController/posts.do">
-		<div class="col-md-12" style="border-style:solid;border-color:#EDEDED"> 
-			<textarea id="textarea" name="postsContent" class="form-control col-xs-12" rows="15"></textarea>
-			<div class="col-md-12">
-				<button id="btn_update" type="submit" class="btn btn-success">發文</button>
-				<button id="no">取消</button>
-			</div>
-			<input type="hidden" id="memberID" name="memberID" value="${membersVO.memberID}">
-		</div>		
-       </form>
-	</div> 
 	<div class="col-md-2"></div> 	
 	<div class="col-md-8">	
 		<ul class="nav nav-tabs">
@@ -104,21 +128,23 @@ ${onePosts.postID}
 		</ul>
 		
 		<form:form method="post" action="newPosts.do" enctype="multipart/form-data">
-			<div class="col-md-12" style="border-style:solid;border-color:#EDEDED;padding:20px">
-				<textarea id="textarea" name="postsContent" class="form-control col-xs-12" rows="5"></textarea>
-				<div class="col-md-10"><input id="input-2" name="file1" type="file" class="file" multiple="" data-show-upload="false" data-show-caption="true"></div>
-				<div class="col-md-2"><button id="btn_posts" type="submit" class="btn btn-primary">發文</button></div>
+			<div class="col-md-12" style="border-style:solid;border-color:#EDEDED;padding:20px;padding-top:0px;background-color: white;">
+			<h4>新增貼文</h4>
+				<textarea id="textarea" name="postsContent" class="form-control col-xs-12" rows="5" placeholder="輸入內文"></textarea>
+				<div class="col-md-10" style="margin-top: 10px;"><input id="input-2" name="file1" type="file" class="file" multiple="" data-show-upload="false" data-show-caption="true" ></div>
+				<div class="col-md-2" style="margin-top: 10px;"><button id="btn_posts" type="submit" class="btn btn-primary" style="float:right;">發文</button></div>
 				<input type="hidden" id="memberID" name="memberID" value="${membersVO.memberID}">
 	</div>					
 		</form:form>
 		<c:forEach var="posts" items="${postsVO}"> 
-			<div class="col-md-12">
-				<c:if test="${posts.parent==null&&posts.status==1}">	
+			<c:if test="${posts.parent==null&&posts.status==1}">
+			<div class="col-md-1"></div>
+				<div class="col-md-10" style="margin:10px">
 					<div>
-						<div  class="col-md-12" style="border-style:solid;border-color:#EDEDED">							
-							<div  class="col-md-12" style="border-style:solid;border-color:#EDEDED">	
+						<div  class="col-md-12" style="border-style:solid;border-color:#EDEDED;">							
+							<div  class="col-md-12">	
 								<div class="col-md-1"><a href="<%=request.getContextPath()%>/postsController/personalPosts.do?membersID=${posts.postMemberID.memberID}"><img style="width:99%" src="data:image/png;base64,${r:byteToBase64(posts.postMemberID.photo)}"></a></div>
-								<div class="col-md-10"><h4>${posts.postMemberID.lastName}</h4>${posts.time}</div>	
+								<div class="col-md-10"><h4>${posts.postMemberID.firstName}</h4>${posts.time}</div>	
 								<div class="col-md-1">
 							</div>	
 								<div class="btn-group ">
@@ -143,25 +169,24 @@ ${onePosts.postID}
 								<div class="col-md-10"></div>
 								<div class="col-md-12"></div>
 							</div>
-						</div>	
 						<form method="post" action="responsePosts.do">
-							<div class="col-md-12" style="border-style:solid;border-color:#EDEDED">
-								<div class="col-md-1"><a href="<%=request.getContextPath()%>/postsController/personalPosts.do?membersID=${posts.postMemberID.memberID}"><img  style="width:80%" src="data:image/png;base64,${r:byteToBase64(membersVO.photo)}"></a></div>
-								<div class="col-md-9"><textarea id="textarea" name="responsePosts_content" class="form-control col-xs-12" rows="1"></textarea></div>
+							<div class="col-md-12" style="padding-top:4px;padding-bottom:4px;">
+							<div class="col-md-1"></div>
+								<div class="col-md-1"><a href="<%=request.getContextPath()%>/postsController/personalPosts.do?membersID=${membersVO.memberID}"><img  style="width:80%" src="data:image/png;base64,${r:byteToBase64(membersVO.photo)}"></a></div>
+								<div class="col-md-8"><textarea id="textarea" name="responsePosts_content" class="form-control col-xs-12" rows="1"></textarea></div>
 								<div class="col-md-2"><button type="submit" class="btn btn btn-primary">回覆</button></div>	
 								<input type="hidden" name="memberID" value="${membersVO.memberID}">
 								<input type="hidden" name="postID" value="${posts.postID}">
 								<input type="hidden" name="action" value="responsePosts">
 							</div>
 						</form>													
-					</div>
-				</c:if>
 					<c:forEach var="response" items="${responseVO}"> 
 						<c:if test="${response.parent==posts.postID&&response.status==1}">
-							<div class="col-md-12" style="border-style:solid;border-color:#EDEDED">
-								<div class="col-md-1"><a href="<%=request.getContextPath()%>/postsController/personalPosts.do?membersID=${response.postMemberID.memberID}"><img  style="width:80%" src="data:image/png;base64,${r:byteToBase64(membersVO.photo)}"></a></div>
-								<div class="col-md-10"><span>${response.content}</span></div>
-								<div class="col-md-1">  
+							<div class="col-md-12" style="border-top: thick solid #EDEDED;padding-top:4px;padding-bottom:4px;">
+							<div class="col-md-1"></div>
+								<div class="col-md-1"><a href="<%=request.getContextPath()%>/postsController/personalPosts.do?membersID=${response.postMemberID.memberID}"><img  style="width:80%" src="data:image/png;base64,${r:byteToBase64(response.postMemberID.photo)}"></a></div>
+								<div class="col-md-8"><span>${response.content}</span></div>
+								<div class="col-md-2">  
 									<div class="btn-group ">
 										<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
 											<span class="caret"></span>
@@ -174,8 +199,10 @@ ${onePosts.postID}
 							</div>		
 						</c:if>
 					</c:forEach>
-			</div>
-				<div class="col-md-12"></div>
+						</div>	
+					</div>
+				</div>
+			</c:if>
 		</c:forEach>			
 	</div>
 	<div class="col-md-2"></div>	
@@ -227,7 +254,21 @@ $(function(){
 			  }
 		});
 	});
+	$("#fh5co-header > div > div > nav > ul > li:nth-child(1)").addClass("active");
 });	
+
+
+// $("#input-2").fileinput({
+//     language: "fr",
+//     uploadUrl: "/file-upload-batch/2",
+//     allowedFileExtensions: ["jpg", "png", "gif"]
+// });
+
+
+
+
+
+
 </script>
 </aside>
 </body>

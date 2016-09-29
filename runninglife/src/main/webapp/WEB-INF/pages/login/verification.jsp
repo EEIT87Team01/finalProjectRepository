@@ -128,7 +128,7 @@
 </div>
 <script>
 $(function(){
-	$('#verifyCode').focusout(function(){
+	$('#verifyCode').keyup(function(){
 		if($('#verifyCode').val().length == 0){
 			$('#btn').prop("disabled",true);
 		}else{

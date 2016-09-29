@@ -81,17 +81,7 @@ public class LoginService implements LoginService_Interface{
 					insetPswd= globalservice.changeMD5Encoding(password);
 					//從DB取出
 					byte[] dbPassword = loginInfo.getPassword();
-											
-					for(byte i:insetPswd){
-						System.out.print(i);
-					}
-				
-					System.out.println("");
-					
-					for(byte i:dbPassword){
-						System.out.print(i);
-					}
-					
+												
 					//確認密碼正確
 					if(dbPassword != null && Arrays.equals(dbPassword, insetPswd)){
 						loginInfo.setMemberAccount(loginInfoPK);
@@ -153,7 +143,6 @@ public class LoginService implements LoginService_Interface{
 			
 //			message = "帳號無誤";
 			membersVO = membersDAO.selectOne(loginInfo.getMemberID().getMemberID());
-			System.out.println(membersVO.getEmail() + membersVO.getMemberID());
 			mailService.sendForgetPswEmail(membersVO, random);
 			DBEmail = membersVO.getEmail();
 			return random;
@@ -301,7 +290,6 @@ public class LoginService implements LoginService_Interface{
 		
 		membersDAO.insert(membersVO);
 		
-		System.out.println(membersVO.getFirstName());
 		
 		return membersVO;
 	}
@@ -316,7 +304,6 @@ public class LoginService implements LoginService_Interface{
 		
 		List<CountryVO> countryVO = countryDAO.selectAll();
 		
-		System.out.println(countryVO);
 		return countryVO;
 	}
 	
@@ -326,7 +313,6 @@ public class LoginService implements LoginService_Interface{
 		
 		List<CityVO> city = cityDAO.selectAll(countryID);
 		
-		System.out.println(city);
 		return city;
 	}
 	
@@ -336,7 +322,6 @@ public class LoginService implements LoginService_Interface{
 		
 		List<LocationVO> location = locationDAO.selectAll(cityID);
 		
-		System.out.println(location);
 		return location;
 	}
 	
