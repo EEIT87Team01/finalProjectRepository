@@ -208,7 +208,6 @@ function ajax(Method, Data, Url, Datetype, Async) {
 
 <!-- Modal end-->
 
-
 <body>
 	<div id="fh5co-page">
 	<%@ include file="/WEB-INF/pages/header.jsp"%>
