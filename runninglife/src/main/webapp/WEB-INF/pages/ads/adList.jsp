@@ -155,7 +155,7 @@ table{
 				</tbody>
 			</table>
 			<p align="right">
-				<a href='adCreate.jsp' class='btn btn-info'>新增廣告</a>
+				<a href='<%=request.getContextPath()%>/ads/adCreate.do' class='btn btn-info'>新增廣告</a>
 			</p>
 		</div>
 	</div>
